@@ -23,11 +23,17 @@ permalink: /tunes/
     <tr>
       <td><strong>{{ tune.name }}</strong>{% if tune.aliases.length %} <small class="aliases">({{ tune.aliases | join(", ") }})</small>{% endif %}</td>
       <td>{{ tune.type }}</td>
-      <td>{{ tune.key }}</td>
+      <td>
+        {% if tune.commonKeys.length %}
+          <span class="key-primary" {% if tune.commonKeys.length > 1 %}title="Also played in: {{ tune.commonKeys | join(', ') }}"{% endif %}>
+            {{ tune.commonKeys[0] }}{% if tune.commonKeys.length > 1 %}<span class="key-more">+{{ tune.commonKeys.length - 1 }}</span>{% endif %}
+          </span>
+        {% endif %}
+      </td>
       <td><span class="tradition-badge {{ tune.tradition }}">{{ tune.tradition }}</span></td>
       <td>
         {% if tune.external.thesession %}
-          <a href="https://thesession.org/tunes/{{ tune.external.thesession }}" target="_blank" rel="noopener">Session</a>
+          <a href="https://thesession.org/tunes/{{ tune.external.thesession }}" target="_blank" rel="noopener">TheSession</a>
         {% endif %}
       </td>
     </tr>

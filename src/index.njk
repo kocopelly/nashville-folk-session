@@ -19,13 +19,13 @@ title: Session Sets — Kocopelly
       <div class="set">
         <span class="set-label">Set {{ loop.index }}</span>
         <ol class="tune-list">
-          {% for tuneId in set.tunes %}
+          {% for entry in set.tunes %}
             <li>
-              {% set link = tuneId | tuneLink(tunes) %}
+              {% set link = entry | tuneLink(tunes) %}
               {% if link %}<a href="{{ link }}" target="_blank" rel="noopener">{% endif %}
-                {{ tuneId | tuneName(tunes) }}
+                {{ entry | tuneName(tunes) }}
               {% if link %}</a>{% endif %}
-              <span class="tune-meta">{{ tunes[tuneId].type }} · {{ tunes[tuneId].key }}</span>
+              <span class="tune-meta">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
             </li>
           {% endfor %}
         </ol>

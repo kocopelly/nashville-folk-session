@@ -67,9 +67,9 @@ export const Tune = z.object({
   id: z.string().regex(/^tune_\d+$/, "Tune ID must be tune_NNN"),
   name: z.string().min(1),
   type: TuneType,
-  key: Key,
   tradition: Tradition,
   aliases: z.array(z.string()).default([]),
+  commonKeys: z.array(z.string()).default([]), // most common keys, descending by frequency
   external: z
     .object({
       thesession: z.number().int().positive().optional(),
@@ -78,9 +78,15 @@ export const Tune = z.object({
   notes: z.string().optional(),
 });
 
+// ─── Tune in a set (with key as played) ─────────────────────
+export const SetTune = z.object({
+  tuneId: z.string(),
+  key: Key.optional(), // key as played this session
+});
+
 // ─── Set (ordered group of tunes) ───────────────────────────
 export const TuneSet = z.object({
-  tunes: z.array(z.string()).min(1), // tune IDs
+  tunes: z.array(z.union([z.string(), SetTune])).min(1), // plain ID or {tuneId, key}
   notes: z.string().optional(),
 });
 
@@ -105,5 +111,6 @@ export type Tradition = z.infer<typeof Tradition>;
 export type TuneType = z.infer<typeof TuneType>;
 export type Key = z.infer<typeof Key>;
 export type Tune = z.infer<typeof Tune>;
+export type SetTune = z.infer<typeof SetTune>;
 export type TuneSet = z.infer<typeof TuneSet>;
 export type Session = z.infer<typeof Session>;

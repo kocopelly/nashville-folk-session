@@ -50,7 +50,8 @@ if (!sessionsResult.success) {
 
     for (const session of sessionsResult.data as Session[]) {
       for (const set of session.sets) {
-        for (const tuneId of set.tunes) {
+        for (const entry of set.tunes) {
+          const tuneId = typeof entry === "string" ? entry : entry.tuneId;
           if (!tuneIds.has(tuneId)) {
             missing.push(`${session.id} references unknown tune: ${tuneId}`);
           }

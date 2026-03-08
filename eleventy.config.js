@@ -14,17 +14,38 @@ export default function (eleventyConfig) {
     return JSON.parse(readFileSync("data/sessions.json", "utf-8"));
   });
 
+  // Helper: normalize a set tune entry (string or {tuneId, key}) to {tuneId, key?}
+  function normalizeTuneEntry(entry) {
+    if (typeof entry === "string") return { tuneId: entry };
+    return entry;
+  }
+
   // Filters
-  eleventyConfig.addFilter("tuneName", function (tuneId, tunes) {
+  eleventyConfig.addFilter("tuneName", function (entry, tunes) {
+    const { tuneId } = normalizeTuneEntry(entry);
     return tunes[tuneId]?.name ?? tuneId;
   });
 
-  eleventyConfig.addFilter("tuneLink", function (tuneId, tunes) {
+  eleventyConfig.addFilter("tuneId", function (entry) {
+    return normalizeTuneEntry(entry).tuneId;
+  });
+
+  eleventyConfig.addFilter("tuneKey", function (entry) {
+    return normalizeTuneEntry(entry).key || null;
+  });
+
+  eleventyConfig.addFilter("tuneLink", function (entry, tunes) {
+    const { tuneId } = normalizeTuneEntry(entry);
     const tune = tunes[tuneId];
     if (tune?.external?.thesession) {
       return `https://thesession.org/tunes/${tune.external.thesession}`;
     }
     return null;
+  });
+
+  eleventyConfig.addFilter("tuneType", function (entry, tunes) {
+    const { tuneId } = normalizeTuneEntry(entry);
+    return tunes[tuneId]?.type ?? "";
   });
 
   eleventyConfig.addFilter("dateDisplay", function (dateStr) {
@@ -40,7 +61,8 @@ export default function (eleventyConfig) {
     const counts = {};
     for (const session of sessions) {
       for (const set of session.sets) {
-        for (const tuneId of set.tunes) {
+        for (const entry of set.tunes) {
+          const { tuneId } = normalizeTuneEntry(entry);
           counts[tuneId] = (counts[tuneId] || 0) + 1;
         }
       }
