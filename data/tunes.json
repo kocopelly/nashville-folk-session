@@ -1,0 +1,74 @@
+{
+  "tune_001": {
+    "id": "tune_001",
+    "name": "The Silver Spear",
+    "type": "reel",
+    "key": "D",
+    "tradition": "irish",
+    "aliases": [],
+    "external": { "thesession": 1 }
+  },
+  "tune_002": {
+    "id": "tune_002",
+    "name": "Speed The Plough",
+    "type": "reel",
+    "key": "G",
+    "tradition": "irish",
+    "aliases": [],
+    "external": { "thesession": 2 }
+  },
+  "tune_003": {
+    "id": "tune_003",
+    "name": "The Golden Keyboard",
+    "type": "reel",
+    "key": "D",
+    "tradition": "irish",
+    "aliases": ["Golden Keyboard"],
+    "external": { "thesession": 101 }
+  },
+  "tune_004": {
+    "id": "tune_004",
+    "name": "The Banshee",
+    "type": "reel",
+    "key": "G",
+    "tradition": "irish",
+    "aliases": [],
+    "external": { "thesession": 119 }
+  },
+  "tune_005": {
+    "id": "tune_005",
+    "name": "The Foxhunter",
+    "type": "reel",
+    "key": "D",
+    "tradition": "irish",
+    "aliases": ["The Foxhunter's Reel"],
+    "external": { "thesession": 50 }
+  },
+  "tune_006": {
+    "id": "tune_006",
+    "name": "Toss The Feathers",
+    "type": "reel",
+    "key": "Em",
+    "tradition": "irish",
+    "aliases": [],
+    "external": { "thesession": 554 }
+  },
+  "tune_007": {
+    "id": "tune_007",
+    "name": "The Mason's Apron",
+    "type": "reel",
+    "key": "A",
+    "tradition": "irish",
+    "aliases": ["Mason's Apron"],
+    "external": { "thesession": 94 }
+  },
+  "tune_008": {
+    "id": "tune_008",
+    "name": "Paddy Ryan's Dream",
+    "type": "reel",
+    "key": "Am",
+    "tradition": "irish",
+    "aliases": [],
+    "external": { "thesession": 131 }
+  }
+}

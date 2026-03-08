@@ -1,0 +1,37 @@
+---
+layout: base.njk
+title: Stats
+permalink: /stats/
+---
+
+<h1>Stats</h1>
+
+{% set played = sessions | mostPlayed(tunes) %}
+
+<section>
+  <h2>Most Played Tunes</h2>
+  {% if played.length === 0 %}
+    <p class="empty">No data yet — log some sessions first!</p>
+  {% else %}
+    <ol class="most-played">
+      {% for tune in played %}
+      <li>
+        <strong>{{ tune.name }}</strong>
+        <span class="play-count">× {{ tune.count }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+  {% endif %}
+</section>
+
+<section>
+  <h2>Overview</h2>
+  <dl class="stats-grid">
+    <dt>Total Sessions</dt>
+    <dd>{{ sessions.length }}</dd>
+    <dt>Total Tunes</dt>
+    <dd>{{ tunes | length }}</dd>
+    <dt>Unique Tunes Played</dt>
+    <dd>{{ played.length }}</dd>
+  </dl>
+</section>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title | default("Session Sets") }}</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">🎻 Session Sets</a>
+      <div class="nav-links">
+        <a href="/">Sessions</a>
+        <a href="/tunes/">Tunes</a>
+        <a href="/stats/">Stats</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    {{ content | safe }}
+  </main>
+  <footer>
+    <p>Kocopelly's session tracker · updated by <a href="https://github.com/slime-the-bot">Slime 🫠</a></p>
+  </footer>
+</body>
+</html>

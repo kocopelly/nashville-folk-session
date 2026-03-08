@@ -1,0 +1,36 @@
+---
+layout: base.njk
+title: Tune Registry
+permalink: /tunes/
+---
+
+<h1>Tune Registry</h1>
+
+<p>{{ tunes | length }} tunes tracked</p>
+
+<table class="tune-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Key</th>
+      <th>Tradition</th>
+      <th>🔗</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for id, tune in tunes %}
+    <tr>
+      <td><strong>{{ tune.name }}</strong>{% if tune.aliases.length %} <small class="aliases">({{ tune.aliases | join(", ") }})</small>{% endif %}</td>
+      <td>{{ tune.type }}</td>
+      <td>{{ tune.key }}</td>
+      <td><span class="tradition-badge {{ tune.tradition }}">{{ tune.tradition }}</span></td>
+      <td>
+        {% if tune.external.thesession %}
+          <a href="https://thesession.org/tunes/{{ tune.external.thesession }}" target="_blank" rel="noopener">Session</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

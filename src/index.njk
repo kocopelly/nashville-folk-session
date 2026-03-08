@@ -1,0 +1,40 @@
+---
+layout: base.njk
+title: Session Sets — Kocopelly
+---
+
+<h1>Sessions</h1>
+
+{% if sessions.length === 0 %}
+  <p class="empty">No sessions logged yet. Send Slime your set list! 🎻</p>
+{% else %}
+  <div class="sessions">
+    {% for session in sessions | reverse %}
+    <article class="session-card">
+      <h2>{{ session.date | dateDisplay }}</h2>
+      {% if session.venue %}<p class="venue">📍 {{ session.venue }}{% if session.location %}, {{ session.location }}{% endif %}</p>{% endif %}
+      <span class="tradition-badge {{ session.tradition }}">{{ session.tradition }}</span>
+
+      {% for set in session.sets %}
+      <div class="set">
+        <span class="set-label">Set {{ loop.index }}</span>
+        <ol class="tune-list">
+          {% for tuneId in set.tunes %}
+            <li>
+              {% set link = tuneId | tuneLink(tunes) %}
+              {% if link %}<a href="{{ link }}" target="_blank" rel="noopener">{% endif %}
+                {{ tuneId | tuneName(tunes) }}
+              {% if link %}</a>{% endif %}
+              <span class="tune-meta">{{ tunes[tuneId].type }} · {{ tunes[tuneId].key }}</span>
+            </li>
+          {% endfor %}
+        </ol>
+        {% if set.notes %}<p class="set-notes">{{ set.notes }}</p>{% endif %}
+      </div>
+      {% endfor %}
+
+      {% if session.notes %}<p class="session-notes">{{ session.notes }}</p>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
+{% endif %}
