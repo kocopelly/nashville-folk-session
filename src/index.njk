@@ -25,15 +25,22 @@ title: Session Sets — Kocopelly
               {% if link %}<a href="{{ link }}" target="_blank" rel="noopener">{% endif %}
                 {{ entry | tuneName(tunes) }}
               {% if link %}</a>{% endif %}
+              {% if entry | hasSetting %}<a href="{{ link }}" class="dots-link" title="View dots">𝄞</a>{% endif %}
               <span class="tune-meta">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
             </li>
           {% endfor %}
         </ol>
         {% if set.notes %}<p class="set-notes">{{ set.notes }}</p>{% endif %}
+        {% if set.links %}{% for link in set.links %}{% if loop.first %}<div class="set-links">{% endif %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener" class="attachment-link">{{ link.type | linkEmoji }} {{ link.label }}</a>
+          {% if loop.last %}</div>{% endif %}{% endfor %}{% endif %}
       </div>
       {% endfor %}
 
       {% if session.notes %}<p class="session-notes">{{ session.notes }}</p>{% endif %}
+      {% if session.links %}{% for link in session.links %}{% if loop.first %}<div class="session-links">{% endif %}
+          <a href="{{ link.url }}" target="_blank" rel="noopener" class="attachment-link">{{ link.type | linkEmoji }} {{ link.label }}</a>
+        {% if loop.last %}</div>{% endif %}{% endfor %}{% endif %}
     </article>
     {% endfor %}
   </div>

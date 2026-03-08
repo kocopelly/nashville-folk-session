@@ -14,10 +14,10 @@ export default function (eleventyConfig) {
     return JSON.parse(readFileSync("data/sessions.json", "utf-8"));
   });
 
-  // Helper: normalize a set tune entry (string or {tuneId, key}) to {tuneId, key?}
+  // Helper: normalize a set tune entry (string or {tuneId, key, settingId})
   function normalizeTuneEntry(entry) {
-    if (typeof entry === "string") return { tuneId: entry };
-    return entry;
+    if (typeof entry === "string") return { tuneId: entry, key: undefined, settingId: undefined };
+    return { tuneId: entry.tuneId, key: entry.key, settingId: entry.settingId };
   }
 
   // Filters
@@ -35,12 +35,23 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("tuneLink", function (entry, tunes) {
-    const { tuneId } = normalizeTuneEntry(entry);
+    const { tuneId, settingId } = normalizeTuneEntry(entry);
     const tune = tunes[tuneId];
     if (tune?.external?.thesession) {
-      return `https://thesession.org/tunes/${tune.external.thesession}`;
+      const base = `https://thesession.org/tunes/${tune.external.thesession}`;
+      return settingId ? `${base}#setting${settingId}` : base;
     }
     return null;
+  });
+
+  eleventyConfig.addFilter("hasSetting", function (entry) {
+    return normalizeTuneEntry(entry).settingId != null;
+  });
+
+  // Link type → emoji mapping
+  const linkEmoji = { recording: "🎵", video: "🎬", photo: "📸", article: "📄", "sheet-music": "🎼", other: "🔗" };
+  eleventyConfig.addFilter("linkEmoji", function (type) {
+    return linkEmoji[type] || "🔗";
   });
 
   eleventyConfig.addFilter("tuneType", function (entry, tunes) {

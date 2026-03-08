@@ -78,16 +78,27 @@ export const Tune = z.object({
   notes: z.string().optional(),
 });
 
+// ─── Link / Attachment ───────────────────────────────────────
+export const Link = z.object({
+  label: z.string(),
+  url: z.string().url(),
+  type: z
+    .enum(["recording", "video", "photo", "article", "sheet-music", "other"])
+    .default("other"),
+});
+
 // ─── Tune in a set (with key as played) ─────────────────────
 export const SetTune = z.object({
   tuneId: z.string(),
   key: Key.optional(), // key as played this session
+  settingId: z.number().int().positive().optional(), // TheSession setting ID → links to dots
 });
 
 // ─── Set (ordered group of tunes) ───────────────────────────
 export const TuneSet = z.object({
   tunes: z.array(z.union([z.string(), SetTune])).min(1), // plain ID or {tuneId, key}
   notes: z.string().optional(),
+  links: z.array(Link).default([]), // recordings, videos, etc. for this set
 });
 
 // ─── Session (a single gathering) ───────────────────────────
@@ -100,6 +111,7 @@ export const Session = z.object({
   sets: z.array(TuneSet).min(1),
   notes: z.string().optional(),
   attendees: z.array(z.string()).default([]),
+  links: z.array(Link).default([]), // photos, event pages, fundraiser links, etc.
 });
 
 // ─── Top-level data files ───────────────────────────────────
@@ -111,6 +123,7 @@ export type Tradition = z.infer<typeof Tradition>;
 export type TuneType = z.infer<typeof TuneType>;
 export type Key = z.infer<typeof Key>;
 export type Tune = z.infer<typeof Tune>;
+export type Link = z.infer<typeof Link>;
 export type SetTune = z.infer<typeof SetTune>;
 export type TuneSet = z.infer<typeof TuneSet>;
 export type Session = z.infer<typeof Session>;
