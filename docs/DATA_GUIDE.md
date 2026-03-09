@@ -106,6 +106,7 @@ Add an entry to `data/sessions.json`:
   "venue": "The Fillin' Station",
   "location": "Nashville, TN",
   "tradition": "irish",
+  "organizer": "KJ",
   "sets": [
     {
       "tunes": [
@@ -128,6 +129,7 @@ Add an entry to `data/sessions.json`:
 | `venue` | | Venue name |
 | `location` | | City, State |
 | `tradition` | ✅ | Primary tradition of the session |
+| `organizer` | | Display name of the session organizer (e.g. `"KJ"`). V1 is a plain string; will migrate to slug-based refs if multi-organizer support is needed. |
 | `sets` | ✅ | Array of sets (at least one) |
 | `notes` | | Session-level notes |
 | `attendees` | | Array of names (optional) |
