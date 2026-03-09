@@ -22,10 +22,7 @@ title: Session Sets — Kocopelly
           {% for entry in set.tunes %}
             <li>
               {% set link = entry | tuneLink(tunes) %}
-              {% if link %}<a href="{{ link }}" target="_blank" rel="noopener">{% endif %}
-                {{ entry | tuneName(tunes) }}
-              {% if link %}</a>{% endif %}
-              {% if entry | hasSetting %}<a href="{{ link }}" class="dots-link" title="View dots">𝄞</a>{% endif %}
+              {% if link %}<a href="{{ link }}" target="_blank" rel="noopener">{{ entry | tuneName(tunes) }}</a>{% else %}{{ entry | tuneName(tunes) }}{% endif %}
               <span class="tune-meta">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
             </li>
           {% endfor %}

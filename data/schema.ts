@@ -70,9 +70,11 @@ export const Tune = z.object({
   tradition: Tradition,
   aliases: z.array(z.string()).default([]),
   commonKeys: z.array(z.string()).default([]), // most common keys, descending by frequency
+  url: z.string().url().optional(), // default link for this tune (any provider)
   external: z
     .object({
       thesession: z.number().int().positive().optional(),
+      tta: z.string().optional(), // Traditional Tune Archive slug
     })
     .default({}),
   notes: z.string().optional(),
@@ -91,7 +93,7 @@ export const Link = z.object({
 export const SetTune = z.object({
   tuneId: z.string(),
   key: Key.optional(), // key as played this session
-  settingId: z.number().int().positive().optional(), // TheSession setting ID → links to dots
+  url: z.string().url().optional(), // overrides the tune's default link (e.g. specific setting/arrangement)
 });
 
 // ─── Set (ordered group of tunes) ───────────────────────────

@@ -178,18 +178,6 @@ h2 {
   margin-left: 0.25rem;
 }
 
-.dots-link {
-  font-size: 0.85rem;
-  color: var(--accent);
-  text-decoration: none;
-  margin-left: 0.25rem;
-  opacity: 0.6;
-}
-
-.dots-link:hover {
-  opacity: 1;
-}
-
 .set-notes,
 .session-notes {
   font-size: 0.85rem;

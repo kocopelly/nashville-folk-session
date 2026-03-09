@@ -8,7 +8,7 @@
     "sets": [
       {
         "tunes": [
-          { "tuneId": "tune_001", "key": "D", "settingId": 182 },
+          { "tuneId": "tune_001", "key": "D", "url": "https://thesession.org/tunes/182#setting182" },
           { "tuneId": "tune_002", "key": "D" },
           { "tuneId": "tune_003", "key": "Edor" }
         ],

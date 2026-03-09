@@ -14,10 +14,10 @@ export default function (eleventyConfig) {
     return JSON.parse(readFileSync("data/sessions.json", "utf-8"));
   });
 
-  // Helper: normalize a set tune entry (string or {tuneId, key, settingId})
+  // Helper: normalize a set tune entry (string or {tuneId, key, url})
   function normalizeTuneEntry(entry) {
-    if (typeof entry === "string") return { tuneId: entry, key: undefined, settingId: undefined };
-    return { tuneId: entry.tuneId, key: entry.key, settingId: entry.settingId };
+    if (typeof entry === "string") return { tuneId: entry, key: undefined, url: undefined };
+    return { tuneId: entry.tuneId, key: entry.key, url: entry.url };
   }
 
   // Filters
@@ -34,18 +34,12 @@ export default function (eleventyConfig) {
     return normalizeTuneEntry(entry).key || null;
   });
 
+  // Link resolution: entry.url (set-level override) > tune.url (default) > null
   eleventyConfig.addFilter("tuneLink", function (entry, tunes) {
-    const { tuneId, settingId } = normalizeTuneEntry(entry);
+    const { tuneId, url } = normalizeTuneEntry(entry);
+    if (url) return url;
     const tune = tunes[tuneId];
-    if (tune?.external?.thesession) {
-      const base = `https://thesession.org/tunes/${tune.external.thesession}`;
-      return settingId ? `${base}#setting${settingId}` : base;
-    }
-    return null;
-  });
-
-  eleventyConfig.addFilter("hasSetting", function (entry) {
-    return normalizeTuneEntry(entry).settingId != null;
+    return tune?.url || null;
   });
 
   // Link type → emoji mapping

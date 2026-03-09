@@ -6,6 +6,7 @@
     "tradition": "irish",
     "aliases": [],
     "commonKeys": ["D", "A", "C", "G"],
+    "url": "https://thesession.org/tunes/182",
     "external": { "thesession": 182 }
   },
   "tune_002": {
@@ -15,6 +16,7 @@
     "tradition": "irish",
     "aliases": [],
     "commonKeys": ["D"],
+    "url": "https://thesession.org/tunes/901",
     "external": { "thesession": 901 }
   },
   "tune_003": {
@@ -24,6 +26,7 @@
     "tradition": "irish",
     "aliases": ["Golden Keyboard"],
     "commonKeys": ["Edor"],
+    "url": "https://thesession.org/tunes/36",
     "external": { "thesession": 36 }
   },
   "tune_004": {
@@ -33,6 +36,7 @@
     "tradition": "irish",
     "aliases": [],
     "commonKeys": ["G"],
+    "url": "https://thesession.org/tunes/8",
     "external": { "thesession": 8 }
   },
   "tune_005": {
@@ -42,6 +46,7 @@
     "tradition": "irish",
     "aliases": ["The Foxhunter's Reel"],
     "commonKeys": ["G", "A"],
+    "url": "https://thesession.org/tunes/511",
     "external": { "thesession": 511 }
   },
   "tune_006": {
@@ -51,6 +56,7 @@
     "tradition": "irish",
     "aliases": [],
     "commonKeys": ["Edor"],
+    "url": "https://thesession.org/tunes/113",
     "external": { "thesession": 113 }
   },
   "tune_007": {
@@ -60,6 +66,7 @@
     "tradition": "irish",
     "aliases": ["Mason's Apron"],
     "commonKeys": ["A", "G"],
+    "url": "https://thesession.org/tunes/74",
     "external": { "thesession": 74 }
   },
   "tune_008": {
@@ -69,6 +76,7 @@
     "tradition": "irish",
     "aliases": [],
     "commonKeys": ["Am", "Ador"],
+    "url": "https://thesession.org/tunes/79",
     "external": { "thesession": 79 }
   }
 }
