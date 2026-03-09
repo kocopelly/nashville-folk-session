@@ -12,8 +12,15 @@ title: Session Sets — Kocopelly
     {% for session in sessions | reverse %}
     <article class="session-card">
       <h2>{{ session.date | dateDisplay }}</h2>
-      {% if session.venue %}<p class="venue">📍 {{ session.venue }}{% if session.location %}, {{ session.location }}{% endif %}</p>{% endif %}
-      <span class="tradition-badge {{ session.tradition }}">{{ session.tradition }}</span>
+      {% set venue = session | resolve("venue", series) %}
+      {% set location = session | resolve("location", series) %}
+      {% set tradition = session | resolve("tradition", series) %}
+      {% set organizer = session | resolve("organizer", series) %}
+      {% set seriesName = series[session.seriesId].name if series[session.seriesId] else null %}
+      {% if venue %}<p class="venue">📍 {{ venue }}{% if location %}, {{ location }}{% endif %}</p>{% endif %}
+      {% if tradition %}<span class="tradition-badge {{ tradition }}">{{ tradition }}</span>{% endif %}
+      {% if seriesName %}<span class="series-name">{{ seriesName }}</span>{% endif %}
+      {% if organizer %}<span class="organizer">Organized by {{ organizer }}</span>{% endif %}
 
       {% for set in session.sets %}
       <div class="set">

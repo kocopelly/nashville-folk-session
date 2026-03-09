@@ -95,18 +95,52 @@ Just omit `url` and `external`:
 
 ---
 
+## Adding a Series
+
+A series is a recurring session (e.g. "Kocopelly Irish Session"). Add an entry to `data/series.json`:
+
+```json
+"station-inn": {
+  "id": "station-inn",
+  "name": "Station Inn Thursday Jam",
+  "tradition": "bluegrass",
+  "venue": "The Station Inn",
+  "location": "Nashville, TN",
+  "schedule": "Every Thursday",
+  "organizer": "Someone",
+  "description": "Weekly bluegrass jam.",
+  "listed": true
+}
+```
+
+### Series fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | ✅ | Lowercase slug (e.g. `kocopelly`, `station-inn`) |
+| `name` | ✅ | Display name |
+| `tradition` | ✅ | Default tradition for sessions in this series |
+| `venue` | | Default venue name |
+| `location` | | Default city, state |
+| `schedule` | | Human-readable schedule (e.g. "Every Wednesday") |
+| `organizer` | | Display name of the organizer |
+| `description` | | Blurb for the series page |
+| `url` | | External link (Facebook group, website, etc.) |
+| `listed` | | `true` (default) or `false` to hide from public listings |
+
+---
+
 ## Adding a Session
+
+Sessions belong to a series. Fields on the session override series defaults (venue, location, tradition, organizer). If omitted, the series value is used.
 
 Add an entry to `data/sessions.json`:
 
 ```json
 {
   "id": "sess_2026-03-12",
+  "seriesId": "kocopelly",
   "date": "2026-03-12",
-  "venue": "The Fillin' Station",
-  "location": "Nashville, TN",
-  "tradition": "irish",
-  "organizer": "KJ",
   "sets": [
     {
       "tunes": [
@@ -125,11 +159,12 @@ Add an entry to `data/sessions.json`:
 | Field | Required | Description |
 |-------|----------|-------------|
 | `id` | ✅ | Format: `sess_YYYY-MM-DD` (add `_2` etc. for multiple sessions per day) |
+| `seriesId` | ✅ | References a series in `series.json` |
 | `date` | ✅ | `YYYY-MM-DD` |
-| `venue` | | Venue name |
-| `location` | | City, State |
-| `tradition` | ✅ | Primary tradition of the session |
-| `organizer` | | Display name of the session organizer (e.g. `"KJ"`). V1 is a plain string; will migrate to slug-based refs if multi-organizer support is needed. |
+| `venue` | | Overrides series default |
+| `location` | | Overrides series default |
+| `tradition` | | Overrides series default |
+| `organizer` | | Overrides series default |
 | `sets` | ✅ | Array of sets (at least one) |
 | `notes` | | Session-level notes |
 | `attendees` | | Array of names (optional) |

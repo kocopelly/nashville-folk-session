@@ -9,9 +9,22 @@ export default function (eleventyConfig) {
     return JSON.parse(readFileSync("data/tunes.json", "utf-8"));
   });
 
+  eleventyConfig.addGlobalData("series", async () => {
+    const { readFileSync } = await import("node:fs");
+    return JSON.parse(readFileSync("data/series.json", "utf-8"));
+  });
+
   eleventyConfig.addGlobalData("sessions", async () => {
     const { readFileSync } = await import("node:fs");
     return JSON.parse(readFileSync("data/sessions.json", "utf-8"));
+  });
+
+  // Helper: resolve a session field with series fallback
+  // session.field > series.field
+  eleventyConfig.addFilter("resolve", function (session, field, series) {
+    if (session[field] != null) return session[field];
+    const s = series[session.seriesId];
+    return s?.[field] ?? null;
   });
 
   // Helper: normalize a set tune entry (string or {tuneId, key, url})

@@ -1,11 +1,8 @@
 [
   {
     "id": "sess_2026-03-05",
+    "seriesId": "kocopelly",
     "date": "2026-03-05",
-    "venue": "The Fillin' Station",
-    "location": "Nashville, TN",
-    "tradition": "irish",
-    "organizer": "KJ",
     "sets": [
       {
         "label": "reels",

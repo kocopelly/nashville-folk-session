@@ -140,6 +140,21 @@ h2 {
   color: #1e3a5f;
 }
 
+.series-name {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-left: 0.5rem;
+}
+
+.organizer {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-left: 0.5rem;
+}
+
 /* ─── Sets ──────────────────────────────────────────────── */
 .set {
   margin: 1rem 0;
