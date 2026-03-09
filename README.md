@@ -17,9 +17,11 @@ Weekly Irish & folk session set list tracker. Built with [11ty](https://www.11ty
 
 ## Data
 
-- `data/tunes.json` — tune registry (name, key, type, tradition, TheSession.org links)
+- `data/tunes.json` — tune registry (name, key, type, tradition, links)
 - `data/sessions.json` — session log (date, venue, sets, notes)
 - `data/schema.ts` — Zod schemas for validation
+
+Tune links are **provider-agnostic** — full URLs stored in data. Works with TheSession, Traditional Tune Archive, or any source. See **[docs/DATA_GUIDE.md](docs/DATA_GUIDE.md)** for the full data model and examples.
 
 ## Development
 
@@ -32,28 +34,9 @@ npm run typecheck  # TypeScript check
 npm run lint       # ESLint + Prettier
 ```
 
-## Adding a session
+## Adding data
 
-Edit `data/sessions.json`:
-
-```json
-{
-  "id": "sess_2026-03-05",
-  "date": "2026-03-05",
-  "venue": "Station Inn",
-  "location": "Nashville, TN",
-  "tradition": "irish",
-  "sets": [
-    {
-      "tunes": ["tune_001", "tune_002", "tune_004"],
-      "notes": "Started slow, built up nicely"
-    }
-  ],
-  "notes": "Good crowd tonight"
-}
-```
-
-New tunes go in `data/tunes.json` first.
+See **[docs/DATA_GUIDE.md](docs/DATA_GUIDE.md)** for the complete guide on adding tunes and sessions, including examples for TheSession, Traditional Tune Archive, and other sources.
 
 ---
 

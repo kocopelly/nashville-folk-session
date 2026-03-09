@@ -1,1 +1,43 @@
-[]
+[
+  {
+    "id": "sess_2026-03-05",
+    "seriesId": "kocopelly",
+    "date": "2026-03-05",
+    "sets": [
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_001", "key": "D", "url": "https://thesession.org/tunes/182#setting182" },
+          { "tuneId": "tune_002", "key": "D" },
+          { "tuneId": "tune_003", "key": "Edor" }
+        ],
+        "notes": "Kicked off the night, good energy",
+        "links": [
+          { "label": "Recording", "url": "https://example.com/set1.mp3", "type": "recording" }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          { "tuneId": "tune_004", "key": "G" },
+          { "tuneId": "tune_005", "key": "G" },
+          { "tuneId": "tune_007", "key": "A" }
+        ],
+        "links": []
+      },
+      {
+        "tunes": [
+          { "tuneId": "tune_006", "key": "Edor" },
+          { "tuneId": "tune_008", "key": "Am" }
+        ],
+        "notes": "Closed out slow, nice vibe",
+        "links": []
+      }
+    ],
+    "notes": "Good turnout, 8 people. New guitar player showed up.",
+    "links": [
+      { "label": "Group photo", "url": "https://example.com/photo.jpg", "type": "photo" },
+      { "label": "Venue website", "url": "https://example.com/fillin-station", "type": "other" }
+    ]
+  }
+]

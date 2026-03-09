@@ -9,22 +9,61 @@ export default function (eleventyConfig) {
     return JSON.parse(readFileSync("data/tunes.json", "utf-8"));
   });
 
+  eleventyConfig.addGlobalData("series", async () => {
+    const { readFileSync } = await import("node:fs");
+    return JSON.parse(readFileSync("data/series.json", "utf-8"));
+  });
+
   eleventyConfig.addGlobalData("sessions", async () => {
     const { readFileSync } = await import("node:fs");
     return JSON.parse(readFileSync("data/sessions.json", "utf-8"));
   });
 
+  // Helper: resolve a session field with series fallback
+  // session.field > series.field
+  eleventyConfig.addFilter("resolve", function (session, field, series) {
+    if (session[field] != null) return session[field];
+    const s = series[session.seriesId];
+    return s?.[field] ?? null;
+  });
+
+  // Helper: normalize a set tune entry (string or {tuneId, key, url})
+  function normalizeTuneEntry(entry) {
+    if (typeof entry === "string") return { tuneId: entry, key: undefined, url: undefined };
+    return { tuneId: entry.tuneId, key: entry.key, url: entry.url };
+  }
+
   // Filters
-  eleventyConfig.addFilter("tuneName", function (tuneId, tunes) {
+  eleventyConfig.addFilter("tuneName", function (entry, tunes) {
+    const { tuneId } = normalizeTuneEntry(entry);
     return tunes[tuneId]?.name ?? tuneId;
   });
 
-  eleventyConfig.addFilter("tuneLink", function (tuneId, tunes) {
+  eleventyConfig.addFilter("tuneId", function (entry) {
+    return normalizeTuneEntry(entry).tuneId;
+  });
+
+  eleventyConfig.addFilter("tuneKey", function (entry) {
+    return normalizeTuneEntry(entry).key || null;
+  });
+
+  // Link resolution: entry.url (set-level override) > tune.url (default) > null
+  eleventyConfig.addFilter("tuneLink", function (entry, tunes) {
+    const { tuneId, url } = normalizeTuneEntry(entry);
+    if (url) return url;
     const tune = tunes[tuneId];
-    if (tune?.external?.thesession) {
-      return `https://thesession.org/tunes/${tune.external.thesession}`;
-    }
-    return null;
+    return tune?.url || null;
+  });
+
+  // Link type → emoji mapping
+  const linkEmoji = { recording: "🎵", video: "🎬", photo: "📸", article: "📄", "sheet-music": "🎼", other: "🔗" };
+  eleventyConfig.addFilter("linkEmoji", function (type) {
+    return linkEmoji[type] || "🔗";
+  });
+
+  eleventyConfig.addFilter("tuneType", function (entry, tunes) {
+    const { tuneId } = normalizeTuneEntry(entry);
+    return tunes[tuneId]?.type ?? "";
   });
 
   eleventyConfig.addFilter("dateDisplay", function (dateStr) {
@@ -40,7 +79,8 @@ export default function (eleventyConfig) {
     const counts = {};
     for (const session of sessions) {
       for (const set of session.sets) {
-        for (const tuneId of set.tunes) {
+        for (const entry of set.tunes) {
+          const { tuneId } = normalizeTuneEntry(entry);
           counts[tuneId] = (counts[tuneId] || 0) + 1;
         }
       }

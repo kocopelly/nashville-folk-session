@@ -12,28 +12,39 @@ title: Session Sets — Kocopelly
     {% for session in sessions | reverse %}
     <article class="session-card">
       <h2>{{ session.date | dateDisplay }}</h2>
-      {% if session.venue %}<p class="venue">📍 {{ session.venue }}{% if session.location %}, {{ session.location }}{% endif %}</p>{% endif %}
-      <span class="tradition-badge {{ session.tradition }}">{{ session.tradition }}</span>
+      {% set venue = session | resolve("venue", series) %}
+      {% set location = session | resolve("location", series) %}
+      {% set tradition = session | resolve("tradition", series) %}
+      {% set organizer = session | resolve("organizer", series) %}
+      {% set seriesName = series[session.seriesId].name if series[session.seriesId] else null %}
+      {% if venue %}<p class="venue">📍 {{ venue }}{% if location %}, {{ location }}{% endif %}</p>{% endif %}
+      {% if tradition %}<span class="tradition-badge {{ tradition }}">{{ tradition }}</span>{% endif %}
+      {% if seriesName %}<span class="series-name">{{ seriesName }}</span>{% endif %}
+      {% if organizer %}<span class="organizer">Organized by {{ organizer }}</span>{% endif %}
 
       {% for set in session.sets %}
       <div class="set">
-        <span class="set-label">Set {{ loop.index }}</span>
+        <span class="set-label">Set {{ loop.index }}{% if set.label %} · {{ set.label }}{% endif %}</span>
         <ol class="tune-list">
-          {% for tuneId in set.tunes %}
+          {% for entry in set.tunes %}
             <li>
-              {% set link = tuneId | tuneLink(tunes) %}
-              {% if link %}<a href="{{ link }}" target="_blank" rel="noopener">{% endif %}
-                {{ tuneId | tuneName(tunes) }}
-              {% if link %}</a>{% endif %}
-              <span class="tune-meta">{{ tunes[tuneId].type }} · {{ tunes[tuneId].key }}</span>
+              {% set link = entry | tuneLink(tunes) %}
+              {% if link %}<a href="{{ link }}" target="_blank" rel="noopener">{{ entry | tuneName(tunes) }}</a>{% else %}{{ entry | tuneName(tunes) }}{% endif %}
+              <span class="tune-meta">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
             </li>
           {% endfor %}
         </ol>
         {% if set.notes %}<p class="set-notes">{{ set.notes }}</p>{% endif %}
+        {% if set.links %}{% for link in set.links %}{% if loop.first %}<div class="set-links">{% endif %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener" class="attachment-link">{{ link.type | linkEmoji }} {{ link.label }}</a>
+          {% if loop.last %}</div>{% endif %}{% endfor %}{% endif %}
       </div>
       {% endfor %}
 
       {% if session.notes %}<p class="session-notes">{{ session.notes }}</p>{% endif %}
+      {% if session.links %}{% for link in session.links %}{% if loop.first %}<div class="session-links">{% endif %}
+          <a href="{{ link.url }}" target="_blank" rel="noopener" class="attachment-link">{{ link.type | linkEmoji }} {{ link.label }}</a>
+        {% if loop.last %}</div>{% endif %}{% endfor %}{% endif %}
     </article>
     {% endfor %}
   </div>

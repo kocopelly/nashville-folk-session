@@ -6,7 +6,7 @@
 import { readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { TuneRegistry, SessionLog, type Session } from "../data/schema.js";
+import { TuneRegistry, SeriesRegistry, SessionLog, type Session } from "../data/schema.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dataDir = resolve(__dirname, "../data");
@@ -27,6 +27,22 @@ if (!tunesResult.success) {
 } else {
   const count = Object.keys(tunesResult.data).length;
   console.log(`✅ tunes.json — ${count} tunes valid`);
+}
+
+// ── Validate series ─────────────────────────────────────────
+console.log("Validating series.json...");
+const rawSeries = JSON.parse(readFileSync(resolve(dataDir, "series.json"), "utf-8"));
+const seriesResult = SeriesRegistry.safeParse(rawSeries);
+
+if (!seriesResult.success) {
+  console.error("❌ series.json validation failed:");
+  for (const issue of seriesResult.error.issues) {
+    console.error(`  - ${issue.path.join(".")}: ${issue.message}`);
+  }
+  errors++;
+} else {
+  const count = Object.keys(seriesResult.data).length;
+  console.log(`✅ series.json — ${count} series valid`);
 }
 
 // ── Validate sessions ───────────────────────────────────────
@@ -50,7 +66,8 @@ if (!sessionsResult.success) {
 
     for (const session of sessionsResult.data as Session[]) {
       for (const set of session.sets) {
-        for (const tuneId of set.tunes) {
+        for (const entry of set.tunes) {
+          const tuneId = typeof entry === "string" ? entry : entry.tuneId;
           if (!tuneIds.has(tuneId)) {
             missing.push(`${session.id} references unknown tune: ${tuneId}`);
           }
@@ -64,6 +81,26 @@ if (!sessionsResult.success) {
       errors++;
     } else {
       console.log("✅ All tune references valid");
+    }
+  }
+
+  // Cross-reference: check all seriesId in sessions exist in series
+  if (seriesResult.success) {
+    const seriesIds = new Set(Object.keys(seriesResult.data));
+    const missingSeries: string[] = [];
+
+    for (const session of sessionsResult.data as Session[]) {
+      if (!seriesIds.has(session.seriesId)) {
+        missingSeries.push(`${session.id} references unknown series: ${session.seriesId}`);
+      }
+    }
+
+    if (missingSeries.length > 0) {
+      console.error("❌ Dangling series references:");
+      for (const m of missingSeries) console.error(`  - ${m}`);
+      errors++;
+    } else {
+      console.log("✅ All series references valid");
     }
   }
 }
