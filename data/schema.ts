@@ -111,6 +111,7 @@ export const Session = z.object({
   venue: z.string().optional(),
   location: z.string().optional(),
   tradition: Tradition,
+  organizer: z.string().optional(), // display name of the session organizer (V1: inline string; will migrate to slug ref if multi-organizer support is needed)
   sets: z.array(TuneSet).min(1),
   notes: z.string().optional(),
   attendees: z.array(z.string()).default([]),
