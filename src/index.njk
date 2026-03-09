@@ -17,7 +17,7 @@ title: Session Sets — Kocopelly
 
       {% for set in session.sets %}
       <div class="set">
-        <span class="set-label">Set {{ loop.index }}</span>
+        <span class="set-label">Set {{ loop.index }}{% if set.label %} · {{ set.label }}{% endif %}</span>
         <ol class="tune-list">
           {% for entry in set.tunes %}
             <li>

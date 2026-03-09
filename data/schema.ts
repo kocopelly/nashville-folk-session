@@ -98,6 +98,7 @@ export const SetTune = z.object({
 
 // ─── Set (ordered group of tunes) ───────────────────────────
 export const TuneSet = z.object({
+  label: z.string().optional(), // e.g. "jigs", "reels", "polkas", "slow set"
   tunes: z.array(z.union([z.string(), SetTune])).min(1), // plain ID or {tuneId, key}
   notes: z.string().optional(),
   links: z.array(Link).default([]), // recordings, videos, etc. for this set

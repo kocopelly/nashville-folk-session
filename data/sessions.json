@@ -7,6 +7,7 @@
     "tradition": "irish",
     "sets": [
       {
+        "label": "reels",
         "tunes": [
           { "tuneId": "tune_001", "key": "D", "url": "https://thesession.org/tunes/182#setting182" },
           { "tuneId": "tune_002", "key": "D" },
@@ -18,6 +19,7 @@
         ]
       },
       {
+        "label": "jigs",
         "tunes": [
           { "tuneId": "tune_004", "key": "G" },
           { "tuneId": "tune_005", "key": "G" },

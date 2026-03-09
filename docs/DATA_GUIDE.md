@@ -133,6 +133,17 @@ Add an entry to `data/sessions.json`:
 | `attendees` | | Array of names (optional) |
 | `links` | | Session-level attachments (photos, event pages, etc.) |
 
+### Set fields
+
+Each set object supports:
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `label` | | Optional label, e.g. `"reels"`, `"jigs"`, `"slow set"` |
+| `tunes` | ✅ | Array of tune entries (at least one) |
+| `notes` | | Set-level notes |
+| `links` | | Attachments for this set |
+
 ### Set tune entries
 
 Each tune in a set can be a simple string (`"tune_001"`) or an object:
