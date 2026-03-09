@@ -3,25 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title | default("Session Sets") }}</title>
+  <title>{{ title | default("Nashville Folk Session") }}</title>
   <link rel="stylesheet" href="/styles/main.css">
 </head>
-<body>
-  <header>
-    <nav>
-      <a href="/" class="logo">🎻 Session Sets</a>
-      <div class="nav-links">
-        <a href="/">Sessions</a>
-        <a href="/tunes/">Tunes</a>
-        <a href="/stats/">Stats</a>
+<body class="bg-bg text-ink min-h-screen flex flex-col leading-relaxed">
+  <header class="border-b-2 border-ink">
+    <nav class="max-w-2xl mx-auto px-4 py-6">
+      <div class="text-center mb-3">
+        <a href="/" class="font-display text-3xl font-black text-ink no-underline uppercase tracking-widest">
+          Nashville Folk Session
+        </a>
+      </div>
+      <div class="flex justify-center gap-8 border-t border-border pt-3">
+        <a href="/" class="text-xs uppercase tracking-widest text-muted no-underline hover:text-ink transition-colors font-semibold">Sessions</a>
+        <a href="/tunes/" class="text-xs uppercase tracking-widest text-muted no-underline hover:text-ink transition-colors font-semibold">Tunes</a>
+        <a href="/stats/" class="text-xs uppercase tracking-widest text-muted no-underline hover:text-ink transition-colors font-semibold">Stats</a>
       </div>
     </nav>
   </header>
-  <main>
+
+  <main class="max-w-2xl mx-auto px-4 py-10 flex-1 w-full">
     {{ content | safe }}
   </main>
-  <footer>
-    <p>Kocopelly's session tracker · updated by <a href="https://github.com/slime-the-bot">Slime 🫠</a></p>
+
+  <footer class="border-t-2 border-ink py-6 px-4 text-center text-muted text-xs uppercase tracking-widest">
+    <p>Nashville Folk Session · curated by <a href="https://github.com/slime-the-bot" class="text-ink hover:underline">Slime 🫠</a></p>
   </footer>
 </body>
 </html>

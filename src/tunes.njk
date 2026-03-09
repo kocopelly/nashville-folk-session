@@ -1,42 +1,51 @@
 ---
 layout: base.njk
-title: Tune Registry
+title: Tune Registry — Nashville Folk Session
 permalink: /tunes/
 ---
 
-<h1>Tune Registry</h1>
+<div class="text-center mb-10">
+  <h1 class="font-display text-4xl font-black uppercase tracking-wider mb-1">Tune Registry</h1>
+  <div class="w-16 h-0.5 bg-ink mx-auto mb-3"></div>
+  <p class="text-muted text-sm uppercase tracking-widest">{{ tunes | length }} tunes tracked</p>
+</div>
 
-<p>{{ tunes | length }} tunes tracked</p>
-
-<table class="tune-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Key</th>
-      <th>Tradition</th>
-      <th>🔗</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for id, tune in tunes %}
-    <tr>
-      <td><strong>{{ tune.name }}</strong>{% if tune.aliases.length %} <small class="aliases">({{ tune.aliases | join(", ") }})</small>{% endif %}</td>
-      <td>{{ tune.type }}</td>
-      <td>
-        {% if tune.commonKeys.length %}
-          <span class="key-primary" {% if tune.commonKeys.length > 1 %}title="Also played in: {{ tune.commonKeys | join(', ') }}"{% endif %}>
-            {{ tune.commonKeys[0] }}{% if tune.commonKeys.length > 1 %}<span class="key-more">+{{ tune.commonKeys.length - 1 }}</span>{% endif %}
-          </span>
-        {% endif %}
-      </td>
-      <td><span class="tradition-badge {{ tune.tradition }}">{{ tune.tradition }}</span></td>
-      <td>
-        {% if tune.external.thesession %}
-          <a href="https://thesession.org/tunes/{{ tune.external.thesession }}" target="_blank" rel="noopener">TheSession</a>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b-2 border-ink">
+        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Name</th>
+        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Type</th>
+        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Key</th>
+        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Tradition</th>
+        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for id, tune in tunes %}
+      <tr class="border-b border-border hover:bg-hover transition-colors">
+        <td class="py-3 px-3">
+          <span class="font-semibold">{{ tune.name }}</span>
+          {% if tune.aliases.length %}<span class="text-muted text-xs ml-1">({{ tune.aliases | join(", ") }})</span>{% endif %}
+        </td>
+        <td class="py-3 px-3 text-muted capitalize">{{ tune.type }}</td>
+        <td class="py-3 px-3">
+          {% if tune.commonKeys.length %}
+            <span {% if tune.commonKeys.length > 1 %}title="Also played in: {{ tune.commonKeys | join(', ') }}"{% endif %}>
+              {{ tune.commonKeys[0] }}{% if tune.commonKeys.length > 1 %}<span class="text-xs text-muted ml-0.5 align-super">+{{ tune.commonKeys.length - 1 }}</span>{% endif %}
+            </span>
+          {% endif %}
+        </td>
+        <td class="py-3 px-3">
+          <span class="badge-{{ tune.tradition }} text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ tune.tradition }}</span>
+        </td>
+        <td class="py-3 px-3">
+          {% if tune.url %}
+            <a href="{{ tune.url }}" target="_blank" rel="noopener" class="text-accent hover:text-ink transition-colors text-xs font-semibold uppercase tracking-wider">View →</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

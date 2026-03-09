@@ -1,37 +1,46 @@
 ---
 layout: base.njk
-title: Stats
+title: Stats — Nashville Folk Session
 permalink: /stats/
 ---
 
-<h1>Stats</h1>
+<div class="text-center mb-10">
+  <h1 class="font-display text-4xl font-black uppercase tracking-wider mb-1">Stats</h1>
+  <div class="w-16 h-0.5 bg-ink mx-auto"></div>
+</div>
 
 {% set played = sessions | mostPlayed(tunes) %}
 
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+  <div class="border-2 border-ink p-6 text-center">
+    <div class="text-4xl font-black text-ink font-display">{{ sessions.length }}</div>
+    <div class="text-[10px] uppercase tracking-[0.2em] text-muted mt-2 font-bold">Sessions</div>
+  </div>
+  <div class="border-2 border-ink p-6 text-center">
+    <div class="text-4xl font-black text-ink font-display">{{ tunes | length }}</div>
+    <div class="text-[10px] uppercase tracking-[0.2em] text-muted mt-2 font-bold">Tunes in Registry</div>
+  </div>
+  <div class="border-2 border-ink p-6 text-center">
+    <div class="text-4xl font-black text-ink font-display">{{ played.length }}</div>
+    <div class="text-[10px] uppercase tracking-[0.2em] text-muted mt-2 font-bold">Unique Tunes Played</div>
+  </div>
+</div>
+
 <section>
-  <h2>Most Played Tunes</h2>
+  <div class="text-center mb-8">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Most Played</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto"></div>
+  </div>
   {% if played.length === 0 %}
-    <p class="empty">No data yet — log some sessions first!</p>
+    <p class="text-center text-muted py-8">No data yet — log some sessions first!</p>
   {% else %}
-    <ol class="most-played">
+    <ol class="space-y-0">
       {% for tune in played %}
-      <li>
-        <strong>{{ tune.name }}</strong>
-        <span class="play-count">× {{ tune.count }}</span>
+      <li class="flex items-center justify-between py-3 {% if not loop.last %}border-b border-border{% endif %}">
+        <span class="font-semibold text-[15px]">{{ tune.name }}</span>
+        <span class="text-sm text-muted font-display">× {{ tune.count }}</span>
       </li>
       {% endfor %}
     </ol>
   {% endif %}
-</section>
-
-<section>
-  <h2>Overview</h2>
-  <dl class="stats-grid">
-    <dt>Total Sessions</dt>
-    <dd>{{ sessions.length }}</dd>
-    <dt>Total Tunes</dt>
-    <dd>{{ tunes | length }}</dd>
-    <dt>Unique Tunes Played</dt>
-    <dd>{{ played.length }}</dd>
-  </dl>
 </section>
