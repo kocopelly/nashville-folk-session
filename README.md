@@ -51,13 +51,14 @@ npm run typecheck  # TypeScript type check
 npm run lint       # ESLint + Prettier
 ```
 
-## Contributing
+## Corrections & Requests
 
-Run a session in Nashville? Want your set lists on here? Have a correction?
+Spot a wrong key? Know a tune we missed? Run a session and want it tracked here?
 
-- **Open an issue** or PR on this repo
 - **Email** kjkrause97@gmail.com
 - **At the session** — find KJ, he's the one with the fiddle
+
+> **Note:** This repo is maintained by KJ and Slime. PRs from outside contributors are not accepted at this time, but we're happy to take corrections and requests via email.
 
 ---
 
