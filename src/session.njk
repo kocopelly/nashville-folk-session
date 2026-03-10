@@ -1,0 +1,50 @@
+---
+pagination:
+  data: sessions
+  size: 1
+  alias: session
+permalink: "sessions/{{ session.id }}/index.html"
+layout: base.njk
+eleventyComputed:
+  title: "{{ session.date | dateDisplay }} — Nashville Folk Session"
+---
+
+<div class="mb-6">
+  <a href="/" class="text-[10px] uppercase tracking-[0.2em] text-muted hover:text-ink transition-colors">← All Sessions</a>
+</div>
+
+<div class="flex flex-wrap items-baseline gap-3 mb-2">
+  <h1 class="font-display text-3xl font-bold">{{ session.date | dateDisplay }}</h1>
+  {% set tradition = session | resolve("tradition", series) %}
+  {% if tradition %}
+    <span class="badge-{{ tradition }} text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ tradition }}</span>
+  {% endif %}
+</div>
+
+{% set venue = session | resolve("venue", series) %}
+{% set location = session | resolve("location", series) %}
+{% set seriesName = series[session.seriesId].name if series[session.seriesId] else null %}
+{% set organizer = session | resolve("organizer", series) %}
+<div class="text-sm text-muted mb-8 flex flex-wrap gap-x-3 gap-y-1">
+  {% if venue %}<span>{{ venue }}{% if location %}, {{ location }}{% endif %}</span>{% endif %}
+  {% if seriesName %}<span>·</span><span class="font-semibold text-ink">{{ seriesName }}</span>{% endif %}
+  {% if organizer %}<span>·</span><span>{{ organizer }}</span>{% endif %}
+</div>
+
+{% if session.notes %}<p class="text-sm text-muted italic mb-8 pb-4 border-b border-border">{{ session.notes }}</p>{% endif %}
+
+{% set isAllLoose = session.sets | allLoose %}
+<div class="space-y-2">
+  {% for set in session.sets %}
+    {% set isLoose = set | isLoose %}
+    {% include "set-item.njk" %}
+  {% endfor %}
+</div>
+
+{% if session.links and session.links.length %}
+  <div class="flex flex-wrap gap-2 mt-8 pt-4 border-t border-border">
+    {% for link in session.links %}
+      <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
+    {% endfor %}
+  </div>
+{% endif %}

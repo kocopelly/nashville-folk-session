@@ -1,7 +1,6 @@
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default function (eleventyConfig) {
-  // Pass through static assets
-  eleventyConfig.addPassthroughCopy("src/styles");
+  // CSS is handled by Tailwind CLI — no passthrough for styles
 
   // Global data from JSON files
   eleventyConfig.addGlobalData("tunes", async () => {
@@ -64,6 +63,21 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("tuneType", function (entry, tunes) {
     const { tuneId } = normalizeTuneEntry(entry);
     return tunes[tuneId]?.type ?? "";
+  });
+
+  // Is this a "loose" set? (single tune, no label)
+  eleventyConfig.addFilter("isLoose", function (set) {
+    return set.tunes.length === 1 && !set.label;
+  });
+
+  // Count total tunes across all sets
+  eleventyConfig.addFilter("tuneCount", function (sets) {
+    return sets.reduce((n, s) => n + s.tunes.length, 0);
+  });
+
+  // Are all sets in a session "loose"?
+  eleventyConfig.addFilter("allLoose", function (sets) {
+    return sets.every(s => s.tunes.length === 1 && !s.label);
   });
 
   eleventyConfig.addFilter("dateDisplay", function (dateStr) {

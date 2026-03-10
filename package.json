@@ -1,11 +1,11 @@
 {
-  "name": "session-sets",
-  "version": "0.1.0",
-  "description": "Weekly Irish & folk session set list tracker",
+  "name": "nashville-folk-session",
+  "version": "0.2.0",
+  "description": "Nashville folk & Irish session set list tracker",
   "type": "module",
   "scripts": {
-    "dev": "eleventy --serve",
-    "build": "eleventy",
+    "dev": "npx @tailwindcss/cli -i src/styles/main.css -o _site/styles/main.css --watch & eleventy --serve",
+    "build": "eleventy && npx @tailwindcss/cli -i src/styles/main.css -o _site/styles/main.css --minify",
     "lint": "eslint . && prettier --check .",
     "lint:fix": "eslint --fix . && prettier --write .",
     "typecheck": "tsc --noEmit",
@@ -13,9 +13,11 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
+    "@tailwindcss/cli": "^4.2.1",
     "@types/node": "^22.0.0",
     "eslint": "^9.0.0",
     "prettier": "^3.4.0",
+    "tailwindcss": "^4.2.1",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
     "zod": "^3.24.0"

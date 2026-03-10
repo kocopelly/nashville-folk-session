@@ -14,9 +14,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -34,18 +34,23 @@ jobs:
 
       - name: Deploy to Cloudflare Pages
         id: deploy
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy _site --project-name=nashville-folk-session --branch=${{ github.head_ref || 'main' }}
 
+      - name: Build branch alias
+        if: github.event_name == 'pull_request'
+        id: alias
+        run: echo "url=https://$(echo '${{ github.head_ref }}' | sed 's/[\/\.]/-/g').nashville-folk-session.pages.dev" >> "$GITHUB_OUTPUT"
+
       - name: Comment preview URL on PR
         if: github.event_name == 'pull_request'
-        uses: hasura/comment-progress@v2.3.0
+        uses: hasura/comment-progress@146c635f3e325d478025e29e5043ec1c07c0e36c # v2.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           number: ${{ github.event.number }}
           id: deploy-preview
-          message: "☘️ **Preview deployed!**\n\n🔗 ${{ steps.deploy.outputs.deployment-url }}"
+          message: "☘️ **Preview deployed!**\n\n🔗 ${{ steps.alias.outputs.url }}"

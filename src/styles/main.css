@@ -1,300 +1,44 @@
-/* ─── Reset & Base ──────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@import "tailwindcss";
+
+/* ─── LETTERPRESS — Folk revival poster, indigo ink on ivory ─── */
+@theme {
+  --color-bg: #fffff5;
+  --color-surface: #fffff8;
+  --color-ink: #1a1a3a;
+  --color-muted: #6a6a80;
+  --color-accent: #c49a3c;
+  --color-accent-dim: #faf0d8;
+  --color-border: #d0d0dc;
+  --color-hover: #f5f5f0;
+  --font-display: "Georgia", "Times New Roman", serif;
 }
 
-:root {
-  --bg: #faf9f6;
-  --fg: #1a1a1a;
-  --muted: #6b7280;
-  --accent: #2d6a4f;
-  --accent-light: #d8f3dc;
-  --border: #e5e7eb;
-  --radius: 8px;
-  --max-width: 800px;
-}
+/* ─── Tradition Badge Colors ────────────────────────────── */
+.badge-irish { background: #d8e0d0; color: #2a3a2a; }
+.badge-bluegrass { background: #f5ecd0; color: #6a5020; }
+.badge-old-time { background: #f0dcc8; color: #6a3a18; }
+.badge-scottish { background: #d0d8e8; color: #2a3050; }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--fg);
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+/* ─── Details toggle label swap + bottom placement ──────── */
+details .details-show-less { display: none; }
+details[open] .details-show-more { display: none; }
+details[open] .details-show-less { display: inline; }
+details summary { list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+details.session-details[open] { display: flex; flex-direction: column; }
+details.session-details[open] > summary { order: 1; margin-top: 0.75rem; }
 
-/* ─── Layout ────────────────────────────────────────────── */
-header {
-  border-bottom: 1px solid var(--border);
-  padding: 1rem;
+/* ─── Truncation fade — hide when details is open ──────── */
+.truncation-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  pointer-events: none;
+  transition: opacity 0.2s;
 }
-
-nav {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-weight: 700;
-  font-size: 1.1rem;
-  text-decoration: none;
-  color: var(--fg);
-}
-
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.nav-links a:hover {
-  color: var(--accent);
-}
-
-main {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  flex: 1;
-  width: 100%;
-}
-
-footer {
-  border-top: 1px solid var(--border);
-  padding: 1.5rem 1rem;
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-footer a {
-  color: var(--accent);
-}
-
-/* ─── Typography ────────────────────────────────────────── */
-h1 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-}
-
-h2 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-/* ─── Session Cards ─────────────────────────────────────── */
-.session-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  background: white;
-}
-
-.venue {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-
-.tradition-badge {
-  display: inline-block;
-  font-size: 0.75rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.tradition-badge.irish {
-  background: #d8f3dc;
-  color: #1b4332;
-}
-
-.tradition-badge.bluegrass {
-  background: #fde68a;
-  color: #78350f;
-}
-
-.tradition-badge.old-time {
-  background: #fed7aa;
-  color: #7c2d12;
-}
-
-.tradition-badge.scottish {
-  background: #bfdbfe;
-  color: #1e3a5f;
-}
-
-.series-name {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--fg);
-  margin-left: 0.5rem;
-}
-
-.organizer {
-  display: inline-block;
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-left: 0.5rem;
-}
-
-/* ─── Sets ──────────────────────────────────────────────── */
-.set {
-  margin: 1rem 0;
-  padding-left: 0.5rem;
-  border-left: 3px solid var(--accent-light);
-}
-
-.set-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
-
-.tune-list {
-  margin: 0.25rem 0 0 1.25rem;
-}
-
-.tune-list li {
-  margin-bottom: 0.25rem;
-}
-
-.tune-list a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.tune-list a:hover {
-  text-decoration: underline;
-}
-
-.tune-meta {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-left: 0.25rem;
-}
-
-.set-notes,
-.session-notes {
-  font-size: 0.85rem;
-  color: var(--muted);
-  font-style: italic;
-  margin-top: 0.5rem;
-}
-
-/* ─── Tune Table ────────────────────────────────────────── */
-.tune-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.tune-table th,
-.tune-table td {
-  padding: 0.5rem 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-.tune-table th {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
-
-.aliases {
-  color: var(--muted);
-}
-
-.key-primary {
-  cursor: default;
-  position: relative;
-}
-
-.key-more {
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-left: 0.2rem;
-  vertical-align: super;
-}
-
-/* ─── Stats ─────────────────────────────────────────────── */
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem 2rem;
-}
-
-.stats-grid dt {
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-.stats-grid dd {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-
-.most-played li {
-  margin-bottom: 0.25rem;
-}
-
-.play-count {
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-/* ─── Attachment Links ──────────────────────────────────── */
-.set-links,
-.session-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.attachment-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.8rem;
-  padding: 0.2rem 0.6rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  text-decoration: none;
-  color: var(--fg);
-  background: var(--bg);
-  transition: border-color 0.15s;
-}
-
-.attachment-link:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-/* ─── Empty State ───────────────────────────────────────── */
-.empty {
-  text-align: center;
-  color: var(--muted);
-  padding: 3rem 1rem;
-  font-size: 1.1rem;
+.session-truncation-wrapper:has(.session-details[open]) .truncation-fade {
+  opacity: 0;
 }
