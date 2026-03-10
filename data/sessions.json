@@ -889,7 +889,13 @@
             "key": "G"
           }
         ],
-        "links": []
+        "links": [
+          {
+            "label": "Killavil Fancy / Lads of Laois / Kilty Town",
+            "url": "https://www.youtube.com/watch?v=RLcjarx4MGM",
+            "type": "video"
+          }
+        ]
       },
       {
         "label": "reels",
