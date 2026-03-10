@@ -1,223 +1,548 @@
 [
   {
-    "id": "sess_2026-02-19",
-    "seriesId": "kocopelly",
-    "date": "2026-02-19",
+    "id": "sess_2026-01-07",
+    "seriesId": "quinns-irish",
+    "date": "2026-01-07",
     "sets": [
       {
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_010",
-            "key": "Edor"
+            "tuneId": "tune_002",
+            "key": "G",
+            "url": "https://thesession.org/tunes/8#setting12365"
           },
           {
-            "tuneId": "tune_009",
-            "key": "Edor"
+            "tuneId": "tune_001",
+            "key": "Em",
+            "url": "https://thesession.org/tunes/1#setting1"
+          },
+          {
+            "tuneId": "tune_042",
+            "key": "A",
+            "url": "https://thesession.org/tunes/646#setting30966"
           }
         ],
-        "notes": "Eased in with the classics",
-        "links": []
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125235",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_025",
+            "key": "D",
+            "url": "https://thesession.org/tunes/347#setting13150"
+          },
+          {
+            "tuneId": "tune_041",
+            "key": "Edor",
+            "url": "https://thesession.org/tunes/637#setting637"
+          },
+          {
+            "tuneId": "tune_051",
+            "key": "D",
+            "url": "https://thesession.org/tunes/901#setting901"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125236",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_055",
+            "key": "D",
+            "url": "https://thesession.org/tunes/1040#setting23271"
+          },
+          {
+            "tuneId": "tune_027",
+            "key": "G",
+            "url": "https://thesession.org/tunes/430#setting430"
+          },
+          {
+            "tuneId": "tune_022",
+            "key": "Em",
+            "url": "https://thesession.org/tunes/219#setting219"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125237",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_037",
+            "key": "G",
+            "url": "https://thesession.org/tunes/565#setting56034"
+          },
+          {
+            "tuneId": "tune_028",
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/432#setting432"
+          },
+          {
+            "tuneId": "tune_065",
+            "key": "D",
+            "url": "https://thesession.org/tunes/1552#setting1552"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125238",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_026",
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/426#setting426"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125239",
+            "type": "sheet-music"
+          }
+        ]
       },
       {
         "label": "jigs",
         "tunes": [
           {
-            "tuneId": "tune_017",
-            "key": "G"
+            "tuneId": "tune_030",
+            "key": "D",
+            "url": "https://thesession.org/tunes/447#setting53997"
           },
           {
-            "tuneId": "tune_020",
-            "key": "G"
+            "tuneId": "tune_049",
+            "key": "G",
+            "url": "https://thesession.org/tunes/820#setting820"
           },
           {
-            "tuneId": "tune_023",
-            "key": "Dmix"
+            "tuneId": "tune_068",
+            "key": "Edor",
+            "url": "https://thesession.org/tunes/2403#setting2403"
           }
         ],
-        "links": []
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125240",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_045",
+            "key": "D",
+            "url": "https://thesession.org/tunes/741#setting741"
+          },
+          {
+            "tuneId": "tune_069",
+            "key": "G",
+            "url": "https://thesession.org/tunes/3297#setting3297"
+          },
+          {
+            "tuneId": "tune_009",
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/48#setting48"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125241",
+            "type": "sheet-music"
+          }
+        ],
+        "notes": "Mixed jig/slip jig set \u2014 Paddy O'Rafferty is a jig, then two slip jigs"
+      },
+      {
+        "label": "polkas",
+        "tunes": [
+          {
+            "tuneId": "tune_006",
+            "key": "D",
+            "url": "https://thesession.org/tunes/39#setting39"
+          },
+          {
+            "tuneId": "tune_056",
+            "key": "D",
+            "url": "https://thesession.org/tunes/1075#setting1075"
+          },
+          {
+            "tuneId": "tune_029",
+            "key": "D",
+            "url": "https://thesession.org/tunes/441#setting13304"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125242",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_071",
+            "key": "D",
+            "url": "https://thesession.org/tunes/15043#setting27856"
+          },
+          {
+            "tuneId": "tune_021",
+            "key": "G",
+            "url": "https://thesession.org/tunes/195#setting195"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125244",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_046",
+            "key": "G",
+            "url": "https://thesession.org/tunes/791#setting13932"
+          },
+          {
+            "tuneId": "tune_007",
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/42#setting42"
+          },
+          {
+            "tuneId": "tune_003",
+            "key": "A",
+            "url": "https://thesession.org/tunes/11#setting11"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125245",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_062",
+            "key": "Dmix",
+            "url": "https://thesession.org/tunes/1237#setting1237"
+          },
+          {
+            "tuneId": "tune_011",
+            "key": "G",
+            "url": "https://thesession.org/tunes/56#setting56"
+          },
+          {
+            "tuneId": "tune_004",
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/12#setting12"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125246",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_066",
+            "key": "G",
+            "url": "https://thesession.org/tunes/1831#setting1831"
+          },
+          {
+            "tuneId": "tune_060",
+            "key": "G",
+            "url": "https://thesession.org/tunes/1198#setting14484"
+          },
+          {
+            "tuneId": "tune_070",
+            "key": "G",
+            "url": "https://thesession.org/tunes/4070#setting16874"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125247",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_020",
+            "key": "D",
+            "url": "https://thesession.org/tunes/182#setting182"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125252",
+            "type": "sheet-music"
+          }
+        ]
+      }
+    ],
+    "notes": "",
+    "links": []
+  },
+  {
+    "id": "sess_2026-01-14",
+    "seriesId": "quinns-irish",
+    "date": "2026-01-14",
+    "sets": [
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_012",
+            "key": "D",
+            "url": "https://thesession.org/tunes/62#setting62"
+          },
+          {
+            "tuneId": "tune_047",
+            "key": "G",
+            "url": "https://thesession.org/tunes/793#setting793"
+          },
+          {
+            "tuneId": "tune_004",
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/12#setting12"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125531",
+            "type": "sheet-music"
+          }
+        ]
       },
       {
         "label": "reels",
         "tunes": [
           {
             "tuneId": "tune_014",
-            "key": "Bm"
+            "key": "D",
+            "url": "https://thesession.org/tunes/103#setting103"
           },
           {
-            "tuneId": "tune_013",
-            "key": "Dm"
-          },
-          {
-            "tuneId": "tune_008",
-            "key": "Am"
-          }
-        ],
-        "notes": "The minor key reel set \u2014 moody and gorgeous",
-        "links": [
-          {
-            "label": "Recording",
-            "url": "https://example.com/feb19-minors.mp3",
-            "type": "recording"
-          }
-        ]
-      },
-      {
-        "label": "slip jigs",
-        "tunes": [
-          {
-            "tuneId": "tune_032",
-            "key": "Em"
-          },
-          {
-            "tuneId": "tune_034",
-            "key": "Edor"
-          }
-        ],
-        "links": []
-      },
-      {
-        "label": "hornpipes",
-        "tunes": [
-          {
-            "tuneId": "tune_027",
-            "key": "Edor"
-          },
-          {
-            "tuneId": "tune_029",
-            "key": "D"
-          }
-        ],
-        "notes": "Rights Of Man always gets people's attention",
-        "links": []
-      },
-      {
-        "label": "jigs",
-        "tunes": [
-          {
-            "tuneId": "tune_019",
-            "key": "Dmix"
-          },
-          {
-            "tuneId": "tune_021",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_025",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_026",
-            "key": "D"
-          }
-        ],
-        "notes": "Marathon jig set \u2014 fiddle player called all four",
-        "links": []
-      },
-      {
-        "label": "reels",
-        "tunes": [
-          {
-            "tuneId": "tune_012",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_001",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_002",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_011",
-            "key": "D"
-          }
-        ],
-        "notes": "D major reel blitz to close it out",
-        "links": [
-          {
-            "label": "Video",
-            "url": "https://example.com/feb19-closing.mp4",
-            "type": "video"
-          }
-        ]
-      },
-      {
-        "label": "polkas",
-        "tunes": [
-          {
-            "tuneId": "tune_035",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_037",
-            "key": "D"
-          }
-        ],
-        "notes": "Post-session polka bonus round at the bar",
-        "links": []
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_015",
-            "key": "Ador"
+            "tuneId": "tune_046",
+            "key": "G",
+            "url": "https://thesession.org/tunes/791#setting13932"
           },
           {
             "tuneId": "tune_007",
-            "key": "A"
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/42#setting42"
           }
         ],
-        "notes": "Actual last set, everyone standing up to leave but kept playing",
-        "links": []
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125532",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_002",
+            "key": "G",
+            "url": "https://thesession.org/tunes/8#setting12365"
+          },
+          {
+            "tuneId": "tune_001",
+            "key": "Em",
+            "url": "https://thesession.org/tunes/1#setting1"
+          },
+          {
+            "tuneId": "tune_042",
+            "key": "A",
+            "url": "https://thesession.org/tunes/646#setting30966"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125235",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_032",
+            "key": "G",
+            "url": "https://thesession.org/tunes/474#setting474"
+          },
+          {
+            "tuneId": "tune_008",
+            "key": "Amix",
+            "url": "https://thesession.org/tunes/44#setting44"
+          },
+          {
+            "tuneId": "tune_053",
+            "key": "D",
+            "url": "https://thesession.org/tunes/990#setting990"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125533",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_034",
+            "key": "G",
+            "url": "https://thesession.org/tunes/536#setting536"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125534",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_050",
+            "key": "D",
+            "url": "https://thesession.org/tunes/828#setting828"
+          },
+          {
+            "tuneId": "tune_039",
+            "key": "G",
+            "url": "https://thesession.org/tunes/605#setting605"
+          },
+          {
+            "tuneId": "tune_059",
+            "key": "G",
+            "url": "https://thesession.org/tunes/1100#setting1100"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125535",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_019",
+            "key": "D",
+            "url": "https://thesession.org/tunes/181#setting181"
+          },
+          {
+            "tuneId": "tune_031",
+            "key": "G",
+            "url": "https://thesession.org/tunes/472#setting472"
+          },
+          {
+            "tuneId": "tune_052",
+            "key": "D",
+            "url": "https://thesession.org/tunes/975#setting975"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125537",
+            "type": "sheet-music"
+          }
+        ]
       },
       {
         "label": "jigs",
         "tunes": [
           {
-            "tuneId": "tune_018",
-            "key": "Edor"
+            "tuneId": "tune_054",
+            "key": "Dmix",
+            "url": "https://thesession.org/tunes/992#setting992"
           },
           {
-            "tuneId": "tune_022",
-            "key": "Edor"
+            "tuneId": "tune_033",
+            "key": "G",
+            "url": "https://thesession.org/tunes/476#setting476"
+          },
+          {
+            "tuneId": "tune_024",
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/335#setting335"
           }
         ],
-        "notes": "OK this was ACTUALLY the last one",
-        "links": []
-      }
-    ],
-    "notes": "Ran way late \u2014 venue let us stay past closing. 6 players, small but tight. The new flute player is legit.",
-    "links": []
-  },
-  {
-    "id": "sess_2026-02-26",
-    "seriesId": "kocopelly",
-    "date": "2026-02-26",
-    "sets": [
-      {
-        "label": "reels",
-        "tunes": [
-          {
-            "tuneId": "tune_012",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_011",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_016",
-            "key": "G"
-          }
-        ],
-        "notes": "Strong opener, everyone locked in right away",
         "links": [
           {
-            "label": "Recording",
-            "url": "https://example.com/feb26-set1.mp3",
-            "type": "recording"
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125538",
+            "type": "sheet-music"
           }
         ]
       },
@@ -226,279 +551,96 @@
         "tunes": [
           {
             "tuneId": "tune_023",
-            "key": "Dmix"
+            "key": "D",
+            "url": "https://thesession.org/tunes/308#setting308"
           },
           {
-            "tuneId": "tune_025",
-            "key": "D"
+            "tuneId": "tune_058",
+            "key": "D",
+            "url": "https://thesession.org/tunes/1080#setting1080"
           },
           {
-            "tuneId": "tune_026",
-            "key": "D"
+            "tuneId": "tune_017",
+            "key": "D",
+            "url": "https://thesession.org/tunes/111#setting111"
           }
         ],
-        "links": []
-      },
-      {
-        "label": "slip jigs",
-        "tunes": [
+        "links": [
           {
-            "tuneId": "tune_032",
-            "key": "Em"
-          },
-          {
-            "tuneId": "tune_033",
-            "key": "Em"
-          },
-          {
-            "tuneId": "tune_034",
-            "key": "Edor"
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125540",
+            "type": "sheet-music"
           }
-        ],
-        "notes": "First time doing a full slip jig set \u2014 tricky but fun",
-        "links": []
+        ]
       },
       {
-        "label": "reels",
+        "label": "jigs",
         "tunes": [
           {
             "tuneId": "tune_015",
-            "key": "Ador"
-          },
-          {
-            "tuneId": "tune_007",
-            "key": "A"
-          },
-          {
-            "tuneId": "tune_005",
-            "key": "G"
-          },
-          {
-            "tuneId": "tune_004",
-            "key": "G"
-          }
-        ],
-        "notes": "Longest set of the night, 4 tunes back to back",
-        "links": [
-          {
-            "label": "Video clip",
-            "url": "https://example.com/feb26-set4.mp4",
-            "type": "video"
-          }
-        ]
-      },
-      {
-        "label": "polkas",
-        "tunes": [
-          {
-            "tuneId": "tune_035",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_036",
-            "key": "G"
-          },
-          {
-            "tuneId": "tune_037",
-            "key": "D"
-          }
-        ],
-        "notes": "Sliabh Luachra vibes, the bodhr\u00e1n player went nuts",
-        "links": []
-      },
-      {
-        "label": "hornpipes",
-        "tunes": [
-          {
-            "tuneId": "tune_029",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_030",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_031",
-            "key": "G"
-          }
-        ],
-        "links": []
-      },
-      {
-        "label": "jigs",
-        "tunes": [
-          {
-            "tuneId": "tune_019",
-            "key": "Dmix"
-          },
-          {
-            "tuneId": "tune_018",
-            "key": "Edor"
-          }
-        ],
-        "notes": "Cool down set",
-        "links": []
-      },
-      {
-        "label": "reels",
-        "tunes": [
-          {
-            "tuneId": "tune_001",
-            "key": "D"
+            "key": "Edor",
+            "url": "https://thesession.org/tunes/106#setting12675"
           },
           {
             "tuneId": "tune_010",
-            "key": "Edor"
+            "key": "G",
+            "url": "https://thesession.org/tunes/55#setting55"
           }
         ],
-        "notes": "Encore \u2014 couldn't resist one more",
-        "links": []
-      }
-    ],
-    "notes": "Best session yet. 12 people including a concertina player visiting from Galway. Multiple requests to make this weekly.",
-    "links": [
-      {
-        "label": "Group photo",
-        "url": "https://example.com/feb26-group.jpg",
-        "type": "photo"
-      }
-    ]
-  },
-  {
-    "id": "sess_2026-03-02",
-    "seriesId": "station-inn-bg",
-    "date": "2026-03-02",
-    "sets": [
-      {
-        "tunes": [
+        "links": [
           {
-            "tuneId": "tune_038",
-            "key": "A"
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125541",
+            "type": "sheet-music"
           }
         ]
       },
       {
-        "tunes": [
-          {
-            "tuneId": "tune_041",
-            "key": "G"
-          }
-        ],
-        "notes": "Banjo player kicked this one off"
-      },
-      {
+        "label": "reels",
         "tunes": [
           {
             "tuneId": "tune_043",
-            "key": "Am"
-          }
-        ]
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_040",
-            "key": "A"
-          }
-        ]
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_042",
-            "key": "D"
-          }
-        ]
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_049",
-            "key": "G"
-          }
-        ],
-        "notes": "Had to do it"
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_044",
-            "key": "G"
-          }
-        ]
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_039",
-            "key": "A"
-          }
-        ]
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_045",
-            "key": "D"
-          }
-        ]
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_046",
-            "key": "G"
-          }
-        ]
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_047",
-            "key": "A"
-          }
-        ]
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_048",
-            "key": "D"
-          }
-        ],
-        "notes": "Closed it out, real pretty"
-      }
-    ],
-    "notes": "Casual Sunday jam. ~15 people rotating through. Good mix of pickers.",
-    "links": []
-  },
-  {
-    "id": "sess_2026-03-05",
-    "seriesId": "kocopelly",
-    "date": "2026-03-05",
-    "sets": [
-      {
-        "label": "reels",
-        "tunes": [
-          {
-            "tuneId": "tune_001",
-            "key": "D"
-          },
-          {
-            "tuneId": "tune_002",
-            "key": "D"
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/671#setting671"
           },
           {
             "tuneId": "tune_003",
-            "key": "Edor"
+            "key": "A",
+            "url": "https://thesession.org/tunes/11#setting11"
           }
         ],
-        "notes": "Kicked off the night, good energy",
         "links": [
           {
-            "label": "Recording",
-            "url": "https://example.com/set1.mp3",
-            "type": "recording"
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125542",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_061",
+            "key": "G",
+            "url": "https://thesession.org/tunes/1209#setting1209"
+          },
+          {
+            "tuneId": "tune_044",
+            "key": "Dmix",
+            "url": "https://thesession.org/tunes/737#setting22697"
+          },
+          {
+            "tuneId": "tune_064",
+            "key": "Dmix",
+            "url": "https://thesession.org/tunes/1499#setting1499"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125543",
+            "type": "sheet-music"
           }
         ]
       },
@@ -506,98 +648,134 @@
         "label": "jigs",
         "tunes": [
           {
-            "tuneId": "tune_017",
-            "key": "G"
+            "tuneId": "tune_048",
+            "key": "D",
+            "url": "https://thesession.org/tunes/818#setting818"
           },
           {
-            "tuneId": "tune_020",
-            "key": "G"
+            "tuneId": "tune_057",
+            "key": "Amix",
+            "url": "https://thesession.org/tunes/1076#setting1076"
           },
           {
-            "tuneId": "tune_021",
-            "key": "D"
+            "tuneId": "tune_063",
+            "key": "Edor",
+            "url": "https://thesession.org/tunes/1447#setting1447"
           }
         ],
-        "links": []
-      },
-      {
-        "label": "reels",
-        "tunes": [
+        "links": [
           {
-            "tuneId": "tune_009",
-            "key": "Edor"
-          },
-          {
-            "tuneId": "tune_010",
-            "key": "Edor"
-          },
-          {
-            "tuneId": "tune_006",
-            "key": "Edor"
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125544",
+            "type": "sheet-music"
           }
-        ],
-        "notes": "The Edor set \u2014 crowd favorite",
-        "links": []
-      },
-      {
-        "label": "hornpipes",
-        "tunes": [
-          {
-            "tuneId": "tune_027",
-            "key": "Edor"
-          },
-          {
-            "tuneId": "tune_028",
-            "key": "Edor"
-          }
-        ],
-        "links": []
+        ]
       },
       {
         "label": "jigs",
         "tunes": [
           {
-            "tuneId": "tune_018",
-            "key": "Edor"
+            "tuneId": "tune_016",
+            "key": "Ador",
+            "url": "https://thesession.org/tunes/109#setting109"
           },
           {
-            "tuneId": "tune_022",
-            "key": "Edor"
+            "tuneId": "tune_067",
+            "key": "D",
+            "url": "https://thesession.org/tunes/2025#setting2025"
           },
           {
-            "tuneId": "tune_024",
-            "key": "Ador"
-          }
-        ],
-        "links": []
-      },
-      {
-        "tunes": [
-          {
-            "tuneId": "tune_008",
-            "key": "Am"
+            "tuneId": "tune_011",
+            "key": "G",
+            "url": "https://thesession.org/tunes/56#setting56"
           },
           {
             "tuneId": "tune_013",
-            "key": "Dm"
+            "key": "D",
+            "url": "https://thesession.org/tunes/89#setting89"
           }
         ],
-        "notes": "Closed out slow, minor key vibes",
-        "links": []
-      }
-    ],
-    "notes": "Good turnout, 8 people. New guitar player showed up.",
-    "links": [
-      {
-        "label": "Group photo",
-        "url": "https://example.com/photo.jpg",
-        "type": "photo"
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125545",
+            "type": "sheet-music"
+          }
+        ]
       },
       {
-        "label": "Venue website",
-        "url": "https://example.com/fillin-station",
-        "type": "other"
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_040",
+            "key": "G",
+            "url": "https://thesession.org/tunes/613#setting613"
+          },
+          {
+            "tuneId": "tune_071",
+            "key": "D",
+            "url": "https://thesession.org/tunes/15043#setting27856"
+          },
+          {
+            "tuneId": "tune_018",
+            "key": "Dmix",
+            "url": "https://thesession.org/tunes/138#setting138"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125546",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_005",
+            "key": "G",
+            "url": "https://thesession.org/tunes/37#setting37"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125547",
+            "type": "sheet-music"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_035",
+            "key": "Edor",
+            "url": "https://thesession.org/tunes/560#setting55401"
+          },
+          {
+            "tuneId": "tune_036",
+            "key": "G",
+            "url": "https://thesession.org/tunes/563#setting45431"
+          },
+          {
+            "tuneId": "tune_038",
+            "key": "D",
+            "url": "https://thesession.org/tunes/570#setting45188"
+          }
+        ],
+        "links": [
+          {
+            "label": "TheSession set",
+            "url": "https://thesession.org/members/190207/sets/125548",
+            "type": "sheet-music"
+          }
+        ]
       }
-    ]
+    ],
+    "notes": "",
+    "links": []
   }
 ]
