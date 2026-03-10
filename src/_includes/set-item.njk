@@ -5,7 +5,7 @@
     <div class="text-[15px]">
       {% set entry = set.tunes[0] %}
       {% set link = entry | tuneLink(tunes) %}
-      {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
+      {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:text-accent transition-colors font-medium">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-medium">{{ entry | tuneName(tunes) }}</span>{% endif %}
       <span class="text-xs text-muted">({{ entry | tuneKey | default(entry | tuneType(tunes)) }})</span>
     </div>
     {% if set.notes %}
@@ -19,7 +19,7 @@
     <div class="text-[15px] leading-relaxed">
       {% for entry in set.tunes %}
         {% set link = entry | tuneLink(tunes) %}
-        {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
+        {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:text-accent transition-colors font-medium">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-medium">{{ entry | tuneName(tunes) }}</span>{% endif %}
         <span class="text-xs text-muted">({{ entry | tuneKey | default(entry | tuneType(tunes)) }})</span>{% if not loop.last %} <span class="text-muted">/</span> {% endif %}
       {% endfor %}
     </div>
@@ -28,7 +28,7 @@
         {% if set.notes %}<span class="text-xs text-muted italic">{{ set.notes }}</span>{% endif %}
         {% if set.links and set.links.length %}
           {% for link in set.links %}
-            <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-2 py-0.5 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
+            <a href="{{ link.url }}" target="_blank" rel="noopener" class="text-xs text-muted hover:text-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
           {% endfor %}
         {% endif %}
       </div>
