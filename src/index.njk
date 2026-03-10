@@ -37,7 +37,8 @@ title: Sessions — Nashville Folk Session
       </div>
 
       {# Show first N sets — with fade on last if truncated #}
-      <div class="relative">
+      <div class="session-truncation-wrapper">
+        <div class="relative">
         <div class="space-y-3">
           {% for set in session.sets %}
             {% if loop.index0 < maxSetsInFeed %}
@@ -69,7 +70,7 @@ title: Sessions — Nashville Folk Session
         {% if session.sets.length > maxSetsInFeed %}
           <div class="truncation-fade"></div>
         {% endif %}
-      </div>
+        </div>
 
       {# Expandable overflow sets #}
       {% if session.sets.length > maxSetsInFeed %}
@@ -108,6 +109,7 @@ title: Sessions — Nashville Folk Session
           </div>
         </details>
       {% endif %}
+      </div>
 
       {# Footer row: show more + view session on same line #}
       <div class="flex items-center gap-4 mt-3">

@@ -28,7 +28,7 @@ details summary::-webkit-details-marker { display: none; }
 details.session-details[open] { display: flex; flex-direction: column; }
 details.session-details[open] > summary { order: 1; margin-top: 0.75rem; }
 
-/* ─── Truncation fade ──────────────────────────────────── */
+/* ─── Truncation fade — hide when details is open ──────── */
 .truncation-fade {
   position: absolute;
   bottom: 0;
@@ -37,4 +37,8 @@ details.session-details[open] > summary { order: 1; margin-top: 0.75rem; }
   height: 3rem;
   background: linear-gradient(to bottom, transparent, var(--color-bg));
   pointer-events: none;
+  transition: opacity 0.2s;
+}
+.session-truncation-wrapper:has(.session-details[open]) .truncation-fade {
+  opacity: 0;
 }
