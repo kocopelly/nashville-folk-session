@@ -1,0 +1,102 @@
+---
+layout: base.njk
+title: About — Nashville Folk Session
+---
+
+<h1 class="font-display text-3xl font-bold mb-8">About</h1>
+
+<div class="space-y-10 text-[15px] leading-relaxed">
+
+  {# ── Mission ────────────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-3">The Mission</h2>
+    <div class="space-y-4">
+      <p>
+        Nashville has a growing Irish traditional music community, but finding out what gets played at sessions — and where to find the dots — has always been word-of-mouth at best. This site is an attempt to change that.
+      </p>
+      <p>
+        We keep a best-effort record of what was played at local sessions: the tunes, the keys, the sets, and links to sheet music and recordings on <a href="https://thesession.org" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">TheSession.org</a>. Think of it as a living tunebook for Nashville's folk music scene.
+      </p>
+      <p>
+        Whether you're a regular looking to practice what we played last week, a newcomer figuring out what to learn first, or just curious about the local tradition — this is for you.
+      </p>
+    </div>
+  </section>
+
+  {# ── Divider ────────────────────────────────────────── #}
+  <hr class="border-border">
+
+  {# ── The Humans ─────────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-6">The Humans (& Non-Humans)</h2>
+
+    <div class="space-y-8">
+
+      {# KJ #}
+      <div class="flex gap-4 items-start">
+        <div class="w-10 h-10 rounded-full bg-accent-dim border border-border flex items-center justify-center text-lg flex-shrink-0">🎻</div>
+        <div>
+          <h3 class="font-display text-lg font-bold mb-1">KJ Krause</h3>
+          <p class="text-muted text-sm mb-2">Fiddler · Session regular · Curator</p>
+          <p>
+            KJ started attending Nashville's Irish sessions and quickly realized there was no good way to share what got played each week. He'd been keeping tunelists on Notion — painstakingly linking each set to sheet music on TheSession — but figured the community deserved something better than a private page behind a share link.
+          </p>
+          <p class="mt-2">
+            So he built this site. Or rather, he and Slime built it together.
+          </p>
+        </div>
+      </div>
+
+      {# Slime #}
+      <div class="flex gap-4 items-start">
+        <div class="w-10 h-10 rounded-full bg-accent-dim border border-border flex items-center justify-center text-lg flex-shrink-0">🫠</div>
+        <div>
+          <h3 class="font-display text-lg font-bold mb-1">Slime</h3>
+          <p class="text-muted text-sm mb-2">Non-Newtonian intelligence · Co-builder</p>
+          <p>
+            Slime is KJ's AI assistant — a <a href="https://openclaw.ai" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">OpenClaw</a>-powered agent that helps with everything from scraping tune data off TheSession to building and deploying this site. Think of Slime as the tireless intern who actually enjoys cross-referencing ABC notation at 2am.
+          </p>
+          <p class="mt-2">
+            Every tune ID, setting link, and key on this site was sourced and verified through TheSession's API — Slime handles the plumbing so KJ can focus on playing.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {# ── Divider ────────────────────────────────────────── #}
+  <hr class="border-border">
+
+  {# ── How It Works ───────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-3">How It Works</h2>
+    <div class="space-y-4">
+      <p>
+        After each session, KJ jots down the sets and tunes as best he can remember. Slime then enriches that data — looking up each tune on <a href="https://thesession.org" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">TheSession.org</a>, finding the right settings (specific transcriptions), and linking everything together.
+      </p>
+      <p>
+        The result is a structured record where every tune links to its sheet music and every set links back to its source. The data lives in simple JSON files, the site is built with <a href="https://www.11ty.dev" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">Eleventy</a>, and it's all <a href="https://github.com/kocopelly/nashville-folk-session" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">open source</a>.
+      </p>
+    </div>
+  </section>
+
+  {# ── Divider ────────────────────────────────────────── #}
+  <hr class="border-border">
+
+  {# ── Get Involved ───────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-3">Get Involved</h2>
+    <div class="space-y-4">
+      <p>
+        Run a session in Nashville? Want your tunelists on here? Have a correction or a tune we missed? Reach out:
+      </p>
+      <ul class="list-none space-y-1.5 pl-0">
+        <li><span class="text-muted">Email:</span> <a href="mailto:kjkrause97@gmail.com" class="text-accent hover:underline font-medium">kjkrause97@gmail.com</a></li>
+        <li><span class="text-muted">GitHub:</span> <a href="https://github.com/kocopelly/nashville-folk-session" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">kocopelly/nashville-folk-session</a></li>
+        <li><span class="text-muted">At the session:</span> Find KJ — he's the one with the fiddle and too many opinions about key signatures.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
