@@ -1130,7 +1130,7 @@
     "type": "slide",
     "tradition": "irish",
     "aliases": [
-      "An R\u00e9alt Os Cionn An Ghairt\u00e9ir"
+      "An Réalt Os Cionn An Ghairtéir"
     ],
     "commonKeys": [
       "G"
@@ -1159,29 +1159,40 @@
   "tune_076": {
     "id": "tune_076",
     "name": "O'Farrell's",
-    "type": "reel",
-    "tradition": "irish",
-    "aliases": [],
-    "commonKeys": [
-      "D"
-    ],
-    "external": {}
-  },
-  "tune_077": {
-    "id": "tune_077",
-    "name": "The Foxhunters",
-    "type": "reel",
+    "type": "slip jig",
     "tradition": "irish",
     "aliases": [
-      "Fiaga\u00ed An Mhadra Rua"
+      "An Phis Fhliuch",
+      "O'Farrell's Trip To Limerick",
+      "O'Farrell's Welcome To Limerick",
+      "The Wet Pussycat"
     ],
     "commonKeys": [
       "G",
-      "A"
+      "Dmix"
     ],
-    "url": "https://thesession.org/tunes/511",
+    "url": "https://thesession.org/tunes/879",
     "external": {
-      "thesession": 511
+      "thesession": 879
+    }
+  },
+  "tune_077": {
+    "id": "tune_077",
+    "name": "The Foxhunter",
+    "type": "slip jig",
+    "tradition": "irish",
+    "aliases": [
+      "The Duck's Nest",
+      "The Foxhunter's Jig",
+      "Nead Na Lachain"
+    ],
+    "commonKeys": [
+      "D",
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/482",
+    "external": {
+      "thesession": 482
     }
   },
   "tune_078": {
@@ -1202,7 +1213,7 @@
   },
   "tune_079": {
     "id": "tune_079",
-    "name": "Gr\u00e1inne's",
+    "name": "Gráinne's",
     "type": "jig",
     "tradition": "irish",
     "aliases": [
