@@ -104,10 +104,7 @@ title: Sessions — Nashville Folk Session
         </details>
       {% endif %}
 
-      {# Session-level notes and links #}
-      {% if session.notes %}<p class="text-sm text-muted italic mt-6 pt-4 border-t border-border">{{ session.notes }}</p>{% endif %}
-
-      <div class="flex flex-wrap items-center gap-4 mt-4">
+      <div class="flex flex-wrap items-center gap-4 mt-6 pt-4 border-t border-border">
         {% if session.links and session.links.length %}
           {% for link in session.links %}
             <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
