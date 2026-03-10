@@ -28,6 +28,9 @@ details summary::-webkit-details-marker { display: none; }
 details.session-details[open] { display: flex; flex-direction: column; }
 details.session-details[open] > summary { order: 1; margin-top: 0.75rem; }
 
+/* ─── Expand row: keep 'View session' aligned with summary ─ */
+.session-expand-row:has(.session-details[open]) { align-items: flex-end; }
+
 /* ─── Truncation fade — hide when details is open ──────── */
 .truncation-fade {
   position: absolute;
