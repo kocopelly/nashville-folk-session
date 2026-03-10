@@ -1,35 +1,27 @@
 {# Renders a single set. Expects: set, tunes, isLoose (single-tune no-label) #}
 {% if isLoose %}
-  {# Single tune, no label — render as compact line #}
-  <div class="flex items-baseline gap-2 py-0.5">
+  {# Single tune, no label — compact line #}
+  <div class="py-0.5 text-[15px]">
     {% set entry = set.tunes[0] %}
     {% set link = entry | tuneLink(tunes) %}
     {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
-    <span class="text-xs text-muted">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
+    <span class="text-xs text-muted">({{ entry | tuneKey | default(entry | tuneType(tunes)) }})</span>
     {% if set.notes %}<span class="text-xs text-muted italic ml-1">— {{ set.notes }}</span>{% endif %}
   </div>
 {% else %}
-  {# Multi-tune or labeled set — full card #}
-  <div>
-    {% if set.label %}
-      <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mb-1 border-b border-border pb-1">{{ set.label }}</div>
-    {% endif %}
-    <ol class="list-decimal list-inside space-y-0.5">
-      {% for entry in set.tunes %}
-        <li class="text-[15px]">
-          {% set link = entry | tuneLink(tunes) %}
-          {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
-          <span class="text-xs text-muted ml-1">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
-        </li>
-      {% endfor %}
-    </ol>
-    {% if set.notes %}<p class="text-sm text-muted italic mt-1">{{ set.notes }}</p>{% endif %}
+  {# Multi-tune or labeled set — inline format: Label: tune 1 (key) / tune 2 (key) #}
+  <div class="py-1 text-[15px] leading-relaxed">
+    {% if set.label %}<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mr-1">{{ set.label }}:</span>{% endif %}
+    {% for entry in set.tunes %}
+      {% set link = entry | tuneLink(tunes) %}
+      {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
+      <span class="text-xs text-muted">({{ entry | tuneKey | default(entry | tuneType(tunes)) }})</span>{% if not loop.last %} <span class="text-muted">/</span> {% endif %}
+    {% endfor %}
+    {% if set.notes %}<span class="text-xs text-muted italic ml-1">— {{ set.notes }}</span>{% endif %}
     {% if set.links and set.links.length %}
-      <div class="flex flex-wrap gap-2 mt-1">
-        {% for link in set.links %}
-          <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
-        {% endfor %}
-      </div>
+      {% for link in set.links %}
+        <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-2 py-0.5 border border-border text-ink bg-bg hover:border-ink transition-colors ml-1">{{ link.type | linkEmoji }} {{ link.label }}</a>
+      {% endfor %}
     {% endif %}
   </div>
 {% endif %}
