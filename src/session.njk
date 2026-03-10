@@ -33,30 +33,11 @@ eleventyComputed:
 
 {% if session.notes %}<p class="text-sm text-muted italic mb-8 pb-4 border-b border-border">{{ session.notes }}</p>{% endif %}
 
-<div class="space-y-6">
+{% set isAllLoose = session.sets | allLoose %}
+<div class="space-y-{% if isAllLoose %}0{% else %}6{% endif %}">
   {% for set in session.sets %}
-  <div>
-    <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mb-2 border-b border-border pb-1">
-      Set {{ loop.index }}{% if set.label %} — {{ set.label }}{% endif %}
-    </div>
-    <ol class="list-decimal list-inside space-y-1">
-      {% for entry in set.tunes %}
-        <li class="text-[15px]">
-          {% set link = entry | tuneLink(tunes) %}
-          {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
-          <span class="text-xs text-muted ml-1">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
-        </li>
-      {% endfor %}
-    </ol>
-    {% if set.notes %}<p class="text-sm text-muted italic mt-2">{{ set.notes }}</p>{% endif %}
-    {% if set.links and set.links.length %}
-      <div class="flex flex-wrap gap-2 mt-2">
-        {% for link in set.links %}
-          <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
+    {% set isLoose = set | isLoose %}
+    {% include "set-item.njk" %}
   {% endfor %}
 </div>
 

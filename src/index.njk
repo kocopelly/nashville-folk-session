@@ -11,9 +11,10 @@ title: Sessions — Nashville Folk Session
 {% if sessions.length === 0 %}
   <p class="text-center text-muted py-12 text-lg">No sessions logged yet. Send Slime your set list! 🎻</p>
 {% else %}
-  {% set maxSetsInFeed = 3 %}
+  {% set maxVisible = 3 %}
   <div class="space-y-8">
     {% for session in sessions | reverse %}
+    {% set isAllLoose = session.sets | allLoose %}
     <article class="pb-8 {% if not loop.last %}border-b border-border{% endif %}">
       <div class="flex flex-wrap items-baseline gap-3 mb-1">
         <h2 class="font-display text-2xl font-bold">
@@ -33,85 +34,54 @@ title: Sessions — Nashville Folk Session
         {% if venue %}<span>{{ venue }}{% if location %}, {{ location }}{% endif %}</span>{% endif %}
         {% if seriesName %}<span>·</span><span class="font-semibold text-ink">{{ seriesName }}</span>{% endif %}
         {% if organizer %}<span>·</span><span>{{ organizer }}</span>{% endif %}
-        <span>·</span><span>{{ session.sets.length }} sets</span>
+        <span>·</span>
+        {% if isAllLoose %}
+          <span>{{ session.sets | tuneCount }} tunes</span>
+        {% else %}
+          <span>{{ session.sets.length }} sets</span>
+        {% endif %}
       </div>
 
-      {# Show first N sets — with fade on last if truncated #}
+      {# Visible portion with fade #}
       <div class="session-truncation-wrapper">
         <div class="relative">
-        <div class="space-y-3">
-          {% for set in session.sets %}
-            {% if loop.index0 < maxSetsInFeed %}
-            <div>
-              <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mb-1 border-b border-border pb-1">
-                Set {{ loop.index }}{% if set.label %} — {{ set.label }}{% endif %}
-              </div>
-              <ol class="list-decimal list-inside space-y-0.5">
-                {% for entry in set.tunes %}
-                  <li class="text-[15px]">
-                    {% set link = entry | tuneLink(tunes) %}
-                    {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
-                    <span class="text-xs text-muted ml-1">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
-                  </li>
-                {% endfor %}
-              </ol>
-              {% if set.notes %}<p class="text-sm text-muted italic mt-1">{{ set.notes }}</p>{% endif %}
-              {% if set.links and set.links.length %}
-                <div class="flex flex-wrap gap-2 mt-1">
-                  {% for link in set.links %}
-                    <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-        {% if session.sets.length > maxSetsInFeed %}
-          <div class="truncation-fade"></div>
-        {% endif %}
-        </div>
-
-      {# Expandable overflow sets #}
-      {% if session.sets.length > maxSetsInFeed %}
-        <details class="session-details">
-          <summary class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent cursor-pointer hover:text-ink transition-colors select-none">
-            <span class="details-show-more">Show {{ session.sets.length - maxSetsInFeed }} more set{{ "s" if (session.sets.length - maxSetsInFeed) > 1 }} ▾</span>
-            <span class="details-show-less">Show less ▴</span>
-          </summary>
-          <div class="space-y-3 mt-3">
+          <div class="space-y-{% if isAllLoose %}0{% else %}3{% endif %}">
             {% for set in session.sets %}
-              {% if loop.index0 >= maxSetsInFeed %}
-              <div>
-                <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mb-1 border-b border-border pb-1">
-                  Set {{ loop.index }}{% if set.label %} — {{ set.label }}{% endif %}
-                </div>
-                <ol class="list-decimal list-inside space-y-0.5">
-                  {% for entry in set.tunes %}
-                    <li class="text-[15px]">
-                      {% set link = entry | tuneLink(tunes) %}
-                      {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
-                      <span class="text-xs text-muted ml-1">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
-                    </li>
-                  {% endfor %}
-                </ol>
-                {% if set.notes %}<p class="text-sm text-muted italic mt-1">{{ set.notes }}</p>{% endif %}
-                {% if set.links and set.links.length %}
-                  <div class="flex flex-wrap gap-2 mt-1">
-                    {% for link in set.links %}
-                      <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-              </div>
+              {% if loop.index0 < maxVisible %}
+                {% set isLoose = set | isLoose %}
+                {% include "set-item.njk" %}
               {% endif %}
             {% endfor %}
           </div>
-        </details>
-      {% endif %}
+          {% if session.sets.length > maxVisible %}
+            <div class="truncation-fade"></div>
+          {% endif %}
+        </div>
+
+        {# Expandable overflow #}
+        {% if session.sets.length > maxVisible %}
+          <details class="session-details">
+            <summary class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent cursor-pointer hover:text-ink transition-colors select-none">
+              {% if isAllLoose %}
+                <span class="details-show-more">Show {{ session.sets.length - maxVisible }} more tune{{ "s" if (session.sets.length - maxVisible) > 1 }} ▾</span>
+              {% else %}
+                <span class="details-show-more">Show {{ session.sets.length - maxVisible }} more set{{ "s" if (session.sets.length - maxVisible) > 1 }} ▾</span>
+              {% endif %}
+              <span class="details-show-less">Show less ▴</span>
+            </summary>
+            <div class="space-y-{% if isAllLoose %}0{% else %}3{% endif %} mt-{% if isAllLoose %}0{% else %}3{% endif %}">
+              {% for set in session.sets %}
+                {% if loop.index0 >= maxVisible %}
+                  {% set isLoose = set | isLoose %}
+                  {% include "set-item.njk" %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </details>
+        {% endif %}
       </div>
 
-      {# Footer row: show more + view session on same line #}
+      {# Footer #}
       <div class="flex items-center gap-4 mt-3">
         {% if session.links and session.links.length %}
           {% for link in session.links %}
