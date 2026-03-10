@@ -18,3 +18,10 @@
 .badge-bluegrass { background: #f5ecd0; color: #6a5020; }
 .badge-old-time { background: #f0dcc8; color: #6a3a18; }
 .badge-scottish { background: #d0d8e8; color: #2a3050; }
+
+/* ─── Details toggle label swap ─────────────────────────── */
+details .details-show-less { display: none; }
+details[open] .details-show-more { display: none; }
+details[open] .details-show-less { display: inline; }
+details summary { list-style: none; }
+details summary::-webkit-details-marker { display: none; }
