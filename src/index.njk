@@ -30,17 +30,22 @@ title: Sessions — Nashville Folk Session
       {% set location = session | resolve("location", series) %}
       {% set seriesName = series[session.seriesId].name if series[session.seriesId] else null %}
       {% set organizer = session | resolve("organizer", series) %}
-      <div class="text-sm text-muted mb-4 flex flex-wrap gap-x-3 gap-y-1">
-        {% if venue %}<span>{{ venue }}{% if location %}, {{ location }}{% endif %}</span>{% endif %}
-        {% if seriesName %}<span>·</span><span class="font-semibold text-ink">{{ seriesName }}</span>{% endif %}
-        {% if organizer %}<span>·</span><span>{{ organizer }}</span>{% endif %}
-        <span>·</span>
-        {% if isAllLoose %}
-          <span>{{ session.sets | tuneCount }} tunes</span>
-        {% else %}
-          <span>{{ session.sets.length }} sets</span>
+      <dl class="text-sm text-muted mb-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-0.5">
+        {% if venue %}
+          <dt class="font-medium text-ink">Venue</dt>
+          <dd>{{ venue }}{% if location %}, {{ location }}{% endif %}</dd>
         {% endif %}
-      </div>
+        {% if seriesName %}
+          <dt class="font-medium text-ink">Series</dt>
+          <dd>{{ seriesName }}</dd>
+        {% endif %}
+        {% if organizer %}
+          <dt class="font-medium text-ink">Led by</dt>
+          <dd>{{ organizer }}</dd>
+        {% endif %}
+        <dt class="font-medium text-ink">{% if isAllLoose %}Tunes{% else %}Sets{% endif %}</dt>
+        <dd>{% if isAllLoose %}{{ session.sets | tuneCount }}{% else %}{{ session.sets.length }}{% endif %}</dd>
+      </dl>
 
       {# Visible portion with fade #}
       <div class="session-truncation-wrapper">
@@ -85,7 +90,7 @@ title: Sessions — Nashville Folk Session
       <div class="flex items-center gap-4 mt-3">
         {% if session.links and session.links.length %}
           {% for link in session.links %}
-            <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
+            <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
           {% endfor %}
         {% endif %}
         <a href="/sessions/{{ session.id }}/" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.2em] font-bold text-accent hover:text-ink transition-colors ml-auto">View session →</a>

@@ -1,24 +1,14 @@
 {
-  "station-inn-bg": {
-    "id": "station-inn-bg",
-    "name": "Station Inn Bluegrass Jam",
-    "tradition": "bluegrass",
-    "venue": "The Station Inn",
-    "location": "Nashville, TN",
-    "schedule": "Sunday afternoons",
-    "organizer": "Various",
-    "description": "Open bluegrass jam at the Station Inn.",
-    "listed": true
-  },
-  "kocopelly": {
-    "id": "kocopelly",
-    "name": "Kocopelly Irish Session",
+  "quinns-irish": {
+    "id": "quinns-irish",
+    "name": "Nashville Irish Session at Quinn's",
     "tradition": "irish",
-    "venue": "The Fillin' Station",
+    "venue": "Quinn's Neighbourhood Pub",
     "location": "Nashville, TN",
-    "schedule": "Every Wednesday",
-    "organizer": "KJ",
-    "description": "Weekly Irish traditional music session in Nashville.",
+    "schedule": "Every Wednesday, 6:30pm - 8:30pm",
+    "organizer": "Eamonn Dillon",
+    "description": "Weekly Irish traditional music session at Quinn's Neighbourhood Pub in Nashville.",
+    "url": "https://www.google.com/maps/place/quinns+neighborhood/data=!4m2!3m1!1s0x88647f20f0e9f743:0x7a23cf9e2f3baa6e",
     "listed": true
   }
 }

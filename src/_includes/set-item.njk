@@ -28,7 +28,7 @@
         {% if set.notes %}<span class="text-xs text-muted italic">{{ set.notes }}</span>{% endif %}
         {% if set.links and set.links.length %}
           {% for link in set.links %}
-            <a href="{{ link.url }}" target="_blank" rel="noopener" class="text-xs text-muted hover:text-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
+            <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs text-muted hover:text-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
           {% endfor %}
         {% endif %}
       </div>
