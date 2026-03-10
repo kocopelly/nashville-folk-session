@@ -7,7 +7,7 @@
       {
         "label": "reels",
         "tunes": [
-          { "tuneId": "tune_001", "key": "D", "url": "https://thesession.org/tunes/182#setting182" },
+          { "tuneId": "tune_001", "key": "D" },
           { "tuneId": "tune_002", "key": "D" },
           { "tuneId": "tune_003", "key": "Edor" }
         ],
@@ -19,18 +19,45 @@
       {
         "label": "jigs",
         "tunes": [
-          { "tuneId": "tune_004", "key": "G" },
-          { "tuneId": "tune_005", "key": "G" },
-          { "tuneId": "tune_007", "key": "A" }
+          { "tuneId": "tune_017", "key": "G" },
+          { "tuneId": "tune_020", "key": "G" },
+          { "tuneId": "tune_021", "key": "D" }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_009", "key": "Edor" },
+          { "tuneId": "tune_010", "key": "Edor" },
+          { "tuneId": "tune_006", "key": "Edor" }
+        ],
+        "notes": "The Edor set — crowd favorite",
+        "links": []
+      },
+      {
+        "label": "hornpipes",
+        "tunes": [
+          { "tuneId": "tune_027", "key": "Edor" },
+          { "tuneId": "tune_028", "key": "Edor" }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          { "tuneId": "tune_018", "key": "Edor" },
+          { "tuneId": "tune_022", "key": "Edor" },
+          { "tuneId": "tune_024", "key": "Ador" }
         ],
         "links": []
       },
       {
         "tunes": [
-          { "tuneId": "tune_006", "key": "Edor" },
-          { "tuneId": "tune_008", "key": "Am" }
+          { "tuneId": "tune_008", "key": "Am" },
+          { "tuneId": "tune_013", "key": "Dm" }
         ],
-        "notes": "Closed out slow, nice vibe",
+        "notes": "Closed out slow, minor key vibes",
         "links": []
       }
     ],
@@ -39,5 +66,203 @@
       { "label": "Group photo", "url": "https://example.com/photo.jpg", "type": "photo" },
       { "label": "Venue website", "url": "https://example.com/fillin-station", "type": "other" }
     ]
+  },
+  {
+    "id": "sess_2026-02-26",
+    "seriesId": "kocopelly",
+    "date": "2026-02-26",
+    "sets": [
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_012", "key": "D" },
+          { "tuneId": "tune_011", "key": "D" },
+          { "tuneId": "tune_016", "key": "G" }
+        ],
+        "notes": "Strong opener, everyone locked in right away",
+        "links": [
+          { "label": "Recording", "url": "https://example.com/feb26-set1.mp3", "type": "recording" }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          { "tuneId": "tune_023", "key": "Dmix" },
+          { "tuneId": "tune_025", "key": "D" },
+          { "tuneId": "tune_026", "key": "D" }
+        ],
+        "links": []
+      },
+      {
+        "label": "slip jigs",
+        "tunes": [
+          { "tuneId": "tune_032", "key": "Em" },
+          { "tuneId": "tune_033", "key": "Em" },
+          { "tuneId": "tune_034", "key": "Edor" }
+        ],
+        "notes": "First time doing a full slip jig set — tricky but fun",
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_015", "key": "Ador" },
+          { "tuneId": "tune_007", "key": "A" },
+          { "tuneId": "tune_005", "key": "G" },
+          { "tuneId": "tune_004", "key": "G" }
+        ],
+        "notes": "Longest set of the night, 4 tunes back to back",
+        "links": [
+          { "label": "Video clip", "url": "https://example.com/feb26-set4.mp4", "type": "video" }
+        ]
+      },
+      {
+        "label": "polkas",
+        "tunes": [
+          { "tuneId": "tune_035", "key": "D" },
+          { "tuneId": "tune_036", "key": "G" },
+          { "tuneId": "tune_037", "key": "D" }
+        ],
+        "notes": "Sliabh Luachra vibes, the bodhrán player went nuts",
+        "links": []
+      },
+      {
+        "label": "hornpipes",
+        "tunes": [
+          { "tuneId": "tune_029", "key": "D" },
+          { "tuneId": "tune_030", "key": "D" },
+          { "tuneId": "tune_031", "key": "G" }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          { "tuneId": "tune_019", "key": "Dmix" },
+          { "tuneId": "tune_018", "key": "Edor" }
+        ],
+        "notes": "Cool down set",
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_001", "key": "D" },
+          { "tuneId": "tune_010", "key": "Edor" }
+        ],
+        "notes": "Encore — couldn't resist one more",
+        "links": []
+      }
+    ],
+    "notes": "Best session yet. 12 people including a concertina player visiting from Galway. Multiple requests to make this weekly.",
+    "links": [
+      { "label": "Group photo", "url": "https://example.com/feb26-group.jpg", "type": "photo" }
+    ]
+  },
+  {
+    "id": "sess_2026-02-19",
+    "seriesId": "kocopelly",
+    "date": "2026-02-19",
+    "sets": [
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_010", "key": "Edor" },
+          { "tuneId": "tune_009", "key": "Edor" }
+        ],
+        "notes": "Eased in with the classics",
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          { "tuneId": "tune_017", "key": "G" },
+          { "tuneId": "tune_020", "key": "G" },
+          { "tuneId": "tune_023", "key": "Dmix" }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_014", "key": "Bm" },
+          { "tuneId": "tune_013", "key": "Dm" },
+          { "tuneId": "tune_008", "key": "Am" }
+        ],
+        "notes": "The minor key reel set — moody and gorgeous",
+        "links": [
+          { "label": "Recording", "url": "https://example.com/feb19-minors.mp3", "type": "recording" }
+        ]
+      },
+      {
+        "label": "slip jigs",
+        "tunes": [
+          { "tuneId": "tune_032", "key": "Em" },
+          { "tuneId": "tune_034", "key": "Edor" }
+        ],
+        "links": []
+      },
+      {
+        "label": "hornpipes",
+        "tunes": [
+          { "tuneId": "tune_027", "key": "Edor" },
+          { "tuneId": "tune_029", "key": "D" }
+        ],
+        "notes": "Rights Of Man always gets people's attention",
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          { "tuneId": "tune_019", "key": "Dmix" },
+          { "tuneId": "tune_021", "key": "D" },
+          { "tuneId": "tune_025", "key": "D" },
+          { "tuneId": "tune_026", "key": "D" }
+        ],
+        "notes": "Marathon jig set — fiddle player called all four",
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_012", "key": "D" },
+          { "tuneId": "tune_001", "key": "D" },
+          { "tuneId": "tune_002", "key": "D" },
+          { "tuneId": "tune_011", "key": "D" }
+        ],
+        "notes": "D major reel blitz to close it out",
+        "links": [
+          { "label": "Video", "url": "https://example.com/feb19-closing.mp4", "type": "video" }
+        ]
+      },
+      {
+        "label": "polkas",
+        "tunes": [
+          { "tuneId": "tune_035", "key": "D" },
+          { "tuneId": "tune_037", "key": "D" }
+        ],
+        "notes": "Post-session polka bonus round at the bar",
+        "links": []
+      },
+      {
+        "tunes": [
+          { "tuneId": "tune_015", "key": "Ador" },
+          { "tuneId": "tune_007", "key": "A" }
+        ],
+        "notes": "Actual last set, everyone standing up to leave but kept playing",
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          { "tuneId": "tune_018", "key": "Edor" },
+          { "tuneId": "tune_022", "key": "Edor" }
+        ],
+        "notes": "OK this was ACTUALLY the last one",
+        "links": []
+      }
+    ],
+    "notes": "Ran way late — venue let us stay past closing. 6 players, small but tight. The new flute player is legit.",
+    "links": []
   }
 ]

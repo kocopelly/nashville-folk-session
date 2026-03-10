@@ -78,5 +78,295 @@
     "commonKeys": ["Am", "Ador"],
     "url": "https://thesession.org/tunes/79",
     "external": { "thesession": 79 }
+  },
+  "tune_009": {
+    "id": "tune_009",
+    "name": "Drowsy Maggie",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Edor", "D"],
+    "url": "https://thesession.org/tunes/27",
+    "external": { "thesession": 27 }
+  },
+  "tune_010": {
+    "id": "tune_010",
+    "name": "Cooley's",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": ["Cooley's Reel"],
+    "commonKeys": ["Edor", "Em"],
+    "url": "https://thesession.org/tunes/1",
+    "external": { "thesession": 1 }
+  },
+  "tune_011": {
+    "id": "tune_011",
+    "name": "The Maid Behind The Bar",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["D", "C"],
+    "url": "https://thesession.org/tunes/64",
+    "external": { "thesession": 64 }
+  },
+  "tune_012": {
+    "id": "tune_012",
+    "name": "The Wind That Shakes The Barley",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["D", "Em"],
+    "url": "https://thesession.org/tunes/116",
+    "external": { "thesession": 116 }
+  },
+  "tune_013": {
+    "id": "tune_013",
+    "name": "Tam Lin",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Dm", "Am", "Bm"],
+    "url": "https://thesession.org/tunes/248",
+    "external": { "thesession": 248 }
+  },
+  "tune_014": {
+    "id": "tune_014",
+    "name": "The Musical Priest",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Bm", "Am"],
+    "url": "https://thesession.org/tunes/73",
+    "external": { "thesession": 73 }
+  },
+  "tune_015": {
+    "id": "tune_015",
+    "name": "The Gravel Walks",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Ador", "Amix"],
+    "url": "https://thesession.org/tunes/42",
+    "external": { "thesession": 42 }
+  },
+  "tune_016": {
+    "id": "tune_016",
+    "name": "The Sally Gardens",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["G", "D"],
+    "url": "https://thesession.org/tunes/98",
+    "external": { "thesession": 98 }
+  },
+  "tune_017": {
+    "id": "tune_017",
+    "name": "The Kesh",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": ["The Kesh Jig"],
+    "commonKeys": ["G", "D"],
+    "url": "https://thesession.org/tunes/55",
+    "external": { "thesession": 55 }
+  },
+  "tune_018": {
+    "id": "tune_018",
+    "name": "Morrison's",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": ["Morrison's Jig"],
+    "commonKeys": ["Edor", "Em"],
+    "url": "https://thesession.org/tunes/71",
+    "external": { "thesession": 71 }
+  },
+  "tune_019": {
+    "id": "tune_019",
+    "name": "Banish Misfortune",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Dmix", "Emix"],
+    "url": "https://thesession.org/tunes/9",
+    "external": { "thesession": 9 }
+  },
+  "tune_020": {
+    "id": "tune_020",
+    "name": "Out On The Ocean",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["G", "D"],
+    "url": "https://thesession.org/tunes/108",
+    "external": { "thesession": 108 }
+  },
+  "tune_021": {
+    "id": "tune_021",
+    "name": "The Connaughtman's Rambles",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["D", "Edor"],
+    "url": "https://thesession.org/tunes/19",
+    "external": { "thesession": 19 }
+  },
+  "tune_022": {
+    "id": "tune_022",
+    "name": "The Swallowtail",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": ["The Swallowtail Jig"],
+    "commonKeys": ["Edor", "Em"],
+    "url": "https://thesession.org/tunes/106",
+    "external": { "thesession": 106 }
+  },
+  "tune_023": {
+    "id": "tune_023",
+    "name": "The Blarney Pilgrim",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Dmix", "G"],
+    "url": "https://thesession.org/tunes/5",
+    "external": { "thesession": 5 }
+  },
+  "tune_024": {
+    "id": "tune_024",
+    "name": "The Lilting Banshee",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Ador", "Ddor"],
+    "url": "https://thesession.org/tunes/60",
+    "external": { "thesession": 60 }
+  },
+  "tune_025": {
+    "id": "tune_025",
+    "name": "The Lark In The Morning",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["D", "C"],
+    "url": "https://thesession.org/tunes/62",
+    "external": { "thesession": 62 }
+  },
+  "tune_026": {
+    "id": "tune_026",
+    "name": "The Cliffs Of Moher",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["D", "G"],
+    "url": "https://thesession.org/tunes/12",
+    "external": { "thesession": 12 }
+  },
+  "tune_027": {
+    "id": "tune_027",
+    "name": "The Rights Of Man",
+    "type": "hornpipe",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Edor", "Em"],
+    "url": "https://thesession.org/tunes/83",
+    "external": { "thesession": 83 }
+  },
+  "tune_028": {
+    "id": "tune_028",
+    "name": "King Of The Fairies",
+    "type": "hornpipe",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Edor", "Em"],
+    "url": "https://thesession.org/tunes/475",
+    "external": { "thesession": 475 }
+  },
+  "tune_029": {
+    "id": "tune_029",
+    "name": "The Harvest Home",
+    "type": "hornpipe",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["D", "G"],
+    "url": "https://thesession.org/tunes/49",
+    "external": { "thesession": 49 }
+  },
+  "tune_030": {
+    "id": "tune_030",
+    "name": "The Boys Of Bluehill",
+    "type": "hornpipe",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["D", "C"],
+    "url": "https://thesession.org/tunes/651",
+    "external": { "thesession": 651 }
+  },
+  "tune_031": {
+    "id": "tune_031",
+    "name": "Off To California",
+    "type": "hornpipe",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["G", "A"],
+    "url": "https://thesession.org/tunes/30",
+    "external": { "thesession": 30 }
+  },
+  "tune_032": {
+    "id": "tune_032",
+    "name": "The Butterfly",
+    "type": "slip jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Em", "G"],
+    "url": "https://thesession.org/tunes/10",
+    "external": { "thesession": 10 }
+  },
+  "tune_033": {
+    "id": "tune_033",
+    "name": "The Kid On The Mountain",
+    "type": "slip jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Em", "G"],
+    "url": "https://thesession.org/tunes/52",
+    "external": { "thesession": 52 }
+  },
+  "tune_034": {
+    "id": "tune_034",
+    "name": "A Fig For A Kiss",
+    "type": "slip jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["Edor", "Ador"],
+    "url": "https://thesession.org/tunes/750",
+    "external": { "thesession": 750 }
+  },
+  "tune_035": {
+    "id": "tune_035",
+    "name": "John Ryan's",
+    "type": "polka",
+    "tradition": "irish",
+    "aliases": ["John Ryan's Polka"],
+    "commonKeys": ["D"],
+    "url": "https://thesession.org/tunes/441",
+    "external": { "thesession": 441 }
+  },
+  "tune_036": {
+    "id": "tune_036",
+    "name": "The Britches Full Of Stitches",
+    "type": "polka",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["G", "D"],
+    "url": "https://thesession.org/tunes/1075",
+    "external": { "thesession": 1075 }
+  },
+  "tune_037": {
+    "id": "tune_037",
+    "name": "The Rakes Of Mallow",
+    "type": "polka",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": ["D", "G"],
+    "url": "https://thesession.org/tunes/85",
+    "external": { "thesession": 85 }
   }
 }
