@@ -65,36 +65,49 @@ title: Sessions — Nashville Folk Session
 
         {# Expandable overflow #}
         {% if session.sets.length > maxVisible %}
-          <details class="session-details">
-            <summary class="text-xs font-bold uppercase tracking-widest text-accent cursor-pointer hover:text-ink transition-colors select-none">
-              {% if isAllLoose %}
-                <span class="details-show-more">Show {{ session.sets.length - maxVisible }} more tune{{ "s" if (session.sets.length - maxVisible) > 1 }} ▾</span>
-              {% else %}
-                <span class="details-show-more">Show {{ session.sets.length - maxVisible }} more set{{ "s" if (session.sets.length - maxVisible) > 1 }} ▾</span>
-              {% endif %}
-              <span class="details-show-less">Show less ▴</span>
-            </summary>
-            <div class="space-y-2 mt-2">
-              {% for set in session.sets %}
-                {% if loop.index0 >= maxVisible %}
-                  {% set isLoose = set | isLoose %}
-                  {% include "set-item.njk" %}
+          <div class="flex items-start gap-4">
+            <details class="session-details flex-1">
+              <summary class="text-xs font-bold uppercase tracking-widest text-accent cursor-pointer hover:text-ink transition-colors select-none">
+                {% if isAllLoose %}
+                  <span class="details-show-more">Show {{ session.sets.length - maxVisible }} more tune{{ "s" if (session.sets.length - maxVisible) > 1 }} ▾</span>
+                {% else %}
+                  <span class="details-show-more">Show {{ session.sets.length - maxVisible }} more set{{ "s" if (session.sets.length - maxVisible) > 1 }} ▾</span>
                 {% endif %}
-              {% endfor %}
-            </div>
-          </details>
+                <span class="details-show-less">Show less ▴</span>
+              </summary>
+              <div class="space-y-2 mt-2">
+                {% for set in session.sets %}
+                  {% if loop.index0 >= maxVisible %}
+                    {% set isLoose = set | isLoose %}
+                    {% include "set-item.njk" %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </details>
+            <a href="/sessions/{{ session.id }}/" class="shrink-0 text-xs font-bold uppercase tracking-widest text-accent hover:text-ink transition-colors">View session →</a>
+          </div>
         {% endif %}
       </div>
 
-      {# Footer #}
-      <div class="flex items-center gap-4 mt-3">
+      {# Footer — only shown for sessions with ≤ maxVisible sets #}
+      {% if session.sets.length <= maxVisible %}
+        <div class="flex items-center gap-4 mt-3">
+          {% if session.links and session.links.length %}
+            {% for link in session.links %}
+              <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
+            {% endfor %}
+          {% endif %}
+          <a href="/sessions/{{ session.id }}/" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest font-bold text-accent hover:text-ink transition-colors ml-auto">View session →</a>
+        </div>
+      {% else %}
         {% if session.links and session.links.length %}
-          {% for link in session.links %}
-            <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
-          {% endfor %}
+          <div class="flex items-center gap-4 mt-2">
+            {% for link in session.links %}
+              <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
+            {% endfor %}
+          </div>
         {% endif %}
-        <a href="/sessions/{{ session.id }}/" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest font-bold text-accent hover:text-ink transition-colors ml-auto">View session →</a>
-      </div>
+      {% endif %}
     </article>
     {% endfor %}
   </div>
