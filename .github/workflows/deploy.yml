@@ -42,36 +42,10 @@ jobs:
 
       - name: Comment preview URL on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+        uses: hasura/comment-progress@v2.3.0
         with:
-          script: |
-            const deploymentUrl = '${{ steps.deploy.outputs.deployment-url }}';
-            if (!deploymentUrl) return;
-
-            const body = `🫠 **Preview deployed!**\n\n🔗 ${deploymentUrl}`;
-
-            // Check for existing bot comment to update instead of spamming
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-            const existing = comments.find(c =>
-              c.user.type === 'Bot' && c.body.includes('Preview deployed!')
-            );
-
-            if (existing) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: existing.id,
-                body,
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body,
-              });
-            }
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: deploy-preview
+          message: "🫠 **Preview deployed!**\n\n🔗 ${{ steps.deploy.outputs.deployment-url }}"
