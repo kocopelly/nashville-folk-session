@@ -94,10 +94,11 @@ KJ merges when the PR looks right. Auto-deploys to production.
 
 ## Block List
 
-Maintained at `data/email-blocklist.json` (array of email addresses).
+Maintained outside the repo (Slime's private workspace, not version-controlled).
 - Starts empty
 - KJ says "block them" → Slime adds the address
 - Check blocklist before triaging (blocked emails get silently dropped)
+- **Never commit email addresses or blocklist data to this public repo**
 
 ## Reply Tone
 
