@@ -34,7 +34,7 @@ eleventyComputed:
 {% if session.notes %}<p class="text-sm text-muted italic mb-8 pb-4 border-b border-border">{{ session.notes }}</p>{% endif %}
 
 {% set isAllLoose = session.sets | allLoose %}
-<div class="space-y-{% if isAllLoose %}0{% else %}6{% endif %}">
+<div class="space-y-2">
   {% for set in session.sets %}
     {% set isLoose = set | isLoose %}
     {% include "set-item.njk" %}

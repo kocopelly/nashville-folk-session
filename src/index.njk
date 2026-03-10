@@ -45,7 +45,7 @@ title: Sessions — Nashville Folk Session
       {# Visible portion with fade #}
       <div class="session-truncation-wrapper">
         <div class="relative">
-          <div class="space-y-{% if isAllLoose %}0{% else %}3{% endif %}">
+          <div class="space-y-2">
             {% for set in session.sets %}
               {% if loop.index0 < maxVisible %}
                 {% set isLoose = set | isLoose %}
@@ -69,7 +69,7 @@ title: Sessions — Nashville Folk Session
               {% endif %}
               <span class="details-show-less">Show less ▴</span>
             </summary>
-            <div class="space-y-{% if isAllLoose %}0{% else %}3{% endif %} mt-{% if isAllLoose %}0{% else %}3{% endif %}">
+            <div class="space-y-2 mt-2">
               {% for set in session.sets %}
                 {% if loop.index0 >= maxVisible %}
                   {% set isLoose = set | isLoose %}
