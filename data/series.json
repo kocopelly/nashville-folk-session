@@ -1,4 +1,15 @@
 {
+  "station-inn-bg": {
+    "id": "station-inn-bg",
+    "name": "Station Inn Bluegrass Jam",
+    "tradition": "bluegrass",
+    "venue": "The Station Inn",
+    "location": "Nashville, TN",
+    "schedule": "Sunday afternoons",
+    "organizer": "Various",
+    "description": "Open bluegrass jam at the Station Inn.",
+    "listed": true
+  },
   "kocopelly": {
     "id": "kocopelly",
     "name": "Kocopelly Irish Session",
