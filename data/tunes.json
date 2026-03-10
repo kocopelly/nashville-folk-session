@@ -1481,14 +1481,17 @@
     "name": "Paddy Fahey's",
     "type": "reel",
     "tradition": "irish",
-    "aliases": [],
-    "commonKeys": [
-      "Dmix",
-      "C"
+    "aliases": [
+      "Fahey's Flight",
+      "Paddy Fahey's No. 15",
+      "Paddy Fahy's No. 14"
     ],
-    "url": "https://thesession.org/tunes/1402",
+    "commonKeys": [
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/150",
     "external": {
-      "thesession": 1402
+      "thesession": 150
     }
   }
 }
