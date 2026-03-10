@@ -10,7 +10,7 @@
   --color-accent-dim: #faf0d8;
   --color-border: #d0d0dc;
   --color-hover: #f5f5f0;
-  --font-display: "Georgia", "Times New Roman", serif;
+  --font-display: "Playfair Display", "Georgia", "Times New Roman", serif;
 }
 
 /* ─── Tradition Badge Colors ────────────────────────────── */
@@ -27,6 +27,9 @@ details summary { list-style: none; }
 details summary::-webkit-details-marker { display: none; }
 details.session-details[open] { display: flex; flex-direction: column; }
 details.session-details[open] > summary { order: 1; margin-top: 0.75rem; }
+
+/* ─── Expand row: keep 'View session' aligned with summary ─ */
+.session-expand-row:has(.session-details[open]) { align-items: flex-end; }
 
 /* ─── Truncation fade — hide when details is open ──────── */
 .truncation-fade {

@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title | default("Nashville Folk Session") }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body class="bg-bg text-ink min-h-screen flex flex-col leading-relaxed">
@@ -14,11 +17,12 @@
           Nashville Folk Session
         </a>
       </div>
-      <div class="flex justify-center gap-8 border-t border-border pt-3">
-        <a href="/" class="text-xs uppercase tracking-widest text-muted no-underline hover:text-ink transition-colors font-semibold">Sessions</a>
-        <a href="/series/" class="text-xs uppercase tracking-widest text-muted no-underline hover:text-ink transition-colors font-semibold">Series</a>
-        <a href="/tunes/" class="text-xs uppercase tracking-widest text-muted no-underline hover:text-ink transition-colors font-semibold">Tunes</a>
-        <a href="/stats/" class="text-xs uppercase tracking-widest text-muted no-underline hover:text-ink transition-colors font-semibold">Stats</a>
+      {% set u = page.url %}
+      <div class="flex justify-center gap-4 sm:gap-8 border-t border-border pt-3">
+        <a href="/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if u == '/' or '/sessions/' in u %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Sessions</a>
+        <a href="/series/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if '/series/' in u %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Series</a>
+        <a href="/tunes/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if u == '/tunes/' %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Tunes</a>
+        <a href="/stats/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if u == '/stats/' %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Stats</a>
       </div>
     </nav>
   </header>
@@ -28,7 +32,7 @@
   </main>
 
   <footer class="border-t-2 border-ink py-6 px-4 text-center text-muted text-xs uppercase tracking-widest">
-    <p>Nashville Folk Session · curated by <a href="https://github.com/slime-the-bot" class="text-ink hover:underline">Slime 🫠</a></p>
+    <p>Nashville Folk Session · curated by <a href="https://github.com/slime-the-bot" class="text-ink hover:underline">Slime</a></p>
   </footer>
 </body>
 </html>
