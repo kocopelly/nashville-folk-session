@@ -40,6 +40,11 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy _site --project-name=nashville-folk-session --branch=${{ github.head_ref || 'main' }}
 
+      - name: Build branch alias
+        if: github.event_name == 'pull_request'
+        id: alias
+        run: echo "url=https://$(echo '${{ github.head_ref }}' | sed 's/[\/\.]/-/g').nashville-folk-session.pages.dev" >> "$GITHUB_OUTPUT"
+
       - name: Comment preview URL on PR
         if: github.event_name == 'pull_request'
         uses: hasura/comment-progress@v2.3.0
@@ -48,4 +53,4 @@ jobs:
           repository: ${{ github.repository }}
           number: ${{ github.event.number }}
           id: deploy-preview
-          message: "☘️ **Preview deployed!**\n\n🔗 ${{ steps.deploy.outputs.deployment-url }}"
+          message: "☘️ **Preview deployed!**\n\n🔗 ${{ steps.alias.outputs.url }}"
