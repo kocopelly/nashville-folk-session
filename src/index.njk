@@ -11,11 +11,14 @@ title: Sessions — Nashville Folk Session
 {% if sessions.length === 0 %}
   <p class="text-center text-muted py-12 text-lg">No sessions logged yet. Send Slime your set list! 🎻</p>
 {% else %}
+  {% set maxSetsInFeed = 3 %}
   <div class="space-y-10">
     {% for session in sessions | reverse %}
     <article class="pb-10 {% if not loop.last %}border-b border-border{% endif %}">
       <div class="flex flex-wrap items-baseline gap-3 mb-2">
-        <h2 class="font-display text-2xl font-bold">{{ session.date | dateDisplay }}</h2>
+        <h2 class="font-display text-2xl font-bold">
+          <a href="/sessions/{{ session.id }}/" class="text-ink no-underline hover:text-accent transition-colors">{{ session.date | dateDisplay }}</a>
+        </h2>
         {% set tradition = session | resolve("tradition", series) %}
         {% if tradition %}
           <span class="badge-{{ tradition }} text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ tradition }}</span>
@@ -30,43 +33,87 @@ title: Sessions — Nashville Folk Session
         {% if venue %}<span>{{ venue }}{% if location %}, {{ location }}{% endif %}</span>{% endif %}
         {% if seriesName %}<span>·</span><span class="font-semibold text-ink">{{ seriesName }}</span>{% endif %}
         {% if organizer %}<span>·</span><span>{{ organizer }}</span>{% endif %}
+        <span>·</span><span>{{ session.sets.length }} sets</span>
       </div>
 
+      {# Show first N sets in the feed #}
       <div class="space-y-5">
         {% for set in session.sets %}
-        <div>
-          <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mb-2 border-b border-border pb-1">
-            Set {{ loop.index }}{% if set.label %} — {{ set.label }}{% endif %}
-          </div>
-          <ol class="list-decimal list-inside space-y-1">
-            {% for entry in set.tunes %}
-              <li class="text-[15px]">
-                {% set link = entry | tuneLink(tunes) %}
-                {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
-                <span class="text-xs text-muted ml-1">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
-              </li>
-            {% endfor %}
-          </ol>
-          {% if set.notes %}<p class="text-sm text-muted italic mt-2">{{ set.notes }}</p>{% endif %}
-          {% if set.links and set.links.length %}
-            <div class="flex flex-wrap gap-2 mt-2">
-              {% for link in set.links %}
-                <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
-              {% endfor %}
+          {% if loop.index0 < maxSetsInFeed %}
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mb-2 border-b border-border pb-1">
+              Set {{ loop.index }}{% if set.label %} — {{ set.label }}{% endif %}
             </div>
+            <ol class="list-decimal list-inside space-y-1">
+              {% for entry in set.tunes %}
+                <li class="text-[15px]">
+                  {% set link = entry | tuneLink(tunes) %}
+                  {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
+                  <span class="text-xs text-muted ml-1">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
+                </li>
+              {% endfor %}
+            </ol>
+            {% if set.notes %}<p class="text-sm text-muted italic mt-2">{{ set.notes }}</p>{% endif %}
+            {% if set.links and set.links.length %}
+              <div class="flex flex-wrap gap-2 mt-2">
+                {% for link in set.links %}
+                  <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
           {% endif %}
-        </div>
         {% endfor %}
       </div>
 
+      {# Expandable overflow sets #}
+      {% if session.sets.length > maxSetsInFeed %}
+        <details class="mt-4">
+          <summary class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent cursor-pointer hover:text-ink transition-colors select-none py-2">
+            Show {{ session.sets.length - maxSetsInFeed }} more set{{ "s" if (session.sets.length - maxSetsInFeed) > 1 }} ▾
+          </summary>
+          <div class="space-y-5 mt-4">
+            {% for set in session.sets %}
+              {% if loop.index0 >= maxSetsInFeed %}
+              <div>
+                <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mb-2 border-b border-border pb-1">
+                  Set {{ loop.index }}{% if set.label %} — {{ set.label }}{% endif %}
+                </div>
+                <ol class="list-decimal list-inside space-y-1">
+                  {% for entry in set.tunes %}
+                    <li class="text-[15px]">
+                      {% set link = entry | tuneLink(tunes) %}
+                      {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:bg-accent-dim transition-colors font-semibold border-b border-border">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-semibold">{{ entry | tuneName(tunes) }}</span>{% endif %}
+                      <span class="text-xs text-muted ml-1">{{ entry | tuneType(tunes) }}{% if entry | tuneKey %} · {{ entry | tuneKey }}{% endif %}</span>
+                    </li>
+                  {% endfor %}
+                </ol>
+                {% if set.notes %}<p class="text-sm text-muted italic mt-2">{{ set.notes }}</p>{% endif %}
+                {% if set.links and set.links.length %}
+                  <div class="flex flex-wrap gap-2 mt-2">
+                    {% for link in set.links %}
+                      <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </details>
+      {% endif %}
+
+      {# Session-level notes and links #}
       {% if session.notes %}<p class="text-sm text-muted italic mt-6 pt-4 border-t border-border">{{ session.notes }}</p>{% endif %}
-      {% if session.links and session.links.length %}
-        <div class="flex flex-wrap gap-2 mt-4">
+
+      <div class="flex flex-wrap items-center gap-4 mt-4">
+        {% if session.links and session.links.length %}
           {% for link in session.links %}
             <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkEmoji }} {{ link.label }}</a>
           {% endfor %}
-        </div>
-      {% endif %}
+        {% endif %}
+        <a href="/sessions/{{ session.id }}/" class="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.2em] font-bold text-accent hover:text-ink transition-colors ml-auto">View session →</a>
+      </div>
     </article>
     {% endfor %}
   </div>
