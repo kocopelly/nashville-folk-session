@@ -25,5 +25,16 @@ details[open] .details-show-more { display: none; }
 details[open] .details-show-less { display: inline; }
 details summary { list-style: none; }
 details summary::-webkit-details-marker { display: none; }
-details[open] { display: flex; flex-direction: column; }
-details[open] > summary { order: 1; margin-top: 1rem; }
+details.session-details[open] { display: flex; flex-direction: column; }
+details.session-details[open] > summary { order: 1; margin-top: 0.75rem; }
+
+/* ─── Truncation fade ──────────────────────────────────── */
+.truncation-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  pointer-events: none;
+}
