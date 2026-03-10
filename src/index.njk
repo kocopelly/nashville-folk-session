@@ -18,7 +18,7 @@ title: Sessions — Nashville Folk Session
     <article class="pb-8 {% if not loop.last %}border-b border-border{% endif %}">
       <div class="flex flex-wrap items-baseline gap-3 mb-1">
         <h2 class="font-display text-3xl font-bold">
-          <a href="/sessions/{{ session.id }}/" class="text-ink no-underline hover:text-accent hover:underline transition-colors">{{ session.date | dateDisplay }} →</a>
+          <a href="/sessions/{{ session.id }}/" class="text-ink no-underline hover:text-accent transition-colors">{{ session.date | dateDisplay }}</a>
         </h2>
         {% set tradition = session | resolve("tradition", series) %}
         {% if tradition %}
@@ -86,14 +86,15 @@ title: Sessions — Nashville Folk Session
         {% endif %}
       </div>
 
-      {# Footer — only render if there are external links #}
-      {% if session.links and session.links.length %}
-        <div class="flex items-center gap-4 mt-3">
+      {# Footer #}
+      <div class="flex items-center gap-4 mt-3">
+        {% if session.links and session.links.length %}
           {% for link in session.links %}
             <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
           {% endfor %}
-        </div>
-      {% endif %}
+        {% endif %}
+        <a href="/sessions/{{ session.id }}/" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest font-bold text-accent hover:text-ink transition-colors ml-auto">View session →</a>
+      </div>
     </article>
     {% endfor %}
   </div>
