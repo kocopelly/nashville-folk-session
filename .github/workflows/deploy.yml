@@ -48,4 +48,4 @@ jobs:
           repository: ${{ github.repository }}
           number: ${{ github.event.number }}
           id: deploy-preview
-          message: "🫠 **Preview deployed!**\n\n🔗 ${{ steps.deploy.outputs.deployment-url }}"
+          message: "☘️ **Preview deployed!**\n\n🔗 ${{ steps.deploy.outputs.deployment-url }}"
