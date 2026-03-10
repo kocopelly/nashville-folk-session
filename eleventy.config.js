@@ -18,6 +18,13 @@ export default function (eleventyConfig) {
     return JSON.parse(readFileSync("data/sessions.json", "utf-8"));
   });
 
+  // Series as an array (for pagination in series.njk)
+  eleventyConfig.addGlobalData("seriesList", async () => {
+    const { readFileSync } = await import("node:fs");
+    const data = JSON.parse(readFileSync("data/series.json", "utf-8"));
+    return Object.values(data).filter(s => s.listed !== false);
+  });
+
   // Helper: resolve a session field with series fallback
   // session.field > series.field
   eleventyConfig.addFilter("resolve", function (session, field, series) {
@@ -85,6 +92,15 @@ export default function (eleventyConfig) {
   // Are all sets in a session "loose"?
   eleventyConfig.addFilter("allLoose", function (sets) {
     return sets.every(s => s.tunes.length === 1 && !s.label);
+  });
+
+  // Series helpers
+  eleventyConfig.addFilter("seriesSessionCount", function (sessions, seriesId) {
+    return sessions.filter(s => s.seriesId === seriesId).length;
+  });
+
+  eleventyConfig.addFilter("filterBySeries", function (sessions, seriesId) {
+    return sessions.filter(s => s.seriesId === seriesId);
   });
 
   eleventyConfig.addFilter("dateDisplay", function (dateStr) {

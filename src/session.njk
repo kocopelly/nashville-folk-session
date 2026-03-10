@@ -32,7 +32,7 @@ eleventyComputed:
   {% endif %}
   {% if seriesName %}
     <dt class="font-medium text-ink">Series</dt>
-    <dd>{{ seriesName }}</dd>
+    <dd><a href="/series/{{ session.seriesId }}/" class="text-muted hover:text-ink transition-colors underline decoration-border hover:decoration-ink">{{ seriesName }}</a></dd>
   {% endif %}
   {% if organizer %}
     <dt class="font-medium text-ink">Led by</dt>
