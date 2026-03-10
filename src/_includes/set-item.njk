@@ -2,7 +2,7 @@
 {% if isLoose %}
   {# Single tune, no label — compact line with left accent #}
   <div class="border-l-2 border-border pl-3 py-1">
-    <div class="text-[15px]">
+    <div class="text-sm">
       {% set entry = set.tunes[0] %}
       {% set link = entry | tuneLink(tunes) %}
       {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:text-accent transition-colors font-medium">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-medium">{{ entry | tuneName(tunes) }}</span>{% endif %}
@@ -15,8 +15,8 @@
 {% else %}
   {# Multi-tune or labeled set — left accent border with inline tunes #}
   <div class="border-l-2 border-accent pl-3 py-1.5">
-    {% if set.label %}<div class="text-[10px] font-bold uppercase tracking-[0.2em] text-muted mb-1">{{ set.label }}</div>{% endif %}
-    <div class="text-[15px] leading-relaxed">
+    {% if set.label %}<div class="text-xs font-bold uppercase tracking-widest text-muted mb-1">{{ set.label }}</div>{% endif %}
+    <div class="text-sm leading-relaxed">
       {% for entry in set.tunes %}
         {% set link = entry | tuneLink(tunes) %}
         {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:text-accent transition-colors font-medium">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-medium">{{ entry | tuneName(tunes) }}</span>{% endif %}

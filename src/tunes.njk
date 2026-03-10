@@ -14,11 +14,11 @@ permalink: /tunes/
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b-2 border-ink">
-        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Name</th>
-        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Type</th>
-        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Key</th>
-        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Tradition</th>
-        <th class="text-left py-3 px-3 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">Link</th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Name</th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Type</th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Key</th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Tradition</th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Link</th>
       </tr>
     </thead>
     <tbody>
@@ -37,11 +37,11 @@ permalink: /tunes/
           {% endif %}
         </td>
         <td class="py-3 px-3">
-          <span class="badge-{{ tune.tradition }} text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ tune.tradition }}</span>
+          <span class="badge-{{ tune.tradition }} text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ tune.tradition }}</span>
         </td>
         <td class="py-3 px-3">
           {% if tune.url %}
-            <a href="{{ tune.url }}" target="_blank" rel="noopener" class="text-accent hover:text-ink transition-colors text-xs font-semibold uppercase tracking-wider">View →</a>
+            <a href="{{ tune.url }}" target="_blank" rel="noopener" class="text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors inline-flex items-center">View →</a>
           {% endif %}
         </td>
       </tr>

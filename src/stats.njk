@@ -14,15 +14,15 @@ permalink: /stats/
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
   <div class="border-2 border-ink p-6 text-center">
     <div class="text-4xl font-black text-ink font-display">{{ sessions.length }}</div>
-    <div class="text-[10px] uppercase tracking-[0.2em] text-muted mt-2 font-bold">Sessions</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-2 font-bold">Sessions</div>
   </div>
   <div class="border-2 border-ink p-6 text-center">
     <div class="text-4xl font-black text-ink font-display">{{ tunes | length }}</div>
-    <div class="text-[10px] uppercase tracking-[0.2em] text-muted mt-2 font-bold">Tunes in Registry</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-2 font-bold">Tunes in Registry</div>
   </div>
   <div class="border-2 border-ink p-6 text-center">
     <div class="text-4xl font-black text-ink font-display">{{ played.length }}</div>
-    <div class="text-[10px] uppercase tracking-[0.2em] text-muted mt-2 font-bold">Unique Tunes Played</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-2 font-bold">Unique Tunes Played</div>
   </div>
 </div>
 
@@ -37,7 +37,7 @@ permalink: /stats/
     <ol class="space-y-0">
       {% for tune in played %}
       <li class="flex items-center justify-between py-3 {% if not loop.last %}border-b border-border{% endif %}">
-        <span class="font-semibold text-[15px]">{{ tune.name }}</span>
+        <span class="font-semibold text-sm">{{ tune.name }}</span>
         <span class="text-sm text-muted font-display">× {{ tune.count }}</span>
       </li>
       {% endfor %}
