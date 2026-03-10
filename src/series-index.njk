@@ -1,0 +1,51 @@
+---
+layout: base.njk
+title: Series — Nashville Folk Session
+permalink: series/index.html
+---
+
+<div class="text-center mb-10">
+  <h1 class="font-display text-4xl font-black uppercase tracking-wider mb-1">Series</h1>
+  <div class="w-16 h-0.5 bg-ink mx-auto"></div>
+</div>
+
+{% if seriesList.length === 0 %}
+  <p class="text-center text-muted py-12 text-lg">No series listed yet.</p>
+{% else %}
+  <div class="space-y-6">
+    {% for s in seriesList %}
+      <a href="/series/{{ s.id }}/" class="block border border-border rounded-sm p-5 hover:border-ink transition-colors group">
+        <div class="flex flex-wrap items-baseline gap-3 mb-2">
+          <h2 class="font-display text-xl font-bold text-ink group-hover:text-accent transition-colors">{{ s.name }}</h2>
+          {% if s.tradition %}
+            <span class="badge-{{ s.tradition }} text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ s.tradition }}</span>
+          {% endif %}
+        </div>
+
+        <dl class="text-sm text-muted grid grid-cols-[auto_1fr] gap-x-4 gap-y-0.5 mb-3">
+          {% if s.venue %}
+            <dt class="font-medium text-ink">Venue</dt>
+            <dd>{{ s.venue }}{% if s.location %}, {{ s.location }}{% endif %}</dd>
+          {% endif %}
+          {% if s.schedule %}
+            <dt class="font-medium text-ink">Schedule</dt>
+            <dd>{{ s.schedule }}</dd>
+          {% endif %}
+          {% if s.organizer %}
+            <dt class="font-medium text-ink">Led by</dt>
+            <dd>{{ s.organizer }}</dd>
+          {% endif %}
+          {% set count = sessions | seriesSessionCount(s.id) %}
+          {% if count > 0 %}
+            <dt class="font-medium text-ink">Sessions logged</dt>
+            <dd>{{ count }}</dd>
+          {% endif %}
+        </dl>
+
+        {% if s.description %}
+          <p class="text-sm text-muted">{{ s.description }}</p>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
