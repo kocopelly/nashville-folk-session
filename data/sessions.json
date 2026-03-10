@@ -797,7 +797,8 @@
             "tuneId": "tune_074",
             "key": "G"
           }
-        ]
+        ],
+        "label": "mixed"
       },
       {
         "tunes": [
@@ -813,7 +814,8 @@
             "tuneId": "tune_075",
             "key": "D"
           }
-        ]
+        ],
+        "label": "jigs"
       },
       {
         "tunes": [
@@ -825,7 +827,8 @@
             "tuneId": "tune_077",
             "key": "G"
           }
-        ]
+        ],
+        "label": "slip jigs"
       },
       {
         "tunes": [
@@ -841,7 +844,8 @@
             "tuneId": "tune_018",
             "key": "Em"
           }
-        ]
+        ],
+        "label": "reels"
       },
       {
         "tunes": [
@@ -849,7 +853,8 @@
             "tuneId": "tune_078",
             "key": "Ddor"
           }
-        ]
+        ],
+        "label": "reels"
       },
       {
         "tunes": [
@@ -861,7 +866,8 @@
             "tuneId": "tune_080",
             "key": "Amix"
           }
-        ]
+        ],
+        "label": "jigs"
       },
       {
         "tunes": [
@@ -877,7 +883,8 @@
             "tuneId": "tune_089",
             "key": "G"
           }
-        ]
+        ],
+        "label": "reels"
       },
       {
         "tunes": [
@@ -893,7 +900,8 @@
             "tuneId": "tune_082",
             "key": "G"
           }
-        ]
+        ],
+        "label": "reels"
       },
       {
         "tunes": [
@@ -901,7 +909,8 @@
             "tuneId": "tune_083",
             "key": "D"
           }
-        ]
+        ],
+        "label": "reels"
       },
       {
         "tunes": [
@@ -917,7 +926,8 @@
             "tuneId": "tune_085",
             "key": "D"
           }
-        ]
+        ],
+        "label": "reels"
       },
       {
         "tunes": [
@@ -925,7 +935,8 @@
             "tuneId": "tune_090",
             "key": "D"
           }
-        ]
+        ],
+        "label": "jigs"
       }
     ]
   }
