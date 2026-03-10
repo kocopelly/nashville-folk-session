@@ -19,9 +19,11 @@
 .badge-old-time { background: #f0dcc8; color: #6a3a18; }
 .badge-scottish { background: #d0d8e8; color: #2a3050; }
 
-/* ─── Details toggle label swap ─────────────────────────── */
+/* ─── Details toggle label swap + bottom placement ──────── */
 details .details-show-less { display: none; }
 details[open] .details-show-more { display: none; }
 details[open] .details-show-less { display: inline; }
 details summary { list-style: none; }
 details summary::-webkit-details-marker { display: none; }
+details[open] { display: flex; flex-direction: column; }
+details[open] > summary { order: 1; margin-top: 1rem; }

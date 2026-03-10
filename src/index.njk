@@ -69,11 +69,11 @@ title: Sessions — Nashville Folk Session
       {# Expandable overflow sets #}
       {% if session.sets.length > maxSetsInFeed %}
         <details class="mt-4">
-          <summary class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent cursor-pointer hover:text-ink transition-colors select-none py-2">
+          <summary class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent cursor-pointer hover:text-ink transition-colors select-none py-2 details-summary-bottom">
             <span class="details-show-more">Show {{ session.sets.length - maxSetsInFeed }} more set{{ "s" if (session.sets.length - maxSetsInFeed) > 1 }} ▾</span>
             <span class="details-show-less">Show less ▴</span>
           </summary>
-          <div class="space-y-5 mt-4">
+          <div class="space-y-5">
             {% for set in session.sets %}
               {% if loop.index0 >= maxSetsInFeed %}
               <div>
