@@ -777,5 +777,277 @@
     ],
     "notes": "",
     "links": []
+  },
+  {
+    "id": "sess_2026-03-04",
+    "seriesId": "quinns",
+    "date": "2026-03-04",
+    "sets": [
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_012",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_047",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_004",
+            "key": "Ador"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_072",
+            "key": "Bm"
+          },
+          {
+            "tuneId": "tune_073",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_074",
+            "key": "D"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_075",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_076",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_077",
+            "key": "Am"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_078",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_065",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_079",
+            "key": "Dmix"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_080",
+            "key": "Gmix"
+          },
+          {
+            "tuneId": "tune_081",
+            "key": "A"
+          },
+          {
+            "tuneId": "tune_082",
+            "key": "D"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_083",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_084",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_034",
+            "key": "G"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_085",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_086",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_087",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_099",
+            "key": "Dmix"
+          }
+        ],
+        "notes": "Paddy Fahey's \u2014 needs confirmation: using No. 20 (thesession:1402)",
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_088",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_023",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_058",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_017",
+            "key": "D"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_089",
+            "key": "Em"
+          },
+          {
+            "tuneId": "tune_070",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_090",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_030",
+            "key": "D"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_019",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_091",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_092",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_042",
+            "key": "A"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_060",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_093",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_094",
+            "key": "G"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_095",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_096",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_097",
+            "key": "G"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_015",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_010",
+            "key": "G"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_098",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_003",
+            "key": "A"
+          },
+          {
+            "tuneId": "tune_020",
+            "key": "D"
+          }
+        ],
+        "links": []
+      }
+    ]
   }
 ]

@@ -1089,5 +1089,406 @@
     "external": {
       "thesession": 15043
     }
+  },
+  "tune_072": {
+    "id": "tune_072",
+    "name": "The Musical Priest",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Bm",
+      "Am"
+    ],
+    "url": "https://thesession.org/tunes/73",
+    "external": {
+      "thesession": 73
+    }
+  },
+  "tune_073": {
+    "id": "tune_073",
+    "name": "The Cup Of Tea",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Edor"
+    ],
+    "url": "https://thesession.org/tunes/20",
+    "external": {
+      "thesession": 20
+    }
+  },
+  "tune_074": {
+    "id": "tune_074",
+    "name": "The Bucks Of Oranmore",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/2",
+    "external": {
+      "thesession": 2
+    }
+  },
+  "tune_075": {
+    "id": "tune_075",
+    "name": "George White's Favourite",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "G",
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/718",
+    "external": {
+      "thesession": 718
+    }
+  },
+  "tune_076": {
+    "id": "tune_076",
+    "name": "The Virginia",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/812",
+    "external": {
+      "thesession": 812
+    }
+  },
+  "tune_077": {
+    "id": "tune_077",
+    "name": "Castle Kelly",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Am",
+      "Ador"
+    ],
+    "url": "https://thesession.org/tunes/21",
+    "external": {
+      "thesession": 21
+    }
+  },
+  "tune_078": {
+    "id": "tune_078",
+    "name": "The Drunken Landlady",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Edor",
+      "Ador"
+    ],
+    "url": "https://thesession.org/tunes/363",
+    "external": {
+      "thesession": 363
+    }
+  },
+  "tune_079": {
+    "id": "tune_079",
+    "name": "Dinny O'Brien's",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Dmix"
+    ],
+    "url": "https://thesession.org/tunes/1667",
+    "external": {
+      "thesession": 1667
+    }
+  },
+  "tune_080": {
+    "id": "tune_080",
+    "name": "Jenny Picking Cockles",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Gmix"
+    ],
+    "url": "https://thesession.org/tunes/202",
+    "external": {
+      "thesession": 202
+    }
+  },
+  "tune_081": {
+    "id": "tune_081",
+    "name": "The Reconciliation",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "A",
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/1977",
+    "external": {
+      "thesession": 1977
+    }
+  },
+  "tune_082": {
+    "id": "tune_082",
+    "name": "The Skylark",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/632",
+    "external": {
+      "thesession": 632
+    }
+  },
+  "tune_083": {
+    "id": "tune_083",
+    "name": "The Killavil Fancy",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/576",
+    "external": {
+      "thesession": 576
+    }
+  },
+  "tune_084": {
+    "id": "tune_084",
+    "name": "The Lads Of Laois",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Em",
+      "Edor"
+    ],
+    "url": "https://thesession.org/tunes/58",
+    "external": {
+      "thesession": 58
+    }
+  },
+  "tune_085": {
+    "id": "tune_085",
+    "name": "The Flags Of Dublin",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/2527",
+    "external": {
+      "thesession": 2527
+    }
+  },
+  "tune_086": {
+    "id": "tune_086",
+    "name": "The Heather Breeze",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/411",
+    "external": {
+      "thesession": 411
+    }
+  },
+  "tune_087": {
+    "id": "tune_087",
+    "name": "The Silver Spire",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/240",
+    "external": {
+      "thesession": 240
+    }
+  },
+  "tune_088": {
+    "id": "tune_088",
+    "name": "Doctor O'Neill",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/1304",
+    "external": {
+      "thesession": 1304
+    }
+  },
+  "tune_089": {
+    "id": "tune_089",
+    "name": "The Rollicking Boys Of Tandragee",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Em",
+      "Dmix"
+    ],
+    "url": "https://thesession.org/tunes/1392",
+    "external": {
+      "thesession": 1392
+    }
+  },
+  "tune_090": {
+    "id": "tune_090",
+    "name": "The Gander In The Pratie Hole",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D",
+      "Dmix"
+    ],
+    "url": "https://thesession.org/tunes/401",
+    "external": {
+      "thesession": 401
+    }
+  },
+  "tune_091": {
+    "id": "tune_091",
+    "name": "Maudabawn Chapel",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/302",
+    "external": {
+      "thesession": 302
+    }
+  },
+  "tune_092": {
+    "id": "tune_092",
+    "name": "The Earl's Chair",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/221",
+    "external": {
+      "thesession": 221
+    }
+  },
+  "tune_093": {
+    "id": "tune_093",
+    "name": "The Rolling Waves",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/88",
+    "external": {
+      "thesession": 88
+    }
+  },
+  "tune_094": {
+    "id": "tune_094",
+    "name": "Out On The Ocean",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/108",
+    "external": {
+      "thesession": 108
+    }
+  },
+  "tune_095": {
+    "id": "tune_095",
+    "name": "The Sheep In The Boat",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Edor"
+    ],
+    "url": "https://thesession.org/tunes/2576",
+    "external": {
+      "thesession": 2576
+    }
+  },
+  "tune_096": {
+    "id": "tune_096",
+    "name": "I Ne'er Shall Wean Her",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/803",
+    "external": {
+      "thesession": 803
+    }
+  },
+  "tune_097": {
+    "id": "tune_097",
+    "name": "The Mouse In The Mug",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/362",
+    "external": {
+      "thesession": 362
+    }
+  },
+  "tune_098": {
+    "id": "tune_098",
+    "name": "The Mountain Road",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/68",
+    "external": {
+      "thesession": 68
+    }
+  },
+  "tune_099": {
+    "id": "tune_099",
+    "name": "Paddy Fahey's",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Dmix",
+      "C"
+    ],
+    "url": "https://thesession.org/tunes/1402",
+    "external": {
+      "thesession": 1402
+    }
   }
 }
