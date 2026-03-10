@@ -5,10 +5,16 @@
     "tradition": "irish",
     "venue": "Quinn's Neighbourhood Pub",
     "location": "Nashville, TN",
-    "schedule": "Every Wednesday, 6:30pm - 8:30pm",
+    "schedule": "Every Wednesday, 6:30pm – 8:30pm",
     "organizer": "Eamonn Dillon",
-    "description": "Weekly Irish traditional music session at Quinn's Neighbourhood Pub in Nashville.",
-    "url": "https://www.google.com/maps/place/quinns+neighborhood/data=!4m2!3m1!1s0x88647f20f0e9f743:0x7a23cf9e2f3baa6e",
+    "description": "Weekly Irish traditional music session at Quinn's Neighbourhood Pub in Nashville. All levels and instruments welcome — come listen or join in.",
+    "links": [
+      {
+        "label": "Google Maps",
+        "url": "https://www.google.com/maps/place/Quinn's+Neighbourhood+Pub+and+Eatery/@36.1416476,-86.7280317,17z",
+        "type": "other"
+      }
+    ],
     "listed": true
   }
 }

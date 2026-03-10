@@ -114,7 +114,8 @@ export const Series = z.object({
   schedule: z.string().optional(),       // human-readable, e.g. "Every Wednesday"
   organizer: z.string().optional(),      // display name
   description: z.string().optional(),    // blurb for series page
-  url: z.string().url().optional(),      // external link (Facebook group, website, etc.)
+  url: z.string().url().optional(),      // primary external link (website, etc.)
+  links: z.array(Link).default([]),      // additional links (Facebook, Google Maps, etc.)
   listed: z.boolean().default(true),     // false = hidden from public listings
 });
 
