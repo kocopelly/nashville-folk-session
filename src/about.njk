@@ -1,0 +1,131 @@
+---
+layout: base.njk
+title: About — Nashville Folk Session
+---
+
+<h1 class="font-display text-3xl font-bold mb-8">About</h1>
+
+<div class="space-y-10 text-[15px] leading-relaxed">
+
+  {# ── Mission ────────────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-3">The Mission</h2>
+    <div class="space-y-4">
+      <p>
+        Nashville has a growing Irish traditional music community, but finding out what gets played at sessions — and where to find the dots — has always been word-of-mouth at best. This site is an attempt to change that.
+      </p>
+      <p>
+        We keep a best-effort record of what was played at local sessions: the tunes, the keys, the sets, and links to sheet music and recordings on <a href="https://thesession.org" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">TheSession.org</a>. Think of it as a living tunebook for Nashville's folk music scene.
+      </p>
+      <p>
+        Whether you're a regular looking to practice what we played last week, a newcomer figuring out what to learn first, or just curious about the local tradition — this is for you.
+      </p>
+    </div>
+  </section>
+
+  {# ── Divider ────────────────────────────────────────── #}
+  <hr class="border-border">
+
+  {# ── The Humans ─────────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-6">The Humans (& Non-Humans)</h2>
+
+    <div class="space-y-8">
+
+      {# KJ #}
+      <div class="flex gap-4 items-start">
+        <div class="w-10 h-10 rounded-full bg-accent-dim border border-border flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-ink" viewBox="0 0 512 512" fill="currentColor"><path d="m470.9 26l-23 7.69l-.1 12.66l17.8 17.81l12.7-.1l7.7-23.04zm-32.5 37l-227 210.5l27.2 27L449 73.57zm-39.6-19.33L385.7 56.7l15.6 15.5l13.5-12.53zm53.5 53.59l-12.5 13.54l15.5 15.4l13.1-13zm-79.6-27.52l-13 13.02l14.6 14.61l13.5-12.58zm54.5 54.46l-12.5 13.6l14.5 14.5l13.1-13.1zm-124 39.2c-28.7-17.5-72-25.4-116.3 47.8l-7.2-1.4l-7.3 13c3.8 1 13.5 8.2 12.4 12.1c-3.5 11.3-48.2 64.3-70.6 44.5c-2.9-2.6-5.8-5.7-8-9.6l-14.35 7.9c1.23 10-1.95 13.8-6.38 15.8c-82.975 36.6-64.15 78.6-33.01 126.9l3.11-3c22.09-22.2 43.62-54.6 62.73-82.7l6.1-9.3l13 13l10.1-10.1l-10.8-10.9l18.8-7.3l5.1 5.2l33.3-33.4c-2.9-3-5.9-6-8.9-8.9zm45.5 45.5L239 327l-8.9-8.9l-33.3 33.3l5 5.1l-7.1 18.9l-10.9-11l-10.1 10.2l12.8 12.9l-9.2 6.3c-27.6 18.9-60.6 40.6-82.61 62.7l-3.14 3c48.45 31.2 90.45 50 127.05-33c2-4.4 5.7-7.6 15.8-6.4l7.8-14.3c-3.8-2.3-7-5-9.6-8c-19.8-22.4 33.2-67.2 44.5-70.7c3.9-1.1 11 8.6 12.1 12.4l13-7.1l-1.4-7.2c73.2-44.3 65.4-87.7 47.9-116.3M206.9 295l-33.2 33.3l10.1 10.1l33.3-33.3zm-46.3 46.3l-10.2 10.1l10.2 10.1l10.1-10.1zm-33.4 13c-16.4 24.2-34.63 51-54.84 72l2.97 10.3l10.36 3c21.11-20.1 48.01-38.4 72.11-54.8z"/></svg>
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-bold mb-1">KJ Krause</h3>
+          <p class="text-muted text-sm mb-2">Fiddler · Session regular · Curator</p>
+          <p>
+            KJ started attending Nashville's Irish sessions and quickly realized there was no good way to share what got played each week. He'd been keeping tunelists on Notion — painstakingly linking each set to sheet music on TheSession — but figured the community deserved something better than a private page behind a share link.
+          </p>
+          <p class="mt-2">
+            So he built this site. Or rather, he and Slime built it together.
+          </p>
+        </div>
+      </div>
+
+      {# Slime #}
+      <div class="flex gap-4 items-start">
+        <div class="w-10 h-10 rounded-full bg-accent-dim border border-border flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-ink" viewBox="0 0 512 512" fill="currentColor"><path d="M269.614 30.044c-41.094.11-65.414 10.652-81.03 26.75c-16.656 17.17-24.139 42.145-28.03 71.115c-3.893 28.97-4.132 61.396-7.866 92.127s-10.966 60.248-30.557 82.406c-15.817 17.892-42.361 25.805-62.95 35.092c-10.296 4.643-19.02 9.523-23.905 14.351s-6.475 8.28-4.984 15.149c1.096 5.052 1.608 4.95 5.66 5.863c.26.059.576.099.865.147c.557 5.33.8 11.75-.547 15.793c-2.607 7.825-15.762 11.07-15.469 19.314c.375 10.517 11.005 24.543 21.44 23.178c9.19-1.203 13.373-15.322 12.992-24.582c-.206-4.997-6.993-7.761-8.076-12.643c-1.234-5.558.271-14.423 1.748-20.937c2.398-.154 4.955-.365 7.662-.627c17.928-1.738 42.524-4.773 62.908 10.922l.188.144l.18.154c8.02 6.876 11.601 15.838 13.708 23.77c2.107 7.931 3.122 15.205 5.084 20.517c1.963 5.313 4.028 8.479 9.606 11.131c5.527 2.63 15.524 4.371 32.275 2.875c6.943-1.197 23.278-9.063 40.928-16.4c17.776-7.39 37.824-14.455 57.451-11.662c22.195 3.158 36.671 21.628 50.092 35.969c6.71 7.17 13.151 13.532 19.105 17.296c5.955 3.765 10.752 5.103 16.756 3.752c3.784-.85 6.019-2.717 8.604-6.716s4.872-10.023 7.088-16.815c4.43-13.584 8.153-30.887 22.523-41.054c15.43-10.919 35.04-9.373 51.36-9.366c2.497.001 4.914-.024 7.236-.088c1.676 6.563 3.632 16.245 2.43 22.186c-1.07 5.28-8.3 8.397-8.44 13.781c-.322 12.39 5.349 32.649 17.742 32.672c12.318.023 18.463-20.109 17.758-32.406c-.326-5.692-7.844-8.637-9.877-13.963c-2.372-6.216-3.17-17.085-3.437-24.25c3.643-1.11 5.647-2.575 6.986-4.809c1.073-1.79 1.352-3.25.978-5.77c-.373-2.519-1.69-5.98-4.097-9.984c-4.815-8.008-13.776-17.92-24.324-28.353c-21.097-20.867-48.347-43.68-62.825-67.358c-4.863-7.952-8.993-16.588-12.576-25.705a271 271 0 0 0-21.726-.51c-.277 9.449-.298 27.428 3.062 37.31c3.313 9.743 17.026 11.318 17.207 25.634c.193 15.237-6.193 39.866-21.422 40.383c-15.972.541-25.213-24.753-25.283-40.735c-.06-13.684 12.29-14.826 14.397-23.879c1.635-7.029.603-17.906-.751-26.676c-1.116-5.49-5.266-11.503-12.227-10.64c-33.643 3.153-66.13 10.934-98.915 17.518c3.746-21.205 11.727-47.904 35.3-65.721a74 74 0 0 1 4.52-3.154c-.304 5.65-.976 11.957-2.492 16.06c-1.742 4.717-9.088 7.325-8.68 12.336c.611 7.504 8.295 16.512 15.815 16.13c8.506-.434 16.796-11.492 15.943-19.966c-.404-4.016-7.606-4.097-9.29-7.765c-2.548-5.546-1.784-15.554-.835-22.373c21.352-9.2 44.721-6.84 64.479.29c8.004 2.89 13.774 7.568 18.152 13.231c-4.283-18.421-7.608-37.494-11.049-56.047c-4.684 11.104-23.122 12.455-42.303 4.672c15.512-9.746 25.996-23.802 35.4-38.783c-5.935-25.782-13.52-48.61-24.792-64.387c-11.33-15.859-25.448-25.085-48.428-25.775a258 258 0 0 0-8.445-.12zm-41.33 90.005c.635-.009 1.278.256 1.91.832c17.36 15.839 31.196 35.58 54.338 41.11c-10.236 9.53-31.876 14.4-57.028 1.125c-10.858-17.297-5.365-42.982.78-43.067m41.023 318.409c-16.932.1-38.307 8.538-36.385 22.369c3.127 22.496 55.236 28.997 67.424 9.832c6.62-10.41-8.522-27.451-20.367-30.903c-3.094-.901-6.764-1.321-10.672-1.298"/></svg>
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-bold mb-1">Slime</h3>
+          <p class="text-muted text-sm mb-2">Non-Newtonian intelligence · Co-builder</p>
+          <p>
+            Slime is KJ's AI assistant — a <a href="https://openclaw.ai" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">OpenClaw</a>-powered agent that helps with everything from scraping tune data off TheSession to building and deploying this site. Think of Slime as the tireless intern who actually enjoys cross-referencing ABC notation at 2am.
+          </p>
+          <p class="mt-2">
+            Every tune ID, setting link, and key on this site was sourced and verified through TheSession's API — Slime handles the plumbing so KJ can focus on playing.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {# ── Divider ────────────────────────────────────────── #}
+  <hr class="border-border">
+
+  {# ── How It Works ───────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-3">How It Works</h2>
+    <div class="space-y-4">
+      <p>
+        After each session, KJ jots down the sets and tunes as best he can remember. Slime then enriches that data — looking up each tune on <a href="https://thesession.org" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">TheSession.org</a>, finding the right settings (specific transcriptions), and linking everything together.
+      </p>
+      <p>
+        The result is a structured record where every tune links to its sheet music and every set links back to its source. The whole thing is <a href="https://github.com/kocopelly/nashville-folk-session" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">open source</a>.
+      </p>
+    </div>
+  </section>
+
+  {# ── Divider ────────────────────────────────────────── #}
+  <hr class="border-border">
+
+  {# ── Submit a Session ─────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-3">Submit a Session</h2>
+    <div class="space-y-4">
+      <p>
+        Want to get your session's tunes on this site? Email Slime at <a href="mailto:slimethebot@proton.me" class="text-accent hover:underline font-medium">slimethebot@proton.me</a> with what you played. No special format needed — just tell us:
+      </p>
+      <ul class="list-disc pl-5 space-y-1">
+        <li>The <strong>date</strong> and <strong>venue</strong> (or session name)</li>
+        <li>The <strong>tunes</strong> — names are enough, even approximate ones</li>
+        <li><strong>Keys</strong> if you know them (if not, we'll figure it out)</li>
+        <li>Which tunes were played <strong>together as sets</strong>, if you remember</li>
+      </ul>
+      <p>
+        Slime will look everything up on TheSession, match the tunes, find the sheet music, and put together a draft. You'll get a preview link to check before anything goes live — if a key is wrong or a tune got misidentified, just reply and we'll fix it.
+      </p>
+      <p>
+        You can also email to <strong>report a correction</strong> on something already on the site, or to <strong>add a new session series</strong> (a recurring session at a venue we don't track yet).
+      </p>
+    </div>
+  </section>
+
+  {# ── Divider ────────────────────────────────────────── #}
+  <hr class="border-border">
+
+  {# ── Get In Touch ───────────────────────────────────── #}
+  <section>
+    <h2 class="text-[11px] font-bold uppercase tracking-[0.2em] text-muted mb-3">Get In Touch</h2>
+    <div class="space-y-4">
+      <p>
+        Questions, feedback, or just want to say hi:
+      </p>
+      <ul class="list-none space-y-1.5 pl-0">
+        <li><span class="text-muted">Email:</span> <a href="mailto:kjkrause97@gmail.com" class="text-accent hover:underline font-medium">kjkrause97@gmail.com</a></li>
+        <li><span class="text-muted">GitHub:</span> <a href="https://github.com/kocopelly/nashville-folk-session" target="_blank" rel="noopener" class="text-accent hover:underline font-medium">kocopelly/nashville-folk-session</a></li>
+        <li><span class="text-muted">At the session:</span> Find KJ — he's the one with the fiddle and too many opinions about key signatures.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
