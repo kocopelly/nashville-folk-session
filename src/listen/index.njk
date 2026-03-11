@@ -5,19 +5,19 @@ title: "Listen — Nashville Folk Session"
 
 <div id="listen-app" class="max-w-lg mx-auto">
   <h1 class="font-display text-2xl font-black uppercase tracking-wider mb-2">Live Listen</h1>
-  <p class="text-muted text-sm mb-6">Passive tune ID powered by <a href="https://github.com/TomWyllie/folkfriend" class="underline">FolkFriend</a>. Tap set boundaries and fix misidentifications as you go.</p>
+  <p class="text-muted text-sm mb-6">Passive tune ID powered by <a href="https://github.com/TomWyllie/folkfriend" class="underline hover:text-ink transition-colors">FolkFriend</a>. Tap set boundaries and fix misidentifications as you go.</p>
 
   <!-- Controls -->
   <div class="flex items-center gap-4 mb-4">
-    <button id="btn-listen" class="border-2 border-ink px-5 py-2 text-xs uppercase tracking-widest font-semibold hover:bg-ink hover:text-bg transition-colors">
+    <button id="btn-listen" class="border-2 border-ink px-5 py-2 text-xs uppercase tracking-widest font-semibold hover:bg-ink hover:text-bg transition-colors cursor-pointer active:scale-95">
       Start Listening
     </button>
     <span id="status" class="text-muted text-xs uppercase tracking-widest">Ready</span>
   </div>
 
   <div class="mb-4 flex items-center gap-4 text-xs text-muted">
-    <label>Query every
-      <select id="query-interval" class="border border-border bg-bg text-ink px-1 py-0.5">
+    <label class="flex items-center gap-1">Query every
+      <select id="query-interval" class="border border-border bg-bg text-ink px-1.5 py-1 rounded-sm cursor-pointer hover:border-ink transition-colors">
         <option value="8">8s</option>
         <option value="12">12s</option>
         <option value="15" selected>15s</option>
@@ -25,9 +25,9 @@ title: "Listen — Nashville Folk Session"
         <option value="30">30s</option>
       </select>
     </label>
-    <label>Min score
+    <label class="flex items-center gap-1">Min score
       <input id="min-score" type="number" min="0" max="1" step="0.05" value="0.25"
-             class="border border-border bg-bg text-ink px-1 py-0.5 w-16">
+             class="border border-border bg-bg text-ink px-1.5 py-1 w-16 rounded-sm hover:border-ink transition-colors">
     </label>
   </div>
 
@@ -39,44 +39,201 @@ title: "Listen — Nashville Folk Session"
   </div>
 
   <!-- Tune log -->
-  <div id="tune-log" class="space-y-1 mb-4"></div>
+  <div id="tune-log" class="mb-2"></div>
 
-  <!-- Bottom actions (visible when listening or has items) -->
-  <div id="bottom-actions" class="hidden space-y-2">
-    <div class="flex gap-2">
-      <button id="btn-new-set" class="border border-ink px-3 py-1.5 text-xs uppercase tracking-widest font-semibold hover:bg-ink hover:text-bg transition-colors flex-none">
-        ── New Set ──
-      </button>
-      <button id="btn-clear" class="border border-border px-3 py-1.5 text-xs uppercase tracking-widest text-muted hover:text-ink hover:border-ink transition-colors flex-none ml-auto">
-        Clear All
-      </button>
-    </div>
-    <!-- Manual add -->
-    <form id="manual-add" class="flex gap-2">
-      <input id="manual-input" type="text" placeholder="Add tune by name..."
-             class="border border-border bg-bg text-ink px-3 py-1.5 text-sm flex-1 placeholder:text-muted/50">
-      <button type="submit" class="border border-ink px-3 py-1.5 text-xs uppercase tracking-widest font-semibold hover:bg-ink hover:text-bg transition-colors flex-none">
-        Add
-      </button>
-    </form>
+  <!-- Bottom insert strip (always at the tail of the list) -->
+  <div id="bottom-strip" class="hidden"></div>
+
+  <!-- Clear -->
+  <div id="clear-row" class="hidden mt-6 pt-4 border-t border-border">
+    <button id="btn-clear" class="text-xs text-muted hover:text-ink transition-colors cursor-pointer uppercase tracking-widest">
+      Clear all
+    </button>
   </div>
 </div>
+
+<style>
+  /* ── Insert strip: the hoverable zone between items ── */
+  .insert-strip {
+    position: relative;
+    height: 6px;
+    cursor: pointer;
+    transition: height 0.15s ease;
+  }
+  .insert-strip:hover,
+  .insert-strip:focus-within {
+    height: auto;
+  }
+  .insert-strip .insert-actions {
+    display: none;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0;
+  }
+  .insert-strip:hover .insert-actions,
+  .insert-strip:focus-within .insert-actions {
+    display: flex;
+  }
+  .insert-strip .insert-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: transparent;
+    transition: background 0.15s;
+  }
+  .insert-strip:hover .insert-line {
+    background: var(--color-border);
+  }
+
+  /* ── Bottom strip: always visible, no hover required ── */
+  .bottom-insert-strip .insert-actions {
+    display: flex !important;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+
+  /* ── Insert buttons ── */
+  .insert-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--color-border);
+    color: var(--color-muted);
+    background: var(--color-bg);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .insert-btn:hover {
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+  .insert-btn:active {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+
+  /* ── Tune row ── */
+  .tune-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0;
+  }
+  .tune-row .tune-delete {
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .tune-row:hover .tune-delete {
+    opacity: 1;
+  }
+  .tune-delete {
+    background: none;
+    border: none;
+    color: var(--color-muted);
+    cursor: pointer;
+    padding: 0.125rem 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .tune-delete:hover {
+    color: var(--color-ink);
+  }
+
+  /* ── Alternatives dropdown ── */
+  .alts-panel {
+    margin-left: 1.75rem;
+    margin-bottom: 0.25rem;
+    padding: 0.375rem 0.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+  .alt-pick {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.25rem 0.375rem;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .alt-pick:hover {
+    color: var(--color-ink);
+    background: var(--color-hover);
+  }
+
+  /* ── Swap button ── */
+  .swap-btn {
+    background: none;
+    border: none;
+    color: var(--color-muted);
+    cursor: pointer;
+    padding: 0.125rem 0.25rem;
+    font-size: 0.6875rem;
+    transition: color 0.15s;
+  }
+  .swap-btn:hover {
+    color: var(--color-ink);
+  }
+
+  /* ── Divider row ── */
+  .divider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+  .divider-row .divider-line {
+    flex: 1;
+    border-top: 2px solid var(--color-ink);
+  }
+
+  /* ── Manual input inside strip ── */
+  .inline-manual-input {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    width: 10rem;
+    transition: border-color 0.15s;
+  }
+  .inline-manual-input:focus {
+    outline: none;
+    border-color: var(--color-ink);
+  }
+  .inline-manual-input::placeholder {
+    color: var(--color-muted);
+    opacity: 0.5;
+  }
+</style>
 
 <script type="module">
   const btn = document.getElementById('btn-listen');
   const statusEl = document.getElementById('status');
   const tuneLogEl = document.getElementById('tune-log');
-  const bottomActions = document.getElementById('bottom-actions');
+  const bottomStrip = document.getElementById('bottom-strip');
+  const clearRow = document.getElementById('clear-row');
   const intervalSel = document.getElementById('query-interval');
   const minScoreInput = document.getElementById('min-score');
   const debugEl = document.getElementById('debug');
   const dbgFrames = document.getElementById('dbg-frames');
   const dbgQueries = document.getElementById('dbg-queries');
   const dbgLast = document.getElementById('dbg-last');
-  const btnNewSet = document.getElementById('btn-new-set');
   const btnClear = document.getElementById('btn-clear');
-  const manualForm = document.getElementById('manual-add');
-  const manualInput = document.getElementById('manual-input');
 
   let listening = false;
   let worker = null;
@@ -88,10 +245,6 @@ title: "Listen — Nashville Folk Session"
   let queriesSent = 0;
 
   // ── Data Model ──
-  // Each item is either:
-  //   { type: 'tune', tuneId, name, score, url, alternatives: [{tuneId, name, score, url}] }
-  //   { type: 'tune', name, manual: true }   (manually added, no link)
-  //   { type: 'divider' }
   let items = [];
 
   function setStatus(msg) { statusEl.textContent = msg; }
@@ -102,79 +255,147 @@ title: "Listen — Nashville Folk Session"
     if (lastResult !== undefined) dbgLast.textContent = `last: ${lastResult}`;
   }
 
+  // ── Insert strip HTML (reused between items and at bottom) ──
+  function insertStripHTML(idx, isBottom) {
+    const cls = isBottom ? 'bottom-insert-strip' : 'insert-strip';
+    return `<div class="${cls}" data-insert="${idx}">
+      ${isBottom ? '' : '<div class="insert-line"></div>'}
+      <div class="insert-actions">
+        <button class="insert-btn do-set-break" data-insert="${idx}" title="Insert set break">── set break ──</button>
+        <button class="insert-btn do-add-tune" data-insert="${idx}" title="Add a tune by name">+ tune</button>
+      </div>
+    </div>`;
+  }
+
   // ── Render ──
   function render() {
-    bottomActions.classList.toggle('hidden', items.length === 0 && !listening);
+    const hasItems = items.length > 0;
+    clearRow.classList.toggle('hidden', !hasItems);
 
-    if (items.length === 0) {
+    if (!hasItems) {
       tuneLogEl.innerHTML = listening
         ? '<p class="text-muted text-sm italic">Listening... no tunes detected yet.</p>'
         : '';
+      bottomStrip.classList.toggle('hidden', !listening);
+      bottomStrip.innerHTML = listening ? insertStripHTML(0, true) : '';
+      bindInsertActions(bottomStrip);
       return;
     }
 
-    tuneLogEl.innerHTML = items.map((item, idx) => {
+    let html = '';
+    items.forEach((item, idx) => {
+      // Insert strip between items (not before first)
+      if (idx > 0) {
+        html += insertStripHTML(idx, false);
+      }
+
       if (item.type === 'divider') {
-        return `<div class="flex items-center gap-2 py-2" data-idx="${idx}">
-          <div class="flex-1 border-t border-ink"></div>
-          <span class="text-xs uppercase tracking-widest text-muted font-semibold">set break</span>
-          <div class="flex-1 border-t border-ink"></div>
-          <button class="item-delete text-muted hover:text-ink text-xs" data-idx="${idx}" title="Remove divider">✕</button>
+        html += `<div class="divider-row" data-idx="${idx}">
+          <div class="divider-line"></div>
+          <span class="text-xs uppercase tracking-widest text-muted font-semibold select-none">set break</span>
+          <div class="divider-line"></div>
+          <button class="tune-delete" data-idx="${idx}" title="Remove" style="opacity:0.4">✕</button>
         </div>`;
+        return;
       }
 
       const link = item.url
-        ? `<a href="${item.url}" target="_blank" rel="noopener" class="underline hover:text-muted">${item.name}</a>`
-        : `<span class="italic">${item.name}</span>`;
+        ? `<a href="${item.url}" target="_blank" rel="noopener" class="underline hover:text-muted transition-colors">${esc(item.name)}</a>`
+        : `<span class="italic">${esc(item.name)}</span>`;
 
       const scoreTag = item.score != null
-        ? `<span class="text-muted text-xs ml-1">(${(item.score * 100).toFixed(0)}%)</span>`
-        : '<span class="text-muted text-xs ml-1">(manual)</span>';
+        ? `<span class="text-muted text-xs ml-1">${(item.score * 100).toFixed(0)}%</span>`
+        : `<span class="text-muted text-xs ml-1">manual</span>`;
 
       const hasAlts = item.alternatives && item.alternatives.length > 0;
       const altBtn = hasAlts
-        ? `<button class="item-swap text-muted hover:text-ink text-xs ml-1" data-idx="${idx}" title="Show alternatives">▾</button>`
+        ? `<button class="swap-btn" data-idx="${idx}" title="Show alternatives">▾</button>`
         : '';
 
-      // Insert-divider button between items
-      const insertBtn = `<button class="insert-divider text-muted/30 hover:text-ink text-xs w-full text-center py-0.5 leading-none opacity-0 hover:opacity-100 transition-opacity" data-idx="${idx}" title="Insert set break here">┄┄┄</button>`;
-
-      return `${idx > 0 ? insertBtn : ''}
-        <div class="flex items-center gap-2 py-1 group" data-idx="${idx}">
-          <span class="text-muted text-xs w-5 text-right flex-none">${tuneNumber(idx)}</span>
-          <span class="text-sm flex-1">${link}${scoreTag}${altBtn}</span>
-          <button class="item-delete text-muted hover:text-ink text-xs opacity-0 group-hover:opacity-100 transition-opacity" data-idx="${idx}" title="Remove">✕</button>
-        </div>
-        <div id="alts-${idx}" class="hidden ml-7 mb-1 space-y-0.5"></div>`;
-    }).join('');
-
-    // Bind events
-    tuneLogEl.querySelectorAll('.item-delete').forEach(el => {
-      el.addEventListener('click', () => {
-        const idx = parseInt(el.dataset.idx);
-        items.splice(idx, 1);
-        render();
-      });
+      html += `<div class="tune-row" data-idx="${idx}">
+        <span class="text-muted text-xs w-5 text-right flex-none select-none">${tuneNumber(idx)}</span>
+        <span class="text-sm flex-1">${link} ${scoreTag}${altBtn}</span>
+        <button class="tune-delete" data-idx="${idx}" title="Remove">✕</button>
+      </div>
+      <div id="alts-${idx}" class="hidden"></div>`;
     });
 
-    tuneLogEl.querySelectorAll('.item-swap').forEach(el => {
-      el.addEventListener('click', () => {
-        const idx = parseInt(el.dataset.idx);
-        toggleAlts(idx);
-      });
-    });
+    tuneLogEl.innerHTML = html;
 
-    tuneLogEl.querySelectorAll('.insert-divider').forEach(el => {
+    // Bottom strip: always the insert point after last item
+    bottomStrip.classList.remove('hidden');
+    bottomStrip.innerHTML = insertStripHTML(items.length, true);
+
+    bindAllEvents();
+  }
+
+  function bindInsertActions(container) {
+    container.querySelectorAll('.do-set-break').forEach(el => {
       el.addEventListener('click', () => {
-        const idx = parseInt(el.dataset.idx);
+        const idx = parseInt(el.dataset.insert);
+        // Don't insert consecutive dividers
+        if (items[idx - 1]?.type === 'divider' || items[idx]?.type === 'divider') return;
         items.splice(idx, 0, { type: 'divider' });
         render();
       });
     });
+
+    container.querySelectorAll('.do-add-tune').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.insert);
+        showInlineInput(el, idx);
+      });
+    });
+  }
+
+  function showInlineInput(anchorEl, idx) {
+    // Replace the "+ tune" button with an inline text input
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'inline-manual-input';
+    input.placeholder = 'Tune name...';
+    anchorEl.parentNode.replaceChild(input, anchorEl);
+    input.focus();
+
+    const commit = () => {
+      const name = input.value.trim();
+      if (name) {
+        items.splice(idx, 0, { type: 'tune', name, manual: true });
+      }
+      render();
+    };
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); commit(); }
+      if (e.key === 'Escape') { render(); }
+    });
+    input.addEventListener('blur', commit);
+  }
+
+  function bindAllEvents() {
+    // Delete buttons
+    tuneLogEl.querySelectorAll('.tune-delete').forEach(el => {
+      el.addEventListener('click', () => {
+        items.splice(parseInt(el.dataset.idx), 1);
+        render();
+      });
+    });
+
+    // Swap buttons (show alternatives)
+    tuneLogEl.querySelectorAll('.swap-btn').forEach(el => {
+      el.addEventListener('click', () => toggleAlts(parseInt(el.dataset.idx)));
+    });
+
+    // Insert strips within the log
+    bindInsertActions(tuneLogEl);
+    // Bottom strip
+    bindInsertActions(bottomStrip);
+
+    // Divider delete (use same selector)
+    // Already handled by .tune-delete above
   }
 
   function tuneNumber(idx) {
-    // Count tune items (not dividers) up to this index
     if (items[idx]?.type !== 'tune') return '';
     let n = 0;
     for (let i = 0; i <= idx; i++) {
@@ -183,22 +404,31 @@ title: "Listen — Nashville Folk Session"
     return `${n}.`;
   }
 
+  function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
   function toggleAlts(idx) {
     const altsEl = document.getElementById(`alts-${idx}`);
     if (!altsEl) return;
     const item = items[idx];
-    if (!item.alternatives) return;
+    if (!item.alternatives || item.alternatives.length === 0) return;
 
     if (!altsEl.classList.contains('hidden')) {
       altsEl.classList.add('hidden');
+      altsEl.innerHTML = '';
       return;
     }
 
-    altsEl.innerHTML = item.alternatives.map((alt, ai) =>
-      `<button class="alt-pick text-xs text-muted hover:text-ink block py-0.5" data-idx="${idx}" data-alt="${ai}">
-        → <span class="underline">${alt.name}</span> (${(alt.score * 100).toFixed(0)}%)
-      </button>`
-    ).join('');
+    altsEl.innerHTML = `<div class="alts-panel">${
+      item.alternatives.map((alt, ai) =>
+        `<button class="alt-pick" data-idx="${idx}" data-alt="${ai}">
+          → ${esc(alt.name)} <span class="text-muted">(${(alt.score * 100).toFixed(0)}%)</span>
+        </button>`
+      ).join('')
+    }</div>`;
 
     altsEl.classList.remove('hidden');
 
@@ -206,20 +436,11 @@ title: "Listen — Nashville Folk Session"
       el.addEventListener('click', () => {
         const altIdx = parseInt(el.dataset.alt);
         const alt = item.alternatives[altIdx];
-        // Swap: current becomes an alternative, picked alt becomes current
         const oldCurrent = { tuneId: item.tuneId, name: item.name, score: item.score, url: item.url };
         const newAlts = [...item.alternatives];
         newAlts.splice(altIdx, 1);
         newAlts.unshift(oldCurrent);
-
-        items[idx] = {
-          type: 'tune',
-          tuneId: alt.tuneId,
-          name: alt.name,
-          score: alt.score,
-          url: alt.url,
-          alternatives: newAlts,
-        };
+        items[idx] = { type: 'tune', tuneId: alt.tuneId, name: alt.name, score: alt.score, url: alt.url, alternatives: newAlts };
         render();
       });
     });
@@ -227,20 +448,14 @@ title: "Listen — Nashville Folk Session"
 
   // ── Handle folkfriend results ──
   function handleResults(results, contour) {
-    if (!results || results.length === 0) {
-      updateDebug('no results');
-      return;
-    }
+    if (!results || results.length === 0) { updateDebug('no results'); return; }
 
     const minScore = parseFloat(minScoreInput.value) || 0.25;
     const top = results[0];
     updateDebug(`${top.display_name} (${(top.score * 100).toFixed(0)}%)`);
     console.log(`[main] top: "${top.display_name}" score=${top.score.toFixed(3)}`);
 
-    if (top.score < minScore) {
-      console.log(`[main] below threshold (${minScore})`);
-      return;
-    }
+    if (top.score < minScore) { console.log(`[main] below threshold`); return; }
 
     const tuneId = top.setting.tune_id;
 
@@ -248,16 +463,14 @@ title: "Listen — Nashville Folk Session"
     for (let i = items.length - 1; i >= 0; i--) {
       if (items[i].type === 'tune') {
         if (items[i].tuneId === tuneId) {
-          // Update score if better
-          if (top.score > items[i].score) items[i].score = top.score;
+          if (top.score > (items[i].score || 0)) items[i].score = top.score;
           render();
           return;
         }
-        break; // only check the last tune
+        break;
       }
     }
 
-    // Build alternatives (next 2)
     const alternatives = results.slice(1, 3).map(r => ({
       tuneId: r.setting.tune_id,
       name: r.display_name,
@@ -266,8 +479,7 @@ title: "Listen — Nashville Folk Session"
     }));
 
     items.push({
-      type: 'tune',
-      tuneId,
+      type: 'tune', tuneId,
       name: top.display_name,
       score: top.score,
       url: `https://thesession.org/tunes/${tuneId}`,
@@ -275,7 +487,6 @@ title: "Listen — Nashville Folk Session"
     });
 
     render();
-    // Auto-scroll to bottom
     tuneLogEl.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
@@ -285,21 +496,16 @@ title: "Listen — Nashville Folk Session"
     framesSent = 0;
     queriesSent = 0;
     debugEl.classList.remove('hidden');
-    bottomActions.classList.remove('hidden');
     updateDebug('—');
 
     worker = new Worker('/listen/listen-worker.js', { type: 'module' });
-    console.log('[main] worker created');
 
     worker.onmessage = ({ data }) => {
       switch (data.type) {
-        case 'status':
-          setStatus(data.msg);
-          break;
+        case 'status': setStatus(data.msg); break;
         case 'ready':
           workerReady = true;
           setStatus('Listening...');
-          console.log('[main] worker ready');
           startQueryLoop();
           break;
         case 'results':
@@ -308,20 +514,15 @@ title: "Listen — Nashville Folk Session"
           break;
         case 'no-match':
           queriesSent++;
-          console.log('[main] no match:', data.reason);
           updateDebug(`no match: ${data.reason}`);
           break;
         case 'error':
-          console.error('[main] worker error:', data.msg);
           setStatus(`Error: ${data.msg}`);
           break;
       }
     };
 
-    worker.onerror = (e) => {
-      console.error('[main] worker onerror:', e.message);
-      setStatus(`Worker error: ${e.message}`);
-    };
+    worker.onerror = (e) => setStatus(`Worker error: ${e.message}`);
 
     try {
       micStream = await navigator.mediaDevices.getUserMedia({
@@ -333,22 +534,16 @@ title: "Listen — Nashville Folk Session"
     }
 
     audioCtx = new AudioContext();
-    const sampleRate = audioCtx.sampleRate;
-    console.log('[main] sample rate:', sampleRate);
-
-    worker.postMessage({ type: 'init', sampleRate });
+    worker.postMessage({ type: 'init', sampleRate: audioCtx.sampleRate });
 
     const source = audioCtx.createMediaStreamSource(micStream);
     const processor = audioCtx.createScriptProcessor(1024, 1, 1);
-
     processor.onaudioprocess = (e) => {
       if (!workerReady) return;
-      const pcm = e.inputBuffer.getChannelData(0);
-      worker.postMessage({ type: 'audio', pcm: new Float32Array(pcm) });
+      worker.postMessage({ type: 'audio', pcm: new Float32Array(e.inputBuffer.getChannelData(0)) });
       framesSent++;
       if (framesSent % 50 === 0) updateDebug();
     };
-
     source.connect(processor);
     processor.connect(audioCtx.destination);
 
@@ -358,14 +553,10 @@ title: "Listen — Nashville Folk Session"
   }
 
   function startQueryLoop() {
-    const intervalSec = parseInt(intervalSel.value) || 15;
-    console.log(`[main] query every ${intervalSec}s`);
+    const sec = parseInt(intervalSel.value) || 15;
     queryTimer = setInterval(() => {
-      if (workerReady) {
-        console.log(`[main] query (${framesSent} frames)`);
-        worker.postMessage({ type: 'query' });
-      }
-    }, intervalSec * 1000);
+      if (workerReady) worker.postMessage({ type: 'query' });
+    }, sec * 1000);
   }
 
   function stopListening() {
@@ -373,42 +564,18 @@ title: "Listen — Nashville Folk Session"
     if (micStream) micStream.getTracks().forEach(t => t.stop());
     if (audioCtx) audioCtx.close();
     if (worker) worker.terminate();
-
-    worker = null;
-    audioCtx = null;
-    micStream = null;
-    workerReady = false;
-    listening = false;
-
+    worker = null; audioCtx = null; micStream = null;
+    workerReady = false; listening = false;
     btn.textContent = 'Start Listening';
     setStatus(items.length > 0 ? `Stopped — ${items.filter(i => i.type === 'tune').length} tune(s)` : 'Stopped');
     render();
   }
 
-  // ── UI events ──
   btn.addEventListener('click', () => listening ? stopListening() : startListening());
-
-  btnNewSet.addEventListener('click', () => {
-    // Don't add consecutive dividers
-    if (items.length > 0 && items[items.length - 1].type === 'divider') return;
-    items.push({ type: 'divider' });
-    render();
-    tuneLogEl.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
 
   btnClear.addEventListener('click', () => {
     if (items.length > 0 && !confirm('Clear all items?')) return;
     items = [];
     render();
-  });
-
-  manualForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = manualInput.value.trim();
-    if (!name) return;
-    items.push({ type: 'tune', name, manual: true });
-    manualInput.value = '';
-    render();
-    tuneLogEl.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 </script>
