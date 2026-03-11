@@ -777,5 +777,167 @@
     ],
     "notes": "",
     "links": []
+  },
+  {
+    "id": "sess_2026-02-25",
+    "seriesId": "quinns-irish",
+    "date": "2026-02-25",
+    "sets": [
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_072",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_073",
+            "key": "Dmix"
+          },
+          {
+            "tuneId": "tune_074",
+            "key": "G"
+          }
+        ],
+        "label": "mixed"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_086",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_030",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_075",
+            "key": "D"
+          }
+        ],
+        "label": "jigs"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_076",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_077",
+            "key": "G"
+          }
+        ],
+        "label": "slip jigs"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_051",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_087",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_018",
+            "key": "Em"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_078",
+            "key": "Ddor"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_079",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_080",
+            "key": "Amix"
+          }
+        ],
+        "label": "jigs"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_019",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_031",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_089",
+            "key": "G"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_046",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_081",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_082",
+            "key": "G"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_083",
+            "key": "D"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_088",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_084",
+            "key": "Bm"
+          },
+          {
+            "tuneId": "tune_085",
+            "key": "D"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_090",
+            "key": "D"
+          }
+        ],
+        "label": "jigs"
+      }
+    ]
   }
 ]
