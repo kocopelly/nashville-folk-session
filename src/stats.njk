@@ -103,6 +103,10 @@ permalink: /stats/
       <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Type Mix</h3>
       <div id="chart-type-mix" class="w-full"></div>
     </div>
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Key Distribution</h3>
+      <div id="chart-key-mix" class="w-full"></div>
+    </div>
   </div>
 </section>
 
@@ -236,6 +240,14 @@ permalink: /stats/
       <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.components }}</div>
       <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Components</div>
     </div>
+  </div>
+
+  {# Layout selector #}
+  <div class="flex justify-center gap-2 mb-3">
+    <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-layout="force">Force</button>
+    <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="circular">Circular</button>
+    <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="radial">Radial</button>
+    <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="type-cluster">By Type</button>
   </div>
 
   {# Force-directed graph #}
@@ -435,7 +447,7 @@ permalink: /stats/
         <tr class="border-b-2 border-ink">
           <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-default>Name</th>
           <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors">Type</th>
-          <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors">Keys</th>
+          <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors">Key</th>
           <th class="text-right py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-method="number">Plays</th>
           <th class="text-right py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-method="number">Sessions</th>
         </tr>
@@ -445,7 +457,7 @@ permalink: /stats/
         <tr class="border-b border-border hover:bg-hover transition-colors">
           <td class="py-2 px-2 font-semibold">{{ tune.name }}</td>
           <td class="py-2 px-2 text-muted capitalize">{{ tune.type }}</td>
-          <td class="py-2 px-2 font-mono text-xs">{{ tune.keysDisplay }}</td>
+          <td class="py-2 px-2 font-mono text-xs">{{ tune.bestKey }}</td>
           <td class="py-2 px-2 text-right font-display">{{ tune.count }}</td>
           <td class="py-2 px-2 text-right font-display">{{ tune.sessionCount }}</td>
         </tr>
@@ -637,40 +649,111 @@ permalink: /stats/
       document.getElementById('chart-session-size')));
   }
 
-  // ── Chart: Type Mix Over Time ──
-  if (ts.dates.length >= 2) {
-    const types = Object.keys(ts.typePerSession);
-    const series = [{}];
-    const data = [ts.dates];
-    for (const type of types) {
-      series.push({
-        label: type.charAt(0).toUpperCase() + type.slice(1),
-        stroke: TYPE_COLORS[type] || MUTED,
-        width: 2,
-        points: { size: 4, fill: BG, stroke: TYPE_COLORS[type] || MUTED },
-      });
-      data.push(ts.typePerSession[type]);
+  // ── Helper: build stacked bar chart ──
+  function stackedBarChart(container, rawSeriesMap, colorMap, labelSuffix) {
+    if (ts.dates.length < 2) return null;
+    const keys = Object.keys(rawSeriesMap);
+    // Sort by total descending so biggest category is at bottom
+    keys.sort((a, b) => {
+      const sumA = rawSeriesMap[a].reduce((s, v) => s + v, 0);
+      const sumB = rawSeriesMap[b].reduce((s, v) => s + v, 0);
+      return sumB - sumA;
+    });
+
+    // Stack the data: each series = sum of itself + all below
+    const stacked = [];
+    for (let k = 0; k < keys.length; k++) {
+      const vals = [];
+      for (let j = 0; j < ts.dates.length; j++) {
+        let sum = 0;
+        for (let i = 0; i <= k; i++) {
+          sum += rawSeriesMap[keys[i]][j];
+        }
+        vals.push(sum);
+      }
+      stacked.push(vals);
     }
+
+    // Build series configs (render from top to bottom for visual stacking)
+    const series = [{}];
+    const bands = [];
+    const data = [ts.dates];
+    for (let k = keys.length - 1; k >= 0; k--) {
+      const key = keys[k];
+      const color = colorMap[key] || MUTED;
+      series.push({
+        label: key.charAt(0).toUpperCase() + key.slice(1) + (labelSuffix || ''),
+        stroke: color,
+        width: 0,
+        fill: color + 'cc',
+        paths: uPlot.paths.bars({ size: [0.7], align: 0 }),
+        points: { show: false },
+      });
+      data.push(stacked[k]);
+      // Band to fill between this series and the one below
+      if (k > 0) {
+        bands.push({
+          series: [data.length - 1, data.length],
+          fill: color + 'cc',
+        });
+      }
+    }
+
     const opts = {
       width: chartWidth(),
-      height: 220,
+      height: 240,
       padding: [10, 10, 0, 0],
       cursor: { show: true },
-      axes: [dateAxis(), Object.assign(valAxis(''), {
-        values: (u, vals) => vals.map(v => v + '%'),
-      })],
+      axes: [dateAxis(), valAxis('')],
       series,
     };
-    uPlots.push(new uPlot(opts, data, document.getElementById('chart-type-mix')));
+    return new uPlot(opts, data, container);
   }
 
-  // ── Network Force-Directed Graph ──
+  // ── Chart: Type Mix Over Time (stacked bars) ──
+  {
+    const el = document.getElementById('chart-type-mix');
+    const chart = stackedBarChart(el, ts.typePerSession, TYPE_COLORS, ' %');
+    if (chart) uPlots.push(chart);
+  }
+
+  // ── Chart: Key Distribution Over Time (stacked bars) ──
+  if (ts.keyPerSession) {
+    // Color map for keys
+    const KEY_COLORS = {
+      D: '#6a5020', G: '#2a5a2a', A: '#5a2a5a', Em: '#2a3a6a', Edor: '#2a3a6a',
+      Ador: '#5a2a5a', Dmix: '#8a6a20', Gmix: '#3a6a3a', Amix: '#6a3a6a',
+      Bm: '#6a3a1a', Am: '#5a2a5a', Ddor: '#8a6a20',
+    };
+    const el = document.getElementById('chart-key-mix');
+    // Only show top 6 keys to avoid clutter, group rest as "Other"
+    const keysArr = Object.keys(ts.keyPerSession);
+    const keyTotals = keysArr.map(k => [k, ts.keyPerSession[k].reduce((a, b) => a + b, 0)]);
+    keyTotals.sort((a, b) => b[1] - a[1]);
+    const topKeys = keyTotals.slice(0, 6).map(k => k[0]);
+    const filteredMap = {};
+    const otherVals = new Array(ts.dates.length).fill(0);
+    for (const k of keysArr) {
+      if (topKeys.includes(k)) {
+        filteredMap[k] = ts.keyPerSession[k];
+      } else {
+        ts.keyPerSession[k].forEach((v, i) => otherVals[i] += v);
+      }
+    }
+    if (otherVals.some(v => v > 0)) filteredMap['Other'] = otherVals;
+    KEY_COLORS['Other'] = '#9a9aaa';
+    const chart = stackedBarChart(el, filteredMap, KEY_COLORS, '');
+    if (chart) uPlots.push(chart);
+  }
+
+  // ── Network Graph with Multiple Layouts ──
   if (net.nodes.length > 0) {
     const canvas = document.getElementById('network-canvas');
     const container = document.getElementById('network-container');
     const tooltip = document.getElementById('network-tooltip');
     const W = container.clientWidth || 672;
     const H = 450;
+    const PAD = 30;
     const dpr = window.devicePixelRatio || 1;
     canvas.width = W * dpr;
     canvas.height = H * dpr;
@@ -679,91 +762,131 @@ permalink: /stats/
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
 
-    // Build node/edge structures
     const nodeMap = {};
-    const nodes = net.nodes.map((n, i) => {
-      const angle = (2 * Math.PI * i) / net.nodes.length;
-      const obj = {
-        ...n,
-        x: W / 2 + W * 0.35 * Math.cos(angle),
-        y: H / 2 + H * 0.35 * Math.sin(angle),
-        vx: 0,
-        vy: 0,
-      };
+    const nodes = net.nodes.map((n) => {
+      const obj = { ...n, x: W / 2, y: H / 2 };
       nodeMap[n.id] = obj;
       return obj;
     });
     const edges = net.edges.filter(e => nodeMap[e.source] && nodeMap[e.target]);
-
-    // Fruchterman-Reingold layout
-    const area = W * H;
-    const k = Math.sqrt(area / Math.max(nodes.length, 1)) * 0.85;
-    const ITERS = 400;
-
-    for (let iter = 0; iter < ITERS; iter++) {
-      const temp = (W / 10) * (1 - iter / ITERS);
-
-      // Repulsive forces
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].vx = 0;
-        nodes[i].vy = 0;
-        for (let j = 0; j < nodes.length; j++) {
-          if (i === j) continue;
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 0.1);
-          const force = (k * k) / dist;
-          nodes[i].vx += (dx / dist) * force;
-          nodes[i].vy += (dy / dist) * force;
-        }
-      }
-
-      // Attractive forces along edges
-      for (const e of edges) {
-        const s = nodeMap[e.source];
-        const t = nodeMap[e.target];
-        const dx = s.x - t.x;
-        const dy = s.y - t.y;
-        const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 0.1);
-        const force = (dist * dist) / k * (0.5 + e.weight * 0.5);
-        s.vx -= (dx / dist) * force;
-        s.vy -= (dy / dist) * force;
-        t.vx += (dx / dist) * force;
-        t.vy += (dy / dist) * force;
-      }
-
-      // Gravity toward center
-      for (const n of nodes) {
-        const dx = W / 2 - n.x;
-        const dy = H / 2 - n.y;
-        n.vx += dx * 0.01;
-        n.vy += dy * 0.01;
-      }
-
-      // Apply with temperature capping
-      for (const n of nodes) {
-        const dist = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
-        if (dist > 0) {
-          const capped = Math.min(dist, temp);
-          n.x += (n.vx / dist) * capped;
-          n.y += (n.vy / dist) * capped;
-        }
-        n.x = Math.max(25, Math.min(W - 25, n.x));
-        n.y = Math.max(25, Math.min(H - 25, n.y));
-      }
-    }
-
-    // Render
     const maxWeight = Math.max(1, ...edges.map(e => e.weight));
     const maxDegree = Math.max(1, ...nodes.map(n => n.degree));
 
+    // ── Layout algorithms ──
+    const layouts = {
+      force() {
+        // Initialize in circle
+        nodes.forEach((n, i) => {
+          const angle = (2 * Math.PI * i) / nodes.length;
+          n.x = W / 2 + W * 0.35 * Math.cos(angle);
+          n.y = H / 2 + H * 0.35 * Math.sin(angle);
+        });
+        const k = Math.sqrt(W * H / Math.max(nodes.length, 1)) * 0.85;
+        for (let iter = 0; iter < 400; iter++) {
+          const temp = (W / 10) * (1 - iter / 400);
+          for (let i = 0; i < nodes.length; i++) {
+            nodes[i].vx = 0; nodes[i].vy = 0;
+            for (let j = 0; j < nodes.length; j++) {
+              if (i === j) continue;
+              const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+              const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 0.1);
+              const f = (k * k) / dist;
+              nodes[i].vx += (dx / dist) * f;
+              nodes[i].vy += (dy / dist) * f;
+            }
+          }
+          for (const e of edges) {
+            const s = nodeMap[e.source], t = nodeMap[e.target];
+            const dx = s.x - t.x, dy = s.y - t.y;
+            const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 0.1);
+            const f = (dist * dist) / k * (0.5 + e.weight * 0.5);
+            s.vx -= (dx / dist) * f; s.vy -= (dy / dist) * f;
+            t.vx += (dx / dist) * f; t.vy += (dy / dist) * f;
+          }
+          for (const n of nodes) {
+            n.vx += (W / 2 - n.x) * 0.01;
+            n.vy += (H / 2 - n.y) * 0.01;
+            const dist = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+            if (dist > 0) {
+              const c = Math.min(dist, temp);
+              n.x += (n.vx / dist) * c;
+              n.y += (n.vy / dist) * c;
+            }
+            n.x = Math.max(PAD, Math.min(W - PAD, n.x));
+            n.y = Math.max(PAD, Math.min(H - PAD, n.y));
+          }
+        }
+      },
+
+      circular() {
+        // Sort by degree, place in circle
+        const sorted = [...nodes].sort((a, b) => b.degree - a.degree);
+        sorted.forEach((n, i) => {
+          const angle = (2 * Math.PI * i) / sorted.length - Math.PI / 2;
+          const rx = (W / 2 - PAD) * 0.9;
+          const ry = (H / 2 - PAD) * 0.9;
+          n.x = W / 2 + rx * Math.cos(angle);
+          n.y = H / 2 + ry * Math.sin(angle);
+        });
+      },
+
+      radial() {
+        // High-degree nodes in center, shells by degree
+        const sorted = [...nodes].sort((a, b) => b.degree - a.degree);
+        const shells = 4;
+        const perShell = Math.ceil(sorted.length / shells);
+        sorted.forEach((n, i) => {
+          const shell = Math.floor(i / perShell);
+          const idxInShell = i - shell * perShell;
+          const nodesInThisShell = Math.min(perShell, sorted.length - shell * perShell);
+          const r = shell === 0 ? 0 : (shell / shells) * Math.min(W, H) * 0.42;
+          const angle = (2 * Math.PI * idxInShell) / nodesInThisShell - Math.PI / 2;
+          n.x = W / 2 + r * Math.cos(angle);
+          n.y = H / 2 + r * Math.sin(angle);
+          // Jitter center nodes slightly
+          if (shell === 0 && nodesInThisShell > 1) {
+            const jAngle = (2 * Math.PI * idxInShell) / nodesInThisShell;
+            n.x += 20 * Math.cos(jAngle);
+            n.y += 20 * Math.sin(jAngle);
+          }
+        });
+      },
+
+      'type-cluster'() {
+        // Group nodes by type, arrange groups in a ring, force within groups
+        const groups = {};
+        nodes.forEach(n => {
+          (groups[n.type] = groups[n.type] || []).push(n);
+        });
+        const typeNames = Object.keys(groups);
+        const nGroups = typeNames.length;
+
+        // Position group centers in a ring
+        typeNames.forEach((type, gi) => {
+          const gAngle = (2 * Math.PI * gi) / nGroups - Math.PI / 2;
+          const gr = Math.min(W, H) * 0.3;
+          const cx = W / 2 + gr * Math.cos(gAngle);
+          const cy = H / 2 + gr * Math.sin(gAngle);
+          const members = groups[type];
+          // Arrange members in small circle around group center
+          const mr = Math.min(80, 15 * Math.sqrt(members.length));
+          members.sort((a, b) => b.degree - a.degree);
+          members.forEach((n, i) => {
+            const mAngle = (2 * Math.PI * i) / members.length;
+            n.x = cx + mr * Math.cos(mAngle);
+            n.y = cy + mr * Math.sin(mAngle);
+          });
+        });
+      },
+    };
+
+    // ── Render function ──
     function render() {
       ctx.clearRect(0, 0, W, H);
 
       // Edges
       for (const e of edges) {
-        const s = nodeMap[e.source];
-        const t = nodeMap[e.target];
+        const s = nodeMap[e.source], t = nodeMap[e.target];
         ctx.beginPath();
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(t.x, t.y);
@@ -796,7 +919,29 @@ permalink: /stats/
         }
       }
     }
-    render();
+
+    // ── Layout switching ──
+    let currentLayout = 'force';
+    function applyLayout(name) {
+      currentLayout = name;
+      layouts[name]();
+      render();
+      // Update button styles
+      document.querySelectorAll('.net-layout-btn').forEach(btn => {
+        if (btn.dataset.layout === name) {
+          btn.className = 'net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold';
+        } else {
+          btn.className = 'net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold';
+        }
+      });
+    }
+
+    document.querySelectorAll('.net-layout-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyLayout(btn.dataset.layout));
+    });
+
+    // Initial layout
+    applyLayout('force');
 
     // Hover tooltip
     canvas.addEventListener('mousemove', function(ev) {
@@ -806,15 +951,11 @@ permalink: /stats/
       let hit = null;
       for (const n of nodes) {
         const r = 3 + 8 * (n.degree / maxDegree);
-        const dx = mx - n.x;
-        const dy = my - n.y;
-        if (dx * dx + dy * dy <= (r + 4) * (r + 4)) {
-          hit = n;
-          break;
-        }
+        const dx = mx - n.x, dy = my - n.y;
+        if (dx * dx + dy * dy <= (r + 4) * (r + 4)) { hit = n; break; }
       }
       if (hit) {
-        tooltip.textContent = hit.name + ' · ' + hit.type + ' · deg ' + hit.degree + ' · btw ' + hit.betweenness;
+        tooltip.textContent = hit.name + ' · ' + hit.type + ' · deg ' + hit.degree + ' · btw ' + hit.betweenness + ' · clust ' + hit.clustering;
         tooltip.style.left = (mx + 12) + 'px';
         tooltip.style.top = (my - 8) + 'px';
         tooltip.classList.remove('hidden');
@@ -824,9 +965,7 @@ permalink: /stats/
         canvas.style.cursor = 'default';
       }
     });
-    canvas.addEventListener('mouseleave', function() {
-      tooltip.classList.add('hidden');
-    });
+    canvas.addEventListener('mouseleave', () => tooltip.classList.add('hidden'));
   }
 
   // ── Responsive resize for uPlot ──

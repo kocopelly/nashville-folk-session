@@ -171,11 +171,35 @@ export default function (eleventyConfig) {
     }
 
     const tunePlays = Object.values(tuneMap)
-      .map((t) => ({
-        ...t,
-        sessionCount: t.sessionIds.length,
-        keysDisplay: t.keys.join(", "),
-      }))
+      .map((t) => {
+        // Most common key: most frequently played key, fallback to tune's default
+        let bestKey = "";
+        if (t.keys.length > 0) {
+          // Count key occurrences across all plays
+          const keyCounts = {};
+          for (const session of sorted) {
+            for (const set of session.sets) {
+              for (const entry of set.tunes) {
+                const ne = normalizeTuneEntry(entry);
+                if (ne.tuneId === t.id) {
+                  const k = ne.key || tunes[t.id]?.commonKeys?.[0] || "";
+                  if (k) keyCounts[k] = (keyCounts[k] || 0) + 1;
+                }
+              }
+            }
+          }
+          bestKey = Object.entries(keyCounts)
+            .sort((a, b) => b[1] - a[1])[0]?.[0] || tunes[t.id]?.commonKeys?.[0] || "";
+        } else {
+          bestKey = tunes[t.id]?.commonKeys?.[0] || "";
+        }
+        return {
+          ...t,
+          sessionCount: t.sessionIds.length,
+          keysDisplay: t.keys.join(", "),
+          bestKey,
+        };
+      })
       .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
     const uniqueTunesPlayed = tunePlays.length;
@@ -417,6 +441,24 @@ export default function (eleventyConfig) {
       });
     }
 
+    // Per-session key counts (for stacked bar)
+    // Collect all keys, then count per session
+    const allKeys = [...new Set(keyDistribution.map((k) => k.key))];
+    const keyPerSession = {};
+    for (const key of allKeys) {
+      keyPerSession[key] = sorted.map((session) => {
+        let count = 0;
+        for (const set of session.sets) {
+          for (const entry of set.tunes) {
+            const ne = normalizeTuneEntry(entry);
+            const k = ne.key || tunes[ne.tuneId]?.commonKeys?.[0] || "";
+            if (k === key) count++;
+          }
+        }
+        return count;
+      });
+    }
+
     const timeSeries = {
       dates: sorted.map(
         (s) => new Date(s.date + "T12:00:00").getTime() / 1000,
@@ -429,6 +471,7 @@ export default function (eleventyConfig) {
       cumulativeUnique: repertoireGrowth.map((g) => g.cumulative),
       newPerSession: repertoireGrowth.map((g) => g.newCount),
       typePerSession,
+      keyPerSession,
     };
 
     // ── Network analysis ──
