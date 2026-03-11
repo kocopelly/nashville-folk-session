@@ -41,11 +41,13 @@ title: "Listen — Nashville Folk Session"
   <!-- Tune log: sortable container of list-rows, interspersed with action-rows -->
   <div id="tune-log"></div>
 
-  <!-- Clear -->
-  <div id="clear-row" class="hidden mt-6">
-    <button id="btn-clear" class="text-xs text-muted hover:text-ink transition-colors cursor-pointer uppercase tracking-widest">
-      Clear all
-    </button>
+  <!-- Footer actions -->
+  <div id="footer-actions" class="hidden mt-6 pt-4 border-t border-border space-y-3">
+    <div class="flex gap-4 text-xs uppercase tracking-widest">
+      <button id="btn-export-json" class="text-muted hover:text-ink transition-colors cursor-pointer">Export JSON</button>
+      <button id="btn-export-text" class="text-muted hover:text-ink transition-colors cursor-pointer">Export Text</button>
+      <button id="btn-clear" class="text-muted hover:text-ink transition-colors cursor-pointer ml-auto">Clear all</button>
+    </div>
   </div>
 </div>
 
@@ -205,12 +207,28 @@ title: "Listen — Nashville Folk Session"
   const dbgQueries = document.getElementById('dbg-queries');
   const dbgLast = document.getElementById('dbg-last');
   const btnClear = document.getElementById('btn-clear');
+  const btnExportJson = document.getElementById('btn-export-json');
+  const btnExportText = document.getElementById('btn-export-text');
+  const footerActions = document.getElementById('footer-actions');
+
+  const STORAGE_KEY = 'nfs-listen-items';
 
   let listening = false, worker = null, audioCtx = null, micStream = null;
   let queryTimer = null, workerReady = false, framesSent = 0, queriesSent = 0;
-  let items = [];
+  let items = loadItems();
   let openAltsIdx = null;
   let sortableInstance = null;
+
+  // ── LocalStorage ──
+  function saveItems() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (_) {}
+  }
+  function loadItems() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (_) { return []; }
+  }
 
   function setStatus(msg) { statusEl.textContent = msg; }
   function updateDebug(last) {
@@ -244,8 +262,9 @@ title: "Listen — Nashville Folk Session"
     // Destroy existing sortable before re-rendering
     if (sortableInstance) { sortableInstance.destroy(); sortableInstance = null; }
 
+    saveItems();
     const hasItems = items.length > 0;
-    clearRow.classList.toggle('hidden', !hasItems && !listening);
+    footerActions.classList.toggle('hidden', !hasItems && !listening);
 
     if (!hasItems) {
       tuneLogEl.innerHTML = listening
@@ -537,6 +556,115 @@ title: "Listen — Nashville Folk Session"
     render();
   }
 
+  // ── Export: session JSON (matches data/sessions.json schema) ──
+  function exportJSON() {
+    // Split items into sets at dividers
+    const sets = [];
+    let currentTunes = [];
+
+    for (const item of items) {
+      if (item.type === 'divider') {
+        if (currentTunes.length) { sets.push(currentTunes); currentTunes = []; }
+      } else if (item.type === 'tune') {
+        currentTunes.push(item);
+      }
+    }
+    if (currentTunes.length) sets.push(currentTunes);
+
+    // Map to schema
+    const today = new Date().toISOString().slice(0, 10);
+    const session = {
+      id: `sess_${today}`,
+      seriesId: '',
+      date: today,
+      sets: sets.map(tunes => {
+        // Infer label from dominant dance type
+        const dances = tunes.map(t => t.dance).filter(Boolean);
+        const label = mode(dances) || undefined;
+
+        return {
+          label,
+          tunes: tunes.map(t => {
+            const entry = {};
+            if (t.tuneId) {
+              // Use TheSession tune ID as external ref
+              entry.tuneId = `__thesession_${t.tuneId}`;
+              entry.url = t.url;
+            } else {
+              entry.tuneId = `__manual_${slugify(t.name)}`;
+            }
+            if (t.name) entry._name = t.name; // helper for review
+            if (t.mode) entry.key = modeToKey(t.mode);
+            return entry;
+          }),
+        };
+      }),
+    };
+
+    download(`session-${today}.json`, JSON.stringify(session, null, 2), 'application/json');
+  }
+
+  // ── Export: plain text ──
+  function exportText() {
+    let lines = [];
+    let setNum = 1;
+    let inSet = false;
+
+    for (const item of items) {
+      if (item.type === 'divider') {
+        if (inSet) { lines.push(''); setNum++; }
+        inSet = false;
+      } else if (item.type === 'tune') {
+        if (!inSet) { lines.push(`Set ${setNum}:`); inSet = true; }
+        const meta = [item.dance, item.mode].filter(Boolean).join(', ');
+        lines.push(`  ${item.name}${meta ? ` (${meta})` : ''}`);
+      }
+    }
+
+    // If no dividers, just list tunes
+    if (!items.some(i => i.type === 'divider')) {
+      lines = items.filter(i => i.type === 'tune').map(t => {
+        const meta = [t.dance, t.mode].filter(Boolean).join(', ');
+        return `${t.name}${meta ? ` (${meta})` : ''}`;
+      });
+    }
+
+    const today = new Date().toISOString().slice(0, 10);
+    download(`session-${today}.txt`, lines.join('\n'), 'text/plain');
+  }
+
+  // ── Helpers ──
+  function mode(arr) {
+    const freq = {};
+    for (const v of arr) freq[v] = (freq[v] || 0) + 1;
+    let best = '', max = 0;
+    for (const [k, c] of Object.entries(freq)) if (c > max) { best = k; max = c; }
+    return best ? best + 's' : ''; // "reel" → "reels"
+  }
+
+  function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
+
+  function modeToKey(m) {
+    // Best-effort map from folkfriend mode names to key abbreviations
+    const map = { major: '', minor: 'm', dorian: 'dor', mixolydian: 'mix' };
+    return map[m] !== undefined ? map[m] : m;
+  }
+
+  function download(filename, text, mime) {
+    const blob = new Blob([text], { type: mime });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ── Event bindings ──
   btn.addEventListener('click', () => listening ? stopListening() : startListening());
   btnClear.addEventListener('click', () => { if (items.length && !confirm('Clear all items?')) return; items = []; render(); });
+  btnExportJson.addEventListener('click', exportJSON);
+  btnExportText.addEventListener('click', exportText);
+
+  // Initial render (restores from localStorage)
+  if (items.length) render();
 </script>
