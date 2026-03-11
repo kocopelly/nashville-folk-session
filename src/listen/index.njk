@@ -109,6 +109,7 @@ title: "Listen — Nashville Folk Session"
   .tune-body { flex: 1; font-size: 0.875rem; min-width: 0; }
   .tune-link { text-decoration: underline; text-underline-offset: 2px; transition: color 0.1s; }
   .tune-link:hover { color: var(--color-muted); }
+  .tune-meta { color: var(--color-muted); font-size: 0.75rem; text-transform: capitalize; }
   .tune-score { color: var(--color-muted); font-size: 0.75rem; margin-left: 0.375rem; }
   .tune-manual-tag { color: var(--color-muted); font-size: 0.75rem; font-style: italic; margin-left: 0.375rem; }
 
@@ -175,7 +176,19 @@ title: "Listen — Nashville Folk Session"
   }
   .alt-pick:hover { background: var(--color-hover); }
   .alt-pick:active { background: var(--color-hover); }
-  .alt-pick .alt-score { color: var(--color-muted); font-size: 0.75rem; margin-left: 0.25rem; }
+  .alt-pick .alt-name { flex: 1; }
+  .alt-pick .alt-meta { color: var(--color-muted); font-size: 0.6875rem; margin: 0 0.375rem; text-transform: capitalize; }
+  .alt-pick .alt-score { color: var(--color-muted); font-size: 0.75rem; }
+  .alt-pick { display: flex; align-items: baseline; }
+
+  /* Popover sections */
+  .popover-info { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--color-border); }
+  .popover-meta { font-size: 0.75rem; color: var(--color-muted); text-transform: capitalize; }
+  .popover-aliases { font-size: 0.6875rem; color: var(--color-muted); font-style: italic; margin-top: 0.125rem; }
+  .popover-alts { padding: 0.25rem 0; }
+  .popover-link { padding: 0.375rem 0.75rem; border-top: 1px solid var(--color-border); font-size: 0.6875rem; }
+  .popover-link a { color: var(--color-muted); text-decoration: underline; transition: color 0.1s; }
+  .popover-link a:hover { color: var(--color-ink); }
 </style>
 
 <script src="/listen/vendor/Sortable.min.js"></script>
@@ -262,18 +275,25 @@ title: "Listen — Nashville Folk Session"
         ? `<a href="${item.url}" target="_blank" rel="noopener" class="tune-link">${esc(item.name)}</a>`
         : `<span class="italic">${esc(item.name)}</span>`;
 
+      // Inline metadata: dance · mode
+      const meta = [item.dance, item.mode].filter(Boolean);
+      const metaStr = meta.length
+        ? `<span class="tune-meta"> · ${esc(meta.join(' · '))}</span>`
+        : '';
+
       const score = item.score != null
         ? `<span class="tune-score">${(item.score * 100).toFixed(0)}%</span>`
         : `<span class="tune-manual-tag">manual</span>`;
 
-      const swapBtn = item.alternatives?.length
-        ? `<button class="icon-btn swap-btn" data-idx="${idx}" title="Alternatives">▾</button>`
+      const hasPopover = item.alternatives?.length || item.aliases?.length;
+      const swapBtn = hasPopover
+        ? `<button class="icon-btn swap-btn" data-idx="${idx}" title="Details & alternatives">▾</button>`
         : '';
 
       html += `<div class="list-row tune-row" data-idx="${idx}">
         <span class="drag-handle">⠿</span>
         <span class="tune-num">${tuneNumber(idx)}</span>
-        <span class="tune-body">${link}${score}</span>
+        <span class="tune-body">${link}${metaStr}${score}</span>
         <span class="row-actions">
           ${swapBtn}
           <button class="icon-btn tune-delete" data-idx="${idx}" title="Remove">✕</button>
@@ -290,12 +310,49 @@ title: "Listen — Nashville Folk Session"
 
   function altsPopoverHTML(idx) {
     const item = items[idx];
-    if (!item?.alternatives?.length) return '';
-    return `<div class="alts-popover" data-alts-for="${idx}">${
-      item.alternatives.map((a, ai) =>
-        `<button class="alt-pick" data-idx="${idx}" data-alt="${ai}">${esc(a.name)}<span class="alt-score">${(a.score * 100).toFixed(0)}%</span></button>`
-      ).join('')
-    }</div>`;
+    const hasAlts = item?.alternatives?.length > 0;
+    const hasAliases = item?.aliases?.length > 1; // >1 because first is usually display_name
+    if (!hasAlts && !hasAliases) return '';
+
+    let html = '<div class="alts-popover" data-alts-for="' + idx + '">';
+
+    // Info section
+    const infoParts = [item.dance, item.mode, item.meter].filter(Boolean);
+    if (infoParts.length || hasAliases) {
+      html += '<div class="popover-info">';
+      if (infoParts.length) {
+        html += `<div class="popover-meta">${esc(infoParts.join(' · '))}</div>`;
+      }
+      if (hasAliases) {
+        const others = item.aliases.filter(a => a !== item.name).slice(0, 5);
+        if (others.length) {
+          html += `<div class="popover-aliases">aka ${others.map(a => esc(a)).join(', ')}</div>`;
+        }
+      }
+      html += '</div>';
+    }
+
+    // Alternatives section
+    if (hasAlts) {
+      html += '<div class="popover-alts">';
+      html += item.alternatives.map((a, ai) => {
+        const altMeta = [a.dance, a.mode].filter(Boolean).join(' · ');
+        return `<button class="alt-pick" data-idx="${idx}" data-alt="${ai}">
+          <span class="alt-name">${esc(a.name)}</span>
+          ${altMeta ? `<span class="alt-meta">${esc(altMeta)}</span>` : ''}
+          <span class="alt-score">${(a.score * 100).toFixed(0)}%</span>
+        </button>`;
+      }).join('');
+      html += '</div>';
+    }
+
+    // Link
+    if (item.url) {
+      html += `<div class="popover-link"><a href="${item.url}" target="_blank" rel="noopener">thesession.org</a></div>`;
+    }
+
+    html += '</div>';
+    return html;
   }
 
   // ── SortableJS ──
@@ -343,9 +400,9 @@ title: "Listen — Nashville Folk Session"
         e.stopPropagation();
         const idx = parseInt(el.dataset.idx), ai = parseInt(el.dataset.alt);
         const item = items[idx], alt = item.alternatives[ai];
-        const old = { tuneId: item.tuneId, name: item.name, score: item.score, url: item.url };
+        const old = { tuneId: item.tuneId, name: item.name, score: item.score, url: item.url, dance: item.dance, mode: item.mode, meter: item.meter };
         const alts = [...item.alternatives]; alts.splice(ai, 1); alts.unshift(old);
-        items[idx] = { type: 'tune', tuneId: alt.tuneId, name: alt.name, score: alt.score, url: alt.url, alternatives: alts };
+        items[idx] = { type: 'tune', tuneId: alt.tuneId, name: alt.name, score: alt.score, url: alt.url, dance: alt.dance, mode: alt.mode, meter: alt.meter, aliases: item.aliases, alternatives: alts };
         openAltsIdx = null; render();
       }));
 
@@ -422,7 +479,14 @@ title: "Listen — Nashville Folk Session"
     items.push({
       type: 'tune', tuneId, name: top.display_name, score: top.score,
       url: `https://thesession.org/tunes/${tuneId}`,
-      alternatives: results.slice(1, 4).map(r => ({ tuneId: r.setting.tune_id, name: r.display_name, score: r.score, url: `https://thesession.org/tunes/${r.setting.tune_id}` })),
+      dance: top.setting.dance || '', mode: top.setting.mode || '', meter: top.setting.meter || '',
+      aliases: top.aliases || [],
+      alternatives: results.slice(1, 4).map(r => ({
+        tuneId: r.setting.tune_id, name: r.display_name, score: r.score,
+        url: `https://thesession.org/tunes/${r.setting.tune_id}`,
+        dance: r.setting.dance || '', mode: r.setting.mode || '', meter: r.setting.meter || '',
+        aliases: r.aliases || [],
+      })),
     });
     render();
     tuneLogEl.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

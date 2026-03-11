@@ -120,6 +120,16 @@ self.onmessage = async ({ data }) => {
       const topName = results.length > 0 ? results[0].display_name : 'none';
       console.log(`[worker] query in ${queryMs}ms — top: "${topName}" (${topScore}), ${results.length} results`);
 
+      // Enrich top results with aliases
+      for (const r of results.slice(0, 4)) {
+        try {
+          const aliasesJson = ff.aliases_from_tune_id(r.setting.tune_id);
+          r.aliases = JSON.parse(aliasesJson);
+        } catch (_) {
+          r.aliases = [];
+        }
+      }
+
       framesReceived = 0;
       self.postMessage({ type: 'results', results, contour });
       break;
