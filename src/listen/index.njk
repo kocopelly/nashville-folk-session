@@ -3,19 +3,19 @@ layout: base.njk
 title: "Listen — Nashville Folk Session"
 ---
 
-<div id="listen-app">
+<div id="listen-app" class="max-w-lg mx-auto">
   <h1 class="font-display text-2xl font-black uppercase tracking-wider mb-2">Live Listen</h1>
-  <p class="text-muted text-sm mb-6">Passive tune identification powered by <a href="https://github.com/TomWyllie/folkfriend" class="underline">FolkFriend</a>. Hit start, play some trad, and watch it identify tunes in real time.</p>
+  <p class="text-muted text-sm mb-6">Passive tune ID powered by <a href="https://github.com/TomWyllie/folkfriend" class="underline">FolkFriend</a>. Tap set boundaries and fix misidentifications as you go.</p>
 
-  <div class="flex items-center gap-4 mb-6">
+  <!-- Controls -->
+  <div class="flex items-center gap-4 mb-4">
     <button id="btn-listen" class="border-2 border-ink px-5 py-2 text-xs uppercase tracking-widest font-semibold hover:bg-ink hover:text-bg transition-colors">
       Start Listening
     </button>
     <span id="status" class="text-muted text-xs uppercase tracking-widest">Ready</span>
   </div>
 
-  <!-- Settings -->
-  <div class="mb-6 flex items-center gap-4 text-xs text-muted">
+  <div class="mb-4 flex items-center gap-4 text-xs text-muted">
     <label>Query every
       <select id="query-interval" class="border border-border bg-bg text-ink px-1 py-0.5">
         <option value="8">8s</option>
@@ -26,32 +26,57 @@ title: "Listen — Nashville Folk Session"
       </select>
     </label>
     <label>Min score
-      <input id="min-score" type="number" min="0" max="1" step="0.05" value="0.30"
+      <input id="min-score" type="number" min="0" max="1" step="0.05" value="0.25"
              class="border border-border bg-bg text-ink px-1 py-0.5 w-16">
     </label>
   </div>
 
-  <!-- Debug info -->
-  <div id="debug" class="mb-4 text-xs text-muted font-mono hidden">
+  <!-- Debug -->
+  <div id="debug" class="mb-6 text-xs text-muted font-mono hidden">
     <span id="dbg-frames">frames: 0</span> ·
     <span id="dbg-queries">queries: 0</span> ·
     <span id="dbg-last">last: —</span>
   </div>
 
-  <!-- Live results -->
-  <div id="results" class="space-y-4"></div>
+  <!-- Tune log -->
+  <div id="tune-log" class="space-y-1 mb-4"></div>
+
+  <!-- Bottom actions (visible when listening or has items) -->
+  <div id="bottom-actions" class="hidden space-y-2">
+    <div class="flex gap-2">
+      <button id="btn-new-set" class="border border-ink px-3 py-1.5 text-xs uppercase tracking-widest font-semibold hover:bg-ink hover:text-bg transition-colors flex-none">
+        ── New Set ──
+      </button>
+      <button id="btn-clear" class="border border-border px-3 py-1.5 text-xs uppercase tracking-widest text-muted hover:text-ink hover:border-ink transition-colors flex-none ml-auto">
+        Clear All
+      </button>
+    </div>
+    <!-- Manual add -->
+    <form id="manual-add" class="flex gap-2">
+      <input id="manual-input" type="text" placeholder="Add tune by name..."
+             class="border border-border bg-bg text-ink px-3 py-1.5 text-sm flex-1 placeholder:text-muted/50">
+      <button type="submit" class="border border-ink px-3 py-1.5 text-xs uppercase tracking-widest font-semibold hover:bg-ink hover:text-bg transition-colors flex-none">
+        Add
+      </button>
+    </form>
+  </div>
 </div>
 
 <script type="module">
   const btn = document.getElementById('btn-listen');
   const statusEl = document.getElementById('status');
-  const resultsEl = document.getElementById('results');
+  const tuneLogEl = document.getElementById('tune-log');
+  const bottomActions = document.getElementById('bottom-actions');
   const intervalSel = document.getElementById('query-interval');
   const minScoreInput = document.getElementById('min-score');
   const debugEl = document.getElementById('debug');
   const dbgFrames = document.getElementById('dbg-frames');
   const dbgQueries = document.getElementById('dbg-queries');
   const dbgLast = document.getElementById('dbg-last');
+  const btnNewSet = document.getElementById('btn-new-set');
+  const btnClear = document.getElementById('btn-clear');
+  const manualForm = document.getElementById('manual-add');
+  const manualInput = document.getElementById('manual-input');
 
   let listening = false;
   let worker = null;
@@ -59,118 +84,210 @@ title: "Listen — Nashville Folk Session"
   let micStream = null;
   let queryTimer = null;
   let workerReady = false;
-
-  // Debug counters
   let framesSent = 0;
   let queriesSent = 0;
 
-  // State machine
-  let sets = [];
-  let currentSet = null;
-  let lastMatchTime = 0;
-  const SET_GAP_MS = 45000;
+  // ── Data Model ──
+  // Each item is either:
+  //   { type: 'tune', tuneId, name, score, url, alternatives: [{tuneId, name, score, url}] }
+  //   { type: 'tune', name, manual: true }   (manually added, no link)
+  //   { type: 'divider' }
+  let items = [];
 
-  function setStatus(msg) {
-    statusEl.textContent = msg;
-  }
+  function setStatus(msg) { statusEl.textContent = msg; }
 
   function updateDebug(lastResult) {
     dbgFrames.textContent = `frames: ${framesSent}`;
     dbgQueries.textContent = `queries: ${queriesSent}`;
-    if (lastResult !== undefined) {
-      dbgLast.textContent = `last: ${lastResult}`;
-    }
+    if (lastResult !== undefined) dbgLast.textContent = `last: ${lastResult}`;
   }
 
-  function renderResults() {
-    if (sets.length === 0 && !currentSet) {
-      resultsEl.innerHTML = '<p class="text-muted text-sm italic">Listening... no tunes detected yet.</p>';
+  // ── Render ──
+  function render() {
+    bottomActions.classList.toggle('hidden', items.length === 0 && !listening);
+
+    if (items.length === 0) {
+      tuneLogEl.innerHTML = listening
+        ? '<p class="text-muted text-sm italic">Listening... no tunes detected yet.</p>'
+        : '';
       return;
     }
 
-    const allSets = currentSet ? [...sets, currentSet] : sets;
-    resultsEl.innerHTML = allSets.map((set, i) => {
-      const isActive = (set === currentSet);
-      const label = isActive ? `Set ${i + 1} (live)` : `Set ${i + 1}`;
-      const time = new Date(set.startTime).toLocaleTimeString();
-      const tuneList = set.tunes.map(t =>
-        `<li class="py-1">
-          <a href="https://thesession.org/tunes/${t.tuneId}" target="_blank" rel="noopener"
-             class="underline hover:text-muted">${t.name}</a>
-          <span class="text-muted text-xs ml-1">(${(t.score * 100).toFixed(0)}%)</span>
-        </li>`
-      ).join('');
-
-      return `
-        <div class="border ${isActive ? 'border-ink' : 'border-border'} p-4">
-          <div class="flex justify-between items-baseline mb-2">
-            <span class="text-xs uppercase tracking-widest font-semibold">${label}</span>
-            <span class="text-xs text-muted">${time}</span>
-          </div>
-          <ol class="list-decimal list-inside text-sm">${tuneList}</ol>
+    tuneLogEl.innerHTML = items.map((item, idx) => {
+      if (item.type === 'divider') {
+        return `<div class="flex items-center gap-2 py-2" data-idx="${idx}">
+          <div class="flex-1 border-t border-ink"></div>
+          <span class="text-xs uppercase tracking-widest text-muted font-semibold">set break</span>
+          <div class="flex-1 border-t border-ink"></div>
+          <button class="item-delete text-muted hover:text-ink text-xs" data-idx="${idx}" title="Remove divider">✕</button>
         </div>`;
+      }
+
+      const link = item.url
+        ? `<a href="${item.url}" target="_blank" rel="noopener" class="underline hover:text-muted">${item.name}</a>`
+        : `<span class="italic">${item.name}</span>`;
+
+      const scoreTag = item.score != null
+        ? `<span class="text-muted text-xs ml-1">(${(item.score * 100).toFixed(0)}%)</span>`
+        : '<span class="text-muted text-xs ml-1">(manual)</span>';
+
+      const hasAlts = item.alternatives && item.alternatives.length > 0;
+      const altBtn = hasAlts
+        ? `<button class="item-swap text-muted hover:text-ink text-xs ml-1" data-idx="${idx}" title="Show alternatives">▾</button>`
+        : '';
+
+      // Insert-divider button between items
+      const insertBtn = `<button class="insert-divider text-muted/30 hover:text-ink text-xs w-full text-center py-0.5 leading-none opacity-0 hover:opacity-100 transition-opacity" data-idx="${idx}" title="Insert set break here">┄┄┄</button>`;
+
+      return `${idx > 0 ? insertBtn : ''}
+        <div class="flex items-center gap-2 py-1 group" data-idx="${idx}">
+          <span class="text-muted text-xs w-5 text-right flex-none">${tuneNumber(idx)}</span>
+          <span class="text-sm flex-1">${link}${scoreTag}${altBtn}</span>
+          <button class="item-delete text-muted hover:text-ink text-xs opacity-0 group-hover:opacity-100 transition-opacity" data-idx="${idx}" title="Remove">✕</button>
+        </div>
+        <div id="alts-${idx}" class="hidden ml-7 mb-1 space-y-0.5"></div>`;
     }).join('');
+
+    // Bind events
+    tuneLogEl.querySelectorAll('.item-delete').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.idx);
+        items.splice(idx, 1);
+        render();
+      });
+    });
+
+    tuneLogEl.querySelectorAll('.item-swap').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.idx);
+        toggleAlts(idx);
+      });
+    });
+
+    tuneLogEl.querySelectorAll('.insert-divider').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.idx);
+        items.splice(idx, 0, { type: 'divider' });
+        render();
+      });
+    });
   }
 
-  function handleResults(results, contour) {
-    console.log('[main] handleResults:', results?.length, 'results, contour len:', contour?.length);
+  function tuneNumber(idx) {
+    // Count tune items (not dividers) up to this index
+    if (items[idx]?.type !== 'tune') return '';
+    let n = 0;
+    for (let i = 0; i <= idx; i++) {
+      if (items[i].type === 'tune') n++;
+    }
+    return `${n}.`;
+  }
 
+  function toggleAlts(idx) {
+    const altsEl = document.getElementById(`alts-${idx}`);
+    if (!altsEl) return;
+    const item = items[idx];
+    if (!item.alternatives) return;
+
+    if (!altsEl.classList.contains('hidden')) {
+      altsEl.classList.add('hidden');
+      return;
+    }
+
+    altsEl.innerHTML = item.alternatives.map((alt, ai) =>
+      `<button class="alt-pick text-xs text-muted hover:text-ink block py-0.5" data-idx="${idx}" data-alt="${ai}">
+        → <span class="underline">${alt.name}</span> (${(alt.score * 100).toFixed(0)}%)
+      </button>`
+    ).join('');
+
+    altsEl.classList.remove('hidden');
+
+    altsEl.querySelectorAll('.alt-pick').forEach(el => {
+      el.addEventListener('click', () => {
+        const altIdx = parseInt(el.dataset.alt);
+        const alt = item.alternatives[altIdx];
+        // Swap: current becomes an alternative, picked alt becomes current
+        const oldCurrent = { tuneId: item.tuneId, name: item.name, score: item.score, url: item.url };
+        const newAlts = [...item.alternatives];
+        newAlts.splice(altIdx, 1);
+        newAlts.unshift(oldCurrent);
+
+        items[idx] = {
+          type: 'tune',
+          tuneId: alt.tuneId,
+          name: alt.name,
+          score: alt.score,
+          url: alt.url,
+          alternatives: newAlts,
+        };
+        render();
+      });
+    });
+  }
+
+  // ── Handle folkfriend results ──
+  function handleResults(results, contour) {
     if (!results || results.length === 0) {
       updateDebug('no results');
       return;
     }
 
-    const minScore = parseFloat(minScoreInput.value) || 0.30;
+    const minScore = parseFloat(minScoreInput.value) || 0.25;
     const top = results[0];
-    console.log(`[main] top result: "${top.display_name}" score=${top.score.toFixed(3)} tuneId=${top.setting.tune_id}`);
     updateDebug(`${top.display_name} (${(top.score * 100).toFixed(0)}%)`);
+    console.log(`[main] top: "${top.display_name}" score=${top.score.toFixed(3)}`);
 
     if (top.score < minScore) {
-      console.log(`[main] below threshold (${minScore}), ignoring`);
-      const now = Date.now();
-      if (currentSet && (now - lastMatchTime > SET_GAP_MS)) {
-        sets.push(currentSet);
-        currentSet = null;
-        renderResults();
-      }
+      console.log(`[main] below threshold (${minScore})`);
       return;
     }
 
     const tuneId = top.setting.tune_id;
-    const now = Date.now();
 
-    if (!currentSet || (now - lastMatchTime > SET_GAP_MS)) {
-      if (currentSet) sets.push(currentSet);
-      currentSet = { tunes: [], startTime: now };
+    // Dedup: skip if last tune item is the same tune
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].type === 'tune') {
+        if (items[i].tuneId === tuneId) {
+          // Update score if better
+          if (top.score > items[i].score) items[i].score = top.score;
+          render();
+          return;
+        }
+        break; // only check the last tune
+      }
     }
 
-    const lastTune = currentSet.tunes[currentSet.tunes.length - 1];
-    if (lastTune && lastTune.tuneId === tuneId) {
-      if (top.score > lastTune.score) lastTune.score = top.score;
-      lastMatchTime = now;
-      renderResults();
-      return;
-    }
+    // Build alternatives (next 2)
+    const alternatives = results.slice(1, 3).map(r => ({
+      tuneId: r.setting.tune_id,
+      name: r.display_name,
+      score: r.score,
+      url: `https://thesession.org/tunes/${r.setting.tune_id}`,
+    }));
 
-    currentSet.tunes.push({
+    items.push({
+      type: 'tune',
       tuneId,
       name: top.display_name,
       score: top.score,
       url: `https://thesession.org/tunes/${tuneId}`,
+      alternatives,
     });
-    lastMatchTime = now;
-    console.log(`[main] tune added to set: ${top.display_name}`);
-    renderResults();
+
+    render();
+    // Auto-scroll to bottom
+    tuneLogEl.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  // ── Listener lifecycle ──
   async function startListening() {
     setStatus('Loading WASM...');
     framesSent = 0;
     queriesSent = 0;
     debugEl.classList.remove('hidden');
+    bottomActions.classList.remove('hidden');
     updateDebug('—');
 
-    // Create worker (ES module worker)
     worker = new Worker('/listen/listen-worker.js', { type: 'module' });
     console.log('[main] worker created');
 
@@ -178,12 +295,11 @@ title: "Listen — Nashville Folk Session"
       switch (data.type) {
         case 'status':
           setStatus(data.msg);
-          console.log('[main] worker status:', data.msg);
           break;
         case 'ready':
           workerReady = true;
           setStatus('Listening...');
-          console.log('[main] worker ready, starting query loop');
+          console.log('[main] worker ready');
           startQueryLoop();
           break;
         case 'results':
@@ -194,12 +310,6 @@ title: "Listen — Nashville Folk Session"
           queriesSent++;
           console.log('[main] no match:', data.reason);
           updateDebug(`no match: ${data.reason}`);
-          const now = Date.now();
-          if (currentSet && (now - lastMatchTime > SET_GAP_MS)) {
-            sets.push(currentSet);
-            currentSet = null;
-            renderResults();
-          }
           break;
         case 'error':
           console.error('[main] worker error:', data.msg);
@@ -209,27 +319,23 @@ title: "Listen — Nashville Folk Session"
     };
 
     worker.onerror = (e) => {
-      console.error('[main] worker onerror:', e.message, e.filename, e.lineno);
+      console.error('[main] worker onerror:', e.message);
       setStatus(`Worker error: ${e.message}`);
     };
 
-    // Open mic
     try {
       micStream = await navigator.mediaDevices.getUserMedia({
         audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
       });
-      console.log('[main] mic stream obtained');
     } catch (e) {
-      console.error('[main] mic access error:', e);
       setStatus('Mic access denied');
       return;
     }
 
     audioCtx = new AudioContext();
     const sampleRate = audioCtx.sampleRate;
-    console.log('[main] AudioContext sample rate:', sampleRate);
+    console.log('[main] sample rate:', sampleRate);
 
-    // Init worker with sample rate
     worker.postMessage({ type: 'init', sampleRate });
 
     const source = audioCtx.createMediaStreamSource(micStream);
@@ -245,19 +351,18 @@ title: "Listen — Nashville Folk Session"
 
     source.connect(processor);
     processor.connect(audioCtx.destination);
-    console.log('[main] audio pipeline connected');
 
     listening = true;
     btn.textContent = 'Stop Listening';
-    renderResults();
+    render();
   }
 
   function startQueryLoop() {
     const intervalSec = parseInt(intervalSel.value) || 15;
-    console.log(`[main] query loop: every ${intervalSec}s`);
+    console.log(`[main] query every ${intervalSec}s`);
     queryTimer = setInterval(() => {
       if (workerReady) {
-        console.log(`[main] sending query (${framesSent} frames sent so far)`);
+        console.log(`[main] query (${framesSent} frames)`);
         worker.postMessage({ type: 'query' });
       }
     }, intervalSec * 1000);
@@ -269,11 +374,6 @@ title: "Listen — Nashville Folk Session"
     if (audioCtx) audioCtx.close();
     if (worker) worker.terminate();
 
-    if (currentSet) {
-      sets.push(currentSet);
-      currentSet = null;
-    }
-
     worker = null;
     audioCtx = null;
     micStream = null;
@@ -281,15 +381,34 @@ title: "Listen — Nashville Folk Session"
     listening = false;
 
     btn.textContent = 'Start Listening';
-    setStatus(sets.length > 0 ? `Done — ${sets.length} set(s) detected` : 'Stopped');
-    renderResults();
+    setStatus(items.length > 0 ? `Stopped — ${items.filter(i => i.type === 'tune').length} tune(s)` : 'Stopped');
+    render();
   }
 
-  btn.addEventListener('click', () => {
-    if (listening) {
-      stopListening();
-    } else {
-      startListening();
-    }
+  // ── UI events ──
+  btn.addEventListener('click', () => listening ? stopListening() : startListening());
+
+  btnNewSet.addEventListener('click', () => {
+    // Don't add consecutive dividers
+    if (items.length > 0 && items[items.length - 1].type === 'divider') return;
+    items.push({ type: 'divider' });
+    render();
+    tuneLogEl.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  btnClear.addEventListener('click', () => {
+    if (items.length > 0 && !confirm('Clear all items?')) return;
+    items = [];
+    render();
+  });
+
+  manualForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = manualInput.value.trim();
+    if (!name) return;
+    items.push({ type: 'tune', name, manual: true });
+    manualInput.value = '';
+    render();
+    tuneLogEl.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 </script>
