@@ -44,6 +44,8 @@ title: "Listen — Nashville Folk Session"
   <!-- Footer actions -->
   <div id="footer-actions" class="hidden mt-6 pt-4 border-t border-border space-y-3">
     <div class="flex gap-4 text-xs uppercase tracking-widest">
+
+      <button id="btn-copy" class="text-muted hover:text-ink transition-colors cursor-pointer">Copy Setlist</button>
       <button id="btn-export-json" class="text-muted hover:text-ink transition-colors cursor-pointer">Export JSON</button>
       <button id="btn-export-text" class="text-muted hover:text-ink transition-colors cursor-pointer">Export Text</button>
       <button id="btn-clear" class="text-muted hover:text-ink transition-colors cursor-pointer ml-auto">Clear all</button>
@@ -207,6 +209,7 @@ title: "Listen — Nashville Folk Session"
   const dbgQueries = document.getElementById('dbg-queries');
   const dbgLast = document.getElementById('dbg-last');
   const btnClear = document.getElementById('btn-clear');
+  const btnCopy = document.getElementById('btn-copy');
   const btnExportJson = document.getElementById('btn-export-json');
   const btnExportText = document.getElementById('btn-export-text');
   const footerActions = document.getElementById('footer-actions');
@@ -604,8 +607,8 @@ title: "Listen — Nashville Folk Session"
     download(`session-${today}.json`, JSON.stringify(session, null, 2), 'application/json');
   }
 
-  // ── Export: plain text ──
-  function exportText() {
+  // ── Text format (shared by copy + download) ──
+  function getTextExport() {
     let lines = [];
     let setNum = 1;
     let inSet = false;
@@ -621,7 +624,6 @@ title: "Listen — Nashville Folk Session"
       }
     }
 
-    // If no dividers, just list tunes
     if (!items.some(i => i.type === 'divider')) {
       lines = items.filter(i => i.type === 'tune').map(t => {
         const meta = [t.dance, t.mode].filter(Boolean).join(', ');
@@ -629,8 +631,29 @@ title: "Listen — Nashville Folk Session"
       });
     }
 
+    return lines.join('\n');
+  }
+
+  function exportText() {
     const today = new Date().toISOString().slice(0, 10);
-    download(`session-${today}.txt`, lines.join('\n'), 'text/plain');
+    download(`session-${today}.txt`, getTextExport(), 'text/plain');
+  }
+
+  async function copySetlist() {
+    const text = getTextExport();
+    try {
+      await navigator.clipboard.writeText(text);
+      btnCopy.textContent = 'Copied!';
+      setTimeout(() => { btnCopy.textContent = 'Copy Setlist'; }, 1500);
+    } catch (_) {
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      btnCopy.textContent = 'Copied!';
+      setTimeout(() => { btnCopy.textContent = 'Copy Setlist'; }, 1500);
+    }
   }
 
   // ── Helpers ──
@@ -662,6 +685,7 @@ title: "Listen — Nashville Folk Session"
   // ── Event bindings ──
   btn.addEventListener('click', () => listening ? stopListening() : startListening());
   btnClear.addEventListener('click', () => { if (items.length && !confirm('Clear all items?')) return; items = []; render(); });
+  btnCopy.addEventListener('click', copySetlist);
   btnExportJson.addEventListener('click', exportJSON);
   btnExportText.addEventListener('click', exportText);
 
