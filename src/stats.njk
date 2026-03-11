@@ -256,6 +256,7 @@ permalink: /stats/
     <canvas id="network-canvas" class="w-full" style="height: 450px;"></canvas>
     <div id="network-tooltip" class="absolute hidden bg-ink text-bg text-xs px-2 py-1 pointer-events-none font-mono" style="z-index: 10;"></div>
   </div>
+  <p class="text-xs text-muted text-center mt-2 mb-6">Node size = degree · Edge thickness = co-occurrence count · Click a node for its name</p>
 
   {# Network metrics tables #}
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -334,14 +335,6 @@ permalink: /stats/
     </div>
   </div>
 
-  {# Network legend #}
-  <div class="flex flex-wrap gap-3 mt-6 justify-center">
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-reel inline-block rounded-full"></span> Reel</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-jig inline-block rounded-full"></span> Jig</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-polka inline-block rounded-full"></span> Polka</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slipjig inline-block rounded-full"></span> Slip Jig</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slide inline-block rounded-full"></span> Slide</span>
-    <span class="text-xs text-muted">Node size = degree · Edge thickness = co-occurrence count</span>
   </div>
 </section>
 
@@ -466,6 +459,10 @@ permalink: /stats/
       </tbody>
     </table>
   </div>
+
+  {# Pagination controls #}
+  <div id="tune-pagination" class="flex items-center justify-center gap-2 mt-4">
+  </div>
 </section>
 
 {# ═══ SET COMPOSITION ═══ #}
@@ -510,8 +507,61 @@ permalink: /stats/
   const ts = DATA.timeSeries;
   const net = DATA.network;
 
-  // ── Tablesort ──
-  new Tablesort(document.getElementById('tune-table'));
+  // ── Tablesort + Pagination ──
+  const tuneTable = document.getElementById('tune-table');
+  new Tablesort(tuneTable);
+
+  const PAGE_SIZE = 25;
+  const tbody = tuneTable.querySelector('tbody');
+  const paginationEl = document.getElementById('tune-pagination');
+
+  function paginateTable() {
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const totalPages = Math.ceil(rows.length / PAGE_SIZE);
+    let currentPage = 1;
+
+    function showPage(page) {
+      currentPage = Math.max(1, Math.min(page, totalPages));
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      rows.forEach((row, i) => {
+        row.style.display = (i >= start && i < end) ? '' : 'none';
+      });
+      renderControls();
+    }
+
+    function renderControls() {
+      if (totalPages <= 1) { paginationEl.innerHTML = ''; return; }
+      const btnClass = 'text-xs uppercase tracking-widest px-3 py-1 border font-bold transition-colors';
+      const activeClass = btnClass + ' border-ink bg-ink text-bg';
+      const normalClass = btnClass + ' border-border text-muted hover:text-ink hover:border-ink';
+      const disabledClass = btnClass + ' border-border text-border cursor-default';
+
+      let html = '';
+      html += '<button class="' + (currentPage > 1 ? normalClass : disabledClass) + '" data-page="prev">←</button>';
+      for (let p = 1; p <= totalPages; p++) {
+        html += '<button class="' + (p === currentPage ? activeClass : normalClass) + '" data-page="' + p + '">' + p + '</button>';
+      }
+      html += '<button class="' + (currentPage < totalPages ? normalClass : disabledClass) + '" data-page="next">→</button>';
+      html += '<span class="text-xs text-muted ml-2">' + rows.length + ' tunes</span>';
+      paginationEl.innerHTML = html;
+
+      paginationEl.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = btn.dataset.page;
+          if (val === 'prev') showPage(currentPage - 1);
+          else if (val === 'next') showPage(currentPage + 1);
+          else showPage(parseInt(val));
+        });
+      });
+    }
+
+    showPage(1);
+
+    // Re-paginate after sort (Tablesort reorders DOM rows)
+    tuneTable.addEventListener('afterSort', () => showPage(1));
+  }
+  paginateTable();
 
   // ── Show-all toggles (last N sessions) ──
   document.querySelectorAll('[data-max-visible]').forEach(section => {
