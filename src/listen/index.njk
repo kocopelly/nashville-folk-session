@@ -1,0 +1,247 @@
+---
+layout: base.njk
+title: "Listen — Nashville Folk Session"
+---
+
+<div id="listen-app">
+  <h1 class="font-display text-2xl font-black uppercase tracking-wider mb-2">Live Listen</h1>
+  <p class="text-muted text-sm mb-6">Passive tune identification powered by <a href="https://github.com/TomWyllie/folkfriend" class="underline">FolkFriend</a>. Hit start, play some trad, and watch it identify tunes in real time.</p>
+
+  <div class="flex items-center gap-4 mb-6">
+    <button id="btn-listen" class="border-2 border-ink px-5 py-2 text-xs uppercase tracking-widest font-semibold hover:bg-ink hover:text-bg transition-colors">
+      Start Listening
+    </button>
+    <span id="status" class="text-muted text-xs uppercase tracking-widest">Ready</span>
+  </div>
+
+  <!-- Settings -->
+  <div class="mb-6 flex items-center gap-4 text-xs text-muted">
+    <label>Query every
+      <select id="query-interval" class="border border-border bg-bg text-ink px-1 py-0.5">
+        <option value="8">8s</option>
+        <option value="12">12s</option>
+        <option value="15" selected>15s</option>
+        <option value="20">20s</option>
+        <option value="30">30s</option>
+      </select>
+    </label>
+    <label>Min score
+      <input id="min-score" type="number" min="0" max="1" step="0.05" value="0.30"
+             class="border border-border bg-bg text-ink px-1 py-0.5 w-16">
+    </label>
+  </div>
+
+  <!-- Live results -->
+  <div id="results" class="space-y-4"></div>
+</div>
+
+<script type="module">
+  const btn = document.getElementById('btn-listen');
+  const statusEl = document.getElementById('status');
+  const resultsEl = document.getElementById('results');
+  const intervalSel = document.getElementById('query-interval');
+  const minScoreInput = document.getElementById('min-score');
+
+  let listening = false;
+  let worker = null;
+  let audioCtx = null;
+  let micStream = null;
+  let workletNode = null;
+  let queryTimer = null;
+  let workerReady = false;
+
+  // State machine
+  let sets = [];        // array of { tunes: [{ tuneId, name, score, url }], startTime }
+  let currentSet = null;
+  let lastMatchTime = 0;
+  const SET_GAP_MS = 45000; // 45s silence = new set
+
+  function setStatus(msg) {
+    statusEl.textContent = msg;
+  }
+
+  function renderResults() {
+    if (sets.length === 0 && !currentSet) {
+      resultsEl.innerHTML = '<p class="text-muted text-sm italic">Listening... no tunes detected yet.</p>';
+      return;
+    }
+
+    const allSets = currentSet ? [...sets, currentSet] : sets;
+    resultsEl.innerHTML = allSets.map((set, i) => {
+      const isActive = (set === currentSet);
+      const label = isActive ? `Set ${i + 1} (live)` : `Set ${i + 1}`;
+      const time = new Date(set.startTime).toLocaleTimeString();
+      const tuneList = set.tunes.map(t =>
+        `<li class="py-1">
+          <a href="https://thesession.org/tunes/${t.tuneId}" target="_blank" rel="noopener"
+             class="underline hover:text-muted">${t.name}</a>
+          <span class="text-muted text-xs ml-1">(${(t.score * 100).toFixed(0)}%)</span>
+        </li>`
+      ).join('');
+
+      return `
+        <div class="border ${isActive ? 'border-ink' : 'border-border'} p-4">
+          <div class="flex justify-between items-baseline mb-2">
+            <span class="text-xs uppercase tracking-widest font-semibold">${label}</span>
+            <span class="text-xs text-muted">${time}</span>
+          </div>
+          <ol class="list-decimal list-inside text-sm">${tuneList}</ol>
+        </div>`;
+    }).join('');
+  }
+
+  function handleResults(results, contour) {
+    if (!results || results.length === 0) return;
+
+    const minScore = parseFloat(minScoreInput.value) || 0.30;
+    const top = results[0];
+    if (top.score < minScore) {
+      // Low confidence — check for set boundary
+      const now = Date.now();
+      if (currentSet && (now - lastMatchTime > SET_GAP_MS)) {
+        sets.push(currentSet);
+        currentSet = null;
+        renderResults();
+      }
+      return;
+    }
+
+    const tuneId = top.setting.tune_id;
+    const now = Date.now();
+
+    // New set?
+    if (!currentSet || (now - lastMatchTime > SET_GAP_MS)) {
+      if (currentSet) sets.push(currentSet);
+      currentSet = { tunes: [], startTime: now };
+    }
+
+    // Dedup: don't add same tune twice in a row
+    const lastTune = currentSet.tunes[currentSet.tunes.length - 1];
+    if (lastTune && lastTune.tuneId === tuneId) {
+      // Update score if better
+      if (top.score > lastTune.score) lastTune.score = top.score;
+      lastMatchTime = now;
+      renderResults();
+      return;
+    }
+
+    currentSet.tunes.push({
+      tuneId,
+      name: top.display_name,
+      score: top.score,
+      url: `https://thesession.org/tunes/${tuneId}`,
+    });
+    lastMatchTime = now;
+    renderResults();
+  }
+
+  async function startListening() {
+    setStatus('Loading WASM...');
+
+    // Create worker (ES module worker)
+    worker = new Worker('/listen/listen-worker.js', { type: 'module' });
+
+    worker.onmessage = ({ data }) => {
+      switch (data.type) {
+        case 'status':
+          setStatus(data.msg);
+          break;
+        case 'ready':
+          workerReady = true;
+          setStatus('Listening...');
+          startQueryLoop();
+          break;
+        case 'results':
+          handleResults(data.results, data.contour);
+          break;
+        case 'no-match':
+          // Check for set boundary on no-match
+          const now = Date.now();
+          if (currentSet && (now - lastMatchTime > SET_GAP_MS)) {
+            sets.push(currentSet);
+            currentSet = null;
+            renderResults();
+          }
+          break;
+        case 'error':
+          setStatus(`Error: ${data.msg}`);
+          break;
+      }
+    };
+
+    // Open mic
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+      });
+    } catch (e) {
+      setStatus('Mic access denied');
+      return;
+    }
+
+    audioCtx = new AudioContext();
+    const sampleRate = audioCtx.sampleRate;
+
+    // Init worker with sample rate
+    worker.postMessage({ type: 'init', sampleRate });
+
+    // Use ScriptProcessorNode (AudioWorklet would be better but requires
+    // a separate file served with correct MIME — keeping it simple for the demo)
+    const source = audioCtx.createMediaStreamSource(micStream);
+    const processor = audioCtx.createScriptProcessor(1024, 1, 1);
+
+    processor.onaudioprocess = (e) => {
+      if (!workerReady) return;
+      const pcm = e.inputBuffer.getChannelData(0);
+      // Copy because the buffer gets reused
+      worker.postMessage({ type: 'audio', pcm: new Float32Array(pcm) });
+    };
+
+    source.connect(processor);
+    processor.connect(audioCtx.destination);
+
+    listening = true;
+    btn.textContent = 'Stop Listening';
+    renderResults();
+  }
+
+  function startQueryLoop() {
+    const intervalSec = parseInt(intervalSel.value) || 15;
+    queryTimer = setInterval(() => {
+      if (workerReady) {
+        worker.postMessage({ type: 'query' });
+      }
+    }, intervalSec * 1000);
+  }
+
+  function stopListening() {
+    if (queryTimer) clearInterval(queryTimer);
+    if (micStream) micStream.getTracks().forEach(t => t.stop());
+    if (audioCtx) audioCtx.close();
+    if (worker) worker.terminate();
+
+    // Finalize current set
+    if (currentSet) {
+      sets.push(currentSet);
+      currentSet = null;
+    }
+
+    worker = null;
+    audioCtx = null;
+    micStream = null;
+    workerReady = false;
+    listening = false;
+
+    btn.textContent = 'Start Listening';
+    setStatus(sets.length > 0 ? `Done — ${sets.length} set(s) detected` : 'Stopped');
+    renderResults();
+  }
+
+  btn.addEventListener('click', () => {
+    if (listening) {
+      stopListening();
+    } else {
+      startListening();
+    }
+  });
+</script>
