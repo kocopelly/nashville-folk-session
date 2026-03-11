@@ -574,6 +574,9 @@ permalink: /stats/
     return el ? el.clientWidth || 600 : 600;
   }
 
+  // ── Store chart refs for resize ──
+  const uPlots = [];
+
   // ── Chart: Repertoire Growth ──
   if (ts.dates.length >= 2) {
     const opts = {
@@ -600,8 +603,8 @@ permalink: /stats/
         },
       ],
     };
-    new uPlot(opts, [ts.dates, ts.cumulativeUnique, ts.newPerSession],
-      document.getElementById('chart-repertoire'));
+    uPlots.push(new uPlot(opts, [ts.dates, ts.cumulativeUnique, ts.newPerSession],
+      document.getElementById('chart-repertoire')));
   }
 
   // ── Chart: Tunes Per Session ──
@@ -630,8 +633,8 @@ permalink: /stats/
         },
       ],
     };
-    new uPlot(opts, [ts.dates, ts.tunesPerSession, ts.setsPerSession],
-      document.getElementById('chart-session-size'));
+    uPlots.push(new uPlot(opts, [ts.dates, ts.tunesPerSession, ts.setsPerSession],
+      document.getElementById('chart-session-size')));
   }
 
   // ── Chart: Type Mix Over Time ──
@@ -658,7 +661,7 @@ permalink: /stats/
       })],
       series,
     };
-    new uPlot(opts, data, document.getElementById('chart-type-mix'));
+    uPlots.push(new uPlot(opts, data, document.getElementById('chart-type-mix')));
   }
 
   // ── Network Force-Directed Graph ──
@@ -830,7 +833,10 @@ permalink: /stats/
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => location.reload(), 300);
+    resizeTimer = setTimeout(() => {
+      const w = chartWidth();
+      uPlots.forEach(u => u.setSize({ width: w, height: u.height }));
+    }, 200);
   });
 })();
 </script>
