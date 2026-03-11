@@ -59,25 +59,55 @@ if (!sessionsResult.success) {
 } else {
   console.log(`✅ sessions.json — ${sessionsResult.data.length} sessions valid`);
 
-  // Duplicate external IDs: same thesession ID on two different tunes = dupe
+  // ── Duplicate detection ──────────────────────────────────
+  // Tunes with known duplicate names that are genuinely different tunes.
+  // Add entries as "name|type" (lowercased) to suppress the name+type check.
+  const allowedNameTypeDupes = new Set<string>([
+    // e.g. "paddy fahey's|reel" if we ever track multiple Fahey's
+  ]);
+
   if (tunesResult.success) {
-    const theSessionIds = new Map<number, string[]>();
+    // 1) Same external ID = always a dupe (thesession, tta, etc.)
+    const externalIndex = new Map<string, string[]>();
     for (const [tuneId, tune] of Object.entries(tunesResult.data)) {
-      const tsId = (tune as any).external?.thesession;
-      if (tsId != null) {
-        if (!theSessionIds.has(tsId)) theSessionIds.set(tsId, []);
-        theSessionIds.get(tsId)!.push(tuneId);
+      const ext = (tune as any).external ?? {};
+      for (const [provider, id] of Object.entries(ext)) {
+        if (id == null) continue;
+        const key = `${provider}:${id}`;
+        if (!externalIndex.has(key)) externalIndex.set(key, []);
+        externalIndex.get(key)!.push(tuneId);
       }
     }
-    const dupes = [...theSessionIds.entries()].filter(([, ids]) => ids.length > 1);
-    if (dupes.length > 0) {
-      console.error("❌ Duplicate thesession IDs:");
-      for (const [tsId, ids] of dupes) {
-        console.error(`  - thesession:${tsId} → ${ids.join(", ")}`);
+    const extDupes = [...externalIndex.entries()].filter(([, ids]) => ids.length > 1);
+    if (extDupes.length > 0) {
+      console.error("❌ Duplicate external IDs:");
+      for (const [key, ids] of extDupes) {
+        console.error(`  - ${key} → ${ids.join(", ")}`);
       }
       errors++;
     } else {
-      console.log("✅ No duplicate thesession IDs");
+      console.log("✅ No duplicate external IDs");
+    }
+
+    // 2) Same name + type = likely a dupe (catches tunes without external IDs)
+    const nameTypeIndex = new Map<string, string[]>();
+    for (const [tuneId, tune] of Object.entries(tunesResult.data)) {
+      const t = tune as any;
+      const key = `${t.name.toLowerCase().trim()}|${t.type}`;
+      if (!nameTypeIndex.has(key)) nameTypeIndex.set(key, []);
+      nameTypeIndex.get(key)!.push(tuneId);
+    }
+    const nameTypeDupes = [...nameTypeIndex.entries()].filter(
+      ([key, ids]) => ids.length > 1 && !allowedNameTypeDupes.has(key)
+    );
+    if (nameTypeDupes.length > 0) {
+      console.error("❌ Duplicate name+type (add to allowlist in validate.ts if intentional):");
+      for (const [key, ids] of nameTypeDupes) {
+        console.error(`  - "${key}" → ${ids.join(", ")}`);
+      }
+      errors++;
+    } else {
+      console.log("✅ No duplicate name+type combos");
     }
   }
 
