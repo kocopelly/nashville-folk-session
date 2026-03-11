@@ -254,7 +254,7 @@ permalink: /stats/
   {# Force-directed graph #}
   <div class="border-2 border-ink mb-8 bg-surface relative" id="network-container">
     <canvas id="network-canvas" class="w-full" style="height: 450px;"></canvas>
-    <div id="network-tooltip" class="absolute hidden bg-ink text-bg text-xs px-2 py-1 pointer-events-none font-mono" style="z-index: 10;"></div>
+    <div id="network-tooltip" class="absolute hidden bg-ink text-bg text-xs px-2 py-1.5 pointer-events-none font-mono rounded" style="z-index: 10; max-width: 220px; white-space: normal; line-height: 1.4;"></div>
   </div>
   <p class="text-xs text-muted text-center mt-2 mb-6">Node size = degree · Edge thickness = co-occurrence count · Click a node for its name</p>
 
@@ -986,7 +986,7 @@ permalink: /stats/
         if (dx * dx + dy * dy <= (r + 4) * (r + 4)) { hit = n; break; }
       }
       if (hit) {
-        tooltip.textContent = hit.name + ' · ' + hit.type + ' · deg ' + hit.degree + ' · btw ' + hit.betweenness + ' · clust ' + hit.clustering;
+        tooltip.innerHTML = '<strong>' + hit.name + '</strong><br>' + hit.type + ' · deg ' + hit.degree + ' · btw ' + hit.betweenness + ' · clust ' + hit.clustering;
         tooltip.classList.remove('hidden');
         // Measure then position — flip if it would overflow
         const tw = tooltip.offsetWidth;
