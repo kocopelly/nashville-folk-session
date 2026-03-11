@@ -735,11 +735,16 @@ permalink: /stats/
     }
 
     // Build series configs (render from top to bottom for visual stacking)
+    // Store individual (non-stacked) values for legend display
+    const individualVals = [];
     const series = [{}];
     const data = [ts.dates];
     for (let k = keys.length - 1; k >= 0; k--) {
       const key = keys[k];
       const color = colorMap[key] || MUTED;
+      const seriesIdx = series.length; // capture for closure
+      const indiv = normalized[key]; // non-stacked percentages
+      individualVals[seriesIdx] = indiv;
       series.push({
         label: key.charAt(0).toUpperCase() + key.slice(1) + (labelSuffix || ''),
         stroke: color,
@@ -747,6 +752,7 @@ permalink: /stats/
         fill: color + 'cc',
         paths: uPlot.paths.bars({ size: [0.7], align: 0 }),
         points: { show: false },
+        value: (u, val, si, di) => di == null ? '--' : Math.round(individualVals[si][di]) + '%',
       });
       data.push(stacked[k]);
     }
