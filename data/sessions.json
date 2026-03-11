@@ -182,7 +182,7 @@
             "type": "sheet-music"
           }
         ],
-        "notes": "Mixed jig/slip jig set — Paddy O'Rafferty is a jig, then two slip jigs"
+        "notes": "Mixed jig/slip jig set \u2014 Paddy O'Rafferty is a jig, then two slip jigs"
       },
       {
         "label": "polkas",
@@ -985,7 +985,7 @@
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_094",
+            "tuneId": "tune_087",
             "key": "G"
           },
           {
@@ -1011,7 +1011,7 @@
             "key": "D"
           },
           {
-            "tuneId": "tune_098",
+            "tuneId": "tune_088",
             "key": "Dmix"
           }
         ],
@@ -1085,7 +1085,7 @@
         "label": "jigs",
         "tunes": [
           {
-            "tuneId": "tune_107",
+            "tuneId": "tune_086",
             "key": "D"
           },
           {
@@ -1107,7 +1107,7 @@
         "label": "jigs",
         "tunes": [
           {
-            "tuneId": "tune_108",
+            "tuneId": "tune_090",
             "key": "Em"
           },
           {
@@ -1159,7 +1159,7 @@
             "key": "D"
           },
           {
-            "tuneId": "tune_094",
+            "tuneId": "tune_087",
             "key": "G"
           }
         ],
@@ -1201,7 +1201,7 @@
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_098",
+            "tuneId": "tune_088",
             "key": "D"
           },
           {
