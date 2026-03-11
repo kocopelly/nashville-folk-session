@@ -242,19 +242,9 @@ permalink: /stats/
     </div>
   </div>
 
-  {# Layout selector #}
-  <div class="flex flex-wrap justify-center gap-2 mb-2">
-    <span class="text-xs uppercase tracking-widest text-muted font-bold self-center mr-1">Layout:</span>
-    <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-layout="force">Force</button>
-    <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="circular">Circular</button>
-    <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="radial">Radial</button>
-    <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="type-cluster">By Type</button>
-  </div>
   {# Type filter #}
   <div class="flex flex-wrap justify-center gap-2 mb-3">
-    <span class="text-xs uppercase tracking-widest text-muted font-bold self-center mr-1">Show:</span>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-type="all">All</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="reel">Reels</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-type="reel">Reels</button>
     <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="jig">Jigs</button>
     <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="polka">Polkas</button>
     <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slip jig">Slip Jigs</button>
@@ -839,66 +829,6 @@ permalink: /stats/
         }
       },
 
-      circular() {
-        // Sort by degree, place in circle
-        const sorted = [...nodes].sort((a, b) => b.degree - a.degree);
-        sorted.forEach((n, i) => {
-          const angle = (2 * Math.PI * i) / sorted.length - Math.PI / 2;
-          const rx = (W / 2 - PAD) * 0.9;
-          const ry = (H / 2 - PAD) * 0.9;
-          n.x = W / 2 + rx * Math.cos(angle);
-          n.y = H / 2 + ry * Math.sin(angle);
-        });
-      },
-
-      radial() {
-        // High-degree nodes in center, shells by degree
-        const sorted = [...nodes].sort((a, b) => b.degree - a.degree);
-        const shells = 4;
-        const perShell = Math.ceil(sorted.length / shells);
-        sorted.forEach((n, i) => {
-          const shell = Math.floor(i / perShell);
-          const idxInShell = i - shell * perShell;
-          const nodesInThisShell = Math.min(perShell, sorted.length - shell * perShell);
-          const r = shell === 0 ? 0 : (shell / shells) * Math.min(W, H) * 0.42;
-          const angle = (2 * Math.PI * idxInShell) / nodesInThisShell - Math.PI / 2;
-          n.x = W / 2 + r * Math.cos(angle);
-          n.y = H / 2 + r * Math.sin(angle);
-          // Jitter center nodes slightly
-          if (shell === 0 && nodesInThisShell > 1) {
-            const jAngle = (2 * Math.PI * idxInShell) / nodesInThisShell;
-            n.x += 20 * Math.cos(jAngle);
-            n.y += 20 * Math.sin(jAngle);
-          }
-        });
-      },
-
-      'type-cluster'() {
-        // Group nodes by type, arrange groups in a ring, force within groups
-        const groups = {};
-        nodes.forEach(n => {
-          (groups[n.type] = groups[n.type] || []).push(n);
-        });
-        const typeNames = Object.keys(groups);
-        const nGroups = typeNames.length;
-
-        // Position group centers in a ring
-        typeNames.forEach((type, gi) => {
-          const gAngle = (2 * Math.PI * gi) / nGroups - Math.PI / 2;
-          const gr = Math.min(W, H) * 0.3;
-          const cx = W / 2 + gr * Math.cos(gAngle);
-          const cy = H / 2 + gr * Math.sin(gAngle);
-          const members = groups[type];
-          // Arrange members in small circle around group center
-          const mr = Math.min(80, 15 * Math.sqrt(members.length));
-          members.sort((a, b) => b.degree - a.degree);
-          members.forEach((n, i) => {
-            const mAngle = (2 * Math.PI * i) / members.length;
-            n.x = cx + mr * Math.cos(mAngle);
-            n.y = cy + mr * Math.sin(mAngle);
-          });
-        });
-      },
     };
 
     // ── Render function ──
@@ -920,38 +850,36 @@ permalink: /stats/
       // Nodes
       for (const n of nodes) {
         const r = 3 + 8 * (n.degree / maxDegree);
+        const isSelected = (n === selectedNode);
         ctx.beginPath();
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fillStyle = TYPE_COLORS[n.type] || MUTED;
         ctx.fill();
-        ctx.strokeStyle = BG;
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = isSelected ? INK : BG;
+        ctx.lineWidth = isSelected ? 2.5 : 1.5;
         ctx.stroke();
       }
 
-      // Labels for high-degree nodes
-      ctx.font = '9px system-ui';
-      ctx.textAlign = 'center';
-      for (const n of nodes) {
-        if (n.degree >= maxDegree * 0.4) {
-          const r = 3 + 8 * (n.degree / maxDegree);
-          ctx.fillStyle = INK;
-          ctx.fillText(n.name.length > 18 ? n.name.slice(0, 16) + '…' : n.name, n.x, n.y - r - 3);
-        }
+      // Label only for selected node
+      if (selectedNode) {
+        const n = selectedNode;
+        const r = 3 + 8 * (n.degree / maxDegree);
+        ctx.font = 'bold 11px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = INK;
+        ctx.fillText(n.name, n.x, n.y - r - 5);
       }
     }
+
+    let selectedNode = null;
 
     // ── Type filtering ──
     function applyTypeFilter(type) {
       currentTypeFilter = type;
-      if (type === 'all') {
-        nodes = allNodes;
-        edges = allEdges;
-      } else {
-        const idSet = new Set(allNodes.filter(n => n.type === type).map(n => n.id));
-        nodes = allNodes.filter(n => idSet.has(n.id));
-        edges = allEdges.filter(e => idSet.has(e.source) && idSet.has(e.target));
-      }
+      selectedNode = null;
+      const idSet = new Set(allNodes.filter(n => n.type === type).map(n => n.id));
+      nodes = allNodes.filter(n => idSet.has(n.id));
+      edges = allEdges.filter(e => idSet.has(e.source) && idSet.has(e.target));
       nodeMap = {};
       nodes.forEach(n => nodeMap[n.id] = n);
       maxWeight = Math.max(1, ...edges.map(e => e.weight));
@@ -964,40 +892,31 @@ permalink: /stats/
           btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold';
         }
       });
-    }
-
-    // ── Layout switching ──
-    let currentLayout = 'force';
-    function applyLayout(name) {
-      currentLayout = name;
-      layouts[name]();
+      layouts.force();
       render();
-      document.querySelectorAll('.net-layout-btn').forEach(btn => {
-        if (btn.dataset.layout === name) {
-          btn.className = 'net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold';
-        } else {
-          btn.className = 'net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold';
-        }
-      });
     }
 
-    function refresh() {
-      applyTypeFilter(currentTypeFilter);
-      applyLayout(currentLayout);
-    }
-
-    document.querySelectorAll('.net-layout-btn').forEach(btn => {
-      btn.addEventListener('click', () => applyLayout(btn.dataset.layout));
-    });
     document.querySelectorAll('.net-type-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        applyTypeFilter(btn.dataset.type);
-        applyLayout(currentLayout);
-      });
+      btn.addEventListener('click', () => applyTypeFilter(btn.dataset.type));
     });
 
-    // Initial layout
-    applyLayout('force');
+    // Initial: show reels
+    applyTypeFilter('reel');
+
+    // Click to select node (shows label)
+    canvas.addEventListener('click', function(ev) {
+      const rect = canvas.getBoundingClientRect();
+      const mx = ev.clientX - rect.left;
+      const my = ev.clientY - rect.top;
+      let hit = null;
+      for (const n of nodes) {
+        const r = 3 + 8 * (n.degree / maxDegree);
+        const dx = mx - n.x, dy = my - n.y;
+        if (dx * dx + dy * dy <= (r + 4) * (r + 4)) { hit = n; break; }
+      }
+      selectedNode = (hit === selectedNode) ? null : hit;
+      render();
+    });
 
     // Hover tooltip
     canvas.addEventListener('mousemove', function(ev) {
