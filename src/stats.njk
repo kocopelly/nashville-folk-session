@@ -4,43 +4,1017 @@ title: Stats — Nashville Folk Session
 permalink: /stats/
 ---
 
+{% set stats = sessions | computeAllStats(tunes) %}
+{% set played = sessions | mostPlayed(tunes) %}
+{% set MAX_VISIBLE = 10 %}
+
+{# uPlot CSS #}
+<link rel="stylesheet" href="https://unpkg.com/uplot@1.6.31/dist/uPlot.min.css">
+
+{# ═══ HEADLINE COUNTERS ═══ #}
 <div class="text-center mb-10">
   <h1 class="font-display text-4xl font-black uppercase tracking-wider mb-1">Stats</h1>
   <div class="w-16 h-0.5 bg-ink mx-auto"></div>
 </div>
 
-{% set played = sessions | mostPlayed(tunes) %}
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-  <div class="border-2 border-ink p-6 text-center">
-    <div class="text-4xl font-black text-ink font-display">{{ sessions.length }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-2 font-bold">Sessions</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-14">
+  <div class="border-2 border-ink p-5 text-center">
+    <div class="text-3xl font-black text-ink font-display">{{ sessions.length }}</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Sessions</div>
   </div>
-  <div class="border-2 border-ink p-6 text-center">
-    <div class="text-4xl font-black text-ink font-display">{{ tunes | length }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-2 font-bold">Tunes in Registry</div>
+  <div class="border-2 border-ink p-5 text-center">
+    <div class="text-3xl font-black text-ink font-display">{{ stats.totalPlays }}</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Total Plays</div>
   </div>
-  <div class="border-2 border-ink p-6 text-center">
-    <div class="text-4xl font-black text-ink font-display">{{ played.length }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-2 font-bold">Unique Tunes Played</div>
+  <div class="border-2 border-ink p-5 text-center">
+    <div class="text-3xl font-black text-ink font-display">{{ stats.uniqueTunesPlayed }}</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Unique Tunes</div>
+  </div>
+  <div class="border-2 border-ink p-5 text-center">
+    <div class="text-3xl font-black text-ink font-display">{{ stats.totalSets }}</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Sets Played</div>
+  </div>
+  <div class="border-2 border-ink p-5 text-center">
+    <div class="text-3xl font-black text-ink font-display">{{ stats.avgTunesPerSession }}</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Tunes / Night</div>
+  </div>
+  <div class="border-2 border-ink p-5 text-center">
+    <div class="text-3xl font-black text-ink font-display">{{ stats.avgSetSize }}</div>
+    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Set Size</div>
   </div>
 </div>
 
-<section>
-  <div class="text-center mb-8">
-    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Most Played</h2>
+{# ═══ SESSION DNA ═══ #}
+<section class="mb-14" id="dna-section" data-max-visible="{{ MAX_VISIBLE }}">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Session DNA</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">Visual fingerprint — each block is a set, colored by type, width by tune count</p>
+  </div>
+
+  <div class="space-y-3">
+    {% for session in stats.sessionDNA %}
+    <div class="session-row flex items-center gap-3" data-idx="{{ loop.index0 }}">
+      <a href="/sessions/{{ session.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 hover:text-ink transition-colors">{{ session.date }}</a>
+      <div class="flex flex-1 h-8 border border-border overflow-hidden" title="{{ session.tuneCount }} tunes in {{ session.setCount }} sets">
+        {% for set in session.sets %}
+        <div class="{{ set.colorClass }} relative group"
+             style="width: {{ set.pct }}%; min-width: 4px;"
+             title="{{ set.label }}: {{ set.tuneCount }} tune{{ 's' if set.tuneCount != 1 }}">
+        </div>
+        {% endfor %}
+      </div>
+      <span class="text-xs text-muted w-8 text-right shrink-0">{{ session.tuneCount }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if stats.sessionDNA | length > MAX_VISIBLE %}
+  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.sessionDNA | length }}</button>
+  {% endif %}
+
+  <div class="flex flex-wrap gap-3 mt-4 justify-center">
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-reel inline-block"></span> Reel</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-jig inline-block"></span> Jig</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-polka inline-block"></span> Polka</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slipjig inline-block"></span> Slip Jig</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slide inline-block"></span> Slide</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-mixed inline-block"></span> Mixed</span>
+  </div>
+</section>
+
+{# ═══ TIME-SERIES CHARTS ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Over Time</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+  </div>
+
+  <div class="space-y-8">
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Repertoire Growth</h3>
+      <div id="chart-repertoire" class="w-full"></div>
+    </div>
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Tunes Per Session</h3>
+      <div id="chart-session-size" class="w-full"></div>
+    </div>
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Type Mix</h3>
+      <div id="chart-type-mix" class="w-full"></div>
+    </div>
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Key Distribution</h3>
+      <div id="chart-key-mix" class="w-full"></div>
+    </div>
+  </div>
+</section>
+
+{# ═══ TYPE BREAKDOWN ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">By Type</h2>
     <div class="w-12 h-0.5 bg-ink mx-auto"></div>
   </div>
-  {% if played.length === 0 %}
-    <p class="text-center text-muted py-8">No data yet — log some sessions first!</p>
-  {% else %}
-    <ol class="space-y-0">
-      {% for tune in played %}
-      <li class="flex items-center justify-between py-3 {% if not loop.last %}border-b border-border{% endif %}">
-        <span class="font-semibold text-sm">{{ tune.name }}</span>
-        <span class="text-sm text-muted font-display">× {{ tune.count }}</span>
-      </li>
-      {% endfor %}
-    </ol>
+
+  <div class="space-y-3">
+    {% for item in stats.typeBreakdown %}
+    <div class="flex items-center gap-3">
+      <span class="text-sm font-semibold capitalize w-20 text-right shrink-0">{{ item.type }}</span>
+      <div class="flex-1 bg-hover h-6 relative overflow-hidden border border-border">
+        <div class="h-full dna-{{ item.type | replace(' ', '') }}" style="width: {{ item.pct }}%;"></div>
+      </div>
+      <span class="text-xs text-muted w-16 shrink-0">{{ item.count }} <span class="text-muted">({{ item.pct }}%)</span></span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# ═══ KEY DISTRIBUTION ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">By Key</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto"></div>
+  </div>
+
+  <div class="space-y-2">
+    {% for item in stats.keyDistribution %}
+    <div class="flex items-center gap-3">
+      <span class="text-sm font-mono font-bold w-12 text-right shrink-0">{{ item.key }}</span>
+      <div class="flex-1 bg-hover h-5 relative overflow-hidden border border-border">
+        <div class="h-full bg-ink" style="width: {{ item.pct }}%; opacity: {{ 0.3 + (item.pct / 100) * 0.7 }};"></div>
+      </div>
+      <span class="text-xs text-muted w-16 shrink-0">{{ item.count }} <span class="text-muted">({{ item.pct }}%)</span></span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# ═══ REPERTOIRE EVOLUTION ═══ #}
+<section class="mb-14" id="evolution-section" data-max-visible="{{ MAX_VISIBLE }}">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Repertoire Evolution</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">New vs. repeat tunes each session</p>
+  </div>
+
+  <div class="space-y-4">
+    {% for diff in stats.sessionDiffs %}
+    <div class="session-row" data-idx="{{ loop.index0 }}">
+      <div class="flex items-center gap-3 mb-1">
+        <a href="/sessions/{{ diff.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 hover:text-ink transition-colors">{{ diff.date }}</a>
+        <div class="flex flex-1 h-6 overflow-hidden border border-border">
+          {% if diff.newPct > 0 %}
+          <div class="h-full bg-accent" style="width: {{ diff.newPct }}%;" title="{{ diff.newTunes }} new tunes"></div>
+          {% endif %}
+          {% if diff.repeatPct > 0 %}
+          <div class="h-full bg-ink opacity-30" style="width: {{ diff.repeatPct }}%;" title="{{ diff.repeatTunes }} repeat tunes"></div>
+          {% endif %}
+        </div>
+        <span class="text-xs text-muted w-20 text-right shrink-0">{{ diff.newTunes }} new · {{ diff.repeatTunes }} rep</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if stats.sessionDiffs | length > MAX_VISIBLE %}
+  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.sessionDiffs | length }}</button>
+  {% endif %}
+
+  <div class="flex gap-4 mt-3 justify-center">
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 bg-accent inline-block"></span> New tunes</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 bg-ink opacity-30 inline-block"></span> Repeats</span>
+  </div>
+</section>
+
+{# ═══ KEY JOURNEY ═══ #}
+<section class="mb-14" id="journey-section" data-max-visible="{{ MAX_VISIBLE }}">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Key Journey</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">The tonal path through each night — first key of each set</p>
+  </div>
+
+  <div class="space-y-3">
+    {% for journey in stats.keyJourneys %}
+    <div class="session-row flex items-start gap-3" data-idx="{{ loop.index0 }}">
+      <span class="text-xs text-muted font-mono w-20 shrink-0 pt-0.5">{{ journey.date }}</span>
+      <div class="flex flex-wrap gap-1">
+        {% for key in journey.keys %}
+        <span class="key-chip text-xs font-mono font-bold px-2 py-0.5 border border-border {% if key == 'D' or key == 'Dmix' or key == 'Ddor' %}key-d{% elif key == 'G' or key == 'Gmix' %}key-g{% elif key == 'A' or key == 'Amix' or key == 'Ador' %}key-a{% elif key == 'Em' or key == 'Edor' %}key-e{% elif key == 'Bm' or key == 'Bdor' or key == 'Bdorian' %}key-b{% elif key == 'Am' %}key-a{% elif key == 'Ddor' %}key-d{% else %}key-other{% endif %}">{{ key }}</span>
+        {% if not loop.last %}<span class="text-border self-center">→</span>{% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if stats.keyJourneys | length > MAX_VISIBLE %}
+  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.keyJourneys | length }}</button>
   {% endif %}
 </section>
+
+{# ═══ NETWORK ANALYSIS ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Tune Network</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">Co-occurrence graph — tunes connected when played in the same set</p>
+  </div>
+
+  {# Network summary counters #}
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.nodeCount }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Nodes</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.edgeCount }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Edges</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.avgDegree }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Degree</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.components }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Components</div>
+    </div>
+  </div>
+
+  {# Type filter #}
+  <div class="flex flex-wrap justify-center gap-2 mb-3">
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-type="reel">Reels</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="jig">Jigs</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="polka">Polkas</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slip jig">Slip Jigs</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slide">Slides</button>
+  </div>
+
+  {# Force-directed graph #}
+  <div class="border-2 border-ink mb-8 bg-surface relative" id="network-container">
+    <canvas id="network-canvas" class="w-full" style="height: 450px;"></canvas>
+    <div id="network-tooltip" class="absolute hidden bg-ink text-bg text-xs px-2 py-1.5 pointer-events-none font-mono rounded" style="z-index: 10; max-width: 220px; white-space: normal; line-height: 1.4;"></div>
+  </div>
+  <p class="text-xs text-muted text-center mt-2 mb-6">Node size = degree · Edge thickness = co-occurrence count · Click a node for its name</p>
+
+  {# Network metrics tables #}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {# Most connected (degree) #}
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">🔗 Most Connected</h3>
+      <p class="text-xs text-muted text-center mb-2">Degree centrality — paired with the most different tunes</p>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="text-left py-1 px-2 text-xs text-muted font-bold">Tune</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Degree</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for n in stats.network.mostConnected %}
+          <tr class="border-b border-border">
+            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 text-right font-mono">{{ n.degree }}</td>
+            <td class="py-1 px-2 text-right font-mono text-muted">{{ n.totalWeight }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {# Bridges (betweenness) #}
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">🌉 Bridges</h3>
+      <p class="text-xs text-muted text-center mb-2">Betweenness centrality — connect otherwise separate clusters</p>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="text-left py-1 px-2 text-xs text-muted font-bold">Tune</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Betweenness</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for n in stats.network.mostCentral %}
+          <tr class="border-b border-border">
+            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 text-right font-mono">{{ n.betweenness }}</td>
+            <td class="py-1 px-2 text-right text-muted capitalize">{{ n.type }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {# Clustering #}
+  <div class="mt-6">
+    <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">🫧 Tight-Knit Groups</h3>
+    <p class="text-xs text-muted text-center mb-2">Highest clustering coefficient — tunes whose partners also partner with each other</p>
+    <div class="max-w-md mx-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="text-left py-1 px-2 text-xs text-muted font-bold">Tune</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Clustering</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Degree</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for n in stats.network.highestClustering %}
+          <tr class="border-b border-border">
+            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 text-right font-mono">{{ n.clustering }}</td>
+            <td class="py-1 px-2 text-right font-mono text-muted">{{ n.degree }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div>
+</section>
+
+{# ═══ TUNE VELOCITY ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Tune Velocity</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto"></div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="border-2 border-ink p-5">
+      <div class="text-center mb-3">
+        <div class="text-sm font-bold uppercase tracking-widest text-ink">⚓ Standards</div>
+        <div class="text-xs text-muted">3+ sessions</div>
+      </div>
+      {% if stats.velocity.standards.length %}
+        <ul class="space-y-1">
+          {% for t in stats.velocity.standards %}
+          <li class="flex justify-between text-sm">
+            <span>{{ t.name }}</span>
+            <span class="text-muted text-xs font-mono">{{ t.sessions }}s / {{ t.count }}×</span>
+          </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-center text-muted text-sm italic">Need more sessions!</p>
+      {% endif %}
+    </div>
+
+    <div class="border-2 border-accent p-5">
+      <div class="text-center mb-3">
+        <div class="text-sm font-bold uppercase tracking-widest text-accent">🔥 Heating Up</div>
+        <div class="text-xs text-muted">2+ of last 3 sessions</div>
+      </div>
+      {% if stats.velocity.heating.length %}
+        <ul class="space-y-1">
+          {% for t in stats.velocity.heating %}
+          <li class="flex justify-between text-sm">
+            <span>{{ t.name }}</span>
+            <span class="text-muted text-xs font-mono">{{ t.sessions }}s / {{ t.count }}×</span>
+          </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-center text-muted text-sm italic">Nothing trending</p>
+      {% endif %}
+    </div>
+
+    <div class="border border-border p-5">
+      <div class="text-center mb-3">
+        <div class="text-sm font-bold uppercase tracking-widest text-muted">💨 One-Hit Wonders</div>
+        <div class="text-xs text-muted">Played once, never returned</div>
+      </div>
+      {% if stats.velocity.oneOffs.length %}
+        <div class="text-sm text-muted">
+          {{ stats.velocity.oneOffs.length }} tune{{ "s" if stats.velocity.oneOffs.length != 1 }}:
+          <span class="text-ink">
+            {% for t in stats.velocity.oneOffs %}{{ t.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+          </span>
+        </div>
+      {% else %}
+        <p class="text-center text-muted text-sm italic">Everything's a repeat!</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{# ═══ COMMON PAIRINGS ═══ #}
+{% if stats.pairings.length %}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Common Pairings</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">Tunes that keep showing up in the same set</p>
+  </div>
+
+  <div class="space-y-0">
+    {% for pair in stats.pairings %}
+    <div class="flex items-center justify-between py-2 {% if not loop.last %}border-b border-border{% endif %}">
+      <span class="text-sm">
+        <span class="font-semibold">{{ pair.tuneA }}</span>
+        <span class="text-muted mx-2">&amp;</span>
+        <span class="font-semibold">{{ pair.tuneB }}</span>
+      </span>
+      <span class="text-xs text-muted font-display">× {{ pair.count }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{# ═══ FULL TUNE TABLE ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">All Tunes Played</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">Click headers to sort</p>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm" id="tune-table">
+      <thead>
+        <tr class="border-b-2 border-ink">
+          <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-default>Name</th>
+          <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors">Type</th>
+          <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors">Key</th>
+          <th class="text-right py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-method="number">Plays</th>
+          <th class="text-right py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-method="number">Sessions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tune in stats.tunePlays %}
+        <tr class="border-b border-border hover:bg-hover transition-colors">
+          <td class="py-2 px-2 font-semibold">{{ tune.name }}</td>
+          <td class="py-2 px-2 text-muted capitalize">{{ tune.type }}</td>
+          <td class="py-2 px-2 font-mono text-xs">{{ tune.bestKey }}</td>
+          <td class="py-2 px-2 text-right font-display">{{ tune.count }}</td>
+          <td class="py-2 px-2 text-right font-display">{{ tune.sessionCount }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {# Pagination controls #}
+  <div id="tune-pagination" class="flex items-center justify-center gap-2 mt-4">
+  </div>
+</section>
+
+{# ═══ SET COMPOSITION ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Set Composition</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto"></div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="border border-border p-5 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.avgSetSize }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Tunes / Set</div>
+    </div>
+    <div class="border border-border p-5 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.maxSetSize }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Biggest Set</div>
+      <div class="text-xs text-muted mt-1">{{ stats.maxSetInfo }}</div>
+    </div>
+    <div class="border border-border p-5 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.typeBreakdown[0].type | capitalize }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Most Common Type</div>
+      <div class="text-xs text-muted mt-1">{{ stats.typeBreakdown[0].pct }}% of all plays</div>
+    </div>
+  </div>
+</section>
+
+{# ═══ EMBEDDED DATA FOR CLIENT-SIDE VIZ ═══ #}
+<script id="stats-json" type="application/json">{{ stats.clientData | dump | safe }}</script>
+
+{# ═══ SCRIPTS ═══ #}
+<script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+<script src="https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.number.min.js"></script>
+<script src="https://unpkg.com/uplot@1.6.31/dist/uPlot.iife.min.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── Parse embedded data ──
+  const DATA = JSON.parse(document.getElementById('stats-json').textContent);
+  const ts = DATA.timeSeries;
+  const net = DATA.network;
+
+  // ── Tablesort + Pagination ──
+  const tuneTable = document.getElementById('tune-table');
+  new Tablesort(tuneTable);
+
+  const PAGE_SIZE = 25;
+  const tbody = tuneTable.querySelector('tbody');
+  const paginationEl = document.getElementById('tune-pagination');
+
+  function paginateTable() {
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const totalPages = Math.ceil(rows.length / PAGE_SIZE);
+    let currentPage = 1;
+
+    function showPage(page) {
+      currentPage = Math.max(1, Math.min(page, totalPages));
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      rows.forEach((row, i) => {
+        row.style.display = (i >= start && i < end) ? '' : 'none';
+      });
+      renderControls();
+    }
+
+    function renderControls() {
+      if (totalPages <= 1) { paginationEl.innerHTML = ''; return; }
+      const btnClass = 'text-xs uppercase tracking-widest px-3 py-1 border font-bold transition-colors';
+      const activeClass = btnClass + ' border-ink bg-ink text-bg';
+      const normalClass = btnClass + ' border-border text-muted hover:text-ink hover:border-ink';
+      const disabledClass = btnClass + ' border-border text-border cursor-default';
+
+      let html = '';
+      html += '<button class="' + (currentPage > 1 ? normalClass : disabledClass) + '" data-page="prev">←</button>';
+      for (let p = 1; p <= totalPages; p++) {
+        html += '<button class="' + (p === currentPage ? activeClass : normalClass) + '" data-page="' + p + '">' + p + '</button>';
+      }
+      html += '<button class="' + (currentPage < totalPages ? normalClass : disabledClass) + '" data-page="next">→</button>';
+      html += '<span class="text-xs text-muted ml-2">' + rows.length + ' tunes</span>';
+      paginationEl.innerHTML = html;
+
+      paginationEl.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = btn.dataset.page;
+          if (val === 'prev') showPage(currentPage - 1);
+          else if (val === 'next') showPage(currentPage + 1);
+          else showPage(parseInt(val));
+        });
+      });
+    }
+
+    showPage(1);
+
+    // Re-paginate after sort (Tablesort reorders DOM rows)
+    tuneTable.addEventListener('afterSort', () => showPage(1));
+  }
+  paginateTable();
+
+  // ── Show-all toggles (last N sessions) ──
+  document.querySelectorAll('[data-max-visible]').forEach(section => {
+    const maxVisible = parseInt(section.dataset.maxVisible);
+    const rows = section.querySelectorAll('.session-row');
+    const total = rows.length;
+    const btn = section.querySelector('.show-all-toggle');
+
+    if (total <= maxVisible) {
+      if (btn) btn.style.display = 'none';
+      return;
+    }
+
+    // Hide older rows
+    rows.forEach((row, i) => {
+      if (i < total - maxVisible) row.style.display = 'none';
+    });
+
+    if (btn) {
+      let expanded = false;
+      btn.addEventListener('click', () => {
+        expanded = !expanded;
+        rows.forEach((row, i) => {
+          row.style.display = (expanded || i >= total - maxVisible) ? '' : 'none';
+        });
+        btn.textContent = expanded ? ('Show last ' + maxVisible) : ('Show all ' + total);
+      });
+    }
+  });
+
+  // ── uPlot theme ──
+  const INK = '#1a1a3a';
+  const MUTED = '#6a6a80';
+  const ACCENT = '#c49a3c';
+  const BORDER = '#d0d0dc';
+  const BG = '#fffff5';
+  const TYPE_COLORS = {
+    reel: INK,
+    jig: ACCENT,
+    polka: '#8b4513',
+    'slip jig': '#4a7c59',
+    slide: '#6a4c8a',
+    hornpipe: '#2e5984',
+  };
+
+  function dateAxis() {
+    return {
+      stroke: MUTED,
+      grid: { stroke: BORDER, width: 1 },
+      ticks: { stroke: BORDER },
+      values: (u, vals) => vals.map(v => {
+        const d = new Date(v * 1000);
+        return (d.getMonth() + 1) + '/' + d.getDate();
+      }),
+      font: '10px system-ui',
+    };
+  }
+
+  function valAxis(label) {
+    return {
+      stroke: MUTED,
+      grid: { stroke: BORDER, width: 1 },
+      ticks: { stroke: BORDER },
+      font: '10px system-ui',
+      label: label,
+      labelFont: 'bold 10px system-ui',
+      labelSize: 16,
+    };
+  }
+
+  function chartWidth() {
+    const el = document.getElementById('chart-repertoire');
+    return el ? el.clientWidth || 600 : 600;
+  }
+
+  // ── Store chart refs for resize ──
+  const uPlots = [];
+
+  // ── Chart: Repertoire Growth ──
+  if (ts.dates.length >= 2) {
+    const opts = {
+      width: chartWidth(),
+      height: 220,
+      padding: [10, 10, 0, 0],
+      cursor: { show: true },
+      axes: [dateAxis(), valAxis('')],
+      series: [
+        {},
+        {
+          label: 'Cumulative Unique',
+          stroke: INK,
+          width: 2,
+          fill: 'rgba(26, 26, 58, 0.08)',
+          points: { size: 6, fill: BG, stroke: INK },
+        },
+        {
+          label: 'New This Session',
+          stroke: ACCENT,
+          width: 2,
+          dash: [5, 3],
+          points: { size: 5, fill: BG, stroke: ACCENT },
+        },
+      ],
+    };
+    uPlots.push(new uPlot(opts, [ts.dates, ts.cumulativeUnique, ts.newPerSession],
+      document.getElementById('chart-repertoire')));
+  }
+
+  // ── Chart: Tunes Per Session ──
+  if (ts.dates.length >= 2) {
+    const opts = {
+      width: chartWidth(),
+      height: 200,
+      padding: [10, 10, 0, 0],
+      cursor: { show: true },
+      axes: [dateAxis(), valAxis('')],
+      series: [
+        {},
+        {
+          label: 'Tunes',
+          stroke: INK,
+          width: 2,
+          fill: 'rgba(26, 26, 58, 0.1)',
+          points: { size: 6, fill: BG, stroke: INK },
+          paths: uPlot.paths.bars({ size: [0.6] }),
+        },
+        {
+          label: 'Sets',
+          stroke: ACCENT,
+          width: 2,
+          points: { size: 5, fill: BG, stroke: ACCENT },
+        },
+      ],
+    };
+    uPlots.push(new uPlot(opts, [ts.dates, ts.tunesPerSession, ts.setsPerSession],
+      document.getElementById('chart-session-size')));
+  }
+
+  // ── Helper: build stacked bar chart (percentage-normalized) ──
+  function stackedBarChart(container, rawSeriesMap, colorMap, labelSuffix) {
+    if (ts.dates.length < 2) return null;
+    const keys = Object.keys(rawSeriesMap);
+    // Sort by total descending so biggest category is at bottom
+    keys.sort((a, b) => {
+      const sumA = rawSeriesMap[a].reduce((s, v) => s + v, 0);
+      const sumB = rawSeriesMap[b].reduce((s, v) => s + v, 0);
+      return sumB - sumA;
+    });
+
+    // Normalize each column to 100%
+    const normalized = {};
+    for (const k of keys) normalized[k] = [];
+    for (let j = 0; j < ts.dates.length; j++) {
+      let colTotal = 0;
+      for (const k of keys) colTotal += rawSeriesMap[k][j];
+      for (const k of keys) {
+        normalized[k].push(colTotal > 0 ? Math.round((rawSeriesMap[k][j] / colTotal) * 1000) / 10 : 0);
+      }
+    }
+
+    // Stack the data: each series = sum of itself + all below
+    const stacked = [];
+    for (let k = 0; k < keys.length; k++) {
+      const vals = [];
+      for (let j = 0; j < ts.dates.length; j++) {
+        let sum = 0;
+        for (let i = 0; i <= k; i++) sum += normalized[keys[i]][j];
+        vals.push(sum);
+      }
+      stacked.push(vals);
+    }
+
+    // Build series configs (render from top to bottom for visual stacking)
+    // Store individual (non-stacked) values for legend display
+    const individualVals = [];
+    const series = [{}];
+    const data = [ts.dates];
+    for (let k = keys.length - 1; k >= 0; k--) {
+      const key = keys[k];
+      const color = colorMap[key] || MUTED;
+      const seriesIdx = series.length; // capture for closure
+      const indiv = normalized[key]; // non-stacked percentages
+      individualVals[seriesIdx] = indiv;
+      series.push({
+        label: key.charAt(0).toUpperCase() + key.slice(1) + (labelSuffix || ''),
+        stroke: color,
+        width: 0,
+        fill: color + 'cc',
+        paths: uPlot.paths.bars({ size: [0.7], align: 0 }),
+        points: { show: false },
+        value: (u, val, si, di) => di == null ? '--' : Math.round(individualVals[si][di]) + '%',
+      });
+      data.push(stacked[k]);
+    }
+
+    const opts = {
+      width: chartWidth(),
+      height: 240,
+      padding: [10, 10, 0, 0],
+      cursor: { show: true },
+      axes: [dateAxis(), Object.assign(valAxis(''), {
+        values: (u, vals) => vals.map(v => Math.round(v) + '%'),
+      })],
+      scales: { y: { range: [0, 100] } },
+      series,
+    };
+    return new uPlot(opts, data, container);
+  }
+
+  // ── Chart: Type Mix Over Time (stacked bars) ──
+  {
+    const el = document.getElementById('chart-type-mix');
+    const chart = stackedBarChart(el, ts.typePerSession, TYPE_COLORS, ' %');
+    if (chart) uPlots.push(chart);
+  }
+
+  // ── Chart: Key Distribution Over Time (stacked bars) ──
+  if (ts.keyPerSession) {
+    // Color map for keys
+    const KEY_COLORS = {
+      D: '#6a5020', G: '#2a5a2a', A: '#5a2a5a', Em: '#2a3a6a', Edor: '#2a3a6a',
+      Ador: '#5a2a5a', Dmix: '#8a6a20', Gmix: '#3a6a3a', Amix: '#6a3a6a',
+      Bm: '#6a3a1a', Am: '#5a2a5a', Ddor: '#8a6a20',
+    };
+    const el = document.getElementById('chart-key-mix');
+    // Only show top 6 keys to avoid clutter, group rest as "Other"
+    const keysArr = Object.keys(ts.keyPerSession);
+    const keyTotals = keysArr.map(k => [k, ts.keyPerSession[k].reduce((a, b) => a + b, 0)]);
+    keyTotals.sort((a, b) => b[1] - a[1]);
+    const topKeys = keyTotals.slice(0, 6).map(k => k[0]);
+    const filteredMap = {};
+    const otherVals = new Array(ts.dates.length).fill(0);
+    for (const k of keysArr) {
+      if (topKeys.includes(k)) {
+        filteredMap[k] = ts.keyPerSession[k];
+      } else {
+        ts.keyPerSession[k].forEach((v, i) => otherVals[i] += v);
+      }
+    }
+    if (otherVals.some(v => v > 0)) filteredMap['Other'] = otherVals;
+    KEY_COLORS['Other'] = '#9a9aaa';
+    const chart = stackedBarChart(el, filteredMap, KEY_COLORS, '');
+    if (chart) uPlots.push(chart);
+  }
+
+  // ── Network Graph with Multiple Layouts ──
+  if (net.nodes.length > 0) {
+    const canvas = document.getElementById('network-canvas');
+    const container = document.getElementById('network-container');
+    const tooltip = document.getElementById('network-tooltip');
+    const W = container.clientWidth || 672;
+    const H = 450;
+    const PAD = 30;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const allNodeMap = {};
+    const allNodes = net.nodes.map((n) => {
+      const obj = { ...n, x: W / 2, y: H / 2, visible: true };
+      allNodeMap[n.id] = obj;
+      return obj;
+    });
+    const allEdges = net.edges.filter(e => allNodeMap[e.source] && allNodeMap[e.target]);
+
+    // Active (filtered) views
+    let nodeMap = allNodeMap;
+    let nodes = allNodes;
+    let edges = allEdges;
+    let maxWeight = Math.max(1, ...edges.map(e => e.weight));
+    let maxDegree = Math.max(1, ...nodes.map(n => n.degree));
+    let currentTypeFilter = 'all';
+
+    // ── Layout algorithms ──
+    const layouts = {
+      force() {
+        // Initialize in circle
+        nodes.forEach((n, i) => {
+          const angle = (2 * Math.PI * i) / nodes.length;
+          n.x = W / 2 + W * 0.35 * Math.cos(angle);
+          n.y = H / 2 + H * 0.35 * Math.sin(angle);
+        });
+        const k = Math.sqrt(W * H / Math.max(nodes.length, 1)) * 0.85;
+        for (let iter = 0; iter < 400; iter++) {
+          const temp = (W / 10) * (1 - iter / 400);
+          for (let i = 0; i < nodes.length; i++) {
+            nodes[i].vx = 0; nodes[i].vy = 0;
+            for (let j = 0; j < nodes.length; j++) {
+              if (i === j) continue;
+              const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+              const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 0.1);
+              const f = (k * k) / dist;
+              nodes[i].vx += (dx / dist) * f;
+              nodes[i].vy += (dy / dist) * f;
+            }
+          }
+          for (const e of edges) {
+            const s = nodeMap[e.source], t = nodeMap[e.target];
+            const dx = s.x - t.x, dy = s.y - t.y;
+            const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 0.1);
+            const f = (dist * dist) / k * (0.5 + e.weight * 0.5);
+            s.vx -= (dx / dist) * f; s.vy -= (dy / dist) * f;
+            t.vx += (dx / dist) * f; t.vy += (dy / dist) * f;
+          }
+          for (const n of nodes) {
+            n.vx += (W / 2 - n.x) * 0.01;
+            n.vy += (H / 2 - n.y) * 0.01;
+            const dist = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+            if (dist > 0) {
+              const c = Math.min(dist, temp);
+              n.x += (n.vx / dist) * c;
+              n.y += (n.vy / dist) * c;
+            }
+            n.x = Math.max(PAD, Math.min(W - PAD, n.x));
+            n.y = Math.max(PAD, Math.min(H - PAD, n.y));
+          }
+        }
+      },
+
+    };
+
+    // ── Render function ──
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Edges
+      for (const e of edges) {
+        const s = nodeMap[e.source], t = nodeMap[e.target];
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(t.x, t.y);
+        const alpha = 0.06 + 0.35 * (e.weight / maxWeight);
+        ctx.strokeStyle = 'rgba(26, 26, 58, ' + alpha + ')';
+        ctx.lineWidth = 0.5 + 2 * (e.weight / maxWeight);
+        ctx.stroke();
+      }
+
+      // Nodes
+      for (const n of nodes) {
+        const r = 3 + 8 * (n.degree / maxDegree);
+        const isSelected = (n === selectedNode);
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = TYPE_COLORS[n.type] || MUTED;
+        ctx.fill();
+        ctx.strokeStyle = isSelected ? INK : BG;
+        ctx.lineWidth = isSelected ? 2.5 : 1.5;
+        ctx.stroke();
+      }
+
+      // Label only for selected node
+      if (selectedNode) {
+        const n = selectedNode;
+        const r = 3 + 8 * (n.degree / maxDegree);
+        ctx.font = 'bold 11px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = INK;
+        ctx.fillText(n.name, n.x, n.y - r - 5);
+      }
+    }
+
+    let selectedNode = null;
+
+    // ── Type filtering ──
+    function applyTypeFilter(type) {
+      currentTypeFilter = type;
+      selectedNode = null;
+      const idSet = new Set(allNodes.filter(n => n.type === type).map(n => n.id));
+      nodes = allNodes.filter(n => idSet.has(n.id));
+      edges = allEdges.filter(e => idSet.has(e.source) && idSet.has(e.target));
+      nodeMap = {};
+      nodes.forEach(n => nodeMap[n.id] = n);
+      maxWeight = Math.max(1, ...edges.map(e => e.weight));
+      maxDegree = Math.max(1, ...nodes.map(n => n.degree));
+      // Update button styles
+      document.querySelectorAll('.net-type-btn').forEach(btn => {
+        if (btn.dataset.type === type) {
+          btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold';
+        } else {
+          btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold';
+        }
+      });
+      layouts.force();
+      render();
+    }
+
+    document.querySelectorAll('.net-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyTypeFilter(btn.dataset.type));
+    });
+
+    // Initial: show reels
+    applyTypeFilter('reel');
+
+    // Click to select node (shows label)
+    canvas.addEventListener('click', function(ev) {
+      const rect = canvas.getBoundingClientRect();
+      const mx = ev.clientX - rect.left;
+      const my = ev.clientY - rect.top;
+      let hit = null;
+      for (const n of nodes) {
+        const r = 3 + 8 * (n.degree / maxDegree);
+        const dx = mx - n.x, dy = my - n.y;
+        if (dx * dx + dy * dy <= (r + 4) * (r + 4)) { hit = n; break; }
+      }
+      selectedNode = (hit === selectedNode) ? null : hit;
+      render();
+    });
+
+    // Hover tooltip
+    canvas.addEventListener('mousemove', function(ev) {
+      const rect = canvas.getBoundingClientRect();
+      const mx = ev.clientX - rect.left;
+      const my = ev.clientY - rect.top;
+      let hit = null;
+      for (const n of nodes) {
+        const r = 3 + 8 * (n.degree / maxDegree);
+        const dx = mx - n.x, dy = my - n.y;
+        if (dx * dx + dy * dy <= (r + 4) * (r + 4)) { hit = n; break; }
+      }
+      if (hit) {
+        tooltip.innerHTML = '<strong>' + hit.name + '</strong><br>' + hit.type + ' · deg ' + hit.degree + ' · btw ' + hit.betweenness + ' · clust ' + hit.clustering;
+        tooltip.classList.remove('hidden');
+        // Measure then position — flip if it would overflow
+        const tw = tooltip.offsetWidth;
+        const th = tooltip.offsetHeight;
+        let tx = mx + 12;
+        let ty = my - 8;
+        if (tx + tw > W) tx = mx - tw - 8;
+        if (ty + th > H) ty = my - th - 4;
+        if (ty < 0) ty = 4;
+        tooltip.style.left = tx + 'px';
+        tooltip.style.top = ty + 'px';
+        canvas.style.cursor = 'pointer';
+      } else {
+        tooltip.classList.add('hidden');
+        canvas.style.cursor = 'default';
+      }
+    });
+    canvas.addEventListener('mouseleave', () => tooltip.classList.add('hidden'));
+  }
+
+  // ── Responsive resize for uPlot ──
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const w = chartWidth();
+      uPlots.forEach(u => u.setSize({ width: w, height: u.height }));
+    }, 200);
+  });
+})();
+</script>

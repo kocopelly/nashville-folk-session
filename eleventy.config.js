@@ -1,8 +1,9 @@
+import { normalizeTuneEntry } from './lib/helpers.js';
+import { computeAllStats } from './lib/stats.js';
+
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default function (eleventyConfig) {
-  // CSS is handled by Tailwind CLI — no passthrough for styles
-
-  // Global data from JSON files
+  // ── Global data from JSON files ──
   eleventyConfig.addGlobalData("tunes", async () => {
     const { readFileSync } = await import("node:fs");
     return JSON.parse(readFileSync("data/tunes.json", "utf-8"));
@@ -18,28 +19,20 @@ export default function (eleventyConfig) {
     return JSON.parse(readFileSync("data/sessions.json", "utf-8"));
   });
 
-  // Series as an array (for pagination in series.njk)
   eleventyConfig.addGlobalData("seriesList", async () => {
     const { readFileSync } = await import("node:fs");
     const data = JSON.parse(readFileSync("data/series.json", "utf-8"));
     return Object.values(data).filter(s => s.listed !== false);
   });
 
-  // Helper: resolve a session field with series fallback
-  // session.field > series.field
+  // ── Thin filters (wiring only) ──
+
   eleventyConfig.addFilter("resolve", function (session, field, series) {
     if (session[field] != null) return session[field];
     const s = series[session.seriesId];
     return s?.[field] ?? null;
   });
 
-  // Helper: normalize a set tune entry (string or {tuneId, key, url})
-  function normalizeTuneEntry(entry) {
-    if (typeof entry === "string") return { tuneId: entry, key: undefined, url: undefined };
-    return { tuneId: entry.tuneId, key: entry.key, url: entry.url };
-  }
-
-  // Filters
   eleventyConfig.addFilter("tuneName", function (entry, tunes) {
     const { tuneId } = normalizeTuneEntry(entry);
     return tunes[tuneId]?.name ?? tuneId;
@@ -53,7 +46,6 @@ export default function (eleventyConfig) {
     return normalizeTuneEntry(entry).key || null;
   });
 
-  // Link resolution: entry.url (set-level override) > tune.url (default) > null
   eleventyConfig.addFilter("tuneLink", function (entry, tunes) {
     const { tuneId, url } = normalizeTuneEntry(entry);
     if (url) return url;
@@ -61,7 +53,7 @@ export default function (eleventyConfig) {
     return tune?.url || null;
   });
 
-  // Link type → inline SVG icon mapping (14×14, stroke-based, muted)
+  // Link type → inline SVG icon mapping
   const linkIcon = {
     recording: `<svg class="inline-block w-3.5 h-3.5 align-[-2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
     video: `<svg class="inline-block w-3.5 h-3.5 align-[-2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
@@ -79,22 +71,18 @@ export default function (eleventyConfig) {
     return tunes[tuneId]?.type ?? "";
   });
 
-  // Is this a "loose" set? (single tune, no label)
   eleventyConfig.addFilter("isLoose", function (set) {
     return set.tunes.length === 1 && !set.label;
   });
 
-  // Count total tunes across all sets
   eleventyConfig.addFilter("tuneCount", function (sets) {
     return sets.reduce((n, s) => n + s.tunes.length, 0);
   });
 
-  // Are all sets in a session "loose"?
   eleventyConfig.addFilter("allLoose", function (sets) {
     return sets.every(s => s.tunes.length === 1 && !s.label);
   });
 
-  // Series helpers
   eleventyConfig.addFilter("seriesSessionCount", function (sessions, seriesId) {
     return sessions.filter(s => s.seriesId === seriesId).length;
   });
@@ -125,6 +113,11 @@ export default function (eleventyConfig) {
     return Object.entries(counts)
       .map(([id, count]) => ({ id, name: tunes[id]?.name ?? id, count }))
       .sort((a, b) => b.count - a.count);
+  });
+
+  // ── Stats computation (delegates to lib/) ──
+  eleventyConfig.addFilter("computeAllStats", function (sessions, tunes) {
+    return computeAllStats(sessions, tunes);
   });
 
   return {
