@@ -39,13 +39,13 @@ title: "Listen — Nashville Folk Session"
   </div>
 
   <!-- Tune log -->
-  <div id="tune-log" class="mb-2"></div>
+  <div id="tune-log"></div>
 
-  <!-- Bottom insert strip (always at the tail of the list) -->
+  <!-- Bottom insert strip -->
   <div id="bottom-strip" class="hidden"></div>
 
   <!-- Clear -->
-  <div id="clear-row" class="hidden mt-6 pt-4 border-t border-border">
+  <div id="clear-row" class="hidden mt-8">
     <button id="btn-clear" class="text-xs text-muted hover:text-ink transition-colors cursor-pointer uppercase tracking-widest">
       Clear all
     </button>
@@ -53,172 +53,128 @@ title: "Listen — Nashville Folk Session"
 </div>
 
 <style>
-  /* ── Insert strip: the hoverable zone between items ── */
-  .insert-strip {
-    position: relative;
-    height: 6px;
-    cursor: pointer;
-    transition: height 0.15s ease;
-  }
-  .insert-strip:hover,
-  .insert-strip:focus-within {
-    height: auto;
-  }
-  .insert-strip .insert-actions {
-    display: none;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    padding: 0.35rem 0;
-  }
-  .insert-strip:hover .insert-actions,
-  .insert-strip:focus-within .insert-actions {
-    display: flex;
-  }
-  .insert-strip .insert-line {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: transparent;
-    transition: background 0.15s;
-  }
-  .insert-strip:hover .insert-line {
-    background: var(--color-border);
-  }
-
-  /* ── Bottom strip: always visible, no hover required ── */
-  .bottom-insert-strip .insert-actions {
-    display: flex !important;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 0;
-  }
-
-  /* ── Insert buttons ── */
-  .insert-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.25rem 0.625rem;
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: 1px solid var(--color-border);
-    color: var(--color-muted);
-    background: var(--color-bg);
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
-  .insert-btn:hover {
-    border-color: var(--color-ink);
-    color: var(--color-ink);
-  }
-  .insert-btn:active {
-    background: var(--color-ink);
-    color: var(--color-bg);
-  }
-
   /* ── Tune row ── */
   .tune-row {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.5rem;
-    padding: 0.375rem 0;
+    padding: 0.5rem 0;
   }
-  .tune-row .tune-delete {
+  .tune-row:hover { background: var(--color-hover); margin: 0 -0.5rem; padding: 0.5rem; border-radius: 3px; }
+  .tune-row .tune-actions { opacity: 0; display: flex; gap: 0.25rem; transition: opacity 0.1s; }
+  .tune-row:hover .tune-actions { opacity: 1; }
+
+  .tune-link { text-decoration: underline; text-underline-offset: 2px; transition: color 0.1s; }
+  .tune-link:hover { color: var(--color-muted); }
+  .tune-score { color: var(--color-muted); font-size: 0.75rem; margin-left: 0.25rem; }
+  .tune-manual-tag { color: var(--color-muted); font-size: 0.75rem; font-style: italic; margin-left: 0.25rem; }
+
+  .icon-btn {
+    background: none; border: none; color: var(--color-muted);
+    cursor: pointer; padding: 2px 4px; font-size: 0.6875rem; line-height: 1;
+    border-radius: 2px; transition: all 0.1s;
+  }
+  .icon-btn:hover { color: var(--color-ink); background: var(--color-bg); }
+
+  /* ── Insert strip — always same height, actions fade ── */
+  .insert-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    gap: 0.375rem;
+    position: relative;
+  }
+  .insert-strip::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    border-top: 1px dashed transparent;
+    transition: border-color 0.15s;
+  }
+  .insert-strip:hover::before { border-color: var(--color-border); }
+  .insert-strip .strip-btn {
     opacity: 0;
-    transition: opacity 0.15s;
+    background: var(--color-bg);
+    border: 1px solid transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+    padding: 1px 8px;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all 0.1s;
+    position: relative;
+    z-index: 1;
+    white-space: nowrap;
   }
-  .tune-row:hover .tune-delete {
+  .insert-strip:hover .strip-btn { opacity: 1; border-color: var(--color-border); }
+  .insert-strip .strip-btn:hover { border-color: var(--color-ink); color: var(--color-ink); }
+  .insert-strip .strip-btn:active { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
+
+  /* ── Bottom strip: always visible ── */
+  .bottom-strip-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.625rem 0;
+    border-top: 1px dashed var(--color-border);
+    margin-top: 0.25rem;
+  }
+  .bottom-strip-inner .strip-btn {
     opacity: 1;
-  }
-  .tune-delete {
-    background: none;
-    border: none;
-    color: var(--color-muted);
-    cursor: pointer;
-    padding: 0.125rem 0.25rem;
-    font-size: 0.75rem;
-    line-height: 1;
-    transition: color 0.15s;
-  }
-  .tune-delete:hover {
-    color: var(--color-ink);
-  }
-
-  /* ── Alternatives dropdown ── */
-  .alts-panel {
-    margin-left: 1.75rem;
-    margin-bottom: 0.25rem;
-    padding: 0.375rem 0.5rem;
-    background: var(--color-surface);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
-  }
-  .alt-pick {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    padding: 0.25rem 0.375rem;
-    font-size: 0.75rem;
     color: var(--color-muted);
     cursor: pointer;
-    transition: all 0.15s;
-  }
-  .alt-pick:hover {
-    color: var(--color-ink);
-    background: var(--color-hover);
-  }
-
-  /* ── Swap button ── */
-  .swap-btn {
-    background: none;
-    border: none;
-    color: var(--color-muted);
-    cursor: pointer;
-    padding: 0.125rem 0.25rem;
+    padding: 3px 10px;
     font-size: 0.6875rem;
-    transition: color 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all 0.1s;
+    white-space: nowrap;
   }
-  .swap-btn:hover {
-    color: var(--color-ink);
-  }
+  .bottom-strip-inner .strip-btn:hover { border-color: var(--color-ink); color: var(--color-ink); }
+  .bottom-strip-inner .strip-btn:active { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
 
   /* ── Divider row ── */
   .divider-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 0;
+    padding: 0.375rem 0;
   }
-  .divider-row .divider-line {
-    flex: 1;
-    border-top: 2px solid var(--color-ink);
-  }
+  .divider-line { flex: 1; border-top: 2px solid var(--color-ink); }
+  .divider-label { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted); font-weight: 600; user-select: none; white-space: nowrap; }
+  .divider-row .icon-btn { opacity: 0; transition: opacity 0.1s; }
+  .divider-row:hover .icon-btn { opacity: 1; }
 
-  /* ── Manual input inside strip ── */
-  .inline-manual-input {
-    border: 1px solid var(--color-border);
+  /* ── Alternatives panel ── */
+  .alts-panel {
+    margin: 0 0 0.25rem 1.75rem;
+    padding: 0.25rem 0;
+  }
+  .alt-pick {
+    display: block; width: 100%; text-align: left;
+    background: none; border: none;
+    padding: 0.25rem 0.5rem; border-radius: 2px;
+    font-size: 0.75rem; color: var(--color-muted);
+    cursor: pointer; transition: all 0.1s;
+  }
+  .alt-pick:hover { color: var(--color-ink); background: var(--color-hover); }
+
+  /* ── Inline manual input ── */
+  .inline-input {
+    border: 1px solid var(--color-ink);
     background: var(--color-bg);
     color: var(--color-ink);
-    padding: 0.25rem 0.5rem;
+    padding: 2px 8px;
     font-size: 0.75rem;
-    width: 10rem;
-    transition: border-color 0.15s;
-  }
-  .inline-manual-input:focus {
+    width: 12rem;
     outline: none;
-    border-color: var(--color-ink);
   }
-  .inline-manual-input::placeholder {
-    color: var(--color-muted);
-    opacity: 0.5;
-  }
+  .inline-input::placeholder { color: var(--color-muted); opacity: 0.5; }
 </style>
 
 <script type="module">
@@ -235,35 +191,38 @@ title: "Listen — Nashville Folk Session"
   const dbgLast = document.getElementById('dbg-last');
   const btnClear = document.getElementById('btn-clear');
 
-  let listening = false;
-  let worker = null;
-  let audioCtx = null;
-  let micStream = null;
-  let queryTimer = null;
-  let workerReady = false;
-  let framesSent = 0;
-  let queriesSent = 0;
-
-  // ── Data Model ──
+  let listening = false, worker = null, audioCtx = null, micStream = null;
+  let queryTimer = null, workerReady = false, framesSent = 0, queriesSent = 0;
   let items = [];
 
   function setStatus(msg) { statusEl.textContent = msg; }
-
-  function updateDebug(lastResult) {
+  function updateDebug(last) {
     dbgFrames.textContent = `frames: ${framesSent}`;
     dbgQueries.textContent = `queries: ${queriesSent}`;
-    if (lastResult !== undefined) dbgLast.textContent = `last: ${lastResult}`;
+    if (last !== undefined) dbgLast.textContent = `last: ${last}`;
   }
 
-  // ── Insert strip HTML (reused between items and at bottom) ──
-  function insertStripHTML(idx, isBottom) {
-    const cls = isBottom ? 'bottom-insert-strip' : 'insert-strip';
-    return `<div class="${cls}" data-insert="${idx}">
-      ${isBottom ? '' : '<div class="insert-line"></div>'}
-      <div class="insert-actions">
-        <button class="insert-btn do-set-break" data-insert="${idx}" title="Insert set break">── set break ──</button>
-        <button class="insert-btn do-add-tune" data-insert="${idx}" title="Add a tune by name">+ tune</button>
-      </div>
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  function tuneNumber(idx) {
+    if (items[idx]?.type !== 'tune') return '';
+    let n = 0;
+    for (let i = 0; i <= idx; i++) if (items[i].type === 'tune') n++;
+    return n + '.';
+  }
+
+  // ── Strip HTML ──
+  function stripHTML(idx) {
+    return `<div class="insert-strip" data-insert="${idx}">
+      <button class="strip-btn do-set-break" data-insert="${idx}">set break</button>
+      <button class="strip-btn do-add-tune" data-insert="${idx}">+ tune</button>
+    </div>`;
+  }
+
+  function bottomStripHTML(idx) {
+    return `<div class="bottom-strip-inner">
+      <button class="strip-btn do-set-break" data-insert="${idx}">set break</button>
+      <button class="strip-btn do-add-tune" data-insert="${idx}">+ tune</button>
     </div>`;
   }
 
@@ -273,290 +232,173 @@ title: "Listen — Nashville Folk Session"
     clearRow.classList.toggle('hidden', !hasItems);
 
     if (!hasItems) {
-      tuneLogEl.innerHTML = listening
-        ? '<p class="text-muted text-sm italic">Listening... no tunes detected yet.</p>'
-        : '';
+      tuneLogEl.innerHTML = listening ? '<p class="text-muted text-sm italic py-4">Listening… no tunes detected yet.</p>' : '';
       bottomStrip.classList.toggle('hidden', !listening);
-      bottomStrip.innerHTML = listening ? insertStripHTML(0, true) : '';
-      bindInsertActions(bottomStrip);
+      bottomStrip.innerHTML = listening ? bottomStripHTML(0) : '';
+      bindStrip(bottomStrip);
       return;
     }
 
     let html = '';
     items.forEach((item, idx) => {
-      // Insert strip between items (not before first)
-      if (idx > 0) {
-        html += insertStripHTML(idx, false);
-      }
+      if (idx > 0) html += stripHTML(idx);
 
       if (item.type === 'divider') {
         html += `<div class="divider-row" data-idx="${idx}">
           <div class="divider-line"></div>
-          <span class="text-xs uppercase tracking-widest text-muted font-semibold select-none">set break</span>
+          <span class="divider-label">set break</span>
           <div class="divider-line"></div>
-          <button class="tune-delete" data-idx="${idx}" title="Remove" style="opacity:0.4">✕</button>
+          <button class="icon-btn tune-delete" data-idx="${idx}" title="Remove">✕</button>
         </div>`;
         return;
       }
 
       const link = item.url
-        ? `<a href="${item.url}" target="_blank" rel="noopener" class="underline hover:text-muted transition-colors">${esc(item.name)}</a>`
+        ? `<a href="${item.url}" target="_blank" rel="noopener" class="tune-link">${esc(item.name)}</a>`
         : `<span class="italic">${esc(item.name)}</span>`;
 
-      const scoreTag = item.score != null
-        ? `<span class="text-muted text-xs ml-1">${(item.score * 100).toFixed(0)}%</span>`
-        : `<span class="text-muted text-xs ml-1">manual</span>`;
+      const score = item.score != null
+        ? `<span class="tune-score">${(item.score * 100).toFixed(0)}%</span>`
+        : `<span class="tune-manual-tag">manual</span>`;
 
-      const hasAlts = item.alternatives && item.alternatives.length > 0;
-      const altBtn = hasAlts
-        ? `<button class="swap-btn" data-idx="${idx}" title="Show alternatives">▾</button>`
-        : '';
+      const hasAlts = item.alternatives?.length > 0;
+      const swapBtn = hasAlts ? `<button class="icon-btn swap-btn" data-idx="${idx}" title="Alternatives">▾</button>` : '';
 
       html += `<div class="tune-row" data-idx="${idx}">
-        <span class="text-muted text-xs w-5 text-right flex-none select-none">${tuneNumber(idx)}</span>
-        <span class="text-sm flex-1">${link} ${scoreTag}${altBtn}</span>
-        <button class="tune-delete" data-idx="${idx}" title="Remove">✕</button>
+        <span class="text-muted text-xs" style="width:1.25rem;text-align:right;flex-shrink:0">${tuneNumber(idx)}</span>
+        <span class="text-sm flex-1">${link}${score}${swapBtn}</span>
+        <span class="tune-actions">
+          <button class="icon-btn tune-delete" data-idx="${idx}" title="Remove">✕</button>
+        </span>
       </div>
       <div id="alts-${idx}" class="hidden"></div>`;
     });
 
     tuneLogEl.innerHTML = html;
 
-    // Bottom strip: always the insert point after last item
     bottomStrip.classList.remove('hidden');
-    bottomStrip.innerHTML = insertStripHTML(items.length, true);
+    bottomStrip.innerHTML = bottomStripHTML(items.length);
 
-    bindAllEvents();
+    bindAll();
   }
 
-  function bindInsertActions(container) {
+  function bindStrip(container) {
     container.querySelectorAll('.do-set-break').forEach(el => {
       el.addEventListener('click', () => {
         const idx = parseInt(el.dataset.insert);
-        // Don't insert consecutive dividers
         if (items[idx - 1]?.type === 'divider' || items[idx]?.type === 'divider') return;
         items.splice(idx, 0, { type: 'divider' });
         render();
       });
     });
-
     container.querySelectorAll('.do-add-tune').forEach(el => {
-      el.addEventListener('click', () => {
-        const idx = parseInt(el.dataset.insert);
-        showInlineInput(el, idx);
-      });
+      el.addEventListener('click', () => inlineInput(el, parseInt(el.dataset.insert)));
     });
   }
 
-  function showInlineInput(anchorEl, idx) {
-    // Replace the "+ tune" button with an inline text input
+  function inlineInput(anchor, idx) {
     const input = document.createElement('input');
     input.type = 'text';
-    input.className = 'inline-manual-input';
-    input.placeholder = 'Tune name...';
-    anchorEl.parentNode.replaceChild(input, anchorEl);
+    input.className = 'inline-input';
+    input.placeholder = 'Tune name…';
+    anchor.replaceWith(input);
     input.focus();
-
     const commit = () => {
       const name = input.value.trim();
-      if (name) {
-        items.splice(idx, 0, { type: 'tune', name, manual: true });
-      }
+      if (name) items.splice(idx, 0, { type: 'tune', name, manual: true });
       render();
     };
-
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); commit(); }
-      if (e.key === 'Escape') { render(); }
+      if (e.key === 'Escape') render();
     });
     input.addEventListener('blur', commit);
   }
 
-  function bindAllEvents() {
-    // Delete buttons
-    tuneLogEl.querySelectorAll('.tune-delete').forEach(el => {
-      el.addEventListener('click', () => {
-        items.splice(parseInt(el.dataset.idx), 1);
-        render();
-      });
-    });
-
-    // Swap buttons (show alternatives)
-    tuneLogEl.querySelectorAll('.swap-btn').forEach(el => {
-      el.addEventListener('click', () => toggleAlts(parseInt(el.dataset.idx)));
-    });
-
-    // Insert strips within the log
-    bindInsertActions(tuneLogEl);
-    // Bottom strip
-    bindInsertActions(bottomStrip);
-
-    // Divider delete (use same selector)
-    // Already handled by .tune-delete above
-  }
-
-  function tuneNumber(idx) {
-    if (items[idx]?.type !== 'tune') return '';
-    let n = 0;
-    for (let i = 0; i <= idx; i++) {
-      if (items[i].type === 'tune') n++;
-    }
-    return `${n}.`;
-  }
-
-  function esc(s) {
-    const d = document.createElement('div');
-    d.textContent = s;
-    return d.innerHTML;
+  function bindAll() {
+    tuneLogEl.querySelectorAll('.tune-delete').forEach(el =>
+      el.addEventListener('click', () => { items.splice(parseInt(el.dataset.idx), 1); render(); }));
+    tuneLogEl.querySelectorAll('.swap-btn').forEach(el =>
+      el.addEventListener('click', () => toggleAlts(parseInt(el.dataset.idx))));
+    bindStrip(tuneLogEl);
+    bindStrip(bottomStrip);
   }
 
   function toggleAlts(idx) {
-    const altsEl = document.getElementById(`alts-${idx}`);
-    if (!altsEl) return;
+    const el = document.getElementById(`alts-${idx}`);
+    if (!el) return;
     const item = items[idx];
-    if (!item.alternatives || item.alternatives.length === 0) return;
-
-    if (!altsEl.classList.contains('hidden')) {
-      altsEl.classList.add('hidden');
-      altsEl.innerHTML = '';
-      return;
-    }
-
-    altsEl.innerHTML = `<div class="alts-panel">${
-      item.alternatives.map((alt, ai) =>
-        `<button class="alt-pick" data-idx="${idx}" data-alt="${ai}">
-          → ${esc(alt.name)} <span class="text-muted">(${(alt.score * 100).toFixed(0)}%)</span>
-        </button>`
-      ).join('')
-    }</div>`;
-
-    altsEl.classList.remove('hidden');
-
-    altsEl.querySelectorAll('.alt-pick').forEach(el => {
-      el.addEventListener('click', () => {
-        const altIdx = parseInt(el.dataset.alt);
-        const alt = item.alternatives[altIdx];
-        const oldCurrent = { tuneId: item.tuneId, name: item.name, score: item.score, url: item.url };
-        const newAlts = [...item.alternatives];
-        newAlts.splice(altIdx, 1);
-        newAlts.unshift(oldCurrent);
-        items[idx] = { type: 'tune', tuneId: alt.tuneId, name: alt.name, score: alt.score, url: alt.url, alternatives: newAlts };
+    if (!item.alternatives?.length) return;
+    if (!el.classList.contains('hidden')) { el.classList.add('hidden'); el.innerHTML = ''; return; }
+    el.innerHTML = `<div class="alts-panel">${item.alternatives.map((a, ai) =>
+      `<button class="alt-pick" data-idx="${idx}" data-alt="${ai}">→ ${esc(a.name)} <span style="color:var(--color-muted)">${(a.score * 100).toFixed(0)}%</span></button>`
+    ).join('')}</div>`;
+    el.classList.remove('hidden');
+    el.querySelectorAll('.alt-pick').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ai = parseInt(btn.dataset.alt), alt = item.alternatives[ai];
+        const old = { tuneId: item.tuneId, name: item.name, score: item.score, url: item.url };
+        const alts = [...item.alternatives]; alts.splice(ai, 1); alts.unshift(old);
+        items[idx] = { type: 'tune', tuneId: alt.tuneId, name: alt.name, score: alt.score, url: alt.url, alternatives: alts };
         render();
       });
     });
   }
 
-  // ── Handle folkfriend results ──
+  // ── Results ──
   function handleResults(results, contour) {
-    if (!results || results.length === 0) { updateDebug('no results'); return; }
-
+    if (!results?.length) { updateDebug('no results'); return; }
     const minScore = parseFloat(minScoreInput.value) || 0.25;
     const top = results[0];
     updateDebug(`${top.display_name} (${(top.score * 100).toFixed(0)}%)`);
-    console.log(`[main] top: "${top.display_name}" score=${top.score.toFixed(3)}`);
-
-    if (top.score < minScore) { console.log(`[main] below threshold`); return; }
-
+    if (top.score < minScore) return;
     const tuneId = top.setting.tune_id;
-
-    // Dedup: skip if last tune item is the same tune
     for (let i = items.length - 1; i >= 0; i--) {
       if (items[i].type === 'tune') {
-        if (items[i].tuneId === tuneId) {
-          if (top.score > (items[i].score || 0)) items[i].score = top.score;
-          render();
-          return;
-        }
+        if (items[i].tuneId === tuneId) { if (top.score > (items[i].score || 0)) items[i].score = top.score; render(); return; }
         break;
       }
     }
-
-    const alternatives = results.slice(1, 3).map(r => ({
-      tuneId: r.setting.tune_id,
-      name: r.display_name,
-      score: r.score,
-      url: `https://thesession.org/tunes/${r.setting.tune_id}`,
-    }));
-
     items.push({
-      type: 'tune', tuneId,
-      name: top.display_name,
-      score: top.score,
+      type: 'tune', tuneId, name: top.display_name, score: top.score,
       url: `https://thesession.org/tunes/${tuneId}`,
-      alternatives,
+      alternatives: results.slice(1, 4).map(r => ({ tuneId: r.setting.tune_id, name: r.display_name, score: r.score, url: `https://thesession.org/tunes/${r.setting.tune_id}` })),
     });
-
     render();
     tuneLogEl.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  // ── Listener lifecycle ──
+  // ── Audio ──
   async function startListening() {
-    setStatus('Loading WASM...');
-    framesSent = 0;
-    queriesSent = 0;
-    debugEl.classList.remove('hidden');
-    updateDebug('—');
-
+    setStatus('Loading WASM…'); framesSent = 0; queriesSent = 0;
+    debugEl.classList.remove('hidden'); updateDebug('—');
     worker = new Worker('/listen/listen-worker.js', { type: 'module' });
-
     worker.onmessage = ({ data }) => {
-      switch (data.type) {
-        case 'status': setStatus(data.msg); break;
-        case 'ready':
-          workerReady = true;
-          setStatus('Listening...');
-          startQueryLoop();
-          break;
-        case 'results':
-          queriesSent++;
-          handleResults(data.results, data.contour);
-          break;
-        case 'no-match':
-          queriesSent++;
-          updateDebug(`no match: ${data.reason}`);
-          break;
-        case 'error':
-          setStatus(`Error: ${data.msg}`);
-          break;
-      }
+      if (data.type === 'status') setStatus(data.msg);
+      if (data.type === 'ready') { workerReady = true; setStatus('Listening…'); startQueryLoop(); }
+      if (data.type === 'results') { queriesSent++; handleResults(data.results, data.contour); }
+      if (data.type === 'no-match') { queriesSent++; updateDebug(`no match: ${data.reason}`); }
+      if (data.type === 'error') setStatus(`Error: ${data.msg}`);
     };
-
     worker.onerror = (e) => setStatus(`Worker error: ${e.message}`);
-
-    try {
-      micStream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
-      });
-    } catch (e) {
-      setStatus('Mic access denied');
-      return;
-    }
-
+    try { micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } }); }
+    catch { setStatus('Mic access denied'); return; }
     audioCtx = new AudioContext();
     worker.postMessage({ type: 'init', sampleRate: audioCtx.sampleRate });
-
-    const source = audioCtx.createMediaStreamSource(micStream);
-    const processor = audioCtx.createScriptProcessor(1024, 1, 1);
-    processor.onaudioprocess = (e) => {
+    const src = audioCtx.createMediaStreamSource(micStream);
+    const proc = audioCtx.createScriptProcessor(1024, 1, 1);
+    proc.onaudioprocess = (e) => {
       if (!workerReady) return;
       worker.postMessage({ type: 'audio', pcm: new Float32Array(e.inputBuffer.getChannelData(0)) });
-      framesSent++;
-      if (framesSent % 50 === 0) updateDebug();
+      framesSent++; if (framesSent % 50 === 0) updateDebug();
     };
-    source.connect(processor);
-    processor.connect(audioCtx.destination);
-
-    listening = true;
-    btn.textContent = 'Stop Listening';
-    render();
+    src.connect(proc); proc.connect(audioCtx.destination);
+    listening = true; btn.textContent = 'Stop Listening'; render();
   }
 
   function startQueryLoop() {
-    const sec = parseInt(intervalSel.value) || 15;
-    queryTimer = setInterval(() => {
-      if (workerReady) worker.postMessage({ type: 'query' });
-    }, sec * 1000);
+    const s = parseInt(intervalSel.value) || 15;
+    queryTimer = setInterval(() => { if (workerReady) worker.postMessage({ type: 'query' }); }, s * 1000);
   }
 
   function stopListening() {
@@ -564,18 +406,12 @@ title: "Listen — Nashville Folk Session"
     if (micStream) micStream.getTracks().forEach(t => t.stop());
     if (audioCtx) audioCtx.close();
     if (worker) worker.terminate();
-    worker = null; audioCtx = null; micStream = null;
-    workerReady = false; listening = false;
+    worker = null; audioCtx = null; micStream = null; workerReady = false; listening = false;
     btn.textContent = 'Start Listening';
-    setStatus(items.length > 0 ? `Stopped — ${items.filter(i => i.type === 'tune').length} tune(s)` : 'Stopped');
+    setStatus(items.length ? `Stopped — ${items.filter(i => i.type === 'tune').length} tune(s)` : 'Stopped');
     render();
   }
 
   btn.addEventListener('click', () => listening ? stopListening() : startListening());
-
-  btnClear.addEventListener('click', () => {
-    if (items.length > 0 && !confirm('Clear all items?')) return;
-    items = [];
-    render();
-  });
+  btnClear.addEventListener('click', () => { if (items.length && !confirm('Clear all items?')) return; items = []; render(); });
 </script>
