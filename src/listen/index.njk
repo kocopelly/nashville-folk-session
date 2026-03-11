@@ -1,0 +1,59 @@
+---
+layout: base.njk
+title: "Listen — Nashville Folk Session"
+---
+<link rel="stylesheet" href="/listen/listen.css">
+
+<div id="listen-app" class="max-w-lg mx-auto">
+  <h1 class="font-display text-2xl font-black uppercase tracking-wider mb-2">Live Listen</h1>
+  <p class="text-muted text-sm mb-6">Passive tune ID powered by <a href="https://github.com/TomWyllie/folkfriend" class="underline hover:text-ink transition-colors">FolkFriend</a>. Drag to reorder, tap to edit.</p>
+
+  <div class="flex items-center gap-4 mb-4">
+    <button id="btn-listen" class="btn-primary">Start Listening</button>
+    <span id="status" class="text-muted text-xs uppercase tracking-widest">Ready</span>
+  </div>
+
+  <div class="mb-4 flex items-center gap-4 text-xs text-muted">
+    <label class="flex items-center gap-1">Query every
+      <select id="query-interval" class="input-sm">
+        <option value="8">8s</option>
+        <option value="12">12s</option>
+        <option value="15" selected>15s</option>
+        <option value="20">20s</option>
+        <option value="30">30s</option>
+      </select>
+    </label>
+    <label class="flex items-center gap-1">Min score
+      <input id="min-score" type="number" min="0" max="1" step="0.05" value="0.25" class="input-sm w-16">
+    </label>
+  </div>
+
+  <div id="debug" class="mb-6 text-xs text-muted font-mono hidden">
+    <span id="dbg-frames">frames: 0</span> ·
+    <span id="dbg-queries">queries: 0</span> ·
+    <span id="dbg-last">last: —</span>
+  </div>
+
+  <div id="tune-log"></div>
+
+  <div id="footer-actions" class="hidden mt-6 pt-4 border-t border-border">
+    <div class="flex gap-4 text-xs uppercase tracking-widest mb-3">
+      <button id="btn-toggle-export" class="link-muted">Export</button>
+      <button id="btn-clear" class="link-muted ml-auto">Clear all</button>
+    </div>
+    <div id="export-panel" class="hidden">
+      <div class="flex gap-3 mb-2 text-xs uppercase tracking-widest">
+        <button class="export-tab" data-tab="text">Text</button>
+        <button class="export-tab" data-tab="json">JSON</button>
+        <span class="ml-auto flex gap-3">
+          <button id="btn-copy" class="link-muted">Copy</button>
+          <button id="btn-download" class="link-muted">Download</button>
+        </span>
+      </div>
+      <pre id="export-preview" class="export-preview"></pre>
+    </div>
+  </div>
+</div>
+
+<script src="/listen/vendor/Sortable.min.js"></script>
+<script type="module" src="/listen/listen-app.js"></script>

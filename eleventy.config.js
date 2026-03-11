@@ -3,6 +3,12 @@ import { computeAllStats } from './lib/stats.js';
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default function (eleventyConfig) {
+  // ── Passthrough: listen island (WASM + JS) ──
+  eleventyConfig.addPassthroughCopy("src/listen/wasm");
+  eleventyConfig.addPassthroughCopy("src/listen/listen-worker.js");
+  eleventyConfig.addPassthroughCopy("src/listen/listen-app.js");
+  eleventyConfig.addPassthroughCopy("src/listen/listen.css");
+  eleventyConfig.addPassthroughCopy("src/listen/vendor");
   // ── Global data from JSON files ──
   eleventyConfig.addGlobalData("tunes", async () => {
     const { readFileSync } = await import("node:fs");

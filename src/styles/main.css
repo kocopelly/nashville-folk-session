@@ -85,3 +85,109 @@ th[aria-sort="descending"]::after { content: " ↓"; }
   background: linear-gradient(to bottom, transparent, var(--color-bg));
   pointer-events: none;
 }
+
+/* ─── Reusable components ───────────────────────────────── */
+
+/* Primary button (border, ink on ivory, inverts on hover) */
+.btn-primary {
+  border: 2px solid var(--color-ink);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  color: var(--color-ink);
+}
+.btn-primary:hover { background: var(--color-ink); color: var(--color-bg); }
+.btn-primary:active { transform: scale(0.95); }
+
+/* Small form input */
+.input-sm {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  padding: 0.25rem 0.375rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.input-sm:hover { border-color: var(--color-ink); }
+
+/* Muted text link button */
+.link-muted {
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.link-muted:hover { color: var(--color-ink); }
+
+/* Icon button (actions in rows — small visual, padded tap target) */
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  padding: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  line-height: 1;
+  border-radius: 2px;
+  transition: color 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.icon-btn:hover, .icon-btn:active { color: var(--color-ink); }
+@media (hover: none) {
+  .icon-btn { padding: 0.625rem; }
+}
+
+/* Popover (dropdown panel) */
+.popover {
+  position: absolute;
+  z-index: 10;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 3px;
+  padding: 0.25rem 0;
+  min-width: 14rem;
+  max-width: calc(100vw - 2rem);
+}
+.popover-section { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--color-border); }
+.popover-section:last-child { border-bottom: none; }
+.popover-row {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.popover-row:hover, .popover-row:active { background: var(--color-hover); }
+
+/* Export preview block */
+.export-preview {
+  font-size: 0.75rem;
+  font-family: monospace;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 0.75rem;
+  border-radius: 2px;
+  overflow-x: auto;
+  max-height: 16rem;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
