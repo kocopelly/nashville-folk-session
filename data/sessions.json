@@ -182,7 +182,7 @@
             "type": "sheet-music"
           }
         ],
-        "notes": "Mixed jig/slip jig set \u2014 Paddy O'Rafferty is a jig, then two slip jigs"
+        "notes": "Mixed jig/slip jig set — Paddy O'Rafferty is a jig, then two slip jigs"
       },
       {
         "label": "polkas",
@@ -779,6 +779,168 @@
     "links": []
   },
   {
+    "id": "sess_2026-02-25",
+    "seriesId": "quinns-irish",
+    "date": "2026-02-25",
+    "sets": [
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_072",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_073",
+            "key": "Dmix"
+          },
+          {
+            "tuneId": "tune_074",
+            "key": "G"
+          }
+        ],
+        "label": "mixed"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_086",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_030",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_075",
+            "key": "D"
+          }
+        ],
+        "label": "jigs"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_076",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_077",
+            "key": "G"
+          }
+        ],
+        "label": "slip jigs"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_051",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_087",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_018",
+            "key": "Em"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_078",
+            "key": "Ddor"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_079",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_080",
+            "key": "Amix"
+          }
+        ],
+        "label": "jigs"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_019",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_031",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_089",
+            "key": "G"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_046",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_081",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_082",
+            "key": "G"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_083",
+            "key": "D"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_088",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_084",
+            "key": "Bm"
+          },
+          {
+            "tuneId": "tune_085",
+            "key": "D"
+          }
+        ],
+        "label": "reels"
+      },
+      {
+        "tunes": [
+          {
+            "tuneId": "tune_090",
+            "key": "D"
+          }
+        ],
+        "label": "jigs"
+      }
+    ]
+  },
+  {
     "id": "sess_2026-03-04",
     "seriesId": "quinns-irish",
     "date": "2026-03-04",
@@ -805,15 +967,15 @@
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_072",
+            "tuneId": "tune_091",
             "key": "Bm"
           },
           {
-            "tuneId": "tune_073",
+            "tuneId": "tune_092",
             "key": "Edor"
           },
           {
-            "tuneId": "tune_074",
+            "tuneId": "tune_093",
             "key": "D"
           }
         ],
@@ -823,15 +985,15 @@
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_075",
+            "tuneId": "tune_094",
             "key": "G"
           },
           {
-            "tuneId": "tune_076",
+            "tuneId": "tune_095",
             "key": "D"
           },
           {
-            "tuneId": "tune_077",
+            "tuneId": "tune_096",
             "key": "Am"
           }
         ],
@@ -841,7 +1003,7 @@
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_078",
+            "tuneId": "tune_097",
             "key": "Edor"
           },
           {
@@ -849,7 +1011,7 @@
             "key": "D"
           },
           {
-            "tuneId": "tune_079",
+            "tuneId": "tune_098",
             "key": "Dmix"
           }
         ],
@@ -859,15 +1021,15 @@
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_080",
+            "tuneId": "tune_099",
             "key": "Gmix"
           },
           {
-            "tuneId": "tune_081",
+            "tuneId": "tune_100",
             "key": "A"
           },
           {
-            "tuneId": "tune_082",
+            "tuneId": "tune_101",
             "key": "D"
           }
         ],
@@ -877,11 +1039,11 @@
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_083",
+            "tuneId": "tune_102",
             "key": "G"
           },
           {
-            "tuneId": "tune_084",
+            "tuneId": "tune_103",
             "key": "Edor"
           },
           {
@@ -901,15 +1063,15 @@
         "label": "reels",
         "tunes": [
           {
-            "tuneId": "tune_085",
+            "tuneId": "tune_104",
             "key": "D"
           },
           {
-            "tuneId": "tune_086",
+            "tuneId": "tune_105",
             "key": "G"
           },
           {
-            "tuneId": "tune_087",
+            "tuneId": "tune_106",
             "key": "D"
           },
           {
@@ -923,7 +1085,7 @@
         "label": "jigs",
         "tunes": [
           {
-            "tuneId": "tune_088",
+            "tuneId": "tune_107",
             "key": "D"
           },
           {
@@ -945,7 +1107,7 @@
         "label": "jigs",
         "tunes": [
           {
-            "tuneId": "tune_089",
+            "tuneId": "tune_108",
             "key": "Em"
           },
           {
@@ -953,7 +1115,7 @@
             "key": "G"
           },
           {
-            "tuneId": "tune_090",
+            "tuneId": "tune_109",
             "key": "D"
           },
           {
