@@ -1130,7 +1130,7 @@
     "type": "slide",
     "tradition": "irish",
     "aliases": [
-      "An Réalt Os Cionn An Ghairtéir"
+      "An R\u00e9alt Os Cionn An Ghairt\u00e9ir"
     ],
     "commonKeys": [
       "G"
@@ -1213,7 +1213,7 @@
   },
   "tune_079": {
     "id": "tune_079",
-    "name": "Gráinne's",
+    "name": "Gr\u00e1inne's",
     "type": "jig",
     "tradition": "irish",
     "aliases": [
@@ -1445,21 +1445,6 @@
       "thesession": 2
     }
   },
-  "tune_094": {
-    "id": "tune_094",
-    "name": "George White's Favourite",
-    "type": "reel",
-    "tradition": "irish",
-    "aliases": [],
-    "commonKeys": [
-      "G",
-      "D"
-    ],
-    "url": "https://thesession.org/tunes/718",
-    "external": {
-      "thesession": 718
-    }
-  },
   "tune_095": {
     "id": "tune_095",
     "name": "The Virginia",
@@ -1502,20 +1487,6 @@
     "url": "https://thesession.org/tunes/363",
     "external": {
       "thesession": 363
-    }
-  },
-  "tune_098": {
-    "id": "tune_098",
-    "name": "Dinny O'Brien's",
-    "type": "reel",
-    "tradition": "irish",
-    "aliases": [],
-    "commonKeys": [
-      "Dmix"
-    ],
-    "url": "https://thesession.org/tunes/1667",
-    "external": {
-      "thesession": 1667
     }
   },
   "tune_099": {
@@ -1630,35 +1601,6 @@
     "url": "https://thesession.org/tunes/240",
     "external": {
       "thesession": 240
-    }
-  },
-  "tune_107": {
-    "id": "tune_107",
-    "name": "Doctor O'Neill",
-    "type": "jig",
-    "tradition": "irish",
-    "aliases": [],
-    "commonKeys": [
-      "D"
-    ],
-    "url": "https://thesession.org/tunes/1304",
-    "external": {
-      "thesession": 1304
-    }
-  },
-  "tune_108": {
-    "id": "tune_108",
-    "name": "The Rollicking Boys Of Tandragee",
-    "type": "jig",
-    "tradition": "irish",
-    "aliases": [],
-    "commonKeys": [
-      "Em",
-      "Dmix"
-    ],
-    "url": "https://thesession.org/tunes/1392",
-    "external": {
-      "thesession": 1392
     }
   },
   "tune_109": {

@@ -59,6 +59,23 @@ if (!sessionsResult.success) {
 } else {
   console.log(`✅ sessions.json — ${sessionsResult.data.length} sessions valid`);
 
+  // ── Duplicate name warnings (non-blocking) ─────────────────
+  if (tunesResult.success) {
+    const byName = new Map<string, string[]>();
+    for (const [tuneId, tune] of Object.entries(tunesResult.data)) {
+      const name = (tune as any).name.toLowerCase().trim();
+      if (!byName.has(name)) byName.set(name, []);
+      byName.get(name)!.push(tuneId);
+    }
+    const nameDupes = [...byName.entries()].filter(([, ids]) => ids.length > 1);
+    if (nameDupes.length > 0) {
+      console.warn("⚠️  Tunes with duplicate names (not an error — just look twice):");
+      for (const [name, ids] of nameDupes) {
+        console.warn(`  - "${name}" → ${ids.join(", ")}`);
+      }
+    }
+  }
+
   // Cross-reference: check all tune IDs in sessions exist in tunes
   if (tunesResult.success) {
     const tuneIds = new Set(Object.keys(tunesResult.data));
