@@ -25,6 +25,11 @@ export default function (eleventyConfig) {
     return JSON.parse(readFileSync("data/sessions.json", "utf-8"));
   });
 
+  eleventyConfig.addGlobalData("feeds", async () => {
+    const { readFileSync } = await import("node:fs");
+    return JSON.parse(readFileSync("data/feeds.json", "utf-8"));
+  });
+
   eleventyConfig.addGlobalData("seriesList", async () => {
     const { readFileSync } = await import("node:fs");
     const data = JSON.parse(readFileSync("data/series.json", "utf-8"));
@@ -95,6 +100,25 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("filterBySeries", function (sessions, seriesId) {
     return sessions.filter(s => s.seriesId === seriesId);
+  });
+
+  eleventyConfig.addFilter("feedsBySeries", function (feeds, seriesId) {
+    const posts = feeds.filter(f => f.seriesId === seriesId);
+    // Pinned first, then reverse-chron
+    const pinned = posts.filter(f => f.pinned).sort((a, b) => b.date.localeCompare(a.date));
+    const unpinned = posts.filter(f => !f.pinned).sort((a, b) => b.date.localeCompare(a.date));
+    return [...pinned, ...unpinned];
+  });
+
+  eleventyConfig.addFilter("feedTypeLabel", function (type) {
+    const labels = {
+      "set-of-the-week": "Set of the Week",
+      "announcement": "Announcement",
+      "tip": "Tip",
+      "repertoire": "Repertoire",
+      "other": "Post",
+    };
+    return labels[type] || type;
   });
 
   eleventyConfig.addFilter("dateDisplay", function (dateStr) {

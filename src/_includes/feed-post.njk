@@ -1,0 +1,37 @@
+{# Renders a single feed post. Expects: post, tunes #}
+<article class="border border-border rounded-sm p-5 bg-surface">
+  <div class="flex flex-wrap items-baseline gap-3 mb-1">
+    <span class="text-xs font-bold uppercase tracking-widest text-accent">{{ post.type | feedTypeLabel }}</span>
+    <span class="text-xs text-muted">{{ post.date | dateDisplay }}</span>
+    {% if post.pinned %}
+      <span class="text-xs text-muted" title="Pinned">📌</span>
+    {% endif %}
+  </div>
+
+  <h3 class="font-display text-lg font-bold mb-1">{{ post.title }}</h3>
+
+  {% if post.author %}
+    <div class="text-xs text-muted mb-3">by {{ post.author }}</div>
+  {% endif %}
+
+  {% if post.body %}
+    <p class="text-sm text-muted mb-4 leading-relaxed">{{ post.body }}</p>
+  {% endif %}
+
+  {% if post.sets.length %}
+    <div class="space-y-2">
+      {% for set in post.sets %}
+        {% set isLoose = set | isLoose %}
+        {% include "set-item.njk" %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if post.links and post.links.length %}
+    <div class="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border">
+      {% for link in post.links %}
+        <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</article>

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "feed_2026-03-12_quinns",
+    "seriesId": "quinns-irish",
+    "date": "2026-03-12",
+    "author": "Eamonn Dillon",
+    "type": "set-of-the-week",
+    "title": "Set of the Week: March 12",
+    "body": "Three reels to work on this week. Start slow with Cooley's — really nail the triplets in the B part before speeding up. The Banshee flows nicely out of it in G, then we'll drive it home with The Gravel Walks.",
+    "sets": [
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_001", "key": "Em", "url": "https://thesession.org/tunes/1#setting1" },
+          { "tuneId": "tune_002", "key": "G", "url": "https://thesession.org/tunes/8#setting12365" },
+          { "tuneId": "tune_007", "key": "Ador", "url": "https://thesession.org/tunes/42#setting42" }
+        ],
+        "links": [
+          { "label": "TheSession set", "url": "https://thesession.org/members/190207/sets/125235", "type": "sheet-music" }
+        ]
+      }
+    ],
+    "links": [],
+    "pinned": false
+  },
+  {
+    "id": "feed_2026-03-05_quinns",
+    "seriesId": "quinns-irish",
+    "date": "2026-03-05",
+    "author": "Eamonn Dillon",
+    "type": "set-of-the-week",
+    "title": "Set of the Week: March 5",
+    "body": "Jig week! The Kesh is one everyone should know — a great anchor tune. Pair it with The Cliffs of Moher (watch the key change into Ador) and finish with Morrison's. Three jigs, three different feels.",
+    "sets": [
+      {
+        "label": "jigs",
+        "tunes": [
+          { "tuneId": "tune_010", "key": "G", "url": "https://thesession.org/tunes/55#setting55" },
+          { "tuneId": "tune_004", "key": "Ador", "url": "https://thesession.org/tunes/12#setting12" },
+          { "tuneId": "tune_011", "key": "G", "url": "https://thesession.org/tunes/56#setting56" }
+        ],
+        "links": [
+          { "label": "TheSession set", "url": "https://thesession.org/members/190207/sets/125240", "type": "sheet-music" }
+        ]
+      }
+    ],
+    "links": [],
+    "pinned": false
+  }
+]
