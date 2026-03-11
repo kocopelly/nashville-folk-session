@@ -5,22 +5,22 @@
     "date": "2026-03-12",
     "author": "Eamonn Dillon",
     "type": "set-of-the-week",
-    "title": "Set of the Week: March 12",
-    "body": "Three reels to work on this week. Start slow with Cooley's — really nail the triplets in the B part before speeding up. The Banshee flows nicely out of it in G, then we'll drive it home with The Gravel Walks.",
+    "title": "Set of the Week: Cooley's Set",
+    "body": "From Foinn Seisiún Book I (page 11) — a classic reel set. Cooley's is the anchor, one of the most-played reels in the tradition. The Wise Maid flows beautifully out of it in D, then Bird in the Bush lifts it into G. Start slow and get the ornaments tight on Cooley's B part before speeding up.",
     "sets": [
       {
         "label": "reels",
         "tunes": [
           { "tuneId": "tune_001", "key": "Em", "url": "https://thesession.org/tunes/1#setting1" },
-          { "tuneId": "tune_002", "key": "G", "url": "https://thesession.org/tunes/8#setting12365" },
-          { "tuneId": "tune_007", "key": "Ador", "url": "https://thesession.org/tunes/42#setting42" }
+          { "tuneId": "tune_110", "key": "D", "url": "https://thesession.org/tunes/118#setting118" },
+          { "tuneId": "tune_111", "key": "G", "url": "https://thesession.org/tunes/629#setting629" }
         ],
-        "links": [
-          { "label": "TheSession set", "url": "https://thesession.org/members/190207/sets/125235", "type": "sheet-music" }
-        ]
+        "links": []
       }
     ],
-    "links": [],
+    "links": [
+      { "label": "Foinn Seisiún Book I (PDF)", "url": "https://sessionsintheshire.co.uk/wp-content/uploads/2021/01/Foinn-Seisiun-Book-I.pdf", "type": "sheet-music" }
+    ],
     "pinned": false
   },
   {
@@ -29,22 +29,46 @@
     "date": "2026-03-05",
     "author": "Eamonn Dillon",
     "type": "set-of-the-week",
-    "title": "Set of the Week: March 5",
-    "body": "Jig week! The Kesh is one everyone should know — a great anchor tune. Pair it with The Cliffs of Moher (watch the key change into Ador) and finish with Morrison's. Three jigs, three different feels.",
+    "title": "Set of the Week: Drowsy Maggie Set",
+    "body": "From Foinn Seisiún Book I (page 13) — Drowsy Maggie is one everyone should know. Kicks off in E dorian with loads of energy, then The Glass of Beer settles into D, and Toss the Feathers drives it home. Three reels, three different feels. The Em→D→D key progression keeps things flowing.",
     "sets": [
       {
-        "label": "jigs",
+        "label": "reels",
         "tunes": [
-          { "tuneId": "tune_010", "key": "G", "url": "https://thesession.org/tunes/55#setting55" },
-          { "tuneId": "tune_004", "key": "Ador", "url": "https://thesession.org/tunes/12#setting12" },
-          { "tuneId": "tune_011", "key": "G", "url": "https://thesession.org/tunes/56#setting56" }
+          { "tuneId": "tune_112", "key": "Edor", "url": "https://thesession.org/tunes/27#setting27" },
+          { "tuneId": "tune_116", "key": "D", "url": "https://thesession.org/tunes/230#setting230" },
+          { "tuneId": "tune_018", "key": "Dmix", "url": "https://thesession.org/tunes/138#setting138" }
         ],
-        "links": [
-          { "label": "TheSession set", "url": "https://thesession.org/members/190207/sets/125240", "type": "sheet-music" }
-        ]
+        "links": []
       }
     ],
-    "links": [],
+    "links": [
+      { "label": "Foinn Seisiún Book I (PDF)", "url": "https://sessionsintheshire.co.uk/wp-content/uploads/2021/01/Foinn-Seisiun-Book-I.pdf", "type": "sheet-music" }
+    ],
+    "pinned": false
+  },
+  {
+    "id": "feed_2026-02-26_quinns",
+    "seriesId": "quinns-irish",
+    "date": "2026-02-26",
+    "author": "Eamonn Dillon",
+    "type": "set-of-the-week",
+    "title": "Set of the Week: Salamanca Set",
+    "body": "From Foinn Seisiún Book I (page 15) — the Bothy Band made this set famous. Salamanca is a powerhouse in D, The Banshee lifts into G, and Sailor's Bonnet brings it back. If you only learn one reel set this month, make it this one.",
+    "sets": [
+      {
+        "label": "reels",
+        "tunes": [
+          { "tuneId": "tune_115", "key": "D", "url": "https://thesession.org/tunes/99#setting99" },
+          { "tuneId": "tune_002", "key": "G", "url": "https://thesession.org/tunes/8#setting12365" },
+          { "tuneId": "tune_038", "key": "D", "url": "https://thesession.org/tunes/570#setting570" }
+        ],
+        "links": []
+      }
+    ],
+    "links": [
+      { "label": "Foinn Seisiún Book I (PDF)", "url": "https://sessionsintheshire.co.uk/wp-content/uploads/2021/01/Foinn-Seisiun-Book-I.pdf", "type": "sheet-music" }
+    ],
     "pinned": false
   }
 ]

@@ -1130,7 +1130,7 @@
     "type": "slide",
     "tradition": "irish",
     "aliases": [
-      "An R\u00e9alt Os Cionn An Ghairt\u00e9ir"
+      "An Réalt Os Cionn An Ghairtéir"
     ],
     "commonKeys": [
       "G"
@@ -1213,7 +1213,7 @@
   },
   "tune_079": {
     "id": "tune_079",
-    "name": "Gr\u00e1inne's",
+    "name": "Gráinne's",
     "type": "jig",
     "tradition": "irish",
     "aliases": [
@@ -1616,6 +1616,110 @@
     "url": "https://thesession.org/tunes/401",
     "external": {
       "thesession": 401
+    }
+  },
+  "tune_110": {
+    "id": "tune_110",
+    "name": "The Wise Maid",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/118",
+    "external": {
+      "thesession": 118
+    }
+  },
+  "tune_111": {
+    "id": "tune_111",
+    "name": "The Bird In The Bush",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "G"
+    ],
+    "url": "https://thesession.org/tunes/629",
+    "external": {
+      "thesession": 629
+    }
+  },
+  "tune_112": {
+    "id": "tune_112",
+    "name": "Drowsy Maggie",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [
+      "Drowsie Maggie"
+    ],
+    "commonKeys": [
+      "Edor",
+      "Em"
+    ],
+    "url": "https://thesession.org/tunes/27",
+    "external": {
+      "thesession": 27
+    }
+  },
+  "tune_113": {
+    "id": "tune_113",
+    "name": "Morrison's",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Edor",
+      "Em"
+    ],
+    "url": "https://thesession.org/tunes/71",
+    "external": {
+      "thesession": 71
+    }
+  },
+  "tune_114": {
+    "id": "tune_114",
+    "name": "The Maid Behind The Bar",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/64",
+    "external": {
+      "thesession": 64
+    }
+  },
+  "tune_115": {
+    "id": "tune_115",
+    "name": "The Salamanca",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [
+      "Salamanca"
+    ],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/99",
+    "external": {
+      "thesession": 99
+    }
+  },
+  "tune_116": {
+    "id": "tune_116",
+    "name": "The Glass Of Beer",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/230",
+    "external": {
+      "thesession": 230
     }
   }
 }
