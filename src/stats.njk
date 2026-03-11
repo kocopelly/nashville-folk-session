@@ -243,11 +243,22 @@ permalink: /stats/
   </div>
 
   {# Layout selector #}
-  <div class="flex justify-center gap-2 mb-3">
+  <div class="flex flex-wrap justify-center gap-2 mb-2">
+    <span class="text-xs uppercase tracking-widest text-muted font-bold self-center mr-1">Layout:</span>
     <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-layout="force">Force</button>
     <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="circular">Circular</button>
     <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="radial">Radial</button>
     <button class="net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-layout="type-cluster">By Type</button>
+  </div>
+  {# Type filter #}
+  <div class="flex flex-wrap justify-center gap-2 mb-3">
+    <span class="text-xs uppercase tracking-widest text-muted font-bold self-center mr-1">Show:</span>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-type="all">All</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="reel">Reels</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="jig">Jigs</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="polka">Polkas</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slip jig">Slip Jigs</button>
+    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slide">Slides</button>
   </div>
 
   {# Force-directed graph #}
@@ -649,7 +660,7 @@ permalink: /stats/
       document.getElementById('chart-session-size')));
   }
 
-  // ── Helper: build stacked bar chart ──
+  // ── Helper: build stacked bar chart (percentage-normalized) ──
   function stackedBarChart(container, rawSeriesMap, colorMap, labelSuffix) {
     if (ts.dates.length < 2) return null;
     const keys = Object.keys(rawSeriesMap);
@@ -660,15 +671,24 @@ permalink: /stats/
       return sumB - sumA;
     });
 
+    // Normalize each column to 100%
+    const normalized = {};
+    for (const k of keys) normalized[k] = [];
+    for (let j = 0; j < ts.dates.length; j++) {
+      let colTotal = 0;
+      for (const k of keys) colTotal += rawSeriesMap[k][j];
+      for (const k of keys) {
+        normalized[k].push(colTotal > 0 ? Math.round((rawSeriesMap[k][j] / colTotal) * 1000) / 10 : 0);
+      }
+    }
+
     // Stack the data: each series = sum of itself + all below
     const stacked = [];
     for (let k = 0; k < keys.length; k++) {
       const vals = [];
       for (let j = 0; j < ts.dates.length; j++) {
         let sum = 0;
-        for (let i = 0; i <= k; i++) {
-          sum += rawSeriesMap[keys[i]][j];
-        }
+        for (let i = 0; i <= k; i++) sum += normalized[keys[i]][j];
         vals.push(sum);
       }
       stacked.push(vals);
@@ -676,7 +696,6 @@ permalink: /stats/
 
     // Build series configs (render from top to bottom for visual stacking)
     const series = [{}];
-    const bands = [];
     const data = [ts.dates];
     for (let k = keys.length - 1; k >= 0; k--) {
       const key = keys[k];
@@ -690,13 +709,6 @@ permalink: /stats/
         points: { show: false },
       });
       data.push(stacked[k]);
-      // Band to fill between this series and the one below
-      if (k > 0) {
-        bands.push({
-          series: [data.length - 1, data.length],
-          fill: color + 'cc',
-        });
-      }
     }
 
     const opts = {
@@ -704,7 +716,10 @@ permalink: /stats/
       height: 240,
       padding: [10, 10, 0, 0],
       cursor: { show: true },
-      axes: [dateAxis(), valAxis('')],
+      axes: [dateAxis(), Object.assign(valAxis(''), {
+        values: (u, vals) => vals.map(v => Math.round(v) + '%'),
+      })],
+      scales: { y: { range: [0, 100] } },
       series,
     };
     return new uPlot(opts, data, container);
@@ -762,15 +777,21 @@ permalink: /stats/
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
 
-    const nodeMap = {};
-    const nodes = net.nodes.map((n) => {
-      const obj = { ...n, x: W / 2, y: H / 2 };
-      nodeMap[n.id] = obj;
+    const allNodeMap = {};
+    const allNodes = net.nodes.map((n) => {
+      const obj = { ...n, x: W / 2, y: H / 2, visible: true };
+      allNodeMap[n.id] = obj;
       return obj;
     });
-    const edges = net.edges.filter(e => nodeMap[e.source] && nodeMap[e.target]);
-    const maxWeight = Math.max(1, ...edges.map(e => e.weight));
-    const maxDegree = Math.max(1, ...nodes.map(n => n.degree));
+    const allEdges = net.edges.filter(e => allNodeMap[e.source] && allNodeMap[e.target]);
+
+    // Active (filtered) views
+    let nodeMap = allNodeMap;
+    let nodes = allNodes;
+    let edges = allEdges;
+    let maxWeight = Math.max(1, ...edges.map(e => e.weight));
+    let maxDegree = Math.max(1, ...nodes.map(n => n.degree));
+    let currentTypeFilter = 'all';
 
     // ── Layout algorithms ──
     const layouts = {
@@ -920,13 +941,37 @@ permalink: /stats/
       }
     }
 
+    // ── Type filtering ──
+    function applyTypeFilter(type) {
+      currentTypeFilter = type;
+      if (type === 'all') {
+        nodes = allNodes;
+        edges = allEdges;
+      } else {
+        const idSet = new Set(allNodes.filter(n => n.type === type).map(n => n.id));
+        nodes = allNodes.filter(n => idSet.has(n.id));
+        edges = allEdges.filter(e => idSet.has(e.source) && idSet.has(e.target));
+      }
+      nodeMap = {};
+      nodes.forEach(n => nodeMap[n.id] = n);
+      maxWeight = Math.max(1, ...edges.map(e => e.weight));
+      maxDegree = Math.max(1, ...nodes.map(n => n.degree));
+      // Update button styles
+      document.querySelectorAll('.net-type-btn').forEach(btn => {
+        if (btn.dataset.type === type) {
+          btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold';
+        } else {
+          btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold';
+        }
+      });
+    }
+
     // ── Layout switching ──
     let currentLayout = 'force';
     function applyLayout(name) {
       currentLayout = name;
       layouts[name]();
       render();
-      // Update button styles
       document.querySelectorAll('.net-layout-btn').forEach(btn => {
         if (btn.dataset.layout === name) {
           btn.className = 'net-layout-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold';
@@ -936,8 +981,19 @@ permalink: /stats/
       });
     }
 
+    function refresh() {
+      applyTypeFilter(currentTypeFilter);
+      applyLayout(currentLayout);
+    }
+
     document.querySelectorAll('.net-layout-btn').forEach(btn => {
       btn.addEventListener('click', () => applyLayout(btn.dataset.layout));
+    });
+    document.querySelectorAll('.net-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyTypeFilter(btn.dataset.type);
+        applyLayout(currentLayout);
+      });
     });
 
     // Initial layout
