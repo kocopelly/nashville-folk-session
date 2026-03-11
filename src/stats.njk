@@ -6,6 +6,10 @@ permalink: /stats/
 
 {% set stats = sessions | computeAllStats(tunes) %}
 {% set played = sessions | mostPlayed(tunes) %}
+{% set MAX_VISIBLE = 10 %}
+
+{# uPlot CSS #}
+<link rel="stylesheet" href="https://unpkg.com/uplot@1.6.31/dist/uPlot.min.css">
 
 {# ═══ HEADLINE COUNTERS ═══ #}
 <div class="text-center mb-10">
@@ -41,7 +45,7 @@ permalink: /stats/
 </div>
 
 {# ═══ SESSION DNA ═══ #}
-<section class="mb-14">
+<section class="mb-14" id="dna-section" data-max-visible="{{ MAX_VISIBLE }}">
   <div class="text-center mb-6">
     <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Session DNA</h2>
     <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
@@ -50,7 +54,7 @@ permalink: /stats/
 
   <div class="space-y-3">
     {% for session in stats.sessionDNA %}
-    <div class="flex items-center gap-3">
+    <div class="session-row flex items-center gap-3" data-idx="{{ loop.index0 }}">
       <a href="/sessions/{{ session.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 hover:text-ink transition-colors">{{ session.date }}</a>
       <div class="flex flex-1 h-8 border border-border overflow-hidden" title="{{ session.tuneCount }} tunes in {{ session.setCount }} sets">
         {% for set in session.sets %}
@@ -65,26 +69,40 @@ permalink: /stats/
     {% endfor %}
   </div>
 
-  {# DNA Legend #}
+  {% if stats.sessionDNA | length > MAX_VISIBLE %}
+  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.sessionDNA | length }}</button>
+  {% endif %}
+
   <div class="flex flex-wrap gap-3 mt-4 justify-center">
-    <span class="flex items-center gap-1.5 text-xs text-muted">
-      <span class="w-3 h-3 dna-reel inline-block"></span> Reel
-    </span>
-    <span class="flex items-center gap-1.5 text-xs text-muted">
-      <span class="w-3 h-3 dna-jig inline-block"></span> Jig
-    </span>
-    <span class="flex items-center gap-1.5 text-xs text-muted">
-      <span class="w-3 h-3 dna-polka inline-block"></span> Polka
-    </span>
-    <span class="flex items-center gap-1.5 text-xs text-muted">
-      <span class="w-3 h-3 dna-slipjig inline-block"></span> Slip Jig
-    </span>
-    <span class="flex items-center gap-1.5 text-xs text-muted">
-      <span class="w-3 h-3 dna-slide inline-block"></span> Slide
-    </span>
-    <span class="flex items-center gap-1.5 text-xs text-muted">
-      <span class="w-3 h-3 dna-mixed inline-block"></span> Mixed
-    </span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-reel inline-block"></span> Reel</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-jig inline-block"></span> Jig</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-polka inline-block"></span> Polka</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slipjig inline-block"></span> Slip Jig</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slide inline-block"></span> Slide</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-mixed inline-block"></span> Mixed</span>
+  </div>
+</section>
+
+{# ═══ TIME-SERIES CHARTS ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Over Time</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+  </div>
+
+  <div class="space-y-8">
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Repertoire Growth</h3>
+      <div id="chart-repertoire" class="w-full"></div>
+    </div>
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Tunes Per Session</h3>
+      <div id="chart-session-size" class="w-full"></div>
+    </div>
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Type Mix</h3>
+      <div id="chart-type-mix" class="w-full"></div>
+    </div>
   </div>
 </section>
 
@@ -129,7 +147,7 @@ permalink: /stats/
 </section>
 
 {# ═══ REPERTOIRE EVOLUTION ═══ #}
-<section class="mb-14">
+<section class="mb-14" id="evolution-section" data-max-visible="{{ MAX_VISIBLE }}">
   <div class="text-center mb-6">
     <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Repertoire Evolution</h2>
     <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
@@ -138,7 +156,7 @@ permalink: /stats/
 
   <div class="space-y-4">
     {% for diff in stats.sessionDiffs %}
-    <div>
+    <div class="session-row" data-idx="{{ loop.index0 }}">
       <div class="flex items-center gap-3 mb-1">
         <a href="/sessions/{{ diff.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 hover:text-ink transition-colors">{{ diff.date }}</a>
         <div class="flex flex-1 h-6 overflow-hidden border border-border">
@@ -155,32 +173,18 @@ permalink: /stats/
     {% endfor %}
   </div>
 
-  <div class="flex gap-4 mt-3 justify-center">
-    <span class="flex items-center gap-1.5 text-xs text-muted">
-      <span class="w-3 h-3 bg-accent inline-block"></span> New tunes
-    </span>
-    <span class="flex items-center gap-1.5 text-xs text-muted">
-      <span class="w-3 h-3 bg-ink opacity-30 inline-block"></span> Repeats
-    </span>
-  </div>
+  {% if stats.sessionDiffs | length > MAX_VISIBLE %}
+  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.sessionDiffs | length }}</button>
+  {% endif %}
 
-  {# Repertoire growth numbers #}
-  <div class="mt-6 border-t border-border pt-4">
-    <div class="flex items-end gap-1 justify-center" style="height: 80px;">
-      {% for g in stats.repertoireGrowth %}
-      <div class="flex flex-col items-center gap-1" style="flex: 1;">
-        <span class="text-xs font-bold text-ink">{{ g.cumulative }}</span>
-        <div class="w-full bg-ink" style="height: {{ (g.cumulative / stats.uniqueTunesPlayed) * 60 }}px;"></div>
-        <span class="text-xs text-muted font-mono" style="font-size: 0.6rem;">{{ g.date | replace("2026-", "") }}</span>
-      </div>
-      {% endfor %}
-    </div>
-    <p class="text-center text-xs text-muted mt-2 uppercase tracking-widest">Cumulative unique tunes</p>
+  <div class="flex gap-4 mt-3 justify-center">
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 bg-accent inline-block"></span> New tunes</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 bg-ink opacity-30 inline-block"></span> Repeats</span>
   </div>
 </section>
 
 {# ═══ KEY JOURNEY ═══ #}
-<section class="mb-14">
+<section class="mb-14" id="journey-section" data-max-visible="{{ MAX_VISIBLE }}">
   <div class="text-center mb-6">
     <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Key Journey</h2>
     <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
@@ -189,16 +193,142 @@ permalink: /stats/
 
   <div class="space-y-3">
     {% for journey in stats.keyJourneys %}
-    <div class="flex items-start gap-3">
+    <div class="session-row flex items-start gap-3" data-idx="{{ loop.index0 }}">
       <span class="text-xs text-muted font-mono w-20 shrink-0 pt-0.5">{{ journey.date }}</span>
       <div class="flex flex-wrap gap-1">
         {% for key in journey.keys %}
-        <span class="key-chip text-xs font-mono font-bold px-2 py-0.5 border border-border {% if key == 'D' or key == 'Dmix' or key == 'Ddor' %}key-d{% elif key == 'G' or key == 'Gmix' %}key-g{% elif key == 'A' or key == 'Amix' or key == 'Ador' %}key-a{% elif key == 'Em' or key == 'Edor' %}key-e{% elif key == 'Bm' or key == 'Bdor' %}key-b{% else %}key-other{% endif %}">{{ key }}</span>
+        <span class="key-chip text-xs font-mono font-bold px-2 py-0.5 border border-border {% if key == 'D' or key == 'Dmix' or key == 'Ddor' %}key-d{% elif key == 'G' or key == 'Gmix' %}key-g{% elif key == 'A' or key == 'Amix' or key == 'Ador' %}key-a{% elif key == 'Em' or key == 'Edor' %}key-e{% elif key == 'Bm' or key == 'Bdor' or key == 'Bdorian' %}key-b{% elif key == 'Am' %}key-a{% elif key == 'Ddor' %}key-d{% else %}key-other{% endif %}">{{ key }}</span>
         {% if not loop.last %}<span class="text-border self-center">→</span>{% endif %}
         {% endfor %}
       </div>
     </div>
     {% endfor %}
+  </div>
+
+  {% if stats.keyJourneys | length > MAX_VISIBLE %}
+  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.keyJourneys | length }}</button>
+  {% endif %}
+</section>
+
+{# ═══ NETWORK ANALYSIS ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Tune Network</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">Co-occurrence graph — tunes connected when played in the same set</p>
+  </div>
+
+  {# Network summary counters #}
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.nodeCount }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Nodes</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.edgeCount }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Edges</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.avgDegree }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Degree</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.components }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Components</div>
+    </div>
+  </div>
+
+  {# Force-directed graph #}
+  <div class="border-2 border-ink mb-8 bg-surface relative" id="network-container">
+    <canvas id="network-canvas" class="w-full" style="height: 450px;"></canvas>
+    <div id="network-tooltip" class="absolute hidden bg-ink text-bg text-xs px-2 py-1 pointer-events-none font-mono" style="z-index: 10;"></div>
+  </div>
+
+  {# Network metrics tables #}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {# Most connected (degree) #}
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">🔗 Most Connected</h3>
+      <p class="text-xs text-muted text-center mb-2">Degree centrality — paired with the most different tunes</p>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="text-left py-1 px-2 text-xs text-muted font-bold">Tune</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Degree</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for n in stats.network.mostConnected %}
+          <tr class="border-b border-border">
+            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 text-right font-mono">{{ n.degree }}</td>
+            <td class="py-1 px-2 text-right font-mono text-muted">{{ n.totalWeight }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {# Bridges (betweenness) #}
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">🌉 Bridges</h3>
+      <p class="text-xs text-muted text-center mb-2">Betweenness centrality — connect otherwise separate clusters</p>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="text-left py-1 px-2 text-xs text-muted font-bold">Tune</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Betweenness</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for n in stats.network.mostCentral %}
+          <tr class="border-b border-border">
+            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 text-right font-mono">{{ n.betweenness }}</td>
+            <td class="py-1 px-2 text-right text-muted capitalize">{{ n.type }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {# Clustering #}
+  <div class="mt-6">
+    <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">🫧 Tight-Knit Groups</h3>
+    <p class="text-xs text-muted text-center mb-2">Highest clustering coefficient — tunes whose partners also partner with each other</p>
+    <div class="max-w-md mx-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="text-left py-1 px-2 text-xs text-muted font-bold">Tune</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Clustering</th>
+            <th class="text-right py-1 px-2 text-xs text-muted font-bold">Degree</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for n in stats.network.highestClustering %}
+          <tr class="border-b border-border">
+            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 text-right font-mono">{{ n.clustering }}</td>
+            <td class="py-1 px-2 text-right font-mono text-muted">{{ n.degree }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {# Network legend #}
+  <div class="flex flex-wrap gap-3 mt-6 justify-center">
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-reel inline-block rounded-full"></span> Reel</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-jig inline-block rounded-full"></span> Jig</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-polka inline-block rounded-full"></span> Polka</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slipjig inline-block rounded-full"></span> Slip Jig</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slide inline-block rounded-full"></span> Slide</span>
+    <span class="text-xs text-muted">Node size = degree · Edge thickness = co-occurrence count</span>
   </div>
 </section>
 
@@ -210,7 +340,6 @@ permalink: /stats/
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {# Standards #}
     <div class="border-2 border-ink p-5">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-ink">⚓ Standards</div>
@@ -230,7 +359,6 @@ permalink: /stats/
       {% endif %}
     </div>
 
-    {# Heating up #}
     <div class="border-2 border-accent p-5">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-accent">🔥 Heating Up</div>
@@ -250,7 +378,6 @@ permalink: /stats/
       {% endif %}
     </div>
 
-    {# One-offs #}
     <div class="border border-border p-5">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-muted">💨 One-Hit Wonders</div>
@@ -353,9 +480,357 @@ permalink: /stats/
   </div>
 </section>
 
-{# ═══ Tablesort CDN ═══ #}
+{# ═══ EMBEDDED DATA FOR CLIENT-SIDE VIZ ═══ #}
+<script id="stats-json" type="application/json">{{ stats.clientData | dump | safe }}</script>
+
+{# ═══ SCRIPTS ═══ #}
 <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
 <script src="https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.number.min.js"></script>
+<script src="https://unpkg.com/uplot@1.6.31/dist/uPlot.iife.min.js"></script>
+
 <script>
+(function() {
+  'use strict';
+
+  // ── Parse embedded data ──
+  const DATA = JSON.parse(document.getElementById('stats-json').textContent);
+  const ts = DATA.timeSeries;
+  const net = DATA.network;
+
+  // ── Tablesort ──
   new Tablesort(document.getElementById('tune-table'));
+
+  // ── Show-all toggles (last N sessions) ──
+  document.querySelectorAll('[data-max-visible]').forEach(section => {
+    const maxVisible = parseInt(section.dataset.maxVisible);
+    const rows = section.querySelectorAll('.session-row');
+    const total = rows.length;
+    const btn = section.querySelector('.show-all-toggle');
+
+    if (total <= maxVisible) {
+      if (btn) btn.style.display = 'none';
+      return;
+    }
+
+    // Hide older rows
+    rows.forEach((row, i) => {
+      if (i < total - maxVisible) row.style.display = 'none';
+    });
+
+    if (btn) {
+      let expanded = false;
+      btn.addEventListener('click', () => {
+        expanded = !expanded;
+        rows.forEach((row, i) => {
+          row.style.display = (expanded || i >= total - maxVisible) ? '' : 'none';
+        });
+        btn.textContent = expanded ? ('Show last ' + maxVisible) : ('Show all ' + total);
+      });
+    }
+  });
+
+  // ── uPlot theme ──
+  const INK = '#1a1a3a';
+  const MUTED = '#6a6a80';
+  const ACCENT = '#c49a3c';
+  const BORDER = '#d0d0dc';
+  const BG = '#fffff5';
+  const TYPE_COLORS = {
+    reel: INK,
+    jig: ACCENT,
+    polka: '#8b4513',
+    'slip jig': '#4a7c59',
+    slide: '#6a4c8a',
+    hornpipe: '#2e5984',
+  };
+
+  function dateAxis() {
+    return {
+      stroke: MUTED,
+      grid: { stroke: BORDER, width: 1 },
+      ticks: { stroke: BORDER },
+      values: (u, vals) => vals.map(v => {
+        const d = new Date(v * 1000);
+        return (d.getMonth() + 1) + '/' + d.getDate();
+      }),
+      font: '10px system-ui',
+    };
+  }
+
+  function valAxis(label) {
+    return {
+      stroke: MUTED,
+      grid: { stroke: BORDER, width: 1 },
+      ticks: { stroke: BORDER },
+      font: '10px system-ui',
+      label: label,
+      labelFont: 'bold 10px system-ui',
+      labelSize: 16,
+    };
+  }
+
+  function chartWidth() {
+    const el = document.getElementById('chart-repertoire');
+    return el ? el.clientWidth || 600 : 600;
+  }
+
+  // ── Chart: Repertoire Growth ──
+  if (ts.dates.length >= 2) {
+    const opts = {
+      width: chartWidth(),
+      height: 220,
+      padding: [10, 10, 0, 0],
+      cursor: { show: true },
+      axes: [dateAxis(), valAxis('')],
+      series: [
+        {},
+        {
+          label: 'Cumulative Unique',
+          stroke: INK,
+          width: 2,
+          fill: 'rgba(26, 26, 58, 0.08)',
+          points: { size: 6, fill: BG, stroke: INK },
+        },
+        {
+          label: 'New This Session',
+          stroke: ACCENT,
+          width: 2,
+          dash: [5, 3],
+          points: { size: 5, fill: BG, stroke: ACCENT },
+        },
+      ],
+    };
+    new uPlot(opts, [ts.dates, ts.cumulativeUnique, ts.newPerSession],
+      document.getElementById('chart-repertoire'));
+  }
+
+  // ── Chart: Tunes Per Session ──
+  if (ts.dates.length >= 2) {
+    const opts = {
+      width: chartWidth(),
+      height: 200,
+      padding: [10, 10, 0, 0],
+      cursor: { show: true },
+      axes: [dateAxis(), valAxis('')],
+      series: [
+        {},
+        {
+          label: 'Tunes',
+          stroke: INK,
+          width: 2,
+          fill: 'rgba(26, 26, 58, 0.1)',
+          points: { size: 6, fill: BG, stroke: INK },
+          paths: uPlot.paths.bars({ size: [0.6] }),
+        },
+        {
+          label: 'Sets',
+          stroke: ACCENT,
+          width: 2,
+          points: { size: 5, fill: BG, stroke: ACCENT },
+        },
+      ],
+    };
+    new uPlot(opts, [ts.dates, ts.tunesPerSession, ts.setsPerSession],
+      document.getElementById('chart-session-size'));
+  }
+
+  // ── Chart: Type Mix Over Time ──
+  if (ts.dates.length >= 2) {
+    const types = Object.keys(ts.typePerSession);
+    const series = [{}];
+    const data = [ts.dates];
+    for (const type of types) {
+      series.push({
+        label: type.charAt(0).toUpperCase() + type.slice(1),
+        stroke: TYPE_COLORS[type] || MUTED,
+        width: 2,
+        points: { size: 4, fill: BG, stroke: TYPE_COLORS[type] || MUTED },
+      });
+      data.push(ts.typePerSession[type]);
+    }
+    const opts = {
+      width: chartWidth(),
+      height: 220,
+      padding: [10, 10, 0, 0],
+      cursor: { show: true },
+      axes: [dateAxis(), Object.assign(valAxis(''), {
+        values: (u, vals) => vals.map(v => v + '%'),
+      })],
+      series,
+    };
+    new uPlot(opts, data, document.getElementById('chart-type-mix'));
+  }
+
+  // ── Network Force-Directed Graph ──
+  if (net.nodes.length > 0) {
+    const canvas = document.getElementById('network-canvas');
+    const container = document.getElementById('network-container');
+    const tooltip = document.getElementById('network-tooltip');
+    const W = container.clientWidth || 672;
+    const H = 450;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    // Build node/edge structures
+    const nodeMap = {};
+    const nodes = net.nodes.map((n, i) => {
+      const angle = (2 * Math.PI * i) / net.nodes.length;
+      const obj = {
+        ...n,
+        x: W / 2 + W * 0.35 * Math.cos(angle),
+        y: H / 2 + H * 0.35 * Math.sin(angle),
+        vx: 0,
+        vy: 0,
+      };
+      nodeMap[n.id] = obj;
+      return obj;
+    });
+    const edges = net.edges.filter(e => nodeMap[e.source] && nodeMap[e.target]);
+
+    // Fruchterman-Reingold layout
+    const area = W * H;
+    const k = Math.sqrt(area / Math.max(nodes.length, 1)) * 0.85;
+    const ITERS = 400;
+
+    for (let iter = 0; iter < ITERS; iter++) {
+      const temp = (W / 10) * (1 - iter / ITERS);
+
+      // Repulsive forces
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].vx = 0;
+        nodes[i].vy = 0;
+        for (let j = 0; j < nodes.length; j++) {
+          if (i === j) continue;
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 0.1);
+          const force = (k * k) / dist;
+          nodes[i].vx += (dx / dist) * force;
+          nodes[i].vy += (dy / dist) * force;
+        }
+      }
+
+      // Attractive forces along edges
+      for (const e of edges) {
+        const s = nodeMap[e.source];
+        const t = nodeMap[e.target];
+        const dx = s.x - t.x;
+        const dy = s.y - t.y;
+        const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 0.1);
+        const force = (dist * dist) / k * (0.5 + e.weight * 0.5);
+        s.vx -= (dx / dist) * force;
+        s.vy -= (dy / dist) * force;
+        t.vx += (dx / dist) * force;
+        t.vy += (dy / dist) * force;
+      }
+
+      // Gravity toward center
+      for (const n of nodes) {
+        const dx = W / 2 - n.x;
+        const dy = H / 2 - n.y;
+        n.vx += dx * 0.01;
+        n.vy += dy * 0.01;
+      }
+
+      // Apply with temperature capping
+      for (const n of nodes) {
+        const dist = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+        if (dist > 0) {
+          const capped = Math.min(dist, temp);
+          n.x += (n.vx / dist) * capped;
+          n.y += (n.vy / dist) * capped;
+        }
+        n.x = Math.max(25, Math.min(W - 25, n.x));
+        n.y = Math.max(25, Math.min(H - 25, n.y));
+      }
+    }
+
+    // Render
+    const maxWeight = Math.max(1, ...edges.map(e => e.weight));
+    const maxDegree = Math.max(1, ...nodes.map(n => n.degree));
+
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Edges
+      for (const e of edges) {
+        const s = nodeMap[e.source];
+        const t = nodeMap[e.target];
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(t.x, t.y);
+        const alpha = 0.06 + 0.35 * (e.weight / maxWeight);
+        ctx.strokeStyle = 'rgba(26, 26, 58, ' + alpha + ')';
+        ctx.lineWidth = 0.5 + 2 * (e.weight / maxWeight);
+        ctx.stroke();
+      }
+
+      // Nodes
+      for (const n of nodes) {
+        const r = 3 + 8 * (n.degree / maxDegree);
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = TYPE_COLORS[n.type] || MUTED;
+        ctx.fill();
+        ctx.strokeStyle = BG;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+
+      // Labels for high-degree nodes
+      ctx.font = '9px system-ui';
+      ctx.textAlign = 'center';
+      for (const n of nodes) {
+        if (n.degree >= maxDegree * 0.4) {
+          const r = 3 + 8 * (n.degree / maxDegree);
+          ctx.fillStyle = INK;
+          ctx.fillText(n.name.length > 18 ? n.name.slice(0, 16) + '…' : n.name, n.x, n.y - r - 3);
+        }
+      }
+    }
+    render();
+
+    // Hover tooltip
+    canvas.addEventListener('mousemove', function(ev) {
+      const rect = canvas.getBoundingClientRect();
+      const mx = ev.clientX - rect.left;
+      const my = ev.clientY - rect.top;
+      let hit = null;
+      for (const n of nodes) {
+        const r = 3 + 8 * (n.degree / maxDegree);
+        const dx = mx - n.x;
+        const dy = my - n.y;
+        if (dx * dx + dy * dy <= (r + 4) * (r + 4)) {
+          hit = n;
+          break;
+        }
+      }
+      if (hit) {
+        tooltip.textContent = hit.name + ' · ' + hit.type + ' · deg ' + hit.degree + ' · btw ' + hit.betweenness;
+        tooltip.style.left = (mx + 12) + 'px';
+        tooltip.style.top = (my - 8) + 'px';
+        tooltip.classList.remove('hidden');
+        canvas.style.cursor = 'pointer';
+      } else {
+        tooltip.classList.add('hidden');
+        canvas.style.cursor = 'default';
+      }
+    });
+    canvas.addEventListener('mouseleave', function() {
+      tooltip.classList.add('hidden');
+    });
+  }
+
+  // ── Responsive resize for uPlot ──
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => location.reload(), 300);
+  });
+})();
 </script>
