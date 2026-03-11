@@ -74,3 +74,14 @@ th[aria-sort="descending"]::after { content: " ↓"; }
 .session-truncation-wrapper:has(.session-details[open]) .truncation-fade {
   opacity: 0;
 }
+
+/* ─── Velocity column fade — truncate overflowing columns ─ */
+.velocity-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  pointer-events: none;
+}

@@ -40,10 +40,18 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy _site --project-name=nashville-folk-session --branch=${{ github.head_ref || 'main' }}
 
-      - name: Build branch alias
+      - name: Build preview alias
         if: github.event_name == 'pull_request'
         id: alias
-        run: echo "url=https://$(echo '${{ github.head_ref }}' | sed 's/[\/\.]/-/g').nashville-folk-session.pages.dev" >> "$GITHUB_OUTPUT"
+        run: echo "url=https://pr-${{ github.event.number }}.nashville-folk-session.pages.dev" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy PR alias
+        if: github.event_name == 'pull_request'
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _site --project-name=nashville-folk-session --branch=pr-${{ github.event.number }}
 
       - name: Comment preview URL on PR
         if: github.event_name == 'pull_request'

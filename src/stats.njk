@@ -345,8 +345,8 @@ permalink: /stats/
     <div class="w-12 h-0.5 bg-ink mx-auto"></div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="border-2 border-ink p-5">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:[grid-template-rows:1fr]">
+    <div class="border-2 border-ink p-5 relative md:max-h-80 overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-ink">⚓ Standards</div>
         <div class="text-xs text-muted">3+ sessions</div>
@@ -363,9 +363,10 @@ permalink: /stats/
       {% else %}
         <p class="text-center text-muted text-sm italic">Need more sessions!</p>
       {% endif %}
+      <div class="velocity-fade"></div>
     </div>
 
-    <div class="border-2 border-accent p-5">
+    <div class="border-2 border-accent p-5 relative md:max-h-80 overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-accent">🔥 Heating Up</div>
         <div class="text-xs text-muted">2+ of last 3 sessions</div>
@@ -382,9 +383,10 @@ permalink: /stats/
       {% else %}
         <p class="text-center text-muted text-sm italic">Nothing trending</p>
       {% endif %}
+      <div class="velocity-fade"></div>
     </div>
 
-    <div class="border border-border p-5">
+    <div class="border border-border p-5 relative md:max-h-80 overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-muted">💨 One-Hit Wonders</div>
         <div class="text-xs text-muted">Played once, never returned</div>
@@ -399,6 +401,7 @@ permalink: /stats/
       {% else %}
         <p class="text-center text-muted text-sm italic">Everything's a repeat!</p>
       {% endif %}
+      <div class="velocity-fade"></div>
     </div>
   </div>
 </section>
