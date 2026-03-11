@@ -182,7 +182,7 @@
             "type": "sheet-music"
           }
         ],
-        "notes": "Mixed jig/slip jig set \u2014 Paddy O'Rafferty is a jig, then two slip jigs"
+        "notes": "Mixed jig/slip jig set — Paddy O'Rafferty is a jig, then two slip jigs"
       },
       {
         "label": "polkas",
@@ -937,6 +937,283 @@
           }
         ],
         "label": "jigs"
+      }
+    ]
+  },
+  {
+    "id": "sess_2026-03-04",
+    "seriesId": "quinns-irish",
+    "date": "2026-03-04",
+    "sets": [
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_012",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_047",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_004",
+            "key": "Ador"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_091",
+            "key": "Bm"
+          },
+          {
+            "tuneId": "tune_092",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_093",
+            "key": "D"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_094",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_095",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_096",
+            "key": "Am"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_097",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_065",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_098",
+            "key": "Dmix"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_099",
+            "key": "Gmix"
+          },
+          {
+            "tuneId": "tune_100",
+            "key": "A"
+          },
+          {
+            "tuneId": "tune_101",
+            "key": "D"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_102",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_103",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_034",
+            "key": "G"
+          }
+        ],
+        "links": [
+          {
+            "label": "Killavil Fancy / Lads of Laois / Kilty Town",
+            "url": "https://www.youtube.com/watch?v=RLcjarx4MGM",
+            "type": "video"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_104",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_105",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_106",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_099",
+            "key": "G"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_107",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_023",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_058",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_017",
+            "key": "D"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_108",
+            "key": "Em"
+          },
+          {
+            "tuneId": "tune_070",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_109",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_030",
+            "key": "D"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_019",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_091",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_092",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_042",
+            "key": "A"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_060",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_093",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_094",
+            "key": "G"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_095",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_096",
+            "key": "G"
+          },
+          {
+            "tuneId": "tune_097",
+            "key": "G"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_015",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_010",
+            "key": "G"
+          }
+        ],
+        "links": []
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "tune_098",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_003",
+            "key": "A"
+          },
+          {
+            "tuneId": "tune_020",
+            "key": "D"
+          }
+        ],
+        "links": []
       }
     ]
   }
