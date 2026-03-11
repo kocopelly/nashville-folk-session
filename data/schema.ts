@@ -134,10 +134,33 @@ export const Session = z.object({
   links: z.array(Link).default([]),      // photos, event pages, fundraiser links, etc.
 });
 
+// ─── Feed Post (series-curated content) ─────────────────
+export const FeedPostType = z.enum([
+  "set-of-the-week",
+  "announcement",
+  "tip",
+  "repertoire",
+  "other",
+]);
+
+export const FeedPost = z.object({
+  id: z.string(),
+  seriesId: z.string(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  author: z.string(),
+  type: FeedPostType,
+  title: z.string(),
+  body: z.string().optional(),
+  sets: z.array(TuneSet).default([]),
+  links: z.array(Link).default([]),
+  pinned: z.boolean().default(false),
+});
+
 // ─── Top-level data files ───────────────────────────────────
 export const TuneRegistry = z.record(z.string(), Tune);
 export const SeriesRegistry = z.record(z.string(), Series);
 export const SessionLog = z.array(Session);
+export const FeedLog = z.array(FeedPost);
 
 // ─── Inferred types ─────────────────────────────────────────
 export type Tradition = z.infer<typeof Tradition>;
@@ -149,3 +172,5 @@ export type SetTune = z.infer<typeof SetTune>;
 export type TuneSet = z.infer<typeof TuneSet>;
 export type Series = z.infer<typeof Series>;
 export type Session = z.infer<typeof Session>;
+export type FeedPostType = z.infer<typeof FeedPostType>;
+export type FeedPost = z.infer<typeof FeedPost>;
