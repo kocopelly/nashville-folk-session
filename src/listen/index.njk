@@ -607,31 +607,23 @@ title: "Listen — Nashville Folk Session"
     download(`session-${today}.json`, JSON.stringify(session, null, 2), 'application/json');
   }
 
-  // ── Text format (shared by copy + download) ──
+  // ── Text format (TheSession style: "Tune 1, Tune 2, Tune 3.") ──
   function getTextExport() {
-    let lines = [];
-    let setNum = 1;
-    let inSet = false;
-
+    // Split into sets at dividers
+    const sets = [];
+    let current = [];
     for (const item of items) {
       if (item.type === 'divider') {
-        if (inSet) { lines.push(''); setNum++; }
-        inSet = false;
+        if (current.length) sets.push(current);
+        current = [];
       } else if (item.type === 'tune') {
-        if (!inSet) { lines.push(`Set ${setNum}:`); inSet = true; }
-        const meta = [item.dance, item.mode].filter(Boolean).join(', ');
-        lines.push(`  ${item.name}${meta ? ` (${meta})` : ''}`);
+        current.push(item.name);
       }
     }
+    if (current.length) sets.push(current);
 
-    if (!items.some(i => i.type === 'divider')) {
-      lines = items.filter(i => i.type === 'tune').map(t => {
-        const meta = [t.dance, t.mode].filter(Boolean).join(', ');
-        return `${t.name}${meta ? ` (${meta})` : ''}`;
-      });
-    }
-
-    return lines.join('\n');
+    // TheSession format: comma-separated names, period at end
+    return sets.map(names => names.join(', ') + '.').join('\n');
   }
 
   function exportText() {
