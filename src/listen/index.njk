@@ -76,59 +76,51 @@ title: "Listen — Nashville Folk Session"
   }
   .icon-btn:hover { color: var(--color-ink); background: var(--color-bg); }
 
-  /* ── Insert strip — always same height, actions fade ── */
+  /* ── Insert strip — always same height, actions fade, left-aligned ── */
   .insert-strip {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 28px;
+    height: 24px;
     gap: 0.375rem;
-    position: relative;
+    padding-left: 1.75rem; /* align with tune text (past the number) */
   }
-  .insert-strip::before {
-    content: '';
-    position: absolute;
-    left: 0; right: 0; top: 50%;
-    border-top: 1px dashed transparent;
-    transition: border-color 0.15s;
-  }
-  .insert-strip:hover::before { border-color: var(--color-border); }
   .insert-strip .strip-btn {
     opacity: 0;
-    background: var(--color-bg);
-    border: 1px solid transparent;
+    background: none;
+    border: none;
     color: var(--color-muted);
     cursor: pointer;
-    padding: 1px 8px;
+    padding: 1px 0;
     font-size: 0.625rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     transition: all 0.1s;
-    position: relative;
-    z-index: 1;
     white-space: nowrap;
   }
-  .insert-strip:hover .strip-btn { opacity: 1; border-color: var(--color-border); }
-  .insert-strip .strip-btn:hover { border-color: var(--color-ink); color: var(--color-ink); }
-  .insert-strip .strip-btn:active { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
+  .insert-strip .strip-sep {
+    opacity: 0;
+    color: var(--color-border);
+    font-size: 0.625rem;
+    transition: opacity 0.1s;
+  }
+  .insert-strip:hover .strip-btn,
+  .insert-strip:hover .strip-sep { opacity: 1; }
+  .insert-strip .strip-btn:hover { color: var(--color-ink); }
 
-  /* ── Bottom strip: always visible ── */
+  /* ── Bottom strip: always visible, left-aligned ── */
   .bottom-strip-inner {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 0.375rem;
-    padding: 0.625rem 0;
-    border-top: 1px dashed var(--color-border);
-    margin-top: 0.25rem;
+    padding: 0.5rem 0 0.5rem 1.75rem;
+    margin-top: 0.125rem;
   }
   .bottom-strip-inner .strip-btn {
-    opacity: 1;
-    background: var(--color-bg);
+    background: none;
     border: 1px solid var(--color-border);
     color: var(--color-muted);
     cursor: pointer;
-    padding: 3px 10px;
+    padding: 2px 8px;
     font-size: 0.6875rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -143,9 +135,9 @@ title: "Listen — Nashville Folk Session"
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.375rem 0;
+    padding: 0.5rem 0 0.5rem 1.75rem;
   }
-  .divider-line { flex: 1; border-top: 2px solid var(--color-ink); }
+  .divider-line { width: 1.5rem; border-top: 1.5px solid var(--color-ink); }
   .divider-label { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted); font-weight: 600; user-select: none; white-space: nowrap; }
   .divider-row .icon-btn { opacity: 0; transition: opacity 0.1s; }
   .divider-row:hover .icon-btn { opacity: 1; }
@@ -215,6 +207,7 @@ title: "Listen — Nashville Folk Session"
   function stripHTML(idx) {
     return `<div class="insert-strip" data-insert="${idx}">
       <button class="strip-btn do-set-break" data-insert="${idx}">set break</button>
+      <span class="strip-sep">·</span>
       <button class="strip-btn do-add-tune" data-insert="${idx}">+ tune</button>
     </div>`;
   }
@@ -247,7 +240,6 @@ title: "Listen — Nashville Folk Session"
         html += `<div class="divider-row" data-idx="${idx}">
           <div class="divider-line"></div>
           <span class="divider-label">set break</span>
-          <div class="divider-line"></div>
           <button class="icon-btn tune-delete" data-idx="${idx}" title="Remove">✕</button>
         </div>`;
         return;
