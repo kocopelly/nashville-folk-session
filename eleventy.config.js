@@ -127,6 +127,302 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.count - a.count);
   });
 
+  // ── Comprehensive stats computation ──────────────────────
+  eleventyConfig.addFilter("computeAllStats", function (sessions, tunes) {
+    // Sort sessions chronologically
+    const sorted = [...sessions].sort((a, b) => a.date.localeCompare(b.date));
+
+    // ── Tune play stats ──
+    const tuneMap = {};
+    let totalPlays = 0;
+    let totalSets = 0;
+    let maxSetSize = 0;
+    let maxSetInfo = "";
+
+    for (const session of sorted) {
+      totalSets += session.sets.length;
+      for (const set of session.sets) {
+        if (set.tunes.length > maxSetSize) {
+          maxSetSize = set.tunes.length;
+          maxSetInfo = `${set.label || "set"} — ${session.date}`;
+        }
+        for (const entry of set.tunes) {
+          const { tuneId, key } = normalizeTuneEntry(entry);
+          totalPlays++;
+          if (!tuneMap[tuneId]) {
+            tuneMap[tuneId] = {
+              id: tuneId,
+              name: tunes[tuneId]?.name ?? tuneId,
+              type: tunes[tuneId]?.type ?? "unknown",
+              count: 0,
+              sessionIds: [],
+              keys: [],
+            };
+          }
+          tuneMap[tuneId].count++;
+          if (!tuneMap[tuneId].sessionIds.includes(session.id)) {
+            tuneMap[tuneId].sessionIds.push(session.id);
+          }
+          if (key && !tuneMap[tuneId].keys.includes(key)) {
+            tuneMap[tuneId].keys.push(key);
+          }
+        }
+      }
+    }
+
+    const tunePlays = Object.values(tuneMap)
+      .map((t) => ({
+        ...t,
+        sessionCount: t.sessionIds.length,
+        keysDisplay: t.keys.join(", "),
+      }))
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+
+    const uniqueTunesPlayed = tunePlays.length;
+
+    // ── Type breakdown ──
+    const typeCounts = {};
+    for (const session of sorted) {
+      for (const set of session.sets) {
+        for (const entry of set.tunes) {
+          const { tuneId } = normalizeTuneEntry(entry);
+          const type = tunes[tuneId]?.type ?? "unknown";
+          typeCounts[type] = (typeCounts[type] || 0) + 1;
+        }
+      }
+    }
+    const typeBreakdown = Object.entries(typeCounts)
+      .map(([type, count]) => ({
+        type,
+        count,
+        pct: Math.round((count / totalPlays) * 100),
+      }))
+      .sort((a, b) => b.count - a.count);
+
+    // ── Key distribution ──
+    const keyCounts = {};
+    for (const session of sorted) {
+      for (const set of session.sets) {
+        for (const entry of set.tunes) {
+          const { key } = normalizeTuneEntry(entry);
+          if (key) {
+            keyCounts[key] = (keyCounts[key] || 0) + 1;
+          }
+        }
+      }
+    }
+    const totalKeyed = Object.values(keyCounts).reduce((a, b) => a + b, 0);
+    const keyDistribution = Object.entries(keyCounts)
+      .map(([key, count]) => ({
+        key,
+        count,
+        pct: Math.round((count / totalKeyed) * 100),
+      }))
+      .sort((a, b) => b.count - a.count);
+
+    // ── Session DNA ──
+    const typeColors = {
+      reel: "dna-reel",
+      jig: "dna-jig",
+      polka: "dna-polka",
+      "slip jig": "dna-slipjig",
+      slide: "dna-slide",
+      hornpipe: "dna-hornpipe",
+      mixed: "dna-mixed",
+      unknown: "dna-mixed",
+    };
+
+    const sessionDNA = sorted.map((session) => {
+      const tuneCount = session.sets.reduce(
+        (n, s) => n + s.tunes.length,
+        0,
+      );
+      const sets = session.sets.map((set) => {
+        // Determine dominant type of the set
+        const setTypeCounts = {};
+        for (const entry of set.tunes) {
+          const { tuneId } = normalizeTuneEntry(entry);
+          const t = tunes[tuneId]?.type ?? "unknown";
+          setTypeCounts[t] = (setTypeCounts[t] || 0) + 1;
+        }
+        const dominantType =
+          set.label && set.label !== "mixed"
+            ? set.label.replace(/s$/, "")
+            : Object.entries(setTypeCounts).sort(
+                (a, b) => b[1] - a[1],
+              )[0]?.[0] || "unknown";
+
+        return {
+          label: set.label || dominantType,
+          type: dominantType,
+          colorClass: typeColors[dominantType] || typeColors.mixed,
+          tuneCount: set.tunes.length,
+          pct:
+            tuneCount > 0
+              ? Math.round((set.tunes.length / tuneCount) * 100)
+              : 0,
+        };
+      });
+
+      return {
+        id: session.id,
+        date: session.date,
+        tuneCount,
+        setCount: session.sets.length,
+        sets,
+      };
+    });
+
+    // ── Tune velocity ──
+    const sessionCount = sorted.length;
+    const recentIds = sorted.slice(-3).map((s) => s.id);
+    const standards = [];
+    const heating = [];
+    const oneOffs = [];
+
+    for (const t of tunePlays) {
+      const recentCount = t.sessionIds.filter((id) =>
+        recentIds.includes(id),
+      ).length;
+      if (t.sessionCount >= Math.min(3, sessionCount) && sessionCount >= 3) {
+        standards.push({ name: t.name, count: t.count, sessions: t.sessionCount });
+      } else if (recentCount >= 2 && t.sessionCount < sessionCount) {
+        heating.push({ name: t.name, count: t.count, sessions: t.sessionCount });
+      } else if (t.sessionCount === 1) {
+        oneOffs.push({ name: t.name });
+      }
+    }
+
+    // ── Common pairings ──
+    const pairCounts = {};
+    for (const session of sorted) {
+      for (const set of session.sets) {
+        const ids = set.tunes.map((e) => normalizeTuneEntry(e).tuneId);
+        for (let i = 0; i < ids.length; i++) {
+          for (let j = i + 1; j < ids.length; j++) {
+            const pair = [ids[i], ids[j]].sort().join("|");
+            pairCounts[pair] = (pairCounts[pair] || 0) + 1;
+          }
+        }
+      }
+    }
+    const pairings = Object.entries(pairCounts)
+      .filter(([, c]) => c >= 2)
+      .map(([pair, count]) => {
+        const [a, b] = pair.split("|");
+        return {
+          tuneA: tunes[a]?.name ?? a,
+          tuneB: tunes[b]?.name ?? b,
+          count,
+        };
+      })
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 15);
+
+    // ── Repertoire growth ──
+    const seenTunes = new Set();
+    const repertoireGrowth = sorted.map((session) => {
+      let newCount = 0;
+      for (const set of session.sets) {
+        for (const entry of set.tunes) {
+          const { tuneId } = normalizeTuneEntry(entry);
+          if (!seenTunes.has(tuneId)) {
+            seenTunes.add(tuneId);
+            newCount++;
+          }
+        }
+      }
+      return {
+        date: session.date,
+        newCount,
+        cumulative: seenTunes.size,
+      };
+    });
+
+    // ── Session diffs ──
+    const seenBefore = new Set();
+    const sessionDiffs = sorted.map((session) => {
+      const sessionTuneIds = new Set();
+      for (const set of session.sets) {
+        for (const entry of set.tunes) {
+          sessionTuneIds.add(normalizeTuneEntry(entry).tuneId);
+        }
+      }
+      let newTunes = 0;
+      let repeatTunes = 0;
+      const newNames = [];
+      const repeatNames = [];
+      for (const tid of sessionTuneIds) {
+        if (seenBefore.has(tid)) {
+          repeatTunes++;
+          repeatNames.push(tunes[tid]?.name ?? tid);
+        } else {
+          newTunes++;
+          newNames.push(tunes[tid]?.name ?? tid);
+        }
+      }
+      // Add all to seenBefore after counting
+      for (const tid of sessionTuneIds) {
+        seenBefore.add(tid);
+      }
+      return {
+        date: session.date,
+        id: session.id,
+        newTunes,
+        repeatTunes,
+        total: sessionTuneIds.size,
+        newNames,
+        repeatNames,
+        newPct:
+          sessionTuneIds.size > 0
+            ? Math.round((newTunes / sessionTuneIds.size) * 100)
+            : 0,
+        repeatPct:
+          sessionTuneIds.size > 0
+            ? Math.round((repeatTunes / sessionTuneIds.size) * 100)
+            : 0,
+      };
+    });
+
+    // ── Key journey per session ──
+    const keyJourneys = sorted.map((session) => {
+      const keys = [];
+      for (const set of session.sets) {
+        const setKeys = set.tunes
+          .map((e) => normalizeTuneEntry(e).key)
+          .filter(Boolean);
+        if (setKeys.length > 0) {
+          // Use the first tune's key as the set's "key center"
+          keys.push(setKeys[0]);
+        }
+      }
+      return { date: session.date, keys };
+    });
+
+    return {
+      totalPlays,
+      totalSets,
+      uniqueTunesPlayed,
+      avgTunesPerSession:
+        sorted.length > 0
+          ? (totalPlays / sorted.length).toFixed(1)
+          : "0",
+      avgSetSize:
+        totalSets > 0 ? (totalPlays / totalSets).toFixed(1) : "0",
+      maxSetSize,
+      maxSetInfo,
+      tunePlays,
+      typeBreakdown,
+      keyDistribution,
+      sessionDNA,
+      velocity: { standards, heating, oneOffs },
+      pairings,
+      repertoireGrowth,
+      sessionDiffs,
+      keyJourneys,
+    };
+  });
+
   return {
     dir: {
       input: "src",

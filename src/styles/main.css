@@ -31,6 +31,35 @@ details.session-details[open] > summary { order: 1; margin-top: 0.75rem; }
 /* ─── Expand row: keep 'View session' aligned with summary ─ */
 .session-expand-row:has(.session-details[open]) { align-items: flex-end; }
 
+/* ─── Session DNA type colors ───────────────────────────── */
+.dna-reel { background: #1a1a3a; }
+.dna-jig { background: #c49a3c; }
+.dna-polka { background: #8b4513; }
+.dna-slipjig { background: #4a7c59; }
+.dna-slide { background: #6a4c8a; }
+.dna-hornpipe { background: #2e5984; }
+.dna-mixed { background: #9a9aaa; }
+
+/* Chart bar aliases (strip plural 's' from labels) */
+.dna-reels { background: #1a1a3a; }
+.dna-jigs { background: #c49a3c; }
+.dna-polkas { background: #8b4513; }
+.dna-slipjigs, .dna-slipjig { background: #4a7c59; }
+.dna-slides { background: #6a4c8a; }
+.dna-hornpipes { background: #2e5984; }
+
+/* ─── Key chips ─────────────────────────────────────────── */
+.key-d { background: #eee8d8; color: #4a3a10; }
+.key-g { background: #d8e8d8; color: #1a3a1a; }
+.key-a { background: #e8d8e8; color: #3a1a3a; }
+.key-e { background: #d8e0f0; color: #1a2a4a; }
+.key-b { background: #f0e0d8; color: #4a2a1a; }
+.key-other { background: #e8e8e8; color: #3a3a3a; }
+
+/* ─── Tablesort indicators ──────────────────────────────── */
+th[aria-sort="ascending"]::after { content: " ↑"; }
+th[aria-sort="descending"]::after { content: " ↓"; }
+
 /* ─── Truncation fade — hide when details is open ──────── */
 .truncation-fade {
   position: absolute;
