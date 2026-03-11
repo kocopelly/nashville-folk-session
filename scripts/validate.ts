@@ -59,6 +59,26 @@ if (!sessionsResult.success) {
 } else {
   console.log(`✅ sessions.json — ${sessionsResult.data.length} sessions valid`);
 
+  // Duplicate external IDs: same thesession ID on two different tunes = dupe
+  const theSessionIds = new Map<number, string[]>();
+  for (const [tuneId, tune] of Object.entries(tunesResult.data)) {
+    const tsId = (tune as any).external?.thesession;
+    if (tsId != null) {
+      if (!theSessionIds.has(tsId)) theSessionIds.set(tsId, []);
+      theSessionIds.get(tsId)!.push(tuneId);
+    }
+  }
+  const dupes = [...theSessionIds.entries()].filter(([, ids]) => ids.length > 1);
+  if (dupes.length > 0) {
+    console.error("❌ Duplicate thesession IDs:");
+    for (const [tsId, ids] of dupes) {
+      console.error(`  - thesession:${tsId} → ${ids.join(", ")}`);
+    }
+    errors++;
+  } else {
+    console.log("✅ No duplicate thesession IDs");
+  }
+
   // Cross-reference: check all tune IDs in sessions exist in tunes
   if (tunesResult.success) {
     const tuneIds = new Set(Object.keys(tunesResult.data));
