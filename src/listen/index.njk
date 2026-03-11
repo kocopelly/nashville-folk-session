@@ -42,13 +42,22 @@ title: "Listen — Nashville Folk Session"
   <div id="tune-log"></div>
 
   <!-- Footer actions -->
-  <div id="footer-actions" class="hidden mt-6 pt-4 border-t border-border space-y-3">
-    <div class="flex gap-4 text-xs uppercase tracking-widest">
-
-      <button id="btn-copy" class="text-muted hover:text-ink transition-colors cursor-pointer">Copy Setlist</button>
-      <button id="btn-export-json" class="text-muted hover:text-ink transition-colors cursor-pointer">Export JSON</button>
-      <button id="btn-export-text" class="text-muted hover:text-ink transition-colors cursor-pointer">Export Text</button>
+  <div id="footer-actions" class="hidden mt-6 pt-4 border-t border-border">
+    <div class="flex gap-4 text-xs uppercase tracking-widest mb-3">
+      <button id="btn-toggle-export" class="text-muted hover:text-ink transition-colors cursor-pointer">Export</button>
       <button id="btn-clear" class="text-muted hover:text-ink transition-colors cursor-pointer ml-auto">Clear all</button>
+    </div>
+    <!-- Export panel -->
+    <div id="export-panel" class="hidden">
+      <div class="flex gap-3 mb-2 text-xs uppercase tracking-widest">
+        <button class="export-tab cursor-pointer transition-colors" data-tab="text">Text</button>
+        <button class="export-tab cursor-pointer transition-colors" data-tab="json">JSON</button>
+        <span class="ml-auto flex gap-3">
+          <button id="btn-copy" class="text-muted hover:text-ink transition-colors cursor-pointer">Copy</button>
+          <button id="btn-download" class="text-muted hover:text-ink transition-colors cursor-pointer">Download</button>
+        </span>
+      </div>
+      <pre id="export-preview" class="text-xs font-mono bg-surface border border-border p-3 rounded-sm overflow-x-auto max-h-64 overflow-y-auto whitespace-pre-wrap"></pre>
     </div>
   </div>
 </div>
@@ -194,6 +203,11 @@ title: "Listen — Nashville Folk Session"
   .popover-link { padding: 0.375rem 0.75rem; border-top: 1px solid var(--color-border); font-size: 0.6875rem; }
   .popover-link a { color: var(--color-muted); text-decoration: underline; transition: color 0.1s; }
   .popover-link a:hover { color: var(--color-ink); }
+
+  /* ── Export panel ── */
+  .export-tab { color: var(--color-muted); border-bottom: 1px solid transparent; padding-bottom: 1px; }
+  .export-tab:hover { color: var(--color-ink); }
+  .export-tab.active { color: var(--color-ink); border-bottom-color: var(--color-ink); font-weight: 600; }
 </style>
 
 <script src="/listen/vendor/Sortable.min.js"></script>
@@ -209,10 +223,13 @@ title: "Listen — Nashville Folk Session"
   const dbgQueries = document.getElementById('dbg-queries');
   const dbgLast = document.getElementById('dbg-last');
   const btnClear = document.getElementById('btn-clear');
+  const btnToggleExport = document.getElementById('btn-toggle-export');
+  const exportPanel = document.getElementById('export-panel');
+  const exportPreview = document.getElementById('export-preview');
   const btnCopy = document.getElementById('btn-copy');
-  const btnExportJson = document.getElementById('btn-export-json');
-  const btnExportText = document.getElementById('btn-export-text');
+  const btnDownload = document.getElementById('btn-download');
   const footerActions = document.getElementById('footer-actions');
+  let activeExportTab = 'text';
 
   const STORAGE_KEY = 'nfs-listen-items';
 
@@ -559,93 +576,74 @@ title: "Listen — Nashville Folk Session"
     render();
   }
 
-  // ── Export: session JSON (matches data/sessions.json schema) ──
-  function exportJSON() {
-    // Split items into sets at dividers
-    const sets = [];
-    let currentTunes = [];
-
+  // ── Export helpers ──
+  function splitIntoSets() {
+    const sets = []; let current = [];
     for (const item of items) {
-      if (item.type === 'divider') {
-        if (currentTunes.length) { sets.push(currentTunes); currentTunes = []; }
-      } else if (item.type === 'tune') {
-        currentTunes.push(item);
-      }
-    }
-    if (currentTunes.length) sets.push(currentTunes);
-
-    // Map to schema
-    const today = new Date().toISOString().slice(0, 10);
-    const session = {
-      id: `sess_${today}`,
-      seriesId: '',
-      date: today,
-      sets: sets.map(tunes => {
-        // Infer label from dominant dance type
-        const dances = tunes.map(t => t.dance).filter(Boolean);
-        const label = mode(dances) || undefined;
-
-        return {
-          label,
-          tunes: tunes.map(t => {
-            const entry = {};
-            if (t.tuneId) {
-              // Use TheSession tune ID as external ref
-              entry.tuneId = `__thesession_${t.tuneId}`;
-              entry.url = t.url;
-            } else {
-              entry.tuneId = `__manual_${slugify(t.name)}`;
-            }
-            if (t.name) entry._name = t.name; // helper for review
-            if (t.mode) entry.key = modeToKey(t.mode);
-            return entry;
-          }),
-        };
-      }),
-    };
-
-    download(`session-${today}.json`, JSON.stringify(session, null, 2), 'application/json');
-  }
-
-  // ── Text format (TheSession style: "Tune 1, Tune 2, Tune 3.") ──
-  function getTextExport() {
-    // Split into sets at dividers
-    const sets = [];
-    let current = [];
-    for (const item of items) {
-      if (item.type === 'divider') {
-        if (current.length) sets.push(current);
-        current = [];
-      } else if (item.type === 'tune') {
-        current.push(item.name);
-      }
+      if (item.type === 'divider') { if (current.length) sets.push(current); current = []; }
+      else if (item.type === 'tune') current.push(item);
     }
     if (current.length) sets.push(current);
-
-    // TheSession format: comma-separated names, period at end
-    return sets.map(names => names.join(', ') + '.').join('\n');
+    return sets;
   }
 
-  function exportText() {
+  function getTextExport() {
+    const sets = splitIntoSets();
+    return sets.map(tunes =>
+      tunes.map(t => {
+        const meta = [t.dance, t.mode].filter(Boolean).join(', ');
+        const url = t.url ? ` — ${t.url.replace('https://', '')}` : '';
+        return `${t.name}${meta ? ` (${meta})` : ''}${url}`;
+      }).join('\n')
+    ).join('\n---\n');
+  }
+
+  function getJSONExport() {
+    const sets = splitIntoSets();
     const today = new Date().toISOString().slice(0, 10);
-    download(`session-${today}.txt`, getTextExport(), 'text/plain');
+    return JSON.stringify({
+      id: `sess_${today}`, seriesId: '', date: today,
+      sets: sets.map(tunes => ({
+        label: mode(tunes.map(t => t.dance).filter(Boolean)) || undefined,
+        tunes: tunes.map(t => {
+          const entry = {};
+          entry.tuneId = t.tuneId ? `__thesession_${t.tuneId}` : `__manual_${slugify(t.name)}`;
+          if (t.url) entry.url = t.url;
+          if (t.name) entry._name = t.name;
+          if (t.mode) entry.key = modeToKey(t.mode);
+          return entry;
+        }),
+      })),
+    }, null, 2);
   }
 
-  async function copySetlist() {
-    const text = getTextExport();
-    try {
-      await navigator.clipboard.writeText(text);
-      btnCopy.textContent = 'Copied!';
-      setTimeout(() => { btnCopy.textContent = 'Copy Setlist'; }, 1500);
-    } catch (_) {
-      // Fallback
+  function getExportContent() {
+    return activeExportTab === 'json' ? getJSONExport() : getTextExport();
+  }
+
+  function updateExportPanel() {
+    exportPreview.textContent = getExportContent();
+    document.querySelectorAll('.export-tab').forEach(t =>
+      t.classList.toggle('active', t.dataset.tab === activeExportTab));
+  }
+
+  async function copyExport() {
+    const text = getExportContent();
+    try { await navigator.clipboard.writeText(text); }
+    catch (_) {
       const ta = document.createElement('textarea');
       ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
       document.body.appendChild(ta); ta.select(); document.execCommand('copy');
       document.body.removeChild(ta);
-      btnCopy.textContent = 'Copied!';
-      setTimeout(() => { btnCopy.textContent = 'Copy Setlist'; }, 1500);
     }
+    btnCopy.textContent = 'Copied!';
+    setTimeout(() => { btnCopy.textContent = 'Copy'; }, 1500);
+  }
+
+  function downloadExport() {
+    const today = new Date().toISOString().slice(0, 10);
+    const isJson = activeExportTab === 'json';
+    download(`session-${today}.${isJson ? 'json' : 'txt'}`, getExportContent(), isJson ? 'application/json' : 'text/plain');
   }
 
   // ── Helpers ──
@@ -677,9 +675,18 @@ title: "Listen — Nashville Folk Session"
   // ── Event bindings ──
   btn.addEventListener('click', () => listening ? stopListening() : startListening());
   btnClear.addEventListener('click', () => { if (items.length && !confirm('Clear all items?')) return; items = []; render(); });
-  btnCopy.addEventListener('click', copySetlist);
-  btnExportJson.addEventListener('click', exportJSON);
-  btnExportText.addEventListener('click', exportText);
+
+  btnToggleExport.addEventListener('click', () => {
+    const show = exportPanel.classList.toggle('hidden');
+    if (!show) updateExportPanel();
+    btnToggleExport.textContent = show ? 'Export' : 'Hide Export';
+  });
+
+  document.querySelectorAll('.export-tab').forEach(t =>
+    t.addEventListener('click', () => { activeExportTab = t.dataset.tab; updateExportPanel(); }));
+
+  btnCopy.addEventListener('click', copyExport);
+  btnDownload.addEventListener('click', downloadExport);
 
   // Initial render (restores from localStorage)
   if (items.length) render();
