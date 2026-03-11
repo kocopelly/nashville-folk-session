@@ -384,13 +384,13 @@ permalink: /stats/
       {% endif %}
     </div>
 
-    <div class="border border-border p-5">
-      <div class="text-center mb-3">
+    <div class="border border-border p-5 md:max-h-96 md:flex md:flex-col">
+      <div class="text-center mb-3 shrink-0">
         <div class="text-sm font-bold uppercase tracking-widest text-muted">💨 One-Hit Wonders</div>
         <div class="text-xs text-muted">Played once, never returned</div>
       </div>
       {% if stats.velocity.oneOffs.length %}
-        <div class="text-sm text-muted">
+        <div class="text-sm text-muted md:overflow-y-auto">
           {{ stats.velocity.oneOffs.length }} tune{{ "s" if stats.velocity.oneOffs.length != 1 }}:
           <span class="text-ink">
             {% for t in stats.velocity.oneOffs %}{{ t.name }}{% if not loop.last %}, {% endif %}{% endfor %}
