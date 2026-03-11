@@ -981,9 +981,17 @@ permalink: /stats/
       }
       if (hit) {
         tooltip.textContent = hit.name + ' · ' + hit.type + ' · deg ' + hit.degree + ' · btw ' + hit.betweenness + ' · clust ' + hit.clustering;
-        tooltip.style.left = (mx + 12) + 'px';
-        tooltip.style.top = (my - 8) + 'px';
         tooltip.classList.remove('hidden');
+        // Measure then position — flip if it would overflow
+        const tw = tooltip.offsetWidth;
+        const th = tooltip.offsetHeight;
+        let tx = mx + 12;
+        let ty = my - 8;
+        if (tx + tw > W) tx = mx - tw - 8;
+        if (ty + th > H) ty = my - th - 4;
+        if (ty < 0) ty = 4;
+        tooltip.style.left = tx + 'px';
+        tooltip.style.top = ty + 'px';
         canvas.style.cursor = 'pointer';
       } else {
         tooltip.classList.add('hidden');
