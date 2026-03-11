@@ -5,7 +5,7 @@ title: "Listen — Nashville Folk Session"
 
 <div id="listen-app" class="max-w-lg mx-auto">
   <h1 class="font-display text-2xl font-black uppercase tracking-wider mb-2">Live Listen</h1>
-  <p class="text-muted text-sm mb-6">Passive tune ID powered by <a href="https://github.com/TomWyllie/folkfriend" class="underline hover:text-ink transition-colors">FolkFriend</a>. Tap set boundaries and fix misidentifications as you go.</p>
+  <p class="text-muted text-sm mb-6">Passive tune ID powered by <a href="https://github.com/TomWyllie/folkfriend" class="underline hover:text-ink transition-colors">FolkFriend</a>. Drag to reorder, tap to edit.</p>
 
   <!-- Controls -->
   <div class="flex items-center gap-4 mb-4">
@@ -38,14 +38,11 @@ title: "Listen — Nashville Folk Session"
     <span id="dbg-last">last: —</span>
   </div>
 
-  <!-- Tune log -->
+  <!-- Tune log: all items (tunes + dividers) + action rows -->
   <div id="tune-log"></div>
 
-  <!-- Bottom insert strip -->
-  <div id="bottom-strip" class="hidden"></div>
-
   <!-- Clear -->
-  <div id="clear-row" class="hidden mt-8">
+  <div id="clear-row" class="hidden mt-6">
     <button id="btn-clear" class="text-xs text-muted hover:text-ink transition-colors cursor-pointer uppercase tracking-widest">
       Clear all
     </button>
@@ -53,118 +50,100 @@ title: "Listen — Nashville Folk Session"
 </div>
 
 <style>
-  /* ── Tune row ── */
-  .tune-row {
+  /* ── Shared row geometry ── */
+  .list-row {
     display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    padding: 0.5rem 0;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0 0.5rem;
+    margin: 0 -0.5rem;
+    border-radius: 3px;
+    transition: background 0.1s;
+    position: relative;
   }
-  .tune-row:hover { background: var(--color-hover); margin: 0 -0.5rem; padding: 0.5rem; border-radius: 3px; }
-  .tune-row .tune-actions { opacity: 0; display: flex; gap: 0.25rem; transition: opacity 0.1s; }
-  .tune-row:hover .tune-actions { opacity: 1; }
 
+  /* ── Tune row ── */
+  .list-row.tune-row { cursor: grab; }
+  .list-row.tune-row:hover { background: var(--color-hover); }
+  .list-row.tune-row.dragging { opacity: 0.4; }
+  .list-row .row-actions { opacity: 0; display: flex; gap: 0.125rem; transition: opacity 0.1s; flex-shrink: 0; }
+  .list-row:hover .row-actions { opacity: 1; }
+
+  .tune-num { width: 1.25rem; text-align: right; flex-shrink: 0; color: var(--color-muted); font-size: 0.75rem; margin-right: 0.5rem; }
+  .tune-body { flex: 1; font-size: 0.875rem; min-width: 0; }
   .tune-link { text-decoration: underline; text-underline-offset: 2px; transition: color 0.1s; }
   .tune-link:hover { color: var(--color-muted); }
-  .tune-score { color: var(--color-muted); font-size: 0.75rem; margin-left: 0.25rem; }
-  .tune-manual-tag { color: var(--color-muted); font-size: 0.75rem; font-style: italic; margin-left: 0.25rem; }
+  .tune-score { color: var(--color-muted); font-size: 0.75rem; margin-left: 0.375rem; }
+  .tune-manual-tag { color: var(--color-muted); font-size: 0.75rem; font-style: italic; margin-left: 0.375rem; }
 
+  /* ── Divider row — same height as a tune row ── */
+  .list-row.divider-row { gap: 0.5rem; }
+  .list-row.divider-row:hover { background: var(--color-hover); }
+  .list-row.divider-row { cursor: grab; }
+  .divider-dash { width: 1rem; border-top: 1.5px solid var(--color-border); flex-shrink: 0; }
+  .divider-label { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-border); font-weight: 600; user-select: none; }
+
+  /* ── Action row (between items + at bottom) — identical everywhere ── */
+  .action-row {
+    display: flex;
+    align-items: center;
+    min-height: 1.5rem;
+    padding-left: 2.25rem; /* aligns with tune body text */
+    gap: 0.75rem;
+  }
+  .action-row .act-btn {
+    background: none; border: none;
+    color: var(--color-border);
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: color 0.15s;
+    white-space: nowrap;
+  }
+  .action-row .act-btn:hover { color: var(--color-ink); }
+
+  /* ── Icon button (delete, swap) ── */
   .icon-btn {
     background: none; border: none; color: var(--color-muted);
     cursor: pointer; padding: 2px 4px; font-size: 0.6875rem; line-height: 1;
     border-radius: 2px; transition: all 0.1s;
   }
-  .icon-btn:hover { color: var(--color-ink); background: var(--color-bg); }
+  .icon-btn:hover { color: var(--color-ink); }
 
-  /* ── Insert strip — always same height, actions fade, left-aligned ── */
-  .insert-strip {
-    display: flex;
-    align-items: center;
-    height: 24px;
-    gap: 0.375rem;
-    padding-left: 1.75rem; /* align with tune text (past the number) */
-  }
-  .insert-strip .strip-btn {
-    opacity: 0;
-    background: none;
-    border: none;
-    color: var(--color-muted);
-    cursor: pointer;
-    padding: 1px 0;
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    transition: all 0.1s;
-    white-space: nowrap;
-  }
-  .insert-strip .strip-sep {
-    opacity: 0;
-    color: var(--color-border);
-    font-size: 0.625rem;
-    transition: opacity 0.1s;
-  }
-  .insert-strip:hover .strip-btn,
-  .insert-strip:hover .strip-sep { opacity: 1; }
-  .insert-strip .strip-btn:hover { color: var(--color-ink); }
-
-  /* ── Bottom strip: always visible, left-aligned ── */
-  .bottom-strip-inner {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.5rem 0 0.5rem 1.75rem;
-    margin-top: 0.125rem;
-  }
-  .bottom-strip-inner .strip-btn {
-    background: none;
+  /* ── Alternatives popover ── */
+  .alts-popover {
+    position: absolute;
+    top: 100%;
+    left: 2.25rem;
+    z-index: 10;
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
-    color: var(--color-muted);
-    cursor: pointer;
-    padding: 2px 8px;
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    transition: all 0.1s;
-    white-space: nowrap;
-  }
-  .bottom-strip-inner .strip-btn:hover { border-color: var(--color-ink); color: var(--color-ink); }
-  .bottom-strip-inner .strip-btn:active { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
-
-  /* ── Divider row ── */
-  .divider-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0 0.5rem 1.75rem;
-  }
-  .divider-line { width: 1.5rem; border-top: 1.5px solid var(--color-ink); }
-  .divider-label { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted); font-weight: 600; user-select: none; white-space: nowrap; }
-  .divider-row .icon-btn { opacity: 0; transition: opacity 0.1s; }
-  .divider-row:hover .icon-btn { opacity: 1; }
-
-  /* ── Alternatives panel ── */
-  .alts-panel {
-    margin: 0 0 0.25rem 1.75rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     padding: 0.25rem 0;
+    min-width: 14rem;
+    border-radius: 3px;
   }
   .alt-pick {
     display: block; width: 100%; text-align: left;
     background: none; border: none;
-    padding: 0.25rem 0.5rem; border-radius: 2px;
-    font-size: 0.75rem; color: var(--color-muted);
-    cursor: pointer; transition: all 0.1s;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem; color: var(--color-ink);
+    cursor: pointer; transition: background 0.1s;
   }
-  .alt-pick:hover { color: var(--color-ink); background: var(--color-hover); }
+  .alt-pick:hover { background: var(--color-hover); }
+  .alt-pick .alt-score { color: var(--color-muted); font-size: 0.75rem; margin-left: 0.25rem; }
 
-  /* ── Inline manual input ── */
+  /* ── Drag feedback ── */
+  .drag-over-top { box-shadow: 0 -2px 0 0 var(--color-ink); }
+  .drag-over-bottom { box-shadow: 0 2px 0 0 var(--color-ink); }
+
+  /* ── Inline input ── */
   .inline-input {
-    border: 1px solid var(--color-ink);
-    background: var(--color-bg);
-    color: var(--color-ink);
-    padding: 2px 8px;
-    font-size: 0.75rem;
-    width: 12rem;
-    outline: none;
+    border: 1px solid var(--color-ink); background: var(--color-bg);
+    color: var(--color-ink); padding: 2px 8px; font-size: 0.8125rem;
+    width: 14rem; outline: none; border-radius: 2px;
   }
   .inline-input::placeholder { color: var(--color-muted); opacity: 0.5; }
 </style>
@@ -173,7 +152,6 @@ title: "Listen — Nashville Folk Session"
   const btn = document.getElementById('btn-listen');
   const statusEl = document.getElementById('status');
   const tuneLogEl = document.getElementById('tune-log');
-  const bottomStrip = document.getElementById('bottom-strip');
   const clearRow = document.getElementById('clear-row');
   const intervalSel = document.getElementById('query-interval');
   const minScoreInput = document.getElementById('min-score');
@@ -186,6 +164,7 @@ title: "Listen — Nashville Folk Session"
   let listening = false, worker = null, audioCtx = null, micStream = null;
   let queryTimer = null, workerReady = false, framesSent = 0, queriesSent = 0;
   let items = [];
+  let openAltsIdx = null; // track which alts popover is open
 
   function setStatus(msg) { statusEl.textContent = msg; }
   function updateDebug(last) {
@@ -193,7 +172,6 @@ title: "Listen — Nashville Folk Session"
     dbgQueries.textContent = `queries: ${queriesSent}`;
     if (last !== undefined) dbgLast.textContent = `last: ${last}`;
   }
-
   function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
   function tuneNumber(idx) {
@@ -203,44 +181,39 @@ title: "Listen — Nashville Folk Session"
     return n + '.';
   }
 
-  // ── Strip HTML ──
-  function stripHTML(idx) {
-    return `<div class="insert-strip" data-insert="${idx}">
-      <button class="strip-btn do-set-break" data-insert="${idx}">set break</button>
-      <span class="strip-sep">·</span>
-      <button class="strip-btn do-add-tune" data-insert="${idx}">+ tune</button>
-    </div>`;
-  }
-
-  function bottomStripHTML(idx) {
-    return `<div class="bottom-strip-inner">
-      <button class="strip-btn do-set-break" data-insert="${idx}">set break</button>
-      <button class="strip-btn do-add-tune" data-insert="${idx}">+ tune</button>
+  // ── Action row HTML (identical between items & at bottom) ──
+  function actionRowHTML(idx) {
+    return `<div class="action-row" data-insert="${idx}">
+      <button class="act-btn do-set-break" data-insert="${idx}">set break</button>
+      <button class="act-btn do-add-tune" data-insert="${idx}">+ tune</button>
     </div>`;
   }
 
   // ── Render ──
   function render() {
     const hasItems = items.length > 0;
-    clearRow.classList.toggle('hidden', !hasItems);
+    clearRow.classList.toggle('hidden', !hasItems && !listening);
 
     if (!hasItems) {
-      tuneLogEl.innerHTML = listening ? '<p class="text-muted text-sm italic py-4">Listening… no tunes detected yet.</p>' : '';
-      bottomStrip.classList.toggle('hidden', !listening);
-      bottomStrip.innerHTML = listening ? bottomStripHTML(0) : '';
-      bindStrip(bottomStrip);
+      tuneLogEl.innerHTML = listening
+        ? '<p class="text-muted text-sm italic py-4">Listening… no tunes detected yet.</p>' + actionRowHTML(0)
+        : '';
+      bindAll();
       return;
     }
 
     let html = '';
     items.forEach((item, idx) => {
-      if (idx > 0) html += stripHTML(idx);
+      // Action row between items
+      if (idx > 0) html += actionRowHTML(idx);
 
       if (item.type === 'divider') {
-        html += `<div class="divider-row" data-idx="${idx}">
-          <div class="divider-line"></div>
+        html += `<div class="list-row divider-row" draggable="true" data-idx="${idx}">
+          <div class="divider-dash"></div>
           <span class="divider-label">set break</span>
-          <button class="icon-btn tune-delete" data-idx="${idx}" title="Remove">✕</button>
+          <span class="row-actions" style="margin-left:auto">
+            <button class="icon-btn tune-delete" data-idx="${idx}" title="Remove">✕</button>
+          </span>
         </div>`;
         return;
       }
@@ -253,48 +226,89 @@ title: "Listen — Nashville Folk Session"
         ? `<span class="tune-score">${(item.score * 100).toFixed(0)}%</span>`
         : `<span class="tune-manual-tag">manual</span>`;
 
-      const hasAlts = item.alternatives?.length > 0;
-      const swapBtn = hasAlts ? `<button class="icon-btn swap-btn" data-idx="${idx}" title="Alternatives">▾</button>` : '';
+      const swapBtn = item.alternatives?.length
+        ? `<button class="icon-btn swap-btn" data-idx="${idx}" title="Alternatives">▾</button>`
+        : '';
 
-      html += `<div class="tune-row" data-idx="${idx}">
-        <span class="text-muted text-xs" style="width:1.25rem;text-align:right;flex-shrink:0">${tuneNumber(idx)}</span>
-        <span class="text-sm flex-1">${link}${score}${swapBtn}</span>
-        <span class="tune-actions">
+      html += `<div class="list-row tune-row" draggable="true" data-idx="${idx}">
+        <span class="tune-num">${tuneNumber(idx)}</span>
+        <span class="tune-body">${link}${score}${swapBtn}</span>
+        <span class="row-actions">
           <button class="icon-btn tune-delete" data-idx="${idx}" title="Remove">✕</button>
         </span>
-      </div>
-      <div id="alts-${idx}" class="hidden"></div>`;
+        ${openAltsIdx === idx ? altsPopoverHTML(idx) : ''}
+      </div>`;
     });
 
+    // Bottom action row
+    html += actionRowHTML(items.length);
+
     tuneLogEl.innerHTML = html;
-
-    bottomStrip.classList.remove('hidden');
-    bottomStrip.innerHTML = bottomStripHTML(items.length);
-
     bindAll();
   }
 
-  function bindStrip(container) {
-    container.querySelectorAll('.do-set-break').forEach(el => {
+  function altsPopoverHTML(idx) {
+    const item = items[idx];
+    if (!item?.alternatives?.length) return '';
+    return `<div class="alts-popover" data-alts-for="${idx}">${
+      item.alternatives.map((a, ai) =>
+        `<button class="alt-pick" data-idx="${idx}" data-alt="${ai}">${esc(a.name)}<span class="alt-score">${(a.score * 100).toFixed(0)}%</span></button>`
+      ).join('')
+    }</div>`;
+  }
+
+  // ── Bind events ──
+  function bindAll() {
+    // Deletes
+    tuneLogEl.querySelectorAll('.tune-delete').forEach(el =>
+      el.addEventListener('click', (e) => { e.stopPropagation(); items.splice(parseInt(el.dataset.idx), 1); openAltsIdx = null; render(); }));
+
+    // Swap buttons
+    tuneLogEl.querySelectorAll('.swap-btn').forEach(el =>
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(el.dataset.idx);
+        openAltsIdx = openAltsIdx === idx ? null : idx;
+        render();
+      }));
+
+    // Alt picks
+    tuneLogEl.querySelectorAll('.alt-pick').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(el.dataset.idx), ai = parseInt(el.dataset.alt);
+        const item = items[idx], alt = item.alternatives[ai];
+        const old = { tuneId: item.tuneId, name: item.name, score: item.score, url: item.url };
+        const alts = [...item.alternatives]; alts.splice(ai, 1); alts.unshift(old);
+        items[idx] = { type: 'tune', tuneId: alt.tuneId, name: alt.name, score: alt.score, url: alt.url, alternatives: alts };
+        openAltsIdx = null;
+        render();
+      });
+    });
+
+    // Close popover on outside click
+    document.addEventListener('click', () => { if (openAltsIdx !== null) { openAltsIdx = null; render(); } }, { once: true });
+
+    // Action rows (set break + tune)
+    tuneLogEl.querySelectorAll('.do-set-break').forEach(el =>
       el.addEventListener('click', () => {
         const idx = parseInt(el.dataset.insert);
         if (items[idx - 1]?.type === 'divider' || items[idx]?.type === 'divider') return;
         items.splice(idx, 0, { type: 'divider' });
         render();
-      });
-    });
-    container.querySelectorAll('.do-add-tune').forEach(el => {
-      el.addEventListener('click', () => inlineInput(el, parseInt(el.dataset.insert)));
-    });
+      }));
+
+    tuneLogEl.querySelectorAll('.do-add-tune').forEach(el =>
+      el.addEventListener('click', () => inlineInput(el, parseInt(el.dataset.insert))));
+
+    // Drag & drop
+    bindDrag();
   }
 
   function inlineInput(anchor, idx) {
     const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'inline-input';
-    input.placeholder = 'Tune name…';
-    anchor.replaceWith(input);
-    input.focus();
+    input.type = 'text'; input.className = 'inline-input'; input.placeholder = 'Tune name…';
+    anchor.replaceWith(input); input.focus();
     const commit = () => {
       const name = input.value.trim();
       if (name) items.splice(idx, 0, { type: 'tune', name, manual: true });
@@ -307,34 +321,51 @@ title: "Listen — Nashville Folk Session"
     input.addEventListener('blur', commit);
   }
 
-  function bindAll() {
-    tuneLogEl.querySelectorAll('.tune-delete').forEach(el =>
-      el.addEventListener('click', () => { items.splice(parseInt(el.dataset.idx), 1); render(); }));
-    tuneLogEl.querySelectorAll('.swap-btn').forEach(el =>
-      el.addEventListener('click', () => toggleAlts(parseInt(el.dataset.idx))));
-    bindStrip(tuneLogEl);
-    bindStrip(bottomStrip);
-  }
+  // ── Drag & Drop ──
+  let dragIdx = null;
 
-  function toggleAlts(idx) {
-    const el = document.getElementById(`alts-${idx}`);
-    if (!el) return;
-    const item = items[idx];
-    if (!item.alternatives?.length) return;
-    if (!el.classList.contains('hidden')) { el.classList.add('hidden'); el.innerHTML = ''; return; }
-    el.innerHTML = `<div class="alts-panel">${item.alternatives.map((a, ai) =>
-      `<button class="alt-pick" data-idx="${idx}" data-alt="${ai}">→ ${esc(a.name)} <span style="color:var(--color-muted)">${(a.score * 100).toFixed(0)}%</span></button>`
-    ).join('')}</div>`;
-    el.classList.remove('hidden');
-    el.querySelectorAll('.alt-pick').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const ai = parseInt(btn.dataset.alt), alt = item.alternatives[ai];
-        const old = { tuneId: item.tuneId, name: item.name, score: item.score, url: item.url };
-        const alts = [...item.alternatives]; alts.splice(ai, 1); alts.unshift(old);
-        items[idx] = { type: 'tune', tuneId: alt.tuneId, name: alt.name, score: alt.score, url: alt.url, alternatives: alts };
+  function bindDrag() {
+    const rows = tuneLogEl.querySelectorAll('.list-row[draggable]');
+    rows.forEach(row => {
+      row.addEventListener('dragstart', (e) => {
+        dragIdx = parseInt(row.dataset.idx);
+        row.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', dragIdx);
+      });
+      row.addEventListener('dragend', () => { row.classList.remove('dragging'); dragIdx = null; clearDropIndicators(); });
+      row.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        clearDropIndicators();
+        const rect = row.getBoundingClientRect();
+        const mid = rect.top + rect.height / 2;
+        row.classList.add(e.clientY < mid ? 'drag-over-top' : 'drag-over-bottom');
+      });
+      row.addEventListener('dragleave', () => { row.classList.remove('drag-over-top', 'drag-over-bottom'); });
+      row.addEventListener('drop', (e) => {
+        e.preventDefault();
+        clearDropIndicators();
+        const fromIdx = dragIdx;
+        let toIdx = parseInt(row.dataset.idx);
+        if (fromIdx === null || fromIdx === toIdx) return;
+        const rect = row.getBoundingClientRect();
+        const dropAfter = e.clientY >= rect.top + rect.height / 2;
+        // Remove item from old position
+        const [moved] = items.splice(fromIdx, 1);
+        // Adjust target index after removal
+        let insertAt = toIdx > fromIdx ? toIdx - 1 : toIdx;
+        if (dropAfter) insertAt++;
+        items.splice(insertAt, 0, moved);
+        dragIdx = null;
         render();
       });
     });
+  }
+
+  function clearDropIndicators() {
+    tuneLogEl.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el =>
+      el.classList.remove('drag-over-top', 'drag-over-bottom'));
   }
 
   // ── Results ──
