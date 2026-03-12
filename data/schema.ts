@@ -64,7 +64,7 @@ export const Key = z.enum([
 
 // ─── Tune ────────────────────────────────────────────────────
 export const Tune = z.object({
-  id: z.string().regex(/^tune_\d+$/, "Tune ID must be tune_NNN"),
+  id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)+$/, "Tune ID must be a slug-nanoid (e.g. cooleys-mxq5i)"),
   name: z.string().min(1),
   type: TuneType,
   tradition: Tradition,
