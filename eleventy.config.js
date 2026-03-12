@@ -115,6 +115,47 @@ export default function (eleventyConfig) {
     return [...pinned, ...unpinned];
   });
 
+  // Given a set's tunes array and the tunes registry, return array of tune names
+  eleventyConfig.addFilter("tuneNames", function (tunesArr, tunesRegistry) {
+    return tunesArr.map(entry => {
+      const { tuneId } = normalizeTuneEntry(entry);
+      return tunesRegistry[tuneId]?.name ?? tuneId;
+    });
+  });
+
+  // Format a date string as "January 7, 2026"
+  eleventyConfig.addFilter("dateShort", function (dateStr) {
+    return new Date(dateStr + "T12:00:00").toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  });
+
+  // Collect unique set labels or tune types from sets
+  eleventyConfig.addFilter("setLabels", function (sets, tunesRegistry) {
+    const labels = new Set();
+    for (const set of sets) {
+      if (set.label) {
+        labels.add(set.label);
+      } else {
+        for (const entry of set.tunes) {
+          const { tuneId } = normalizeTuneEntry(entry);
+          const type = tunesRegistry[tuneId]?.type;
+          if (type) labels.add(type + "s");
+        }
+      }
+    }
+    return [...labels];
+  });
+
+  // Join array with commas and "and" for last item
+  eleventyConfig.addFilter("joinAnd", function (arr) {
+    if (!arr || arr.length === 0) return "";
+    if (arr.length === 1) return arr[0];
+    return arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
+  });
+
   eleventyConfig.addFilter("feedTypeLabel", function (type) {
     const labels = {
       "set-of-the-week": "Set of the Week",

@@ -1,1 +1,39 @@
-[]
+[
+  {
+    "id": "sotw-2026-03-12",
+    "seriesId": "quinns-irish",
+    "date": "2026-03-12",
+    "author": "Eamonn Dillon",
+    "type": "set-of-the-week",
+    "title": "Set of the Week: Jigs",
+    "body": "From Foinn Seisiún Book I (p. 24) — a classic jig set to get under the fingers this week.",
+    "sets": [
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "tune_140",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_141",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_066",
+            "key": "G"
+          }
+        ],
+        "links": [
+          {
+            "label": "Foinn Seisiún Book I (PDF)",
+            "url": "https://sessionsintheshire.co.uk/wp-content/uploads/2021/01/Foinn-Seisiun-Book-I.pdf#page=24",
+            "type": "sheet-music"
+          }
+        ]
+      }
+    ],
+    "links": [],
+    "pinned": false
+  }
+]

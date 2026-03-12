@@ -7,6 +7,7 @@ permalink: "sessions/{{ session.id }}/index.html"
 layout: base.njk
 eleventyComputed:
   title: "{{ session.date | dateDisplay }} — Nashville Folk Session"
+  description: "{{ session.sets.length }} sets, {{ session.sets | tuneCount }} tunes — {{ session.sets | setLabels(tunes) | join(', ') }} at {{ series[session.seriesId].venue or 'Nashville' }}. {{ session.date | dateShort }}."
 ---
 
 <div class="mb-6">
