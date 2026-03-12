@@ -25,7 +25,7 @@ permalink: /tunes/
       {% for id, tune in tunes %}
       <tr class="border-b border-border hover:bg-hover transition-colors">
         <td class="py-3 px-3">
-          <span class="font-semibold">{{ tune.name }}</span>
+          <a href="/tunes/{{ id }}/" class="font-semibold text-ink hover:text-accent transition-colors">{{ tune.name }}</a>
           {% if tune.aliases.length %}<span class="text-muted text-xs ml-1">({{ tune.aliases | join(", ") }})</span>{% endif %}
         </td>
         <td class="py-3 px-3 text-muted capitalize">{{ tune.type }}</td>

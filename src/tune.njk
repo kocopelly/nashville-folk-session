@@ -1,0 +1,140 @@
+---
+pagination:
+  data: tuneProfiles
+  size: 1
+  alias: tune
+permalink: "tunes/{{ tune.id }}/index.html"
+layout: base.njk
+eleventyComputed:
+  title: "{{ tune.name }} — Nashville Folk Session"
+  description: "{{ tune.name }} ({{ tune.type }}) — played {{ tune.playCount }} time{{ 's' if tune.playCount != 1 }} across {{ tune.sessionCount }} session{{ 's' if tune.sessionCount != 1 }}. {{ tune.tradition }} tradition."
+---
+
+<div class="mb-6">
+  <a href="/tunes/" class="text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors">← Tune Registry</a>
+</div>
+
+{# ═══ IDENTITY BLOCK ═══ #}
+<div class="flex flex-wrap items-baseline gap-3 mb-2">
+  <h1 class="font-display text-3xl font-bold">{{ tune.name }}</h1>
+  <span class="badge-{{ tune.tradition }} text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ tune.tradition }}</span>
+</div>
+
+<dl class="text-sm text-muted mb-8 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
+  <dt class="font-medium text-ink">Type</dt>
+  <dd class="capitalize">{{ tune.type }}</dd>
+
+  {% if tune.commonKeys.length %}
+    <dt class="font-medium text-ink">Common Keys</dt>
+    <dd>{{ tune.commonKeys | join(", ") }}</dd>
+  {% endif %}
+
+  {% if tune.aliases.length %}
+    <dt class="font-medium text-ink">Also Known As</dt>
+    <dd>{{ tune.aliases | join(", ") }}</dd>
+  {% endif %}
+</dl>
+
+{% if tune.url %}
+  <div class="mb-8">
+    <a href="{{ tune.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest px-4 py-2 border-2 border-ink text-ink bg-bg hover:bg-ink hover:text-bg transition-colors font-bold">
+      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      View on TheSession{% if tune.externalThesession %} (#{{ tune.externalThesession }}){% endif %}
+    </a>
+  </div>
+{% endif %}
+
+{# ═══ OUR STATS ═══ #}
+{% if tune.playCount > 0 %}
+<section class="mb-10">
+  <h2 class="font-display text-xl font-bold uppercase tracking-wider mb-4">Our Stats</h2>
+  <div class="w-12 h-0.5 bg-ink mb-4"></div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ tune.playCount }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Times Played</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-2xl font-black text-ink font-display">{{ tune.sessionCount }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Sessions</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-sm font-bold text-ink font-mono">{{ tune.firstPlayed | dateShort }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">First Played</div>
+    </div>
+    <div class="border border-border p-4 text-center">
+      <div class="text-sm font-bold text-ink font-mono">{{ tune.lastPlayed | dateShort }}</div>
+      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Last Played</div>
+    </div>
+  </div>
+
+  {% if tune.keysPlayed.length %}
+  <div class="mb-4">
+    <span class="text-xs uppercase tracking-widest text-muted font-bold">Keys We've Played It In: </span>
+    {% for k in tune.keysPlayed %}
+      <span class="inline-block text-xs font-mono font-bold px-2 py-0.5 border border-border mr-1 mb-1">{{ k.key }} <span class="text-muted">×{{ k.count }}</span></span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {# Velocity badge #}
+  <div class="inline-flex items-center gap-2 px-3 py-1.5 border {% if tune.velocityStatus == 'standard' %}border-ink bg-ink text-bg{% elif tune.velocityStatus == 'heating' %}border-accent text-accent{% else %}border-border text-muted{% endif %} text-xs font-bold uppercase tracking-widest">
+    {{ tune.velocityEmoji }} {{ tune.velocityLabel }}
+  </div>
+</section>
+{% else %}
+<section class="mb-10">
+  <div class="border border-border p-6 text-center">
+    <div class="text-muted text-sm italic">This tune is in the registry but hasn't been played at a session yet.</div>
+  </div>
+</section>
+{% endif %}
+
+{# ═══ SET CONTEXT — COMMONLY PAIRED WITH ═══ #}
+{% if tune.pairedWith.length %}
+<section class="mb-10">
+  <h2 class="font-display text-xl font-bold uppercase tracking-wider mb-4">Commonly Paired With</h2>
+  <div class="w-12 h-0.5 bg-ink mb-4"></div>
+
+  <div class="space-y-0">
+    {% for pair in tune.pairedWith %}
+    <div class="flex items-center justify-between py-2 {% if not loop.last %}border-b border-border{% endif %}">
+      <a href="/tunes/{{ pair.id }}/" class="text-sm font-semibold text-ink hover:text-accent transition-colors">{{ pair.name }}</a>
+      <span class="text-xs text-muted font-display">× {{ pair.count }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{# ═══ SESSION HISTORY ═══ #}
+{% if tune.sessionHistory.length %}
+<section class="mb-10">
+  <h2 class="font-display text-xl font-bold uppercase tracking-wider mb-4">Session History</h2>
+  <div class="w-12 h-0.5 bg-ink mb-4"></div>
+
+  <div class="space-y-3">
+    {% for entry in tune.sessionHistory %}
+    <div class="border-l-2 border-border pl-3 py-1.5">
+      <div class="flex items-baseline gap-3 mb-1">
+        <a href="/sessions/{{ entry.sessionId }}/" class="text-sm font-mono text-muted hover:text-ink transition-colors">{{ entry.date | dateShort }}</a>
+      </div>
+      {% for set in entry.sets %}
+        <div class="text-sm text-muted">
+          {% if set.label %}<span class="text-xs font-bold uppercase tracking-widest">{{ set.label }}:</span> {% endif %}
+          {% if set.partners.length %}
+            with
+            {% for p in set.partners %}
+              <a href="/tunes/{{ p.id }}/" class="text-ink hover:text-accent transition-colors font-medium">{{ p.name }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          {% else %}
+            <span class="italic">played solo</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

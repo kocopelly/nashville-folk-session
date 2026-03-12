@@ -1,5 +1,6 @@
 import { normalizeTuneEntry } from './lib/helpers.js';
 import { computeAllStats } from './lib/stats.js';
+import { computeTuneProfiles } from './lib/tuneProfiles.js';
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default function (eleventyConfig) {
@@ -31,6 +32,13 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("feeds", async () => {
     const { readFileSync } = await import("node:fs");
     return JSON.parse(readFileSync("data/feeds.json", "utf-8"));
+  });
+
+  eleventyConfig.addGlobalData("tuneProfiles", async () => {
+    const { readFileSync } = await import("node:fs");
+    const tunes = JSON.parse(readFileSync("data/tunes.json", "utf-8"));
+    const sessions = JSON.parse(readFileSync("data/sessions.json", "utf-8"));
+    return computeTuneProfiles(sessions, tunes);
   });
 
   eleventyConfig.addGlobalData("seriesList", async () => {

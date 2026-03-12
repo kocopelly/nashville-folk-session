@@ -275,7 +275,7 @@ permalink: /stats/
         <tbody>
           {% for n in stats.network.mostConnected %}
           <tr class="border-b border-border">
-            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 font-semibold"><a href="/tunes/{{ n.id }}/" class="text-ink hover:text-accent transition-colors">{{ n.name }}</a></td>
             <td class="py-1 px-2 text-right font-mono">{{ n.degree }}</td>
             <td class="py-1 px-2 text-right font-mono text-muted">{{ n.totalWeight }}</td>
           </tr>
@@ -299,7 +299,7 @@ permalink: /stats/
         <tbody>
           {% for n in stats.network.mostCentral %}
           <tr class="border-b border-border">
-            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 font-semibold"><a href="/tunes/{{ n.id }}/" class="text-ink hover:text-accent transition-colors">{{ n.name }}</a></td>
             <td class="py-1 px-2 text-right font-mono">{{ n.betweenness }}</td>
             <td class="py-1 px-2 text-right text-muted capitalize">{{ n.type }}</td>
           </tr>
@@ -325,7 +325,7 @@ permalink: /stats/
         <tbody>
           {% for n in stats.network.highestClustering %}
           <tr class="border-b border-border">
-            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 font-semibold"><a href="/tunes/{{ n.id }}/" class="text-ink hover:text-accent transition-colors">{{ n.name }}</a></td>
             <td class="py-1 px-2 text-right font-mono">{{ n.clustering }}</td>
             <td class="py-1 px-2 text-right font-mono text-muted">{{ n.degree }}</td>
           </tr>
@@ -355,7 +355,7 @@ permalink: /stats/
         <ul class="space-y-1">
           {% for t in stats.velocity.standards %}
           <li class="flex justify-between text-sm">
-            <span>{{ t.name }}</span>
+            <a href="/tunes/{{ t.id }}/" class="text-ink hover:text-accent transition-colors">{{ t.name }}</a>
             <span class="text-muted text-xs font-mono">{{ t.sessions }}s / {{ t.count }}×</span>
           </li>
           {% endfor %}
@@ -375,7 +375,7 @@ permalink: /stats/
         <ul class="space-y-1">
           {% for t in stats.velocity.heating %}
           <li class="flex justify-between text-sm">
-            <span>{{ t.name }}</span>
+            <a href="/tunes/{{ t.id }}/" class="text-ink hover:text-accent transition-colors">{{ t.name }}</a>
             <span class="text-muted text-xs font-mono">{{ t.sessions }}s / {{ t.count }}×</span>
           </li>
           {% endfor %}
@@ -395,7 +395,7 @@ permalink: /stats/
         <div class="text-sm text-muted">
           {{ stats.velocity.oneOffs.length }} tune{{ "s" if stats.velocity.oneOffs.length != 1 }}:
           <span class="text-ink">
-            {% for t in stats.velocity.oneOffs %}{{ t.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+            {% for t in stats.velocity.oneOffs %}<a href="/tunes/{{ t.id }}/" class="hover:text-accent transition-colors">{{ t.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
           </span>
         </div>
       {% else %}
@@ -419,9 +419,9 @@ permalink: /stats/
     {% for pair in stats.pairings %}
     <div class="flex items-center justify-between py-2 {% if not loop.last %}border-b border-border{% endif %}">
       <span class="text-sm">
-        <span class="font-semibold">{{ pair.tuneA }}</span>
+        <a href="/tunes/{{ pair.tuneAId }}/" class="font-semibold text-ink hover:text-accent transition-colors">{{ pair.tuneA }}</a>
         <span class="text-muted mx-2">&amp;</span>
-        <span class="font-semibold">{{ pair.tuneB }}</span>
+        <a href="/tunes/{{ pair.tuneBId }}/" class="font-semibold text-ink hover:text-accent transition-colors">{{ pair.tuneB }}</a>
       </span>
       <span class="text-xs text-muted font-display">× {{ pair.count }}</span>
     </div>
@@ -452,7 +452,7 @@ permalink: /stats/
       <tbody>
         {% for tune in stats.tunePlays %}
         <tr class="border-b border-border hover:bg-hover transition-colors">
-          <td class="py-2 px-2 font-semibold">{{ tune.name }}</td>
+          <td class="py-2 px-2 font-semibold"><a href="/tunes/{{ tune.id }}/" class="text-ink hover:text-accent transition-colors">{{ tune.name }}</a></td>
           <td class="py-2 px-2 text-muted capitalize">{{ tune.type }}</td>
           <td class="py-2 px-2 font-mono text-xs">{{ tune.bestKey }}</td>
           <td class="py-2 px-2 text-right font-display">{{ tune.count }}</td>
