@@ -11,14 +11,23 @@
       {
         "label": "jigs",
         "tunes": [
-          { "tuneId": "tune_140", "key": "Edor" },
-          { "tuneId": "tune_141", "key": "D" },
-          { "tuneId": "tune_066", "key": "G" }
+          {
+            "tuneId": "tune_140",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "tune_141",
+            "key": "D"
+          },
+          {
+            "tuneId": "tune_066",
+            "key": "G"
+          }
         ],
         "links": [
           {
             "label": "Foinn Seisiún Book I (PDF)",
-            "url": "https://sessionsintheshire.co.uk/wp-content/uploads/2021/01/Foinn-Seisiun-Book-I.pdf",
+            "url": "https://sessionsintheshire.co.uk/wp-content/uploads/2021/01/Foinn-Seisiun-Book-I.pdf#page=24",
             "type": "sheet-music"
           }
         ]
