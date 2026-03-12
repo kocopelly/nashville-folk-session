@@ -3,3 +3,6 @@ _site/
 dist/
 .cache/
 *.tsbuildinfo
+
+# Agent sidecar (local-only, not committed)
+.slime/
