@@ -3,6 +3,9 @@ import { computeAllStats } from './lib/stats.js';
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default function (eleventyConfig) {
+  // ── Passthrough: static assets (icons, OG image, manifest) ──
+  eleventyConfig.addPassthroughCopy("src/static");
+
   // ── Passthrough: listen island (WASM + JS) ──
   eleventyConfig.addPassthroughCopy("src/listen/wasm");
   eleventyConfig.addPassthroughCopy("src/listen/listen-worker.js");
