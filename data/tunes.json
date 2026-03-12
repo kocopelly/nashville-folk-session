@@ -2067,5 +2067,33 @@
     "external": {
       "thesession": 5548
     }
+  },
+  "tune_140": {
+    "id": "tune_140",
+    "name": "The Lilting Banshee",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "Ador"
+    ],
+    "url": "https://thesession.org/tunes/60",
+    "external": {
+      "thesession": 60
+    }
+  },
+  "tune_141": {
+    "id": "tune_141",
+    "name": "Haste To The Wedding",
+    "type": "jig",
+    "tradition": "irish",
+    "aliases": [],
+    "commonKeys": [
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/582",
+    "external": {
+      "thesession": 582
+    }
   }
 }

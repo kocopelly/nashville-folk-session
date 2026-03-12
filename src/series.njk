@@ -7,6 +7,7 @@ permalink: "series/{{ s.id }}/index.html"
 layout: base.njk
 eleventyComputed:
   title: "{{ s.name }} — Nashville Folk Session"
+  description: "{{ s.name }}{% if s.schedule %} — {{ s.schedule }}{% endif %}. {{ sessions | seriesSessionCount(s.id) }} sessions logged."
 ---
 
 <div class="mb-6">

@@ -8,7 +8,7 @@
     {% endif %}
   </div>
 
-  <h3 class="font-display text-lg font-bold mb-1">{{ post.title }}</h3>
+  <h3 class="font-display text-lg font-bold mb-1"><a href="/series/{{ post.seriesId }}/feed/{{ post.id }}/" class="text-ink hover:text-accent transition-colors">{{ post.title }}</a></h3>
 
   {% if post.author %}
     <div class="text-xs text-muted mb-3">by {{ post.author }}</div>

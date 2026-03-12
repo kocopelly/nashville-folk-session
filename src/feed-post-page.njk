@@ -1,0 +1,17 @@
+---
+pagination:
+  data: feeds
+  size: 1
+  alias: post
+permalink: "series/{{ post.seriesId }}/feed/{{ post.id }}/index.html"
+layout: base.njk
+eleventyComputed:
+  title: "{{ post.title }}{% if post.sets.length %}: {{ post.sets[0].tunes | tuneNames(tunes) | join(' / ') }}{% endif %} — Nashville Folk Session"
+  description: "{% if post.body %}{{ post.body }}{% elif post.sets.length %}{{ post.sets[0].label | capitalize }} set — {{ post.sets[0].tunes | tuneNames(tunes) | join(', ') }}{% else %}{{ post.title }}{% endif %}"
+---
+
+<div class="mb-6">
+  <a href="/series/{{ post.seriesId }}/" class="text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors">← Back to Series</a>
+</div>
+
+{% include "feed-post.njk" %}
