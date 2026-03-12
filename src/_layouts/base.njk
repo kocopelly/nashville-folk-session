@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title | default("Nashville Folk Session") }}</title>
-  <meta name="description" content="{{ description or site.description }}">
-  <meta property="og:title" content="{{ ogTitle or title or site.name }}">
-  <meta property="og:description" content="{{ description or site.description }}">
+  <meta name="description" content="{{ (description or site.description) | safe }}">
+  <meta property="og:title" content="{{ (ogTitle or title or site.name) | safe }}">
+  <meta property="og:description" content="{{ (description or site.description) | safe }}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:site_name" content="{{ site.name }}">
   <meta property="og:image" content="{{ site.url }}/static/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ ogTitle or title or site.name }}">
-  <meta name="twitter:description" content="{{ description or site.description }}">
+  <meta name="twitter:title" content="{{ (ogTitle or title or site.name) | safe }}">
+  <meta name="twitter:description" content="{{ (description or site.description) | safe }}">
   <meta name="twitter:image" content="{{ site.url }}/static/og-image.png">
   <meta name="theme-color" content="{{ site.themeColor }}">
   <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
