@@ -519,21 +519,24 @@ permalink: /stats/
   const paginationEl = document.getElementById('tune-pagination');
 
   function paginateTable() {
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const totalPages = Math.ceil(rows.length / PAGE_SIZE);
     let currentPage = 1;
 
+    // Re-query rows from DOM each time so we respect Tablesort's reordering
+    function getRows() { return Array.from(tbody.querySelectorAll('tr')); }
+
     function showPage(page) {
+      const rows = getRows();
+      const totalPages = Math.ceil(rows.length / PAGE_SIZE);
       currentPage = Math.max(1, Math.min(page, totalPages));
       const start = (currentPage - 1) * PAGE_SIZE;
       const end = start + PAGE_SIZE;
       rows.forEach((row, i) => {
         row.style.display = (i >= start && i < end) ? '' : 'none';
       });
-      renderControls();
+      renderControls(rows.length, totalPages);
     }
 
-    function renderControls() {
+    function renderControls(totalRows, totalPages) {
       if (totalPages <= 1) { paginationEl.innerHTML = ''; return; }
       const btnClass = 'text-xs uppercase tracking-widest px-3 py-1 border font-bold transition-colors';
       const activeClass = btnClass + ' border-ink bg-ink text-bg';
@@ -546,7 +549,7 @@ permalink: /stats/
         html += '<button class="' + (p === currentPage ? activeClass : normalClass) + '" data-page="' + p + '">' + p + '</button>';
       }
       html += '<button class="' + (currentPage < totalPages ? normalClass : disabledClass) + '" data-page="next">→</button>';
-      html += '<span class="text-xs text-muted ml-2">' + rows.length + ' tunes</span>';
+      html += '<span class="text-xs text-muted ml-2">' + totalRows + ' tunes</span>';
       paginationEl.innerHTML = html;
 
       paginationEl.querySelectorAll('button').forEach(btn => {
@@ -561,7 +564,7 @@ permalink: /stats/
 
     showPage(1);
 
-    // Re-paginate after sort (Tablesort reorders DOM rows)
+    // Re-paginate after sort — re-reads DOM order so sort applies globally
     tuneTable.addEventListener('afterSort', () => showPage(1));
   }
   paginateTable();
