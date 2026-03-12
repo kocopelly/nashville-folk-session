@@ -11,27 +11,9 @@
  */
 
 import { readFileSync, writeFileSync } from 'fs';
-import { customAlphabet } from 'nanoid';
+import { generateTuneId } from './lib/tune-id.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
-const NANOID_LENGTH = 5;
-const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', NANOID_LENGTH);
-
-// --- Helpers ---
-
-function slugify(name) {
-  return name
-    .toLowerCase()
-    .replace(/['']/g, '')           // remove apostrophes
-    .replace(/[^a-z0-9]+/g, '-')    // non-alphanum → hyphen
-    .replace(/^-|-$/g, '');          // trim leading/trailing hyphens
-}
-
-function generateNewId(name) {
-  const slug = slugify(name);
-  const nid = nanoid(NANOID_LENGTH).toLowerCase();
-  return `${slug}-${nid}`;
-}
 
 // --- Load data ---
 
@@ -47,7 +29,7 @@ const idMap = {};
 const newTunes = {};
 
 for (const [oldId, tune] of Object.entries(tunes)) {
-  const newId = generateNewId(tune.name);
+  const newId = generateTuneId(tune.name);
   idMap[oldId] = newId;
 
   newTunes[newId] = {
