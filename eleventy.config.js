@@ -53,8 +53,10 @@ export default function (eleventyConfig) {
     return normalizeTuneEntry(entry).tuneId;
   });
 
-  eleventyConfig.addFilter("tuneKey", function (entry) {
-    return normalizeTuneEntry(entry).key || null;
+  eleventyConfig.addFilter("tuneKey", function (entry, tunes) {
+    const { tuneId, key } = normalizeTuneEntry(entry);
+    if (key) return key;
+    return tunes?.[tuneId]?.commonKeys?.[0] || null;
   });
 
   eleventyConfig.addFilter("tuneLink", function (entry, tunes) {

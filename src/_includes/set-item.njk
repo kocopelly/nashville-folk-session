@@ -6,7 +6,7 @@
       {% set entry = set.tunes[0] %}
       {% set link = entry | tuneLink(tunes) %}
       {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:text-accent transition-colors font-medium">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-medium">{{ entry | tuneName(tunes) }}</span>{% endif %}
-      <span class="text-xs text-muted">({{ entry | tuneKey | default(entry | tuneType(tunes)) }})</span>
+      <span class="text-xs text-muted">({{ entry | tuneKey(tunes) | default(entry | tuneType(tunes)) }})</span>
     </div>
     {% if set.notes %}
       <div class="text-xs text-muted italic mt-0.5">{{ set.notes }}</div>
@@ -20,7 +20,7 @@
       {% for entry in set.tunes %}
         {% set link = entry | tuneLink(tunes) %}
         {% if link %}<a href="{{ link }}" target="_blank" rel="noopener" class="text-ink hover:text-accent transition-colors font-medium">{{ entry | tuneName(tunes) }}</a>{% else %}<span class="font-medium">{{ entry | tuneName(tunes) }}</span>{% endif %}
-        <span class="text-xs text-muted">({{ entry | tuneKey | default(entry | tuneType(tunes)) }})</span>{% if not loop.last %} <span class="text-muted">/</span> {% endif %}
+        <span class="text-xs text-muted">({{ entry | tuneKey(tunes) | default(entry | tuneType(tunes)) }})</span>{% if not loop.last %} <span class="text-muted">/</span> {% endif %}
       {% endfor %}
     </div>
     {% if set.notes or (set.links and set.links.length) %}
