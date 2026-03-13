@@ -18,29 +18,29 @@ permalink: /stats/
 </div>
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-14">
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ sessions.length }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Sessions</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ sessions.length }}</div>
+    <div class="stat-box-label">Sessions</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.totalPlays }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Total Plays</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.totalPlays }}</div>
+    <div class="stat-box-label">Total Plays</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.uniqueTunesPlayed }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Unique Tunes</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.uniqueTunesPlayed }}</div>
+    <div class="stat-box-label">Unique Tunes</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.totalSets }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Sets Played</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.totalSets }}</div>
+    <div class="stat-box-label">Sets Played</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.avgTunesPerSession }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Tunes / Night</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.avgTunesPerSession }}</div>
+    <div class="stat-box-label">Avg Tunes / Night</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.avgSetSize }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Set Size</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.avgSetSize }}</div>
+    <div class="stat-box-label">Avg Set Size</div>
   </div>
 </div>
 
@@ -70,7 +70,7 @@ permalink: /stats/
   </div>
 
   {% if stats.sessionDNA | length > MAX_VISIBLE %}
-  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.sessionDNA | length }}</button>
+  <button class="show-all-toggle btn-show-all">Show all {{ stats.sessionDNA | length }}</button>
   {% endif %}
 
   <div class="flex flex-wrap gap-3 mt-4 justify-center">
@@ -178,7 +178,7 @@ permalink: /stats/
   </div>
 
   {% if stats.sessionDiffs | length > MAX_VISIBLE %}
-  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.sessionDiffs | length }}</button>
+  <button class="show-all-toggle btn-show-all">Show all {{ stats.sessionDiffs | length }}</button>
   {% endif %}
 
   <div class="flex gap-4 mt-3 justify-center">
@@ -210,7 +210,7 @@ permalink: /stats/
   </div>
 
   {% if stats.keyJourneys | length > MAX_VISIBLE %}
-  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.keyJourneys | length }}</button>
+  <button class="show-all-toggle btn-show-all">Show all {{ stats.keyJourneys | length }}</button>
   {% endif %}
 </section>
 
@@ -224,31 +224,31 @@ permalink: /stats/
 
   {# Network summary counters #}
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-    <div class="border border-border p-4 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.nodeCount }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Nodes</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.network.stats.nodeCount }}</div>
+      <div class="stat-box-label">Nodes</div>
     </div>
-    <div class="border border-border p-4 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.edgeCount }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Edges</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.network.stats.edgeCount }}</div>
+      <div class="stat-box-label">Edges</div>
     </div>
-    <div class="border border-border p-4 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.avgDegree }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Degree</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.network.stats.avgDegree }}</div>
+      <div class="stat-box-label">Avg Degree</div>
     </div>
-    <div class="border border-border p-4 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.components }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Components</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.network.stats.components }}</div>
+      <div class="stat-box-label">Components</div>
     </div>
   </div>
 
   {# Type filter #}
   <div class="flex flex-wrap justify-center gap-2 mb-3">
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-type="reel">Reels</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="jig">Jigs</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="polka">Polkas</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slip jig">Slip Jigs</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slide">Slides</button>
+    <button class="net-type-btn btn-filter btn-filter-active" data-type="reel">Reels</button>
+    <button class="net-type-btn btn-filter btn-filter-inactive" data-type="jig">Jigs</button>
+    <button class="net-type-btn btn-filter btn-filter-inactive" data-type="polka">Polkas</button>
+    <button class="net-type-btn btn-filter btn-filter-inactive" data-type="slip jig">Slip Jigs</button>
+    <button class="net-type-btn btn-filter btn-filter-inactive" data-type="slide">Slides</button>
   </div>
 
   {# Force-directed graph #}
@@ -476,18 +476,18 @@ permalink: /stats/
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div class="border border-border p-5 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.avgSetSize }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Tunes / Set</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.avgSetSize }}</div>
+      <div class="stat-box-label">Avg Tunes / Set</div>
     </div>
-    <div class="border border-border p-5 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.maxSetSize }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Biggest Set</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.maxSetSize }}</div>
+      <div class="stat-box-label">Biggest Set</div>
       <div class="text-xs text-muted mt-1">{{ stats.maxSetInfo }}</div>
     </div>
-    <div class="border border-border p-5 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.typeBreakdown[0].type | capitalize }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Most Common Type</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.typeBreakdown[0].type | capitalize }}</div>
+      <div class="stat-box-label">Most Common Type</div>
       <div class="text-xs text-muted mt-1">{{ stats.typeBreakdown[0].pct }}% of all plays</div>
     </div>
   </div>
@@ -949,9 +949,9 @@ permalink: /stats/
       // Update button styles
       document.querySelectorAll('.net-type-btn').forEach(btn => {
         if (btn.dataset.type === type) {
-          btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold';
+          btn.className = 'net-type-btn btn-filter btn-filter-active';
         } else {
-          btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold';
+          btn.className = 'net-type-btn btn-filter btn-filter-inactive';
         }
       });
       layouts.force();
