@@ -51,19 +51,19 @@ eleventyComputed:
   <div class="w-12 h-0.5 bg-ink mb-4"></div>
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-    <div class="border border-border p-4 text-center">
+    <div class="border border-border p-4 text-center flex flex-col justify-center">
       <div class="text-2xl font-black text-ink font-display">{{ tune.playCount }}</div>
       <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Times Played</div>
     </div>
-    <div class="border border-border p-4 text-center">
+    <div class="border border-border p-4 text-center flex flex-col justify-center">
       <div class="text-2xl font-black text-ink font-display">{{ tune.sessionCount }}</div>
       <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Sessions</div>
     </div>
-    <div class="border border-border p-4 text-center">
+    <div class="border border-border p-4 text-center flex flex-col justify-center">
       <div class="text-sm font-bold text-ink font-mono">{{ tune.firstPlayed | dateShort }}</div>
       <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">First Played</div>
     </div>
-    <div class="border border-border p-4 text-center">
+    <div class="border border-border p-4 text-center flex flex-col justify-center">
       <div class="text-sm font-bold text-ink font-mono">{{ tune.lastPlayed | dateShort }}</div>
       <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Last Played</div>
     </div>
