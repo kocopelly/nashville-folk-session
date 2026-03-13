@@ -90,6 +90,23 @@ export default function (eleventyConfig) {
     return linkIcon[type] || linkIcon.other;
   });
 
+  // Derive a human-friendly source label from a tune URL
+  const urlSourceMap = {
+    'thesession.org': 'TheSession',
+    'tunearch.org': 'TuneArch',
+    'irishtune.info': 'IrishTune',
+    'abcnotation.com': 'ABC Notation',
+  };
+  eleventyConfig.addFilter("urlSourceLabel", function (url) {
+    if (!url) return 'View';
+    try {
+      const host = new URL(url).hostname.replace(/^www\./, '');
+      return urlSourceMap[host] || host;
+    } catch {
+      return 'View';
+    }
+  });
+
   eleventyConfig.addFilter("tuneType", function (entry, tunes) {
     const { tuneId } = normalizeTuneEntry(entry);
     return tunes[tuneId]?.type ?? "";

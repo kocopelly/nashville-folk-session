@@ -39,7 +39,7 @@ eleventyComputed:
   <div class="mb-8">
     <a href="{{ tune.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest px-4 py-2 border-2 border-ink text-ink bg-bg hover:bg-ink hover:text-bg transition-colors font-bold">
       <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-      View on TheSession{% if tune.externalThesession %} (#{{ tune.externalThesession }}){% endif %}
+      {{ tune.url | urlSourceLabel }}{% if tune.externalThesession %} (#{{ tune.externalThesession }}){% endif %}
     </a>
   </div>
 {% endif %}
