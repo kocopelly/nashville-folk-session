@@ -1503,7 +1503,209 @@
     "date": "2026-03-14",
     "venue": "Boston Commons Pub",
     "location": "Nashville, TN",
-    "notes": "Special Saturday session, 2–4pm",
-    "sets": []
+    "notes": "Special Saturday session for the Irish Network Nashville East Nashville Paddy's Day Parade, 2–4pm",
+    "sets": [
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "the-virginia-kz8eu"
+          },
+          {
+            "tuneId": "the-green-fields-of-rossbeigh-zvfmm",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "the-sally-gardens-2blbn",
+            "key": "G"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "the-moving-cloud-iuuh3",
+            "key": "G"
+          },
+          {
+            "tuneId": "andersons-usuef",
+            "key": "D"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "the-maids-of-castlebar-yawda",
+            "key": "D"
+          },
+          {
+            "tuneId": "the-duke-of-leinster-bg1sj",
+            "key": "G"
+          },
+          {
+            "tuneId": "m-and-m-ubspe",
+            "key": "D"
+          }
+        ]
+      },
+      {
+        "label": "slip jigs",
+        "tunes": [
+          {
+            "tuneId": "farewell-to-whalley-range-qlyb8",
+            "key": "A"
+          }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "the-battering-ram-xjmh6",
+            "key": "G"
+          },
+          {
+            "tuneId": "the-trip-to-killarney-qywll",
+            "key": "D"
+          },
+          {
+            "tuneId": "the-green-fields-of-woodford-tx9by",
+            "key": "G"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "martin-wynnes-no-2-uwq7y",
+            "key": "G"
+          },
+          {
+            "tuneId": "the-roscommon-eauae",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "farrel-ogaras-v2ply",
+            "key": "D"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "the-lads-of-laois-8ki1v",
+            "key": "Em"
+          },
+          {
+            "tuneId": "the-masons-apron-lngln",
+            "key": "G"
+          },
+          {
+            "tuneId": "the-new-mown-meadows-dtqb8",
+            "key": "Ador"
+          }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "knocknagow-lvvqh",
+            "key": "Ador"
+          },
+          {
+            "tuneId": "the-cliffs-of-moher-h2kgs",
+            "key": "Ador"
+          },
+          {
+            "tuneId": "out-on-the-ocean-dvhpc",
+            "key": "A"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "ormond-sound-39etn",
+            "key": "Ador"
+          },
+          {
+            "tuneId": "the-sligo-maid-soqak",
+            "key": "Ador"
+          },
+          {
+            "tuneId": "the-red-haired-lass-1x8au",
+            "key": "G"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "the-mossy-banks-tzavr",
+            "key": "G"
+          },
+          {
+            "tuneId": "the-boys-of-ballisodare-nkbvb",
+            "key": "G"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "trim-the-velvet-0rjcs",
+            "key": "G"
+          }
+        ]
+      },
+      {
+        "label": "reels",
+        "tunes": [
+          {
+            "tuneId": "the-sunny-banks-lumcd",
+            "key": "D"
+          },
+          {
+            "tuneId": "mick-finns-otkl7",
+            "key": "D"
+          },
+          {
+            "tuneId": "the-sligo-maid-soqak",
+            "key": "Ador"
+          },
+          {
+            "tuneId": "louises-7aaia",
+            "key": "G"
+          }
+        ]
+      },
+      {
+        "label": "jigs",
+        "tunes": [
+          {
+            "tuneId": "the-coming-of-spring-puada",
+            "key": "Edor"
+          },
+          {
+            "tuneId": "the-legacy-motvg",
+            "key": "G"
+          },
+          {
+            "tuneId": "the-frost-is-all-over-tqsrd",
+            "key": "D"
+          }
+        ]
+      }
+    ],
+    "organizer": "Claire Shirley"
   }
 ]
