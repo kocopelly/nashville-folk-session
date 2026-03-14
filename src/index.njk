@@ -22,7 +22,7 @@ title: Sessions — Nashville Folk Session
         </h2>
         {% set tradition = session | resolve("tradition", series) %}
         {% if tradition %}
-          <span class="badge-{{ tradition }} text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ tradition }}</span>
+          <span class="badge badge-{{ tradition }}">{{ tradition }}</span>
         {% endif %}
       </div>
 
@@ -30,20 +30,20 @@ title: Sessions — Nashville Folk Session
       {% set location = session | resolve("location", series) %}
       {% set seriesName = series[session.seriesId].name if series[session.seriesId] else null %}
       {% set organizer = session | resolve("organizer", series) %}
-      <dl class="text-sm text-muted mb-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
+      <dl class="meta-dl mb-4">
         {% if venue %}
-          <dt class="font-medium text-ink">Venue</dt>
+          <dt>Venue</dt>
           <dd>{{ venue }}{% if location %}, {{ location }}{% endif %}</dd>
         {% endif %}
         {% if seriesName %}
-          <dt class="font-medium text-ink">Series</dt>
+          <dt>Series</dt>
           <dd><a href="/series/{{ session.seriesId }}/" class="text-muted hover:text-ink transition-colors underline decoration-border hover:decoration-ink">{{ seriesName }}</a></dd>
         {% endif %}
         {% if organizer %}
-          <dt class="font-medium text-ink">Led by</dt>
+          <dt>Led by</dt>
           <dd>{{ organizer }}</dd>
         {% endif %}
-        <dt class="font-medium text-ink">{% if isAllLoose %}Tunes{% else %}Sets{% endif %}</dt>
+        <dt>{% if isAllLoose %}Tunes{% else %}Sets{% endif %}</dt>
         <dd>{% if isAllLoose %}{{ session.sets | tuneCount }}{% else %}{{ session.sets.length }}{% endif %}</dd>
       </dl>
 
@@ -67,7 +67,7 @@ title: Sessions — Nashville Folk Session
         {% if session.sets.length > maxVisible %}
           <div class="session-expand-row flex items-start gap-4">
             <details class="session-details flex-1">
-              <summary class="text-xs font-bold uppercase tracking-widest text-accent cursor-pointer hover:text-ink transition-colors select-none">
+              <summary class="nav-link cursor-pointer select-none">
                 {% if isAllLoose %}
                   <span class="details-show-more">Show {{ session.sets.length - maxVisible }} more tune{{ "s" if (session.sets.length - maxVisible) > 1 }} ▾</span>
                 {% else %}
@@ -84,7 +84,7 @@ title: Sessions — Nashville Folk Session
                 {% endfor %}
               </div>
             </details>
-            <a href="/sessions/{{ session.id }}/" class="shrink-0 text-xs font-bold uppercase tracking-widest text-accent hover:text-ink transition-colors">View session →</a>
+            <a href="/sessions/{{ session.id }}/" class="shrink-0 nav-link">View session →</a>
           </div>
         {% endif %}
       </div>
@@ -94,16 +94,16 @@ title: Sessions — Nashville Folk Session
         <div class="flex items-center gap-4 mt-3">
           {% if session.links and session.links.length %}
             {% for link in session.links %}
-              <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
+              <a href="{{ link.url }}" target="_blank" rel="noopener" class="btn-outline">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
             {% endfor %}
           {% endif %}
-          <a href="/sessions/{{ session.id }}/" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest font-bold text-accent hover:text-ink transition-colors ml-auto">View session →</a>
+          <a href="/sessions/{{ session.id }}/" class="nav-link ml-auto">View session →</a>
         </div>
       {% else %}
         {% if session.links and session.links.length %}
           <div class="flex items-center gap-4 mt-2">
             {% for link in session.links %}
-              <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
+              <a href="{{ link.url }}" target="_blank" rel="noopener" class="btn-outline">{{ link.type | linkIcon | safe }} {{ link.label | replace("TheSession set", "thesession.org") }}</a>
             {% endfor %}
           </div>
         {% endif %}

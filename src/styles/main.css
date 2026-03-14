@@ -95,14 +95,157 @@ th[aria-sort="descending"]::after { content: " ↓"; }
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.15s;
   background: transparent;
   color: var(--color-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .btn-primary:hover { background: var(--color-ink); color: var(--color-bg); }
 .btn-primary:active { transform: scale(0.95); }
+
+/* Outline button (light border, subtle hover — for inline actions/outlinks) */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  background: var(--color-bg);
+  transition: border-color 0.15s;
+}
+.btn-outline:hover { border-color: var(--color-ink); }
+
+/* Tradition badge (base — pair with .badge-irish, .badge-bluegrass, etc.) */
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.125rem 0.5rem;
+  border-radius: 2px;
+}
+
+/* Stat counter box */
+.stat-box {
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.stat-box-value {
+  font-weight: 900;
+  color: var(--color-ink);
+}
+.stat-box-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  margin-top: 0.25rem;
+  font-weight: 700;
+}
+
+/* Headline stat box (heavier border — stats page hero) */
+.stat-box-hero {
+  border-width: 2px;
+  border-color: var(--color-ink);
+  padding: 1.25rem;
+}
+
+/* Metadata definition list grid */
+.meta-dl {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 1rem;
+}
+.meta-dl dt {
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+/* Back navigation link */
+.back-link {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--color-ink); }
+
+/* Nav link (text-only action links — "View session →", expand toggles) */
+.nav-link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--color-ink); }
+
+/* Show-all toggle (expand/collapse sections) */
+.btn-show-all {
+  display: block;
+  margin: 0.75rem auto 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  padding: 0.25rem 0.75rem;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.btn-show-all:hover { color: var(--color-ink); border-color: var(--color-ink); }
+
+/* Header nav link (shared base — add .nav-active or .nav-inactive) */
+.header-nav {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: color 0.15s;
+  font-weight: 600;
+}
+.header-nav-active { color: var(--color-ink); border-bottom: 1px solid var(--color-ink); padding-bottom: 0.125rem; }
+.header-nav-inactive { color: var(--color-muted); }
+.header-nav-inactive:hover { color: var(--color-ink); }
+
+/* Network filter toggle button (base — JS swaps between active/inactive) */
+.btn-filter {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-filter-active {
+  border: 2px solid var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+.btn-filter-inactive {
+  border: 1px solid var(--color-border);
+  color: var(--color-muted);
+  background: transparent;
+}
+.btn-filter-inactive:hover { color: var(--color-ink); border-color: var(--color-ink); }
 
 /* Small form input */
 .input-sm {

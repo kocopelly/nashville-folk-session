@@ -18,29 +18,29 @@ permalink: /stats/
 </div>
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-14">
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ sessions.length }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Sessions</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ sessions.length }}</div>
+    <div class="stat-box-label">Sessions</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.totalPlays }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Total Plays</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.totalPlays }}</div>
+    <div class="stat-box-label">Total Plays</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.uniqueTunesPlayed }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Unique Tunes</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.uniqueTunesPlayed }}</div>
+    <div class="stat-box-label">Unique Tunes</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.totalSets }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Sets Played</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.totalSets }}</div>
+    <div class="stat-box-label">Sets Played</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.avgTunesPerSession }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Tunes / Night</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.avgTunesPerSession }}</div>
+    <div class="stat-box-label">Avg Tunes / Night</div>
   </div>
-  <div class="border-2 border-ink p-5 text-center">
-    <div class="text-3xl font-black text-ink font-display">{{ stats.avgSetSize }}</div>
-    <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Set Size</div>
+  <div class="stat-box stat-box-hero">
+    <div class="stat-box-value text-3xl font-display">{{ stats.avgSetSize }}</div>
+    <div class="stat-box-label">Avg Set Size</div>
   </div>
 </div>
 
@@ -70,7 +70,7 @@ permalink: /stats/
   </div>
 
   {% if stats.sessionDNA | length > MAX_VISIBLE %}
-  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.sessionDNA | length }}</button>
+  <button class="show-all-toggle btn-show-all">Show all {{ stats.sessionDNA | length }}</button>
   {% endif %}
 
   <div class="flex flex-wrap gap-3 mt-4 justify-center">
@@ -178,7 +178,7 @@ permalink: /stats/
   </div>
 
   {% if stats.sessionDiffs | length > MAX_VISIBLE %}
-  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.sessionDiffs | length }}</button>
+  <button class="show-all-toggle btn-show-all">Show all {{ stats.sessionDiffs | length }}</button>
   {% endif %}
 
   <div class="flex gap-4 mt-3 justify-center">
@@ -210,7 +210,7 @@ permalink: /stats/
   </div>
 
   {% if stats.keyJourneys | length > MAX_VISIBLE %}
-  <button class="show-all-toggle block mx-auto mt-3 text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors border border-border px-3 py-1">Show all {{ stats.keyJourneys | length }}</button>
+  <button class="show-all-toggle btn-show-all">Show all {{ stats.keyJourneys | length }}</button>
   {% endif %}
 </section>
 
@@ -224,31 +224,31 @@ permalink: /stats/
 
   {# Network summary counters #}
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-    <div class="border border-border p-4 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.nodeCount }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Nodes</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.network.stats.nodeCount }}</div>
+      <div class="stat-box-label">Nodes</div>
     </div>
-    <div class="border border-border p-4 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.edgeCount }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Edges</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.network.stats.edgeCount }}</div>
+      <div class="stat-box-label">Edges</div>
     </div>
-    <div class="border border-border p-4 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.avgDegree }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Degree</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.network.stats.avgDegree }}</div>
+      <div class="stat-box-label">Avg Degree</div>
     </div>
-    <div class="border border-border p-4 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.network.stats.components }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Components</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.network.stats.components }}</div>
+      <div class="stat-box-label">Components</div>
     </div>
   </div>
 
   {# Type filter #}
   <div class="flex flex-wrap justify-center gap-2 mb-3">
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold" data-type="reel">Reels</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="jig">Jigs</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="polka">Polkas</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slip jig">Slip Jigs</button>
-    <button class="net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold" data-type="slide">Slides</button>
+    <button class="net-type-btn btn-filter btn-filter-active" data-type="reel">Reels</button>
+    <button class="net-type-btn btn-filter btn-filter-inactive" data-type="jig">Jigs</button>
+    <button class="net-type-btn btn-filter btn-filter-inactive" data-type="polka">Polkas</button>
+    <button class="net-type-btn btn-filter btn-filter-inactive" data-type="slip jig">Slip Jigs</button>
+    <button class="net-type-btn btn-filter btn-filter-inactive" data-type="slide">Slides</button>
   </div>
 
   {# Force-directed graph #}
@@ -275,7 +275,7 @@ permalink: /stats/
         <tbody>
           {% for n in stats.network.mostConnected %}
           <tr class="border-b border-border">
-            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 font-semibold"><a href="/tunes/{{ n.id }}/" class="text-ink hover:text-accent transition-colors">{{ n.name }}</a></td>
             <td class="py-1 px-2 text-right font-mono">{{ n.degree }}</td>
             <td class="py-1 px-2 text-right font-mono text-muted">{{ n.totalWeight }}</td>
           </tr>
@@ -299,7 +299,7 @@ permalink: /stats/
         <tbody>
           {% for n in stats.network.mostCentral %}
           <tr class="border-b border-border">
-            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 font-semibold"><a href="/tunes/{{ n.id }}/" class="text-ink hover:text-accent transition-colors">{{ n.name }}</a></td>
             <td class="py-1 px-2 text-right font-mono">{{ n.betweenness }}</td>
             <td class="py-1 px-2 text-right text-muted capitalize">{{ n.type }}</td>
           </tr>
@@ -325,7 +325,7 @@ permalink: /stats/
         <tbody>
           {% for n in stats.network.highestClustering %}
           <tr class="border-b border-border">
-            <td class="py-1 px-2 font-semibold">{{ n.name }}</td>
+            <td class="py-1 px-2 font-semibold"><a href="/tunes/{{ n.id }}/" class="text-ink hover:text-accent transition-colors">{{ n.name }}</a></td>
             <td class="py-1 px-2 text-right font-mono">{{ n.clustering }}</td>
             <td class="py-1 px-2 text-right font-mono text-muted">{{ n.degree }}</td>
           </tr>
@@ -355,7 +355,7 @@ permalink: /stats/
         <ul class="space-y-1">
           {% for t in stats.velocity.standards %}
           <li class="flex justify-between text-sm">
-            <span>{{ t.name }}</span>
+            <a href="/tunes/{{ t.id }}/" class="text-ink hover:text-accent transition-colors">{{ t.name }}</a>
             <span class="text-muted text-xs font-mono">{{ t.sessions }}s / {{ t.count }}×</span>
           </li>
           {% endfor %}
@@ -375,7 +375,7 @@ permalink: /stats/
         <ul class="space-y-1">
           {% for t in stats.velocity.heating %}
           <li class="flex justify-between text-sm">
-            <span>{{ t.name }}</span>
+            <a href="/tunes/{{ t.id }}/" class="text-ink hover:text-accent transition-colors">{{ t.name }}</a>
             <span class="text-muted text-xs font-mono">{{ t.sessions }}s / {{ t.count }}×</span>
           </li>
           {% endfor %}
@@ -395,7 +395,7 @@ permalink: /stats/
         <div class="text-sm text-muted">
           {{ stats.velocity.oneOffs.length }} tune{{ "s" if stats.velocity.oneOffs.length != 1 }}:
           <span class="text-ink">
-            {% for t in stats.velocity.oneOffs %}{{ t.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+            {% for t in stats.velocity.oneOffs %}<a href="/tunes/{{ t.id }}/" class="hover:text-accent transition-colors">{{ t.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
           </span>
         </div>
       {% else %}
@@ -419,9 +419,9 @@ permalink: /stats/
     {% for pair in stats.pairings %}
     <div class="flex items-center justify-between py-2 {% if not loop.last %}border-b border-border{% endif %}">
       <span class="text-sm">
-        <span class="font-semibold">{{ pair.tuneA }}</span>
+        <a href="/tunes/{{ pair.tuneAId }}/" class="font-semibold text-ink hover:text-accent transition-colors">{{ pair.tuneA }}</a>
         <span class="text-muted mx-2">&amp;</span>
-        <span class="font-semibold">{{ pair.tuneB }}</span>
+        <a href="/tunes/{{ pair.tuneBId }}/" class="font-semibold text-ink hover:text-accent transition-colors">{{ pair.tuneB }}</a>
       </span>
       <span class="text-xs text-muted font-display">× {{ pair.count }}</span>
     </div>
@@ -452,7 +452,7 @@ permalink: /stats/
       <tbody>
         {% for tune in stats.tunePlays %}
         <tr class="border-b border-border hover:bg-hover transition-colors">
-          <td class="py-2 px-2 font-semibold">{{ tune.name }}</td>
+          <td class="py-2 px-2 font-semibold"><a href="/tunes/{{ tune.id }}/" class="text-ink hover:text-accent transition-colors">{{ tune.name }}</a></td>
           <td class="py-2 px-2 text-muted capitalize">{{ tune.type }}</td>
           <td class="py-2 px-2 font-mono text-xs">{{ tune.bestKey }}</td>
           <td class="py-2 px-2 text-right font-display">{{ tune.count }}</td>
@@ -476,18 +476,18 @@ permalink: /stats/
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div class="border border-border p-5 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.avgSetSize }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Avg Tunes / Set</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.avgSetSize }}</div>
+      <div class="stat-box-label">Avg Tunes / Set</div>
     </div>
-    <div class="border border-border p-5 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.maxSetSize }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Biggest Set</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.maxSetSize }}</div>
+      <div class="stat-box-label">Biggest Set</div>
       <div class="text-xs text-muted mt-1">{{ stats.maxSetInfo }}</div>
     </div>
-    <div class="border border-border p-5 text-center">
-      <div class="text-2xl font-black text-ink font-display">{{ stats.typeBreakdown[0].type | capitalize }}</div>
-      <div class="text-xs uppercase tracking-widest text-muted mt-1 font-bold">Most Common Type</div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.typeBreakdown[0].type | capitalize }}</div>
+      <div class="stat-box-label">Most Common Type</div>
       <div class="text-xs text-muted mt-1">{{ stats.typeBreakdown[0].pct }}% of all plays</div>
     </div>
   </div>
@@ -949,9 +949,9 @@ permalink: /stats/
       // Update button styles
       document.querySelectorAll('.net-type-btn').forEach(btn => {
         if (btn.dataset.type === type) {
-          btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border-2 border-ink bg-ink text-bg font-bold';
+          btn.className = 'net-type-btn btn-filter btn-filter-active';
         } else {
-          btn.className = 'net-type-btn text-xs uppercase tracking-widest px-3 py-1 border border-border text-muted hover:text-ink hover:border-ink transition-colors font-bold';
+          btn.className = 'net-type-btn btn-filter btn-filter-inactive';
         }
       });
       layouts.force();

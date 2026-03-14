@@ -19,26 +19,26 @@ permalink: series/index.html
         <div class="flex flex-wrap items-baseline gap-3 mb-2">
           <h2 class="font-display text-xl font-bold text-ink group-hover:text-accent transition-colors">{{ s.name }}</h2>
           {% if s.tradition %}
-            <span class="badge-{{ s.tradition }} text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ s.tradition }}</span>
+            <span class="badge badge-{{ s.tradition }}">{{ s.tradition }}</span>
           {% endif %}
         </div>
 
-        <dl class="text-sm text-muted grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 mb-3">
+        <dl class="meta-dl mb-3">
           {% if s.venue %}
-            <dt class="font-medium text-ink">Venue</dt>
+            <dt>Venue</dt>
             <dd>{{ s.venue }}{% if s.location %}, {{ s.location }}{% endif %}</dd>
           {% endif %}
           {% if s.schedule %}
-            <dt class="font-medium text-ink">Schedule</dt>
+            <dt>Schedule</dt>
             <dd>{{ s.schedule }}</dd>
           {% endif %}
           {% if s.organizer %}
-            <dt class="font-medium text-ink">Led by</dt>
+            <dt>Led by</dt>
             <dd>{{ s.organizer }}</dd>
           {% endif %}
           {% set count = sessions | seriesSessionCount(s.id) %}
           {% if count > 0 %}
-            <dt class="font-medium text-ink">Sessions logged</dt>
+            <dt>Sessions logged</dt>
             <dd>{{ count }}</dd>
           {% endif %}
         </dl>

@@ -35,12 +35,12 @@
       </div>
       {% set u = page.url %}
       <div class="flex justify-center gap-4 sm:gap-8 border-t border-border pt-3">
-        <a href="/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if u == '/' or '/sessions/' in u %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Sessions</a>
-        <a href="/series/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if '/series/' in u %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Series</a>
-        <a href="/tunes/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if u == '/tunes/' %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Tunes</a>
-        <a href="/stats/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if u == '/stats/' %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Stats</a>
-        <a href="/listen/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if '/listen/' in u %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">Listen</a>
-        <a href="/about/" class="text-xs uppercase tracking-widest no-underline transition-colors font-semibold {% if u == '/about/' %}text-ink border-b border-ink pb-0.5{% else %}text-muted hover:text-ink{% endif %}">About</a>
+        <a href="/" class="header-nav {% if u == '/' or '/sessions/' in u %}header-nav-active{% else %}header-nav-inactive{% endif %}">Sessions</a>
+        <a href="/series/" class="header-nav {% if '/series/' in u %}header-nav-active{% else %}header-nav-inactive{% endif %}">Series</a>
+        <a href="/tunes/" class="header-nav {% if u == '/tunes/' %}header-nav-active{% else %}header-nav-inactive{% endif %}">Tunes</a>
+        <a href="/stats/" class="header-nav {% if u == '/stats/' %}header-nav-active{% else %}header-nav-inactive{% endif %}">Stats</a>
+        <a href="/listen/" class="header-nav {% if '/listen/' in u %}header-nav-active{% else %}header-nav-inactive{% endif %}">Listen</a>
+        <a href="/about/" class="header-nav {% if u == '/about/' %}header-nav-active{% else %}header-nav-inactive{% endif %}">About</a>
       </div>
     </nav>
   </header>

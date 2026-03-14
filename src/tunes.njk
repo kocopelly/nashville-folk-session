@@ -15,7 +15,7 @@ permalink: /tunes/
     <thead>
       <tr class="border-b-2 border-ink">
         <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Name</th>
-        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Type</th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold whitespace-nowrap">Type</th>
         <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Key</th>
         <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Tradition</th>
         <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Link</th>
@@ -25,10 +25,10 @@ permalink: /tunes/
       {% for id, tune in tunes %}
       <tr class="border-b border-border hover:bg-hover transition-colors">
         <td class="py-3 px-3">
-          <span class="font-semibold">{{ tune.name }}</span>
+          <a href="/tunes/{{ id }}/" class="font-semibold text-ink hover:text-accent transition-colors">{{ tune.name }}</a>
           {% if tune.aliases.length %}<span class="text-muted text-xs ml-1">({{ tune.aliases | join(", ") }})</span>{% endif %}
         </td>
-        <td class="py-3 px-3 text-muted capitalize">{{ tune.type }}</td>
+        <td class="py-3 px-3 text-muted capitalize whitespace-nowrap">{{ tune.type }}</td>
         <td class="py-3 px-3">
           {% if tune.commonKeys.length %}
             <span {% if tune.commonKeys.length > 1 %}title="Also played in: {{ tune.commonKeys | join(', ') }}"{% endif %}>
@@ -37,11 +37,11 @@ permalink: /tunes/
           {% endif %}
         </td>
         <td class="py-3 px-3">
-          <span class="badge-{{ tune.tradition }} text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm">{{ tune.tradition }}</span>
+          <span class="badge badge-{{ tune.tradition }}">{{ tune.tradition }}</span>
         </td>
         <td class="py-3 px-3">
           {% if tune.url %}
-            <a href="{{ tune.url }}" target="_blank" rel="noopener" class="text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors inline-flex items-center">View →</a>
+            <a href="{{ tune.url }}" target="_blank" rel="noopener" class="btn-outline">{{ tune.url | urlSourceLabel }}</a>
           {% endif %}
         </td>
       </tr>

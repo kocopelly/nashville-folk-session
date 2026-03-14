@@ -30,7 +30,7 @@
   {% if post.links and post.links.length %}
     <div class="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border">
       {% for link in post.links %}
-        <a href="{{ link.url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs uppercase tracking-widest px-3 py-1 border border-border text-ink bg-bg hover:border-ink transition-colors">{{ link.type | linkIcon | safe }} {{ link.label }}</a>
+        <a href="{{ link.url }}" target="_blank" rel="noopener" class="btn-outline">{{ link.type | linkIcon | safe }} {{ link.label }}</a>
       {% endfor %}
     </div>
   {% endif %}
