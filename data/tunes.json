@@ -2262,18 +2262,6 @@
     },
     "url": "https://thesession.org/tunes/3942"
   },
-  "martin-wynnes-no-2-uwq7y": {
-    "id": "martin-wynnes-no-2-uwq7y",
-    "name": "Martin Wynne's No. 2",
-    "type": "reel",
-    "tradition": "irish",
-    "aliases": [],
-    "commonKeys": [],
-    "external": {
-      "thesession": 450
-    },
-    "url": "https://thesession.org/tunes/450"
-  },
   "farrel-ogaras-v2ply": {
     "id": "farrel-ogaras-v2ply",
     "name": "Farrel O'Gara's",
@@ -2429,5 +2417,19 @@
       "thesession": 448
     },
     "url": "https://thesession.org/tunes/448"
+  },
+  "martin-wynnes-no-4-uwq7y": {
+    "id": "martin-wynnes-no-4-uwq7y",
+    "name": "Martin Wynne's No. 4",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [
+      "Martin Wynne's #4"
+    ],
+    "commonKeys": [],
+    "external": {
+      "thesession": 450
+    },
+    "url": "https://thesession.org/tunes/450"
   }
 }
