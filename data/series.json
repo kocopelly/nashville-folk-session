@@ -1,4 +1,22 @@
 {
+  "middle-tn-irish": {
+    "id": "middle-tn-irish",
+    "name": "Middle Tennessee Irish Music and Dance Session",
+    "tradition": "irish",
+    "venue": "Homegrown Taproom",
+    "location": "Donelson, TN",
+    "schedule": "1st and 3rd Sundays",
+    "organizer": "Middle Tennessee Irish Music and Dance",
+    "description": "Irish traditional music session hosted by Middle Tennessee Irish Music and Dance in Donelson.",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://middletnirish.org/",
+        "type": "other"
+      }
+    ],
+    "listed": true
+  },
   "quinns-irish": {
     "id": "quinns-irish",
     "name": "Nashville Irish Session at Quinn's",
