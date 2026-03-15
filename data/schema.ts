@@ -128,7 +128,7 @@ export const Session = z.object({
   location: z.string().optional(),       // overrides series default
   tradition: Tradition.optional(),       // overrides series default
   organizer: z.string().optional(),      // overrides series default
-  sets: z.array(TuneSet).min(1),
+  sets: z.array(TuneSet),              // empty = session logged, tunes TBD
   notes: z.string().optional(),
   attendees: z.array(z.string()).default([]),
   links: z.array(Link).default([]),      // photos, event pages, fundraiser links, etc.

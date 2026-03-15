@@ -61,12 +61,17 @@ function adjacentToDivider(idx) {
 
 // Build a tune item from a folkfriend result
 function tuneFromResult(r) {
+  const tuneId = r.setting.tune_id;
+  const settingId = r.setting_id;
   return {
     type: 'tune',
-    tuneId: r.setting.tune_id,
+    tuneId,
+    settingId: settingId || null,
     name: r.display_name,
     score: r.score,
-    url: `https://thesession.org/tunes/${r.setting.tune_id}`,
+    url: settingId
+      ? `https://thesession.org/tunes/${tuneId}#setting${settingId}`
+      : `https://thesession.org/tunes/${tuneId}`,
     dance: r.setting.dance || '',
     mode: r.setting.mode || '',
     meter: r.setting.meter || '',
@@ -76,7 +81,7 @@ function tuneFromResult(r) {
 
 // Extract transferable fields from a tune item (for swap)
 function tuneFields(t) {
-  return { tuneId: t.tuneId, name: t.name, score: t.score, url: t.url, dance: t.dance, mode: t.mode, meter: t.meter };
+  return { tuneId: t.tuneId, settingId: t.settingId, name: t.name, score: t.score, url: t.url, dance: t.dance, mode: t.mode, meter: t.meter };
 }
 
 function splitIntoSets() {
