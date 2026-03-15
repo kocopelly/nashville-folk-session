@@ -28,6 +28,7 @@ let items = loadItems();
 let openAltsIdx = null;
 let sortableInstance = null;
 let activeExportTab = 'text';
+let genre = localStorage.getItem('nfs-listen-genre') || 'irish'; // 'irish' or 'oldtime'
 
 // ── Persistence ──
 function saveItems() {
@@ -63,15 +64,23 @@ function adjacentToDivider(idx) {
 function tuneFromResult(r) {
   const tuneId = r.setting.tune_id;
   const settingId = r.setting_id;
+
+  let url;
+  if (genre === 'oldtime') {
+    url = `https://tunearch.org/w/index.php?curid=${tuneId}`;
+  } else {
+    url = settingId
+      ? `https://thesession.org/tunes/${tuneId}#setting${settingId}`
+      : `https://thesession.org/tunes/${tuneId}`;
+  }
+
   return {
     type: 'tune',
     tuneId,
-    settingId: settingId || null,
+    settingId: genre === 'oldtime' ? null : (settingId || null),
     name: r.display_name,
     score: r.score,
-    url: settingId
-      ? `https://thesession.org/tunes/${tuneId}#setting${settingId}`
-      : `https://thesession.org/tunes/${tuneId}`,
+    url,
     dance: r.setting.dance || '',
     mode: r.setting.mode || '',
     meter: r.setting.meter || '',
@@ -127,7 +136,7 @@ async function copyToClipboard(text) {
 
 // ── Render ──
 function actionRowHTML(idx) {
-  const showBreak = !adjacentToDivider(idx);
+  const showBreak = genre !== 'oldtime' && !adjacentToDivider(idx);
   return `<div class="action-row" data-insert="${idx}">
     ${showBreak ? `<button class="act-btn do-set-break" data-insert="${idx}">set break</button>` : ''}
     <button class="act-btn do-add-tune" data-insert="${idx}">+ tune</button>
@@ -165,7 +174,8 @@ function altsPopoverHTML(idx) {
   }
 
   if (item.url) {
-    html += `<div class="popover-section popover-link"><a href="${item.url}" target="_blank" rel="noopener">thesession.org</a></div>`;
+    const linkLabel = item.url.includes('tunearch.org') ? 'tunearch.org' : 'thesession.org';
+    html += `<div class="popover-section popover-link"><a href="${item.url}" target="_blank" rel="noopener">${linkLabel}</a></div>`;
   }
 
   return html + '</div>';
@@ -380,7 +390,7 @@ async function startListening() {
   } catch { setStatus('Mic access denied'); return; }
 
   audioCtx = new AudioContext();
-  worker.postMessage({ type: 'init', sampleRate: audioCtx.sampleRate });
+  worker.postMessage({ type: 'init', sampleRate: audioCtx.sampleRate, genre });
 
   const src = audioCtx.createMediaStreamSource(micStream);
   const proc = audioCtx.createScriptProcessor(1024, 1, 1);
@@ -432,7 +442,9 @@ function getJSONExport() {
     sets: splitIntoSets().map(tunes => ({
       label: dominantValue(tunes.map(t => t.dance).filter(Boolean)) + 's' || undefined,
       tunes: tunes.map(t => ({
-        tuneId: t.tuneId ? `__thesession_${t.tuneId}` : `__manual_${slugify(t.name)}`,
+        tuneId: t.tuneId
+          ? (t.url?.includes('tunearch.org') ? `__tta_${t.tuneId}` : `__thesession_${t.tuneId}`)
+          : `__manual_${slugify(t.name)}`,
         ...(t.url && { url: t.url }),
         _name: t.name,
         ...(t.mode && { key: modeToKey(t.mode) }),
@@ -476,6 +488,21 @@ btnDownload.addEventListener('click', () => {
   const mime = activeExportTab === 'json' ? 'application/json' : 'text/plain';
   download(`session-${today}.${ext}`, getExportContent(), mime);
 });
+
+// ── Genre toggle ──
+const genreSelect = $('genre-select');
+if (genreSelect) {
+  genreSelect.value = genre;
+  genreSelect.addEventListener('change', () => {
+    const wasListening = listening;
+    if (wasListening) stopListening();
+    genre = genreSelect.value;
+    localStorage.setItem('nfs-listen-genre', genre);
+    render();
+    // Auto-restart if was listening
+    if (wasListening) startListening();
+  });
+}
 
 // ── Init ──
 if (items.length) render();

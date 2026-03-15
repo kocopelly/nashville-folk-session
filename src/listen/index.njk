@@ -13,7 +13,13 @@ title: "Listen — Nashville Folk Session"
     <span id="status" class="text-muted text-xs uppercase tracking-widest">Ready</span>
   </div>
 
-  <div class="mb-4 flex items-center gap-4 text-xs text-muted">
+  <div class="mb-4 flex items-center gap-4 text-xs text-muted flex-wrap">
+    <label class="flex items-center gap-1">Genre
+      <select id="genre-select" class="input-sm">
+        <option value="irish">Irish</option>
+        <option value="oldtime">Old Time</option>
+      </select>
+    </label>
     <label class="flex items-center gap-1">Query every
       <select id="query-interval" class="input-sm">
         <option value="8">8s</option>
