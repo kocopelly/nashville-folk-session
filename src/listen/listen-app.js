@@ -137,7 +137,7 @@ async function copyToClipboard(text) {
 
 // ── Render ──
 function actionRowHTML(idx) {
-  const showBreak = genre !== 'oldtime' && !adjacentToDivider(idx);
+  const showBreak = !adjacentToDivider(idx);
   return `<div class="action-row" data-insert="${idx}">
     ${showBreak ? `<button class="act-btn do-set-break" data-insert="${idx}">set break</button>` : ''}
     <button class="act-btn do-add-tune" data-insert="${idx}">+ tune</button>
@@ -434,8 +434,12 @@ function tuneToText(t) {
   return `${t.name}${meta ? ` (${meta})` : ''}${url}`;
 }
 
+function hasDividers() {
+  return items.some(i => i.type === 'divider');
+}
+
 function getTextExport() {
-  if (genre === 'oldtime') {
+  if (!hasDividers()) {
     return items.filter(i => i.type === 'tune').map(tuneToText).join('\n');
   }
   return splitIntoSets().map(tunes =>
@@ -456,15 +460,15 @@ function tunesToJSON(tunesArr) {
 
 function getJSONExport() {
   const today = new Date().toISOString().slice(0, 10);
-  // Old Time: each tune is standalone (no sets)
-  const sets = genre === 'oldtime'
-    ? items.filter(i => i.type === 'tune').map(t => ({
-      tunes: tunesToJSON([t]),
-    }))
-    : splitIntoSets().map(tunes => ({
+  const allTunes = items.filter(i => i.type === 'tune');
+
+  // Only group into sets if user added set breaks
+  const sets = hasDividers()
+    ? splitIntoSets().map(tunes => ({
       label: dominantValue(tunes.map(t => t.dance).filter(Boolean)) + 's' || undefined,
       tunes: tunesToJSON(tunes),
-    }));
+    }))
+    : allTunes.map(t => ({ tunes: tunesToJSON([t]) }));
 
   return JSON.stringify({
     id: `sess_${today}`, seriesId: '', date: today,
