@@ -32,7 +32,7 @@ let genre = localStorage.getItem('nfs-listen-genre') || 'irish'; // 'irish' or '
 
 // ── Persistence ──
 function saveItems() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (_) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (_) { /* storage full or blocked */ }
 }
 function loadItems() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
