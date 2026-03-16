@@ -1,5 +1,12 @@
 /* ─── Listen page styles ──────────────────────────────── */
 
+/* ── Listen panel layout ── */
+.listen-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 /* ── Genre toggle — extends .pill-toggle from design system ── */
 @media (min-width: 480px) {
   .genre-toggle { display: inline-flex; }
@@ -14,8 +21,9 @@
   overflow: hidden;
 }
 @media (min-width: 480px) {
-  .listen-btn { width: auto; min-width: 14rem; }
+  .listen-btn { width: auto; min-width: 16rem; }
 }
+
 .listen-btn[data-listening="true"] {
   background: var(--color-ink);
   color: var(--color-bg);
