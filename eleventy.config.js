@@ -13,6 +13,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/listen/listen-app.js");
   eleventyConfig.addPassthroughCopy("src/listen/listen.css");
   eleventyConfig.addPassthroughCopy("src/listen/vendor");
+  eleventyConfig.addPassthroughCopy("src/listen/oldtime-tune-data.json");
   // ── Global data from JSON files ──
   eleventyConfig.addGlobalData("tunes", async () => {
     const { readFileSync } = await import("node:fs");
