@@ -7,11 +7,7 @@
   align-items: flex-start;
 }
 
-/* ── Genre toggle — extends .pill-toggle from design system ── */
-@media (min-width: 480px) {
-  .genre-toggle { display: inline-flex; }
-  .genre-toggle .pill-toggle-btn { flex: none; }
-}
+/* ── Genre toggle — full width on all screens ── */
 
 /* ── Listen button — extends .btn-primary.btn-sm ── */
 .listen-btn {
@@ -19,9 +15,6 @@
   justify-content: center;
   gap: 0.625rem;
   overflow: hidden;
-}
-@media (min-width: 480px) {
-  .listen-btn { width: auto; min-width: 16rem; }
 }
 
 .listen-btn[data-listening="true"] {
