@@ -489,17 +489,25 @@ btnDownload.addEventListener('click', () => {
   download(`session-${today}.${ext}`, getExportContent(), mime);
 });
 
-// ── Genre toggle ──
-const genreSelect = $('genre-select');
-if (genreSelect) {
-  genreSelect.value = genre;
-  genreSelect.addEventListener('change', () => {
+// ── Genre toggle (pill tabs) ──
+const genreToggle = $('genre-toggle');
+function updateGenrePills() {
+  if (!genreToggle) return;
+  genreToggle.querySelectorAll('.genre-pill').forEach(pill => {
+    pill.setAttribute('aria-selected', pill.dataset.genre === genre ? 'true' : 'false');
+  });
+}
+if (genreToggle) {
+  updateGenrePills();
+  genreToggle.addEventListener('click', (e) => {
+    const pill = e.target.closest('.genre-pill');
+    if (!pill || pill.dataset.genre === genre) return;
     const wasListening = listening;
     if (wasListening) stopListening();
-    genre = genreSelect.value;
+    genre = pill.dataset.genre;
     localStorage.setItem('nfs-listen-genre', genre);
+    updateGenrePills();
     render();
-    // Auto-restart if was listening
     if (wasListening) startListening();
   });
 }

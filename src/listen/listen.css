@@ -1,5 +1,38 @@
 /* ─── Listen page styles ──────────────────────────────── */
 
+/* ── Genre toggle (pill tabs) ── */
+.genre-toggle {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.genre-pill {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3125rem 1rem;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.genre-pill + .genre-pill {
+  border-left: 1px solid var(--color-border);
+}
+.genre-pill:hover {
+  color: var(--color-ink);
+  background: var(--color-hover);
+}
+.genre-pill[aria-selected="true"] {
+  color: var(--color-bg);
+  background: var(--color-ink);
+}
+
 #tune-log { overflow-x: clip; overflow-y: visible; }
 
 /* ── List row (shared for tunes + dividers) ── */
