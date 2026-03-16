@@ -6,19 +6,19 @@
   border: 1px solid var(--color-border);
   border-radius: 2px;
   overflow: hidden;
+  height: 2.125rem;
 }
 @media (min-width: 480px) {
   .genre-toggle { display: inline-flex; }
 }
 .genre-pill {
   flex: 1;
-  font-family: var(--font-display);
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   text-align: center;
-  padding: 0.3125rem 1rem;
+  padding: 0 1rem;
   background: none;
   border: none;
   color: var(--color-muted);
@@ -46,14 +46,17 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  height: 2.75rem;
+  height: 2.125rem;
 }
 .listen-btn {
   width: 10rem;
-  height: 2.375rem;
+  height: 2.125rem;
   flex-shrink: 0;
   text-align: center;
   box-sizing: border-box;
+  font-size: 0.6875rem;
+  padding: 0 1rem;
+  border-width: 1px;
 }
 .listen-status {
   flex: 1;
