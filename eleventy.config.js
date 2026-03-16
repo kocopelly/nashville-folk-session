@@ -43,8 +43,16 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addGlobalData("seriesList", async () => {
     const { readFileSync } = await import("node:fs");
-    const data = JSON.parse(readFileSync("data/series.json", "utf-8"));
-    return Object.values(data).filter(s => s.listed !== false);
+    const series = JSON.parse(readFileSync("data/series.json", "utf-8"));
+    const sessions = JSON.parse(readFileSync("data/sessions.json", "utf-8"));
+    const list = Object.values(series).filter(s => s.listed !== false);
+    // Sort by total sessions descending (most active first)
+    list.sort((a, b) => {
+      const countA = sessions.filter(s => s.seriesId === a.id).length;
+      const countB = sessions.filter(s => s.seriesId === b.id).length;
+      return countB - countA;
+    });
+    return list;
   });
 
   // ── Thin filters (wiring only) ──
