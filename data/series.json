@@ -1,50 +1,50 @@
 {
-  "middle-tn-irish": {
-    "id": "middle-tn-irish",
-    "name": "Middle Tennessee Irish Music and Dance Session",
-    "tradition": "irish",
-    "venue": "Homegrown Taproom",
-    "location": "Donelson, TN",
-    "schedule": "1st and 3rd Sundays",
-    "organizer": "Middle Tennessee Irish Music and Dance",
-    "description": "Irish traditional music session hosted by Middle Tennessee Irish Music and Dance in Donelson.",
-    "links": [
-      {
-        "label": "Website",
-        "url": "https://middletnirish.org/",
-        "type": "other"
-      }
-    ],
-    "listed": true
-  },
-  "quinns-irish": {
-    "id": "quinns-irish",
-    "name": "Nashville Irish Session at Quinn's",
-    "tradition": "irish",
-    "venue": "Quinn's Neighbourhood Pub",
-    "location": "Nashville, TN",
-    "schedule": "Every Wednesday, 6:30pm \u2013 8:30pm",
-    "organizer": "Eamonn Dillon",
-    "description": "Weekly Irish traditional music session at Quinn's Neighbourhood Pub in Nashville. All levels and instruments welcome \u2014 come listen or join in.",
-    "links": [
-      {
-        "label": "Google Maps",
-        "url": "https://www.google.com/maps/place/Quinn's+Neighbourhood+Pub+and+Eatery/@36.1416476,-86.7280317,17z",
-        "type": "other"
-      }
-    ],
-    "listed": true
-  },
-  "browns-diner-oldtime": {
-    "id": "browns-diner-oldtime",
-    "name": "Old Time Session at Brown's Diner",
-    "tradition": "old-time",
-    "venue": "Brown's Diner",
-    "location": "Nashville, TN",
-    "schedule": "3rd Sundays, 12:00pm \u2013 2:00pm",
-    "organizer": "Taylor Dunn",
-    "description": "Old time music session at Brown's Diner in Nashville. 3rd Sundays, noon to 2pm.",
-    "links": [],
-    "listed": true
-  }
+    "middle-tn-irish": {
+        "id": "middle-tn-irish",
+        "name": "Middle Tennessee Irish Music and Dance Session",
+        "tradition": "irish",
+        "venue": "Homegrown Taproom",
+        "location": "Donelson, TN",
+        "schedule": "1st and 3rd Sundays",
+        "organizer": "Middle Tennessee Irish Music and Dance",
+        "description": "Irish traditional music session hosted by Middle Tennessee Irish Music and Dance in Donelson.",
+        "links": [
+            {
+                "label": "Website",
+                "url": "https://middletnirish.org/",
+                "type": "other"
+            }
+        ],
+        "listed": true
+    },
+    "quinns-irish": {
+        "id": "quinns-irish",
+        "name": "Nashville Irish Session at Quinn's",
+        "tradition": "irish",
+        "venue": "Quinn's Neighbourhood Pub",
+        "location": "Nashville, TN",
+        "schedule": "Every Wednesday, 6:30pm – 8:30pm",
+        "organizer": "Eamonn Dillon",
+        "description": "Weekly Irish traditional music session at Quinn's Neighbourhood Pub in Nashville. All levels and instruments welcome — come listen or join in.",
+        "links": [
+            {
+                "label": "Google Maps",
+                "url": "https://www.google.com/maps/place/Quinn's+Neighbourhood+Pub+and+Eatery/@36.1416476,-86.7280317,17z",
+                "type": "other"
+            }
+        ],
+        "listed": true
+    },
+    "browns-diner-oldtime": {
+        "id": "browns-diner-oldtime",
+        "name": "Irish Session at Brown's Diner",
+        "tradition": "irish",
+        "venue": "Brown's Diner",
+        "location": "Nashville, TN",
+        "schedule": "3rd Sundays, 12:00pm – 2:00pm",
+        "organizer": "Taylor Dunn",
+        "description": "Old time music session at Brown's Diner in Nashville. 3rd Sundays, noon to 2pm.",
+        "links": [],
+        "listed": true
+    }
 }
