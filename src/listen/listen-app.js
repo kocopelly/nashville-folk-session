@@ -5,6 +5,7 @@ const STORAGE_KEY = 'nfs-listen-items';
 
 // ── DOM refs ──
 const btn = $('btn-listen');
+const btnLabel = btn?.querySelector('.listen-btn-label');
 const statusEl = $('status');
 const tuneLogEl = $('tune-log');
 const footerActions = $('footer-actions');
@@ -404,7 +405,8 @@ async function startListening() {
   proc.connect(audioCtx.destination);
 
   listening = true;
-  btn.textContent = 'Stop Listening';
+  btnLabel.textContent = 'Stop';
+  btn.dataset.listening = 'true';
   render();
 }
 
@@ -419,8 +421,9 @@ function stopListening() {
   if (audioCtx) audioCtx.close();
   if (worker) worker.terminate();
   worker = null; audioCtx = null; micStream = null; workerReady = false; listening = false;
-  btn.textContent = 'Start Listening';
-  setStatus(items.length ? `Stopped — ${items.filter(i => i.type === 'tune').length} tune(s)` : 'Stopped');
+  btnLabel.textContent = 'Start Listening';
+  btn.dataset.listening = 'false';
+  setStatus(items.length ? `${items.filter(i => i.type === 'tune').length} tune(s)` : '');
   render();
 }
 
