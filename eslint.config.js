@@ -44,6 +44,6 @@ export default [
     },
   },
   {
-    ignores: ["_site/", "node_modules/", "dist/", "src/listen/vendor/"],
+    ignores: ["_site/", "node_modules/", "dist/", "src/listen/vendor/", "src/listen/wasm/"],
   },
 ];
