@@ -7,7 +7,10 @@
   align-items: flex-start;
 }
 
-/* ── Genre toggle — full width on all screens ── */
+/* ── Genre toggle — full width mobile, auto desktop ── */
+@media (min-width: 480px) {
+  .genre-toggle { display: inline-flex; }
+}
 
 /* ── Listen button — extends .btn-primary.btn-sm ── */
 .listen-btn {
@@ -15,6 +18,9 @@
   justify-content: center;
   gap: 0.625rem;
   overflow: hidden;
+}
+@media (min-width: 480px) {
+  .listen-btn { width: auto; min-width: 16rem; }
 }
 
 .listen-btn[data-listening="true"] {
