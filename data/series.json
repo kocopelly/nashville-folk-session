@@ -34,5 +34,17 @@
       }
     ],
     "listed": true
+  },
+  "browns-diner-irish": {
+    "id": "browns-diner-irish",
+    "name": "Open Irish Session at Browns Diner",
+    "tradition": "irish",
+    "venue": "Brown's Diner",
+    "location": "Nashville, TN",
+    "schedule": "3rd Sundays, 12:00pm – 2:00pm",
+    "organizer": "Taylor Dunn",
+    "description": "Open Irish traditional music session at Brown's Diner in Nashville. 3rd Sundays, noon to 2pm.",
+    "links": [],
+    "listed": true
   }
 }
