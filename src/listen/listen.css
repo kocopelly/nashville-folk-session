@@ -7,9 +7,9 @@
   align-items: flex-start;
 }
 
-/* ── Genre toggle — full width mobile, auto desktop ── */
+/* ── Genre toggle — auto-width on desktop ── */
 @media (min-width: 480px) {
-  .genre-toggle { display: inline-flex; }
+  .genre-toggle { align-self: auto; display: inline-flex; }
 }
 
 /* ── Listen button — extends .btn-primary.btn-sm ── */
