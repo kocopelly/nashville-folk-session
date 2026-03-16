@@ -428,31 +428,47 @@ function stopListening() {
 }
 
 // ── Export ──
+function tuneToText(t) {
+  const meta = [t.dance, t.mode].filter(Boolean).join(', ');
+  const url = t.url ? ` — ${t.url.replace('https://', '')}` : '';
+  return `${t.name}${meta ? ` (${meta})` : ''}${url}`;
+}
+
 function getTextExport() {
+  if (genre === 'oldtime') {
+    return items.filter(i => i.type === 'tune').map(tuneToText).join('\n');
+  }
   return splitIntoSets().map(tunes =>
-    tunes.map(t => {
-      const meta = [t.dance, t.mode].filter(Boolean).join(', ');
-      const url = t.url ? ` — ${t.url.replace('https://', '')}` : '';
-      return `${t.name}${meta ? ` (${meta})` : ''}${url}`;
-    }).join('\n')
+    tunes.map(tuneToText).join('\n')
   ).join('\n---\n');
+}
+
+function tunesToJSON(tunesArr) {
+  return tunesArr.map(t => ({
+    tuneId: t.tuneId
+      ? (t.url?.includes('tunearch.org') ? `__tta_${t.tuneId}` : `__thesession_${t.tuneId}`)
+      : `__manual_${slugify(t.name)}`,
+    ...(t.url && { url: t.url }),
+    _name: t.name,
+    ...(t.mode && { key: modeToKey(t.mode) }),
+  }));
 }
 
 function getJSONExport() {
   const today = new Date().toISOString().slice(0, 10);
+  // Old Time: each tune is standalone (no sets)
+  const sets = genre === 'oldtime'
+    ? items.filter(i => i.type === 'tune').map(t => ({
+      tunes: tunesToJSON([t]),
+    }))
+    : splitIntoSets().map(tunes => ({
+      label: dominantValue(tunes.map(t => t.dance).filter(Boolean)) + 's' || undefined,
+      tunes: tunesToJSON(tunes),
+    }));
+
   return JSON.stringify({
     id: `sess_${today}`, seriesId: '', date: today,
-    sets: splitIntoSets().map(tunes => ({
-      label: dominantValue(tunes.map(t => t.dance).filter(Boolean)) + 's' || undefined,
-      tunes: tunes.map(t => ({
-        tuneId: t.tuneId
-          ? (t.url?.includes('tunearch.org') ? `__tta_${t.tuneId}` : `__thesession_${t.tuneId}`)
-          : `__manual_${slugify(t.name)}`,
-        ...(t.url && { url: t.url }),
-        _name: t.name,
-        ...(t.mode && { key: modeToKey(t.mode) }),
-      })),
-    })),
+    sets,
   }, null, 2);
 }
 
