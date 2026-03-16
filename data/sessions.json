@@ -182,7 +182,7 @@
             "type": "sheet-music"
           }
         ],
-        "notes": "Mixed jig/slip jig set — Paddy O'Rafferty is a jig, then two slip jigs"
+        "notes": "Mixed jig/slip jig set \u2014 Paddy O'Rafferty is a jig, then two slip jigs"
       },
       {
         "label": "polkas",
@@ -1503,7 +1503,7 @@
     "date": "2026-03-14",
     "venue": "Boston Commons Pub",
     "location": "Nashville, TN",
-    "notes": "Special Saturday session for the Irish Network Nashville East Nashville Paddy's Day Parade, 2–4pm",
+    "notes": "Special Saturday session for the Irish Network Nashville East Nashville Paddy's Day Parade, 2\u20134pm",
     "sets": [
       {
         "label": "reels",
@@ -1707,5 +1707,13 @@
       }
     ],
     "organizer": "Claire Shirey"
+  },
+  {
+    "id": "sess_2026-03-15",
+    "seriesId": "browns-diner-oldtime",
+    "date": "2026-03-15",
+    "sets": [],
+    "notes": "",
+    "links": []
   }
 ]
