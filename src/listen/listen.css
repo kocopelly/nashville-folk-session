@@ -2,17 +2,22 @@
 
 /* ── Genre toggle (pill tabs) ── */
 .genre-toggle {
-  display: inline-flex;
+  display: flex;
   border: 1px solid var(--color-border);
   border-radius: 2px;
   overflow: hidden;
 }
+@media (min-width: 480px) {
+  .genre-toggle { display: inline-flex; }
+}
 .genre-pill {
+  flex: 1;
   font-family: var(--font-display);
   font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  text-align: center;
   padding: 0.3125rem 1rem;
   background: none;
   border: none;
@@ -20,6 +25,9 @@
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
   -webkit-tap-highlight-color: transparent;
+}
+@media (min-width: 480px) {
+  .genre-pill { flex: none; }
 }
 .genre-pill + .genre-pill {
   border-left: 1px solid var(--color-border);
@@ -31,6 +39,26 @@
 .genre-pill[aria-selected="true"] {
   color: var(--color-bg);
   background: var(--color-ink);
+}
+
+/* ── Listen button + status row ── */
+.listen-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 2.5rem;
+}
+.listen-btn {
+  width: 10rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+.listen-status {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #tune-log { overflow-x: clip; overflow-y: visible; }
