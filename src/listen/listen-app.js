@@ -137,7 +137,7 @@ async function copyToClipboard(text) {
 
 // ── Render ──
 function actionRowHTML(idx) {
-  const showBreak = !adjacentToDivider(idx);
+  const showBreak = genre !== 'oldtime' && !adjacentToDivider(idx);
   return `<div class="action-row" data-insert="${idx}">
     ${showBreak ? `<button class="act-btn do-set-break" data-insert="${idx}">set break</button>` : ''}
     <button class="act-btn do-add-tune" data-insert="${idx}">+ tune</button>
