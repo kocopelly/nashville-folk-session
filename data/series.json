@@ -35,6 +35,24 @@
     ],
     "listed": true
   },
+  "uncle-lennys-irish": {
+    "id": "uncle-lennys-irish",
+    "name": "Irish Trad Session at Uncle Lenny's",
+    "tradition": "irish",
+    "venue": "Uncle Lenny's Country Café",
+    "location": "Fairview, TN",
+    "schedule": "3rd Saturdays, 5:00pm",
+    "organizer": "Grace Broadhead",
+    "description": "Irish traditional music session at Uncle Lenny's Country Café in Fairview. 3rd Saturdays starting at 5pm.",
+    "links": [
+      {
+        "label": "Google Maps",
+        "url": "https://www.google.com/maps/search/Uncle+Lenny's+Country+Cafe+1710+Fairview+Blvd+Fairview+TN+37062",
+        "type": "other"
+      }
+    ],
+    "listed": true
+  },
   "browns-diner-oldtime": {
     "id": "browns-diner-oldtime",
     "name": "Open Irish Session at Browns Diner",
