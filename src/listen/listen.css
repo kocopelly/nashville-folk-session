@@ -46,12 +46,14 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  min-height: 2.5rem;
+  height: 2.75rem;
 }
 .listen-btn {
   width: 10rem;
+  height: 2.375rem;
   flex-shrink: 0;
   text-align: center;
+  box-sizing: border-box;
 }
 .listen-status {
   flex: 1;
