@@ -1,4 +1,5 @@
 /* ─── Listen page styles ──────────────────────────────── */
+@layer components {
 
 /* ── Listen panel — layout handled by Tailwind utilities on element ── */
 
@@ -142,3 +143,4 @@
 }
 .export-tab:hover { color: var(--color-ink); }
 .export-tab.active { color: var(--color-ink); border-bottom-color: var(--color-ink); font-weight: 600; }
+}

@@ -13,6 +13,8 @@
   --font-display: "Playfair Display", "Georgia", "Times New Roman", serif;
 }
 
+@layer components {
+
 /* ─── Tradition Badge Colors ────────────────────────────── */
 .badge-irish { background: #d8e0d0; color: #2a3a2a; }
 .badge-bluegrass { background: #f5ecd0; color: #6a5020; }
@@ -377,4 +379,5 @@ th[aria-sort="descending"]::after { content: " ↓"; }
   max-height: 16rem;
   overflow-y: auto;
   white-space: pre-wrap;
+}
 }
