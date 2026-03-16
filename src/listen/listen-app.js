@@ -496,14 +496,14 @@ btnDownload.addEventListener('click', () => {
 const genreToggle = $('genre-toggle');
 function updateGenrePills() {
   if (!genreToggle) return;
-  genreToggle.querySelectorAll('.genre-pill').forEach(pill => {
+  genreToggle.querySelectorAll('.pill-toggle-btn').forEach(pill => {
     pill.setAttribute('aria-selected', pill.dataset.genre === genre ? 'true' : 'false');
   });
 }
 if (genreToggle) {
   updateGenrePills();
   genreToggle.addEventListener('click', (e) => {
-    const pill = e.target.closest('.genre-pill');
+    const pill = e.target.closest('.pill-toggle-btn');
     if (!pill || pill.dataset.genre === genre) return;
     const wasListening = listening;
     if (wasListening) stopListening();

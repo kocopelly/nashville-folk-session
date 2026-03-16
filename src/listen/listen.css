@@ -1,81 +1,25 @@
 /* ─── Listen page styles ──────────────────────────────── */
 
-/* ── Genre toggle (pill tabs) ── */
-.genre-toggle {
-  display: flex;
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
-  overflow: hidden;
-  height: 2.125rem;
-}
+/* ── Genre toggle — extends .pill-toggle from design system ── */
 @media (min-width: 480px) {
   .genre-toggle { display: inline-flex; }
-}
-.genre-pill {
-  flex: 1;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-align: center;
-  padding: 0 1rem;
-  background: none;
-  border: none;
-  color: var(--color-muted);
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-  -webkit-tap-highlight-color: transparent;
-}
-@media (min-width: 480px) {
-  .genre-pill { flex: none; }
-}
-.genre-pill + .genre-pill {
-  border-left: 1px solid var(--color-border);
-}
-.genre-pill:hover {
-  color: var(--color-ink);
-  background: var(--color-hover);
-}
-.genre-pill[aria-selected="true"] {
-  color: var(--color-bg);
-  background: var(--color-ink);
+  .genre-toggle .pill-toggle-btn { flex: none; }
 }
 
-/* ── Listen button (contains status) ── */
+/* ── Listen button — extends .btn-primary.btn-sm ── */
 .listen-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  min-height: 2.75rem;
-  box-sizing: border-box;
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
-  background: none;
-  color: var(--color-ink);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 0.375rem 1rem;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
-  -webkit-tap-highlight-color: transparent;
-  overflow: hidden;
+  justify-content: center;
   gap: 0.625rem;
+  overflow: hidden;
 }
 @media (min-width: 480px) {
-  .listen-btn { display: inline-flex; width: auto; min-width: 14rem; }
+  .listen-btn { width: auto; min-width: 14rem; }
 }
-.listen-btn:hover {
-  border-color: var(--color-ink);
-  background: var(--color-hover);
-}
-.listen-btn:active { transform: scale(0.98); }
 .listen-btn[data-listening="true"] {
-  border-color: var(--color-ink);
   background: var(--color-ink);
   color: var(--color-bg);
+  border-color: var(--color-ink);
 }
 .listen-btn-label {
   flex-shrink: 0;
