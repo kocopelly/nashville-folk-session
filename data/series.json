@@ -64,5 +64,33 @@
     "description": "Open Irish traditional music session at Brown's Diner in Nashville. 3rd Sundays, noon to 2pm.",
     "links": [],
     "listed": true
+  },
+  "clarksville-irish": {
+    "id": "clarksville-irish",
+    "name": "Traditional Irish Music Session with Patrick D'Arcy & Friends",
+    "tradition": "irish",
+    "venue": "The Star Spangled Brewing Co. Taproom 2",
+    "location": "Clarksville, TN",
+    "schedule": "4th Sundays, 3:00pm \u2013 6:00pm",
+    "organizer": "Patrick D'Arcy",
+    "description": "An open Irish traditional session with Patrick D'Arcy from Dublin, Ireland on uilleann pipes & friends!",
+    "links": [
+      {
+        "label": "Patrick D'Arcy Music",
+        "url": "https://www.patrickdarcymusic.com",
+        "type": "other"
+      },
+      {
+        "label": "Google Maps",
+        "url": "https://www.google.com/maps/search/Star+Spangled+Brewing+Co+1030+Progress+Dr+Ste+E+Clarksville+TN+37040",
+        "type": "other"
+      },
+      {
+        "label": "Facebook Event",
+        "url": "https://www.facebook.com/share/1CPqsrWMWV/",
+        "type": "other"
+      }
+    ],
+    "listed": true
   }
 }
