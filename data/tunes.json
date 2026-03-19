@@ -421,7 +421,10 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "A",
+            "G"
+        ],
         "external": {
             "thesession": 74
         },
@@ -908,7 +911,9 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "D"
+        ],
         "external": {
             "thesession": 234
         },
@@ -1014,7 +1019,10 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "Edor",
+            "G"
+        ],
         "external": {
             "thesession": 322
         },
@@ -1145,7 +1153,10 @@
         "type": "jig",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "G",
+            "D"
+        ],
         "external": {
             "thesession": 382
         },
@@ -1157,7 +1168,10 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "Ador",
+            "Edor"
+        ],
         "external": {
             "thesession": 399
         },
@@ -1290,7 +1304,12 @@
         "type": "jig",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "D",
+            "C",
+            "G",
+            "A"
+        ],
         "external": {
             "thesession": 448
         },
@@ -1304,7 +1323,9 @@
         "aliases": [
             "Martin Wynne's #4"
         ],
-        "commonKeys": [],
+        "commonKeys": [
+            "G"
+        ],
         "external": {
             "thesession": 450
         },
@@ -1390,7 +1411,7 @@
     },
     "gr-innes-359eq": {
         "id": "gr-innes-359eq",
-        "name": "Gr\u00e1inne's",
+        "name": "Gráinne's",
         "type": "jig",
         "tradition": "irish",
         "aliases": [
@@ -1411,7 +1432,12 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "G",
+            "F",
+            "Dmix",
+            "D"
+        ],
         "external": {
             "thesession": 535
         },
@@ -2189,7 +2215,11 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "G",
+            "F",
+            "Dm"
+        ],
         "external": {
             "thesession": 1091
         },
@@ -2215,7 +2245,12 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "G",
+            "F",
+            "Dmix",
+            "D"
+        ],
         "external": {
             "thesession": 1142
         },
@@ -2332,7 +2367,9 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "G"
+        ],
         "external": {
             "thesession": 1385
         },
@@ -2359,7 +2396,7 @@
         "type": "slide",
         "tradition": "irish",
         "aliases": [
-            "An R\u00e9alt Os Cionn An Ghairt\u00e9ir"
+            "An Réalt Os Cionn An Ghairtéir"
         ],
         "commonKeys": [
             "G"
@@ -2391,7 +2428,9 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "D"
+        ],
         "external": {
             "thesession": 1453
         },
@@ -2478,7 +2517,9 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "D"
+        ],
         "external": {
             "thesession": 1723
         },
@@ -2504,7 +2545,9 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "G"
+        ],
         "external": {
             "thesession": 1846
         },
@@ -2532,7 +2575,9 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "D"
+        ],
         "external": {
             "thesession": 1949
         },
@@ -2591,7 +2636,10 @@
         "type": "jig",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "G",
+            "F"
+        ],
         "external": {
             "thesession": 2259
         },
@@ -2634,7 +2682,12 @@
         "type": "slip jig",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "A",
+            "Em",
+            "Bm",
+            "Am"
+        ],
         "external": {
             "thesession": 2410
         },
@@ -2689,7 +2742,13 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "Ador",
+            "Edor",
+            "Ddor",
+            "G",
+            "Dmix"
+        ],
         "external": {
             "thesession": 2706
         },
@@ -2746,7 +2805,9 @@
         "type": "jig",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "Ador"
+        ],
         "external": {
             "thesession": 3354
         },
@@ -2772,7 +2833,9 @@
         "type": "jig",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "D"
+        ],
         "external": {
             "thesession": 3942
         },
@@ -2826,7 +2889,7 @@
     },
     "ril-an-spideil-bmn0e": {
         "id": "ril-an-spideil-bmn0e",
-        "name": "R\u00edl An Spid\u00e9il",
+        "name": "Ríl An Spidéil",
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
@@ -2872,7 +2935,10 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "D",
+            "C"
+        ],
         "external": {
             "thesession": 9818
         },
@@ -2929,7 +2995,9 @@
         "type": "reel",
         "tradition": "irish",
         "aliases": [],
-        "commonKeys": [],
+        "commonKeys": [
+            "G"
+        ],
         "external": {
             "thesession": 18863
         },
