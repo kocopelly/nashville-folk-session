@@ -182,7 +182,7 @@
                         "type": "sheet-music"
                     }
                 ],
-                "notes": "Mixed jig/slip jig set — Paddy O'Rafferty is a jig, then two slip jigs"
+                "notes": "Mixed jig/slip jig set \u2014 Paddy O'Rafferty is a jig, then two slip jigs"
             },
             {
                 "label": "polkas",
@@ -1503,7 +1503,7 @@
         "date": "2026-03-14",
         "venue": "Boston Commons Pub",
         "location": "Nashville, TN",
-        "notes": "Special Saturday session for the Irish Network Nashville East Nashville Paddy's Day Parade, 2–4pm",
+        "notes": "Special Saturday session for the Irish Network Nashville East Nashville Paddy's Day Parade, 2\u20134pm",
         "sets": [
             {
                 "label": "reels",
@@ -1930,5 +1930,248 @@
         ],
         "notes": "",
         "links": []
+    },
+    {
+        "id": "sess_2026-03-18",
+        "seriesId": "quinns-irish",
+        "date": "2026-03-18",
+        "sets": [
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-lark-in-the-morning-qe75o",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/62#setting21312"
+                    },
+                    {
+                        "tuneId": "jimmy-wards-wfwwc",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/793#setting27354"
+                    },
+                    {
+                        "tuneId": "the-cliffs-of-moher-h2kgs",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/12#setting32781"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "paddys-return-xsb50",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/948#setting50153"
+                    },
+                    {
+                        "tuneId": "willie-colemans-3hs3c",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/476#setting50468"
+                    },
+                    {
+                        "tuneId": "up-in-the-air-hq3xs",
+                        "key": "Bm",
+                        "url": "https://thesession.org/tunes/894#setting894"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "father-oflynn-2g0u6",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/1080#setting51983"
+                    },
+                    {
+                        "tuneId": "scatter-the-mud-315h9",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/728#setting13801"
+                    },
+                    {
+                        "tuneId": "the-lilting-banshee-q4lod",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/60#setting47101"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "sweeneys-buttermilk-pavks",
+                        "key": "Bm",
+                        "url": "https://thesession.org/tunes/556#setting56335"
+                    },
+                    {
+                        "tuneId": "jennys-chickens-ha8qk",
+                        "key": "Bm",
+                        "url": "https://thesession.org/tunes/756#setting13868"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "i-buried-my-wife-and-danced-on-top-of-her-qxegl",
+                        "key": "Dmix",
+                        "url": "https://thesession.org/tunes/381#setting381"
+                    },
+                    {
+                        "tuneId": "garrett-barrys-301pg",
+                        "key": "Dmix",
+                        "url": "https://thesession.org/tunes/544#setting13504"
+                    },
+                    {
+                        "tuneId": "the-old-favourite-cr79b",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/56#setting50384"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-rollicking-boys-of-tandragee-cxuh7",
+                        "key": "Dmix",
+                        "url": "https://thesession.org/tunes/1392#setting49090"
+                    },
+                    {
+                        "tuneId": "the-chapel-bell-woklg",
+                        "key": "Edor",
+                        "url": "https://thesession.org/tunes/5405#setting22114"
+                    },
+                    {
+                        "tuneId": "the-coming-of-spring-puada",
+                        "key": "Edor",
+                        "url": "https://thesession.org/tunes/2403#setting50376"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "sporting-paddy-k9hiw",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/430#setting45732"
+                    },
+                    {
+                        "tuneId": "the-crooked-road-to-dublin-8imiz",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/227#setting12914"
+                    },
+                    {
+                        "tuneId": "the-old-bush-p5ivj",
+                        "key": "Dmix",
+                        "url": "https://thesession.org/tunes/1499#setting26150"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "dowds-no-9-nukfg",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/761#setting54534"
+                    },
+                    {
+                        "tuneId": "the-green-mountain-q8p7v",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/166#setting12799"
+                    },
+                    {
+                        "tuneId": "swinging-on-the-gate-t75ue",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/236#setting12938"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-flood-on-the-holm-yvymp",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/15043#setting56818"
+                    },
+                    {
+                        "tuneId": "the-heather-breeze-xa81a",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/411#setting411"
+                    },
+                    {
+                        "tuneId": "the-reel-of-rio-ts1cl",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/575#setting575"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-blarney-pilgrim-r056k",
+                        "key": "Dmix",
+                        "url": "https://thesession.org/tunes/5#setting25996"
+                    },
+                    {
+                        "tuneId": "the-jig-of-slurs-a4olp",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/35#setting51722"
+                    },
+                    {
+                        "tuneId": "the-athol-highlanders-8boy3",
+                        "key": "A",
+                        "url": "https://thesession.org/tunes/107#setting55314"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-fishermans-island-o0fwe",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/181#setting32196"
+                    },
+                    {
+                        "tuneId": "christmas-eve-ujhub",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/440#setting13303"
+                    },
+                    {
+                        "tuneId": "lucy-campbell-91e90",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/1552#setting44358"
+                    },
+                    {
+                        "tuneId": "father-kellys-7vb13",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/791#setting13934"
+                    },
+                    {
+                        "tuneId": "the-mountain-road-zaitf",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/68#setting12522"
+                    }
+                ],
+                "links": []
+            }
+        ]
     }
 ]
