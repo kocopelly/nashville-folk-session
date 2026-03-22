@@ -182,7 +182,7 @@
                         "type": "sheet-music"
                     }
                 ],
-                "notes": "Mixed jig/slip jig set \u2014 Paddy O'Rafferty is a jig, then two slip jigs"
+                "notes": "Mixed jig/slip jig set — Paddy O'Rafferty is a jig, then two slip jigs"
             },
             {
                 "label": "polkas",
@@ -1503,7 +1503,7 @@
         "date": "2026-03-14",
         "venue": "Boston Commons Pub",
         "location": "Nashville, TN",
-        "notes": "Special Saturday session for the Irish Network Nashville East Nashville Paddy's Day Parade, 2\u20134pm",
+        "notes": "Special Saturday session for the Irish Network Nashville East Nashville Paddy's Day Parade, 2–4pm",
         "sets": [
             {
                 "label": "reels",
@@ -2168,6 +2168,356 @@
                         "tuneId": "the-mountain-road-zaitf",
                         "key": "D",
                         "url": "https://thesession.org/tunes/68#setting12522"
+                    }
+                ],
+                "links": []
+            }
+        ]
+    },
+    {
+        "id": "sess_2026-03-21",
+        "seriesId": "uncle-lennys-irish",
+        "date": "2026-03-21",
+        "sets": [
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "jackie-colemans-3e4qx",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/50#setting50"
+                    },
+                    {
+                        "tuneId": "the-bag-of-spuds-b54tb",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/579#setting45214"
+                    },
+                    {
+                        "tuneId": "the-earls-chair-abctq",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/221#setting53936"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-green-fields-of-woodford-tx9by",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/4070#setting16874"
+                    },
+                    {
+                        "tuneId": "the-castle-qbfbf",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/273#setting13016"
+                    },
+                    {
+                        "tuneId": "the-nightingale-k5c9a",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/1868#setting46077"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "sweeneys-buttermilk-pavks",
+                        "key": "Bm",
+                        "url": "https://thesession.org/tunes/556#setting13520"
+                    },
+                    {
+                        "tuneId": "the-glen-of-aherlow-zhcba",
+                        "key": "Edor",
+                        "url": "https://thesession.org/tunes/496#setting37545"
+                    },
+                    {
+                        "tuneId": "matt-peoples-lpmtj",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/691#setting13749"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "imelda-rolands-xvovd",
+                        "key": "Edor",
+                        "url": "https://thesession.org/tunes/2735#setting2735"
+                    },
+                    {
+                        "tuneId": "greigs-pipes-kt7od",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/605#setting50955"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "waltzes",
+                "tunes": [
+                    {
+                        "tuneId": "fanny-power-qccvw",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/957#setting23670"
+                    },
+                    {
+                        "tuneId": "planxty-irwin-0lkma",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/790#setting55008"
+                    },
+                    {
+                        "tuneId": "christmas-eve-ujhub",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/440#setting33829"
+                    },
+                    {
+                        "tuneId": "the-musical-priest-5v058",
+                        "key": "Bm",
+                        "url": "https://thesession.org/tunes/73#setting73"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "paddys-return-xsb50",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/948#setting948"
+                    },
+                    {
+                        "tuneId": "willie-colemans-3hs3c",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/476#setting23887"
+                    },
+                    {
+                        "tuneId": "up-in-the-air-hq3xs",
+                        "key": "Bm",
+                        "url": "https://thesession.org/tunes/894#setting894"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "john-mcgraths-9ppzz",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/3924#setting36093"
+                    },
+                    {
+                        "tuneId": "palmers-gate-6f23l",
+                        "key": "Em",
+                        "url": "https://thesession.org/tunes/1020#setting44657"
+                    },
+                    {
+                        "tuneId": "the-skylark-8q2s4",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/632#setting52669"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "jennys-welcome-to-charlie-7z35f",
+                        "key": "Ddor",
+                        "url": "https://thesession.org/tunes/370#setting13180"
+                    },
+                    {
+                        "tuneId": "the-fishermans-island-o0fwe",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/181#setting32196"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-heather-breeze-xa81a",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/411#setting411"
+                    },
+                    {
+                        "tuneId": "devannys-goat-l3fv6",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/2881#setting41988"
+                    },
+                    {
+                        "tuneId": "paddy-faheys-7yh5b",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/150#setting35695"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "hornpipes",
+                "tunes": [
+                    {
+                        "tuneId": "the-greencastle-90cbk",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/4353#setting34954"
+                    },
+                    {
+                        "tuneId": "the-silver-spear-h02hz",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/182#setting50254"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "king-of-the-clans-6ieug",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/1174#setting14440"
+                    },
+                    {
+                        "tuneId": "dan-breens-as7zz",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/999#setting14208"
+                    },
+                    {
+                        "tuneId": "the-steeplechase-sivk3",
+                        "key": "C",
+                        "url": "https://thesession.org/tunes/2281#setting2281"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "jewels-of-the-ocean-52mj2",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/4449#setting4449"
+                    },
+                    {
+                        "tuneId": "the-sheep-in-the-boat-fxd0k",
+                        "key": "Edor",
+                        "url": "https://thesession.org/tunes/2576#setting2576"
+                    },
+                    {
+                        "tuneId": "i-neer-shall-wean-her-axxci",
+                        "key": "Ador",
+                        "url": "https://thesession.org/tunes/803#setting25889"
+                    },
+                    {
+                        "tuneId": "the-trip-to-clarina-uu6rp",
+                        "key": "Edor",
+                        "url": "https://thesession.org/tunes/13950#setting25165"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "castletown-connors-nwsko",
+                        "key": "Edor",
+                        "url": "https://thesession.org/tunes/1433#setting1433"
+                    },
+                    {
+                        "tuneId": "the-coming-of-spring-puada",
+                        "key": "Edor",
+                        "url": "https://thesession.org/tunes/2403#setting33905"
+                    },
+                    {
+                        "tuneId": "jimmy-wards-wfwwc",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/793#setting17241"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "tommy-peoples-qplw2",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/1100#setting1100"
+                    },
+                    {
+                        "tuneId": "the-long-drop-at38u",
+                        "key": "G",
+                        "url": "https://thesession.org/tunes/1147#setting1147"
+                    },
+                    {
+                        "tuneId": "the-galtee-rangers-mhonz",
+                        "key": "D",
+                        "url": "https://thesession.org/tunes/724#setting724"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-rainy-day-oml0h",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "the-star-of-munster-cngrn",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "the-abbey-ijklg",
+                        "key": "Ador"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "dinny-obriens-soepx",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "dinkeys-4tb80",
+                        "key": "Amix"
+                    },
+                    {
+                        "tuneId": "master-crowleys-6anyr",
+                        "key": "Edor"
+                    }
+                ],
+                "links": []
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-killarney-boys-of-pleasure-xq029",
+                        "key": "Em"
+                    },
+                    {
+                        "tuneId": "ormond-sound-39etn",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "the-bucks-of-oranmore-13h50",
+                        "key": "D"
                     }
                 ],
                 "links": []
