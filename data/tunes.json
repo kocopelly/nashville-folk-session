@@ -3191,21 +3191,6 @@
       "thesession": 477
     }
   },
-  "paddy-faheys-no-2-sgilg": {
-    "id": "paddy-faheys-no-2-sgilg",
-    "name": "Paddy Fahey's No. 2",
-    "type": "reel",
-    "tradition": "irish",
-    "aliases": [],
-    "commonKeys": [
-      "F",
-      "Ador"
-    ],
-    "url": "https://thesession.org/tunes/4074",
-    "external": {
-      "thesession": 4074
-    }
-  },
   "dinkeys-4tb80": {
     "id": "dinkeys-4tb80",
     "name": "Dinkey's",
@@ -3248,6 +3233,23 @@
     "url": "https://thesession.org/tunes/733",
     "external": {
       "thesession": 733
+    }
+  },
+  "paddy-faheys-no-2-71h5v": {
+    "id": "paddy-faheys-no-2-71h5v",
+    "name": "Paddy Fahey's No. 2",
+    "type": "reel",
+    "tradition": "irish",
+    "aliases": [
+      "The Ould House"
+    ],
+    "commonKeys": [
+      "G",
+      "D"
+    ],
+    "url": "https://thesession.org/tunes/492",
+    "external": {
+      "thesession": 492
     }
   }
 }
