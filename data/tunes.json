@@ -3319,5 +3319,215 @@
         "external": {
             "thesession": 492
         }
+    },
+    "sporting-pitchfork-the-7p2ba": {
+        "id": "sporting-pitchfork-the-7p2ba",
+        "name": "Sporting Pitchfork, the",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/1761",
+        "external": {
+            "thesession": 1761
+        }
+    },
+    "calliope-house-eg0km": {
+        "id": "calliope-house-eg0km",
+        "name": "Calliope House",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/15",
+        "external": {
+            "thesession": 15
+        }
+    },
+    "monaghan-twig-the-ssrwd": {
+        "id": "monaghan-twig-the-ssrwd",
+        "name": "Monaghan Twig, the",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Amix"
+        ],
+        "url": "https://thesession.org/tunes/1070",
+        "external": {
+            "thesession": 1070
+        }
+    },
+    "merrily-kiss-the-quaker-71aft": {
+        "id": "merrily-kiss-the-quaker-71aft",
+        "name": "Merrily Kiss the Quaker",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/70",
+        "external": {
+            "thesession": 70
+        }
+    },
+    "woodcock-the-u5aua": {
+        "id": "woodcock-the-u5aua",
+        "name": "Woodcock, the",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/580",
+        "external": {
+            "thesession": 580
+        }
+    },
+    "kerfunten-the-jfz77": {
+        "id": "kerfunten-the-jfz77",
+        "name": "Kerfunten, the",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/139",
+        "external": {
+            "thesession": 139
+        }
+    },
+    "pipe-on-the-hob-the-737uc": {
+        "id": "pipe-on-the-hob-the-737uc",
+        "name": "Pipe on the Hob, the",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/1049",
+        "external": {
+            "thesession": 1049
+        }
+    },
+    "scully-caseys-h5qqx": {
+        "id": "scully-caseys-h5qqx",
+        "name": "Scully Casey's",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/1790",
+        "external": {
+            "thesession": 1790
+        }
+    },
+    "pigeon-on-the-gate-the-f6fqq": {
+        "id": "pigeon-on-the-gate-the-f6fqq",
+        "name": "Pigeon on the Gate, the",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/4312",
+        "external": {
+            "thesession": 4312
+        }
+    },
+    "beare-island-xljza": {
+        "id": "beare-island-xljza",
+        "name": "Beare Island",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/696",
+        "external": {
+            "thesession": 696
+        }
+    },
+    "bank-of-ireland-the-mceyg": {
+        "id": "bank-of-ireland-the-mceyg",
+        "name": "Bank of Ireland, the",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/320",
+        "external": {
+            "thesession": 320
+        }
+    },
+    "four-courts-the-wbqzi": {
+        "id": "four-courts-the-wbqzi",
+        "name": "Four Courts, the",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/2278",
+        "external": {
+            "thesession": 2278
+        }
+    },
+    "old-torn-petticoat-the-8qvq9": {
+        "id": "old-torn-petticoat-the-8qvq9",
+        "name": "Old Torn Petticoat, the",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/368",
+        "external": {
+            "thesession": 368
+        }
+    },
+    "foxhunters-the-byeei": {
+        "id": "foxhunters-the-byeei",
+        "name": "Foxhunters, the",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "A"
+        ],
+        "url": "https://thesession.org/tunes/511",
+        "external": {
+            "thesession": 511
+        }
+    },
+    "miss-mcleods-onqld": {
+        "id": "miss-mcleods-onqld",
+        "name": "Miss Mcleod's",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/75",
+        "external": {
+            "thesession": 75
+        }
     }
 }
