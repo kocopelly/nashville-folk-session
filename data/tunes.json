@@ -3529,5 +3529,187 @@
         "external": {
             "thesession": 75
         }
+    },
+    "snowy-path-the-q4sgr": {
+        "id": "snowy-path-the-q4sgr",
+        "name": "The Snowy Path",
+        "type": "slip jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/104",
+        "external": {
+            "thesession": 104
+        }
+    },
+    "paddy-whacks-svfw6": {
+        "id": "paddy-whacks-svfw6",
+        "name": "Paddy Whack's",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/10186",
+        "external": {
+            "thesession": 10186
+        }
+    },
+    "brides-favourite-the-9zt7g": {
+        "id": "brides-favourite-the-9zt7g",
+        "name": "The Bride's Favourite",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/3746",
+        "external": {
+            "thesession": 3746
+        }
+    },
+    "within-a-mile-of-dublin-tk3ua": {
+        "id": "within-a-mile-of-dublin-tk3ua",
+        "name": "Within a Mile of Dublin",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/125",
+        "external": {
+            "thesession": 125
+        }
+    },
+    "bluemont-the-w2aia": {
+        "id": "bluemont-the-w2aia",
+        "name": "The Bluemont",
+        "type": "waltz",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Amix"
+        ],
+        "url": "https://thesession.org/tunes/14664",
+        "external": {
+            "thesession": 14664
+        }
+    },
+    "sonny-brogans-45d2f": {
+        "id": "sonny-brogans-45d2f",
+        "name": "Sonny Brogan's",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/1185",
+        "external": {
+            "thesession": 1185
+        }
+    },
+    "cordal-the-otmqc": {
+        "id": "cordal-the-otmqc",
+        "name": "The Cordal",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/864",
+        "external": {
+            "thesession": 864
+        }
+    },
+    "health-to-the-ladies-1p6lm": {
+        "id": "health-to-the-ladies-1p6lm",
+        "name": "Health to the Ladies",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/327",
+        "external": {
+            "thesession": 327
+        }
+    },
+    "galtee-the-hcvqs": {
+        "id": "galtee-the-hcvqs",
+        "name": "The Galtee",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/1059",
+        "external": {
+            "thesession": 1059
+        }
+    },
+    "molly-put-the-kettle-on-h6ghn": {
+        "id": "molly-put-the-kettle-on-h6ghn",
+        "name": "Molly Put the Kettle on",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/749",
+        "external": {
+            "thesession": 749
+        }
+    },
+    "dont-touch-that-green-linnet-18ui6": {
+        "id": "dont-touch-that-green-linnet-18ui6",
+        "name": "Don't Touch That Green Linnet",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/2309",
+        "external": {
+            "thesession": 2309
+        }
+    },
+    "bank-of-turf-the-at3am": {
+        "id": "bank-of-turf-the-at3am",
+        "name": "The Bank of Turf",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/1819",
+        "external": {
+            "thesession": 1819
+        }
+    },
+    "miss-monaghan-pmgb8": {
+        "id": "miss-monaghan-pmgb8",
+        "name": "Miss Monaghan",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/471",
+        "external": {
+            "thesession": 471
+        }
     }
 }
