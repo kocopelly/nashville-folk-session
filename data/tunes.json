@@ -3711,5 +3711,148 @@
         "external": {
             "thesession": 471
         }
+    },
+    "the-haunted-house-5834f": {
+        "id": "the-haunted-house-5834f",
+        "name": "The Haunted House",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/1098",
+        "external": {
+            "thesession": 1098
+        }
+    },
+    "the-humours-of-glendart-5003f": {
+        "id": "the-humours-of-glendart-5003f",
+        "name": "The Humours Of Glendart",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/45",
+        "external": {
+            "thesession": 45
+        }
+    },
+    "saddle-the-pony-2db20": {
+        "id": "saddle-the-pony-2db20",
+        "name": "Saddle The Pony",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G",
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/307",
+        "external": {
+            "thesession": 307
+        }
+    },
+    "lady-anne-montgomery-3636b": {
+        "id": "lady-anne-montgomery-3636b",
+        "name": "Lady Anne Montgomery",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/59",
+        "external": {
+            "thesession": 59
+        }
+    },
+    "gort-na-mona-709a1": {
+        "id": "gort-na-mona-709a1",
+        "name": "Gort Na Mona",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/2087",
+        "external": {
+            "thesession": 2087
+        }
+    },
+    "the-golden-keyboard-7a76d": {
+        "id": "the-golden-keyboard-7a76d",
+        "name": "The Golden Keyboard",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/36",
+        "external": {
+            "thesession": 36
+        }
+    },
+    "macleods-farewell-57a55": {
+        "id": "macleods-farewell-57a55",
+        "name": "Macleod's Farewell",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/518",
+        "external": {
+            "thesession": 518
+        }
+    },
+    "farewell-to-connaught-33440": {
+        "id": "farewell-to-connaught-33440",
+        "name": "Farewell To Connaught",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix",
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/981",
+        "external": {
+            "thesession": 981
+        }
+    },
+    "the-little-diamond-f113b": {
+        "id": "the-little-diamond-f113b",
+        "name": "The Little Diamond",
+        "type": "polka",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/604",
+        "external": {
+            "thesession": 604
+        }
+    },
+    "ievan-polkka-ad51f": {
+        "id": "ievan-polkka-ad51f",
+        "name": "Ievan Polkka",
+        "type": "polka",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Bm",
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/418",
+        "external": {
+            "thesession": 418
+        }
     }
 }
