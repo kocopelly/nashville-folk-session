@@ -3854,5 +3854,79 @@
         "external": {
             "thesession": 418
         }
+    },
+    "the-glen-road-to-carrick-0b489": {
+        "id": "the-glen-road-to-carrick-0b489",
+        "name": "The Glen Road To Carrick",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/2285",
+        "external": {
+            "thesession": 2285
+        }
+    },
+    "the-wild-irishman-48d5c": {
+        "id": "the-wild-irishman-48d5c",
+        "name": "The Wild Irishman",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/1027",
+        "external": {
+            "thesession": 1027
+        }
+    },
+    "the-britches-0f9f0": {
+        "id": "the-britches-0f9f0",
+        "name": "The Britches",
+        "type": "polka",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G",
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/277",
+        "external": {
+            "thesession": 277
+        }
+    },
+    "the-butterfly-4fc3e": {
+        "id": "the-butterfly-4fc3e",
+        "name": "The Butterfly",
+        "type": "slip jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Em"
+        ],
+        "url": "https://thesession.org/tunes/10",
+        "external": {
+            "thesession": 10
+        }
+    },
+    "paddy-faheys-bac3d": {
+        "id": "paddy-faheys-bac3d",
+        "name": "Paddy Fahey's",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "Paddy Fahey's Jig #1",
+            "Fahey's Favourite"
+        ],
+        "commonKeys": [
+            "Gdor"
+        ],
+        "url": "https://thesession.org/tunes/532",
+        "external": {
+            "thesession": 532
+        }
     }
 }
