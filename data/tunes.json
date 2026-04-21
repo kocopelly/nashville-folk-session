@@ -3928,5 +3928,118 @@
         "external": {
             "thesession": 532
         }
+    },
+    "dick-gossips-6bff3": {
+        "id": "dick-gossips-6bff3",
+        "name": "Dick Gossip's",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Amix"
+        ],
+        "url": "https://thesession.org/tunes/408",
+        "external": {
+            "thesession": 408
+        }
+    },
+    "the-green-gates-73b17": {
+        "id": "the-green-gates-73b17",
+        "name": "The Green Gates",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/1722",
+        "external": {
+            "thesession": 1722
+        }
+    },
+    "the-golden-stud-e7b86": {
+        "id": "the-golden-stud-e7b86",
+        "name": "The Golden Stud",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Em"
+        ],
+        "url": "https://thesession.org/tunes/4740",
+        "external": {
+            "thesession": 4740
+        }
+    },
+    "banish-misfortune-6b849": {
+        "id": "banish-misfortune-6b849",
+        "name": "Banish Misfortune",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/9",
+        "external": {
+            "thesession": 9
+        }
+    },
+    "mayor-harrisons-fedora-06ec9": {
+        "id": "mayor-harrisons-fedora-06ec9",
+        "name": "Mayor Harrison's Fedora",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/367",
+        "external": {
+            "thesession": 367
+        }
+    },
+    "the-trip-to-sligo-48b3c": {
+        "id": "the-trip-to-sligo-48b3c",
+        "name": "The Trip To Sligo",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Em"
+        ],
+        "url": "https://thesession.org/tunes/397",
+        "external": {
+            "thesession": 397
+        }
+    },
+    "my-love-is-in-america-53558": {
+        "id": "my-love-is-in-america-53558",
+        "name": "My Love Is In America",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix",
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/77",
+        "external": {
+            "thesession": 77
+        }
+    },
+    "munster-buttermilk-58d14": {
+        "id": "munster-buttermilk-58d14",
+        "name": "Munster Buttermilk",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/752",
+        "external": {
+            "thesession": 752
+        }
     }
 }
