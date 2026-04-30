@@ -4028,20 +4028,6 @@
             "thesession": 77
         }
     },
-    "munster-buttermilk-58d14": {
-        "id": "munster-buttermilk-58d14",
-        "name": "Munster Buttermilk",
-        "type": "jig",
-        "tradition": "irish",
-        "aliases": [],
-        "commonKeys": [
-            "D"
-        ],
-        "url": "https://thesession.org/tunes/752",
-        "external": {
-            "thesession": 752
-        }
-    },
     "mcdonaghs-4623a": {
         "id": "mcdonaghs-4623a",
         "name": "McDonagh's",
@@ -4236,6 +4222,139 @@
         "url": "https://thesession.org/tunes/2708",
         "external": {
             "thesession": 2708
+        }
+    },
+    "the-galway-belle-8d2d0": {
+        "id": "the-galway-belle-8d2d0",
+        "name": "The Galway Belle",
+        "type": "polka",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Em"
+        ],
+        "url": "https://thesession.org/tunes/679",
+        "external": {
+            "thesession": 679
+        }
+    },
+    "the-maids-of-ardagh-8cff1": {
+        "id": "the-maids-of-ardagh-8cff1",
+        "name": "The Maids Of Ardagh",
+        "type": "polka",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/466",
+        "external": {
+            "thesession": 466
+        }
+    },
+    "the-rambler-82fbd": {
+        "id": "the-rambler-82fbd",
+        "name": "The Rambler",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "A"
+        ],
+        "url": "https://thesession.org/tunes/510",
+        "external": {
+            "thesession": 510
+        }
+    },
+    "the-kilmovee-cc916": {
+        "id": "the-kilmovee-cc916",
+        "name": "The Kilmovee",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/2973",
+        "external": {
+            "thesession": 2973
+        }
+    },
+    "goat-on-the-green-2cc32": {
+        "id": "goat-on-the-green-2cc32",
+        "name": "Goat On The Green",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Em"
+        ],
+        "url": "https://thesession.org/tunes/1395",
+        "external": {
+            "thesession": 1395
+        }
+    },
+    "paddys-resource-c6fcc": {
+        "id": "paddys-resource-c6fcc",
+        "name": "Paddy's Resource",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/1709",
+        "external": {
+            "thesession": 1709
+        }
+    },
+    "orourkes-067cb": {
+        "id": "orourkes-067cb",
+        "name": "O'Rourke's",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/4",
+        "external": {
+            "thesession": 4
+        }
+    },
+    "the-maid-at-the-well-4e1db": {
+        "id": "the-maid-at-the-well-4e1db",
+        "name": "The Maid At The Well",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "Munster Buttermilk",
+            "The Blackthorn Stick",
+            "Arthur McBride"
+        ],
+        "commonKeys": [
+            "A",
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/752",
+        "external": {
+            "thesession": 752
+        }
+    },
+    "munster-buttermilk-58d14": {
+        "id": "munster-buttermilk-58d14",
+        "name": "Munster Buttermilk",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "The Boats Of Killaloe"
+        ],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/1077",
+        "external": {
+            "thesession": 1077
         }
     }
 }
