@@ -4716,5 +4716,267 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "sess_2026-05-20",
+        "seriesId": "quinns-irish",
+        "date": "2026-05-20",
+        "sets": [
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-lark-in-the-morning-qe75o",
+                        "url": "https://thesession.org/tunes/62#setting55345",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "jimmy-wards-wfwwc",
+                        "url": "https://thesession.org/tunes/793#setting793",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-cliffs-of-moher-h2kgs",
+                        "url": "https://thesession.org/tunes/12#setting53260",
+                        "key": "Ador"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "over-the-moor-to-maggie-196nx",
+                        "url": "https://thesession.org/tunes/115#setting40338",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-flogging-42kt4",
+                        "url": "https://thesession.org/tunes/195#setting42507",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "sporting-pitchfork-the-7p2ba",
+                        "url": "https://thesession.org/tunes/1761#setting54140",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-rambling-pitchfork-4fl97",
+                        "url": "https://thesession.org/tunes/89#setting54758",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "tripping-up-the-stairs-ft5yt",
+                        "url": "https://thesession.org/tunes/111#setting44270",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "frahers-8ddn2",
+                        "url": "https://thesession.org/tunes/992#setting54999",
+                        "key": "Dmix"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-boy-in-the-boat-5zzy5",
+                        "url": "https://thesession.org/tunes/975#setting975",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-gooseberry-bush-64f18",
+                        "url": "https://thesession.org/tunes/2732#setting2732",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-bird-in-the-bush-772cp",
+                        "url": "https://thesession.org/tunes/629#setting41650",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "beare-island-xljza",
+                        "url": "https://thesession.org/tunes/696#setting36345",
+                        "key": "Edor"
+                    },
+                    {
+                        "tuneId": "master-crowleys-6anyr",
+                        "url": "https://thesession.org/tunes/281#setting281",
+                        "key": "Edor"
+                    },
+                    {
+                        "tuneId": "the-sally-gardens-2blbn",
+                        "url": "https://thesession.org/tunes/98#setting98",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "anthony-frawleys-ojrts",
+                        "url": "https://thesession.org/tunes/1198#setting30466",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-lilting-banshee-q4lod",
+                        "url": "https://thesession.org/tunes/60#setting12501",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "out-on-the-ocean-dvhpc",
+                        "url": "https://thesession.org/tunes/108#setting30907",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-high-drive-0c925",
+                        "url": "https://thesession.org/tunes/4428#setting22840",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-banshee-bl5ai",
+                        "url": "https://thesession.org/tunes/8#setting46467",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-musical-priest-5v058",
+                        "url": "https://thesession.org/tunes/73#setting73",
+                        "key": "Bm"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "macleods-farewell-57a55",
+                        "url": "https://thesession.org/tunes/518#setting32355",
+                        "key": "D"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-mooncoin-bsped",
+                        "url": "https://thesession.org/tunes/206#setting46690",
+                        "key": "Amix"
+                    },
+                    {
+                        "tuneId": "the-cook-in-the-kitchen-8481f",
+                        "url": "https://thesession.org/tunes/808#setting26015",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "dusty-windowsills-5f0a7",
+                        "url": "https://thesession.org/tunes/29#setting49897",
+                        "key": "Ador"
+                    }
+                ]
+            },
+            {
+                "label": "slip jigs",
+                "tunes": [
+                    {
+                        "tuneId": "ofarrells-9bxab",
+                        "url": "https://thesession.org/tunes/879#setting42742",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-foxhunter-4v3lp",
+                        "url": "https://thesession.org/tunes/482#setting13385",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "snowy-path-the-q4sgr",
+                        "url": "https://thesession.org/tunes/104#setting104",
+                        "key": "D"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-wandering-minstrel-9odkw",
+                        "url": "https://thesession.org/tunes/2025#setting25917",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "gr-innes-359eq",
+                        "url": "https://thesession.org/tunes/488#setting26034",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-gallowglass-c72f1",
+                        "url": "https://thesession.org/tunes/1369#setting55787",
+                        "key": "Ador"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "toss-the-feathers-8u427",
+                        "url": "https://thesession.org/tunes/138#setting32219",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "the-otters-holt-bf34e",
+                        "url": "https://thesession.org/tunes/636#setting46957",
+                        "key": "Bm"
+                    },
+                    {
+                        "tuneId": "the-high-hr0qb",
+                        "url": "https://thesession.org/tunes/44#setting48855",
+                        "key": "Amix"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-glen-road-to-carrick-0b489",
+                        "url": "https://thesession.org/tunes/2285#setting46044",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-wild-irishman-48d5c",
+                        "url": "https://thesession.org/tunes/1027#setting50257",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-old-bush-p5ivj",
+                        "url": "https://thesession.org/tunes/1499#setting57077",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "the-spike-island-lasses-9b0bl",
+                        "url": "https://thesession.org/tunes/737#setting51861",
+                        "key": "Dmix"
+                    }
+                ]
+            }
+        ]
     }
 ]
