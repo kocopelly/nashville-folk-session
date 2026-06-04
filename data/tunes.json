@@ -4356,5 +4356,47 @@
         "external": {
             "thesession": 1077
         }
+    },
+    "the-gooseberry-bush-64f18": {
+        "id": "the-gooseberry-bush-64f18",
+        "name": "The Gooseberry Bush",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/2732",
+        "external": {
+            "thesession": 2732
+        }
+    },
+    "dusty-windowsills-5f0a7": {
+        "id": "dusty-windowsills-5f0a7",
+        "name": "Dusty Windowsills",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/29",
+        "external": {
+            "thesession": 29
+        }
+    },
+    "the-otters-holt-bf34e": {
+        "id": "the-otters-holt-bf34e",
+        "name": "The Otter's Holt",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Bm"
+        ],
+        "url": "https://thesession.org/tunes/636",
+        "external": {
+            "thesession": 636
+        }
     }
 }
