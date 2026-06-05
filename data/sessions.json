@@ -5470,5 +5470,202 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "sess_2026-05-27",
+        "seriesId": "quinns-irish",
+        "date": "2026-05-27",
+        "sets": [
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-swallowtail-fx9sk",
+                        "url": "https://thesession.org/tunes/106#setting51851",
+                        "key": "Amix"
+                    },
+                    {
+                        "tuneId": "the-kesh-yh0tl",
+                        "url": "https://thesession.org/tunes/55#setting57036",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "morrisons-z9hr0",
+                        "url": "https://thesession.org/tunes/71#setting53407",
+                        "key": "Edor"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "dr-gilberts-td3dt",
+                        "url": "https://thesession.org/tunes/129#setting12736",
+                        "key": "Em"
+                    },
+                    {
+                        "tuneId": "the-gooseberry-bush-64f18",
+                        "url": "https://thesession.org/tunes/2732#setting52776",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "the-bird-in-the-bush-772cp",
+                        "url": "https://thesession.org/tunes/629#setting52019",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "dinny-obriens-soepx",
+                        "url": "https://thesession.org/tunes/1667#setting1667",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "the-man-of-aran-3zx6z",
+                        "url": "https://thesession.org/tunes/973#setting973",
+                        "key": "Bm"
+                    },
+                    {
+                        "tuneId": "mcdonaghs-4623a",
+                        "url": "https://thesession.org/tunes/1963#setting1963",
+                        "key": "Edor"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-roscommon-eauae",
+                        "url": "https://thesession.org/tunes/637#setting23478",
+                        "key": "Edor"
+                    },
+                    {
+                        "tuneId": "the-otters-holt-bf34e",
+                        "url": "https://thesession.org/tunes/636#setting46957",
+                        "key": "Bm"
+                    },
+                    {
+                        "tuneId": "lady-anne-montgomery-3636b",
+                        "url": "https://thesession.org/tunes/59#setting53451",
+                        "key": "D"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "sporting-pitchfork-the-7p2ba",
+                        "url": "https://thesession.org/tunes/1761#setting15207",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "bank-of-turf-the-at3am",
+                        "url": "https://thesession.org/tunes/1819#setting20606",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-hag-at-the-churn-td3dt",
+                        "url": "https://thesession.org/tunes/829#setting49853",
+                        "key": "Dmix"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-morning-star-3vigw",
+                        "url": "https://thesession.org/tunes/828#setting48914",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-golden-keyboard-7a76d",
+                        "url": "https://thesession.org/tunes/36#setting36",
+                        "key": "Edor"
+                    },
+                    {
+                        "tuneId": "come-west-along-the-road-nmgnh",
+                        "url": "https://thesession.org/tunes/474#setting474",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "dusty-windowsills-5f0a7",
+                        "url": "https://thesession.org/tunes/29#setting53483",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "the-blarney-pilgrim-r056k",
+                        "url": "https://thesession.org/tunes/5#setting5",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "the-lilting-banshee-q4lod",
+                        "url": "https://thesession.org/tunes/60#setting12501",
+                        "key": "Ador"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "tommy-peoples-qplw2",
+                        "url": "https://thesession.org/tunes/1100#setting45451",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-spike-island-lasses-9b0bl",
+                        "url": "https://thesession.org/tunes/737#setting43355",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-old-bush-p5ivj",
+                        "url": "https://thesession.org/tunes/1499#setting57077",
+                        "key": "Dmix"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-glen-road-to-carrick-0b489",
+                        "url": "https://thesession.org/tunes/2285#setting46044",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-wild-irishman-48d5c",
+                        "url": "https://thesession.org/tunes/1027#setting40793",
+                        "key": "D"
+                    }
+                ]
+            },
+            {
+                "label": "slip jigs",
+                "tunes": [
+                    {
+                        "tuneId": "moll-roe-4e562",
+                        "url": "https://thesession.org/tunes/527#setting7793",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "ofarrells-9bxab",
+                        "url": "https://thesession.org/tunes/879#setting55611",
+                        "key": "G"
+                    }
+                ]
+            }
+        ]
     }
 ]
