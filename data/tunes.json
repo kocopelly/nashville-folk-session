@@ -4650,5 +4650,19 @@
         "external": {
             "thesession": 651
         }
+    },
+    "moll-roe-4e562": {
+        "id": "moll-roe-4e562",
+        "name": "Moll Roe",
+        "type": "slip jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/527",
+        "external": {
+            "thesession": 527
+        }
     }
 }
