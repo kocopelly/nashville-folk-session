@@ -13,6 +13,8 @@
   --font-display: "Playfair Display", "Georgia", "Times New Roman", serif;
 }
 
+@layer components {
+
 /* ─── Tradition Badge Colors ────────────────────────────── */
 .badge-irish { background: #d8e0d0; color: #2a3a2a; }
 .badge-bluegrass { background: #f5ecd0; color: #6a5020; }
@@ -105,7 +107,51 @@ th[aria-sort="descending"]::after { content: " ↓"; }
   gap: 0.5rem;
 }
 .btn-primary:hover { background: var(--color-ink); color: var(--color-bg); }
-.btn-primary:active { transform: scale(0.95); }
+.btn-primary:active { transform: scale(0.98); }
+
+/* Primary button — compact variant (thinner border, smaller padding) */
+.btn-primary.btn-sm {
+  border-width: 1px;
+  padding: 0 1rem;
+  font-size: 0.6875rem;
+  height: 2.125rem;
+}
+
+/* Pill toggle (tab-style toggle group) */
+.pill-toggle {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+  min-height: 2.125rem;
+}
+.pill-toggle-btn {
+  flex: 1;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  padding: 0.375rem 1rem;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.pill-toggle-btn + .pill-toggle-btn {
+  border-left: 1px solid var(--color-border);
+}
+.pill-toggle-btn:hover {
+  color: var(--color-ink);
+  background: var(--color-hover);
+}
+.pill-toggle-btn[aria-selected="true"] {
+  color: var(--color-bg);
+  background: var(--color-ink);
+}
 
 /* Outline button (light border, subtle hover — for inline actions/outlinks) */
 .btn-outline {
@@ -333,4 +379,5 @@ th[aria-sort="descending"]::after { content: " ↓"; }
   max-height: 16rem;
   overflow-y: auto;
   white-space: pre-wrap;
+}
 }

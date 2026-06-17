@@ -1,4 +1,37 @@
 /* ─── Listen page styles ──────────────────────────────── */
+@layer components {
+
+/* ── Listen panel — layout handled by Tailwind utilities on element ── */
+
+/* ── Genre toggle — listen.css no longer handles display;
+   Tailwind utilities on the element handle responsive display ── */
+
+/* ── Listen button — width handled by Tailwind utilities on element ── */
+.listen-btn {
+  justify-content: center;
+  gap: 0.625rem;
+  overflow: hidden;
+}
+
+.listen-btn[data-listening="true"] {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border-color: var(--color-ink);
+}
+.listen-btn-label {
+  flex-shrink: 0;
+}
+.listen-btn-status {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+  opacity: 0.7;
+  text-align: right;
+}
+.listen-btn-status:empty { display: none; }
 
 #tune-log { overflow-x: clip; overflow-y: visible; }
 
@@ -110,3 +143,4 @@
 }
 .export-tab:hover { color: var(--color-ink); }
 .export-tab.active { color: var(--color-ink); border-bottom-color: var(--color-ink); font-weight: 600; }
+}

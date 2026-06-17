@@ -5,6 +5,7 @@ const STORAGE_KEY = 'nfs-listen-items';
 
 // ── DOM refs ──
 const btn = $('btn-listen');
+const btnLabel = btn?.querySelector('.listen-btn-label');
 const statusEl = $('status');
 const tuneLogEl = $('tune-log');
 const footerActions = $('footer-actions');
@@ -28,10 +29,11 @@ let items = loadItems();
 let openAltsIdx = null;
 let sortableInstance = null;
 let activeExportTab = 'text';
+let genre = localStorage.getItem('nfs-listen-genre') || 'irish'; // 'irish' or 'oldtime'
 
 // ── Persistence ──
 function saveItems() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (_) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (_) { /* storage full or blocked */ }
 }
 function loadItems() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
@@ -63,15 +65,23 @@ function adjacentToDivider(idx) {
 function tuneFromResult(r) {
   const tuneId = r.setting.tune_id;
   const settingId = r.setting_id;
+
+  let url;
+  if (genre === 'oldtime') {
+    url = `https://tunearch.org/w/index.php?curid=${tuneId}`;
+  } else {
+    url = settingId
+      ? `https://thesession.org/tunes/${tuneId}#setting${settingId}`
+      : `https://thesession.org/tunes/${tuneId}`;
+  }
+
   return {
     type: 'tune',
     tuneId,
-    settingId: settingId || null,
+    settingId: genre === 'oldtime' ? null : (settingId || null),
     name: r.display_name,
     score: r.score,
-    url: settingId
-      ? `https://thesession.org/tunes/${tuneId}#setting${settingId}`
-      : `https://thesession.org/tunes/${tuneId}`,
+    url,
     dance: r.setting.dance || '',
     mode: r.setting.mode || '',
     meter: r.setting.meter || '',
@@ -127,7 +137,7 @@ async function copyToClipboard(text) {
 
 // ── Render ──
 function actionRowHTML(idx) {
-  const showBreak = !adjacentToDivider(idx);
+  const showBreak = genre !== 'oldtime' && !adjacentToDivider(idx);
   return `<div class="action-row" data-insert="${idx}">
     ${showBreak ? `<button class="act-btn do-set-break" data-insert="${idx}">set break</button>` : ''}
     <button class="act-btn do-add-tune" data-insert="${idx}">+ tune</button>
@@ -165,7 +175,8 @@ function altsPopoverHTML(idx) {
   }
 
   if (item.url) {
-    html += `<div class="popover-section popover-link"><a href="${item.url}" target="_blank" rel="noopener">thesession.org</a></div>`;
+    const linkLabel = item.url.includes('tunearch.org') ? 'tunearch.org' : 'thesession.org';
+    html += `<div class="popover-section popover-link"><a href="${item.url}" target="_blank" rel="noopener">${linkLabel}</a></div>`;
   }
 
   return html + '</div>';
@@ -380,7 +391,7 @@ async function startListening() {
   } catch { setStatus('Mic access denied'); return; }
 
   audioCtx = new AudioContext();
-  worker.postMessage({ type: 'init', sampleRate: audioCtx.sampleRate });
+  worker.postMessage({ type: 'init', sampleRate: audioCtx.sampleRate, genre });
 
   const src = audioCtx.createMediaStreamSource(micStream);
   const proc = audioCtx.createScriptProcessor(1024, 1, 1);
@@ -394,7 +405,8 @@ async function startListening() {
   proc.connect(audioCtx.destination);
 
   listening = true;
-  btn.textContent = 'Stop Listening';
+  btnLabel.textContent = 'Stop';
+  btn.dataset.listening = 'true';
   render();
 }
 
@@ -409,35 +421,58 @@ function stopListening() {
   if (audioCtx) audioCtx.close();
   if (worker) worker.terminate();
   worker = null; audioCtx = null; micStream = null; workerReady = false; listening = false;
-  btn.textContent = 'Start Listening';
-  setStatus(items.length ? `Stopped — ${items.filter(i => i.type === 'tune').length} tune(s)` : 'Stopped');
+  btnLabel.textContent = 'Start Listening';
+  btn.dataset.listening = 'false';
+  setStatus(items.length ? `${items.filter(i => i.type === 'tune').length} tune(s)` : '');
   render();
 }
 
 // ── Export ──
+function tuneToText(t) {
+  const meta = [t.dance, t.mode].filter(Boolean).join(', ');
+  const url = t.url ? ` — ${t.url.replace('https://', '')}` : '';
+  return `${t.name}${meta ? ` (${meta})` : ''}${url}`;
+}
+
+function hasDividers() {
+  return items.some(i => i.type === 'divider');
+}
+
 function getTextExport() {
+  if (!hasDividers()) {
+    return items.filter(i => i.type === 'tune').map(tuneToText).join('\n');
+  }
   return splitIntoSets().map(tunes =>
-    tunes.map(t => {
-      const meta = [t.dance, t.mode].filter(Boolean).join(', ');
-      const url = t.url ? ` — ${t.url.replace('https://', '')}` : '';
-      return `${t.name}${meta ? ` (${meta})` : ''}${url}`;
-    }).join('\n')
+    tunes.map(tuneToText).join('\n')
   ).join('\n---\n');
+}
+
+function tunesToJSON(tunesArr) {
+  return tunesArr.map(t => ({
+    tuneId: t.tuneId
+      ? (t.url?.includes('tunearch.org') ? `__tta_${t.tuneId}` : `__thesession_${t.tuneId}`)
+      : `__manual_${slugify(t.name)}`,
+    ...(t.url && { url: t.url }),
+    _name: t.name,
+    ...(t.mode && { key: modeToKey(t.mode) }),
+  }));
 }
 
 function getJSONExport() {
   const today = new Date().toISOString().slice(0, 10);
+  const allTunes = items.filter(i => i.type === 'tune');
+
+  // Only group into sets if user added set breaks
+  const sets = hasDividers()
+    ? splitIntoSets().map(tunes => ({
+      label: dominantValue(tunes.map(t => t.dance).filter(Boolean)) + 's' || undefined,
+      tunes: tunesToJSON(tunes),
+    }))
+    : allTunes.map(t => ({ tunes: tunesToJSON([t]) }));
+
   return JSON.stringify({
     id: `sess_${today}`, seriesId: '', date: today,
-    sets: splitIntoSets().map(tunes => ({
-      label: dominantValue(tunes.map(t => t.dance).filter(Boolean)) + 's' || undefined,
-      tunes: tunes.map(t => ({
-        tuneId: t.tuneId ? `__thesession_${t.tuneId}` : `__manual_${slugify(t.name)}`,
-        ...(t.url && { url: t.url }),
-        _name: t.name,
-        ...(t.mode && { key: modeToKey(t.mode) }),
-      })),
-    })),
+    sets,
   }, null, 2);
 }
 
@@ -476,6 +511,29 @@ btnDownload.addEventListener('click', () => {
   const mime = activeExportTab === 'json' ? 'application/json' : 'text/plain';
   download(`session-${today}.${ext}`, getExportContent(), mime);
 });
+
+// ── Genre toggle (pill tabs) ──
+const genreToggle = $('genre-toggle');
+function updateGenrePills() {
+  if (!genreToggle) return;
+  genreToggle.querySelectorAll('.pill-toggle-btn').forEach(pill => {
+    pill.setAttribute('aria-selected', pill.dataset.genre === genre ? 'true' : 'false');
+  });
+}
+if (genreToggle) {
+  updateGenrePills();
+  genreToggle.addEventListener('click', (e) => {
+    const pill = e.target.closest('.pill-toggle-btn');
+    if (!pill || pill.dataset.genre === genre) return;
+    const wasListening = listening;
+    if (wasListening) stopListening();
+    genre = pill.dataset.genre;
+    localStorage.setItem('nfs-listen-genre', genre);
+    updateGenrePills();
+    render();
+    if (wasListening) startListening();
+  });
+}
 
 // ── Init ──
 if (items.length) render();
