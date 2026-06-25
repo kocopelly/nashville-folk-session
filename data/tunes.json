@@ -3432,20 +3432,6 @@
             "thesession": 1790
         }
     },
-    "pigeon-on-the-gate-the-f6fqq": {
-        "id": "pigeon-on-the-gate-the-f6fqq",
-        "name": "The Pigeon on the Gate",
-        "type": "reel",
-        "tradition": "irish",
-        "aliases": [],
-        "commonKeys": [
-            "Edor"
-        ],
-        "url": "https://thesession.org/tunes/4312",
-        "external": {
-            "thesession": 4312
-        }
-    },
     "beare-island-xljza": {
         "id": "beare-island-xljza",
         "name": "Beare Island",
@@ -4929,6 +4915,118 @@
         "url": "https://thesession.org/tunes/1191",
         "external": {
             "thesession": 1191
+        }
+    },
+    "the-pigeon-on-the-gate-05905": {
+        "id": "the-pigeon-on-the-gate-05905",
+        "name": "The Pigeon On The Gate",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/517",
+        "external": {
+            "thesession": 517
+        }
+    },
+    "the-morning-dew-0b5c5": {
+        "id": "the-morning-dew-0b5c5",
+        "name": "The Morning Dew",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/69",
+        "external": {
+            "thesession": 69
+        }
+    },
+    "the-rakes-of-kildare-26911": {
+        "id": "the-rakes-of-kildare-26911",
+        "name": "The Rakes Of Kildare",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/84",
+        "external": {
+            "thesession": 84
+        }
+    },
+    "the-banks-of-lough-gowna-08832": {
+        "id": "the-banks-of-lough-gowna-08832",
+        "name": "The Banks Of Lough Gowna",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Bm"
+        ],
+        "url": "https://thesession.org/tunes/775",
+        "external": {
+            "thesession": 775
+        }
+    },
+    "mcgoldricks-0f7e9": {
+        "id": "mcgoldricks-0f7e9",
+        "name": "McGoldrick's",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/628",
+        "external": {
+            "thesession": 628
+        }
+    },
+    "the-man-of-the-house-337fb": {
+        "id": "the-man-of-the-house-337fb",
+        "name": "The Man Of The House",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Em"
+        ],
+        "url": "https://thesession.org/tunes/222",
+        "external": {
+            "thesession": 222
+        }
+    },
+    "paddy-clancys-b40e8": {
+        "id": "paddy-clancys-b40e8",
+        "name": "Paddy Clancy's",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/832",
+        "external": {
+            "thesession": 832
+        }
+    },
+    "the-leitrim-fancy-fd7dc": {
+        "id": "the-leitrim-fancy-fd7dc",
+        "name": "The Leitrim Fancy",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/467",
+        "external": {
+            "thesession": 467
         }
     }
 }
