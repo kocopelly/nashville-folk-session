@@ -11,21 +11,22 @@ permalink: /tunes/
 </div>
 
 <div class="overflow-x-auto">
-  <table class="w-full text-sm">
+  <table class="w-full text-sm" id="tunes-table">
     <thead>
       <tr class="border-b-2 border-ink">
-        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Name</th>
-        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold whitespace-nowrap">Type</th>
-        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Key</th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold sortable" data-sort="name">Name <span class="sort-indicator"></span></th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold whitespace-nowrap sortable" data-sort="type">Type <span class="sort-indicator"></span></th>
+        <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold sortable" data-sort="key">Key <span class="sort-indicator"></span></th>
+        <th class="text-right py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold sortable sorted-desc" data-sort="plays">Plays <span class="sort-indicator">▼</span></th>
         <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Tradition</th>
         <th class="text-left py-3 px-3 text-xs uppercase tracking-widest text-muted font-bold">Link</th>
       </tr>
     </thead>
     <tbody>
-      {% for id, tune in tunes %}
-      <tr class="border-b border-border hover:bg-hover transition-colors">
+      {% for tune in tuneProfiles %}
+      <tr class="border-b border-border hover:bg-hover transition-colors" data-name="{{ tune.name | lower }}" data-type="{{ tune.type }}" data-key="{{ tune.bestKey | default('') | lower }}" data-plays="{{ tune.playCount }}">
         <td class="py-3 px-3">
-          <a href="/tunes/{{ id }}/" class="font-semibold text-ink hover:text-accent transition-colors">{{ tune.name }}</a>
+          <a href="/tunes/{{ tune.id }}/" class="font-semibold text-ink hover:text-accent transition-colors">{{ tune.name }}</a>
           {% if tune.aliases.length %}<span class="text-muted text-xs ml-1">({{ tune.aliases | join(", ") }})</span>{% endif %}
         </td>
         <td class="py-3 px-3 text-muted capitalize whitespace-nowrap">{{ tune.type }}</td>
@@ -35,6 +36,9 @@ permalink: /tunes/
               {{ tune.commonKeys[0] }}{% if tune.commonKeys.length > 1 %}<span class="text-xs text-muted ml-0.5 align-super">+{{ tune.commonKeys.length - 1 }}</span>{% endif %}
             </span>
           {% endif %}
+        </td>
+        <td class="py-3 px-3 text-right tabular-nums{% if tune.playCount >= 10 %} font-bold{% elif tune.playCount >= 5 %} font-semibold{% endif %}">
+          {{ tune.playCount }}
         </td>
         <td class="py-3 px-3">
           <span class="badge badge-{{ tune.tradition }}">{{ tune.tradition }}</span>
@@ -49,3 +53,65 @@ permalink: /tunes/
     </tbody>
   </table>
 </div>
+
+<script>
+(function() {
+  const table = document.getElementById('tunes-table');
+  const headers = table.querySelectorAll('th.sortable');
+  const tbody = table.querySelector('tbody');
+  let currentSort = 'plays';
+  let currentDir = 'desc';
+
+  function sortTable(col, dir) {
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isNumeric = col === 'plays';
+
+    rows.sort((a, b) => {
+      let va = a.dataset[col] || '';
+      let vb = b.dataset[col] || '';
+      let cmp;
+      if (isNumeric) {
+        cmp = (parseInt(va) || 0) - (parseInt(vb) || 0);
+      } else {
+        cmp = va.localeCompare(vb);
+      }
+      return dir === 'desc' ? -cmp : cmp;
+    });
+
+    for (const row of rows) tbody.appendChild(row);
+  }
+
+  headers.forEach(th => {
+    th.style.cursor = 'pointer';
+    th.addEventListener('click', () => {
+      const col = th.dataset.sort;
+      let dir;
+      if (currentSort === col) {
+        dir = currentDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        dir = col === 'plays' ? 'desc' : 'asc';
+      }
+      currentSort = col;
+      currentDir = dir;
+
+      headers.forEach(h => {
+        h.classList.remove('sorted-asc', 'sorted-desc');
+        h.querySelector('.sort-indicator').textContent = '';
+      });
+      th.classList.add('sorted-' + dir);
+      th.querySelector('.sort-indicator').textContent = dir === 'asc' ? '▲' : '▼';
+
+      sortTable(col, dir);
+    });
+  });
+
+  // Initial sort by plays desc
+  sortTable('plays', 'desc');
+})();
+</script>
+
+<style>
+  th.sortable:hover { color: var(--ink, #1a1a1a); }
+  th.sortable .sort-indicator { font-size: 0.65em; margin-left: 0.25em; }
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+</style>
