@@ -5161,5 +5161,21 @@
         "external": {
             "thesession": 314
         }
+    },
+    "rolling-in-the-barrel-7qh7j": {
+        "id": "rolling-in-the-barrel-7qh7j",
+        "name": "Rolling In The Barrel",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador",
+            "D",
+            "Em"
+        ],
+        "url": "https://thesession.org/tunes/500",
+        "external": {
+            "thesession": 500
+        }
     }
 }

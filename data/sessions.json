@@ -6593,6 +6593,23 @@
                 "label": "reels",
                 "tunes": [
                     {
+                        "tuneId": "rolling-in-the-barrel-7qh7j"
+                    },
+                    {
+                        "tuneId": "the-belles-of-tipperary-z7scs"
+                    },
+                    {
+                        "tuneId": "the-bird-in-the-bush-772cp"
+                    },
+                    {
+                        "tuneId": "the-killavil-fancy-wtie5"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
                         "tuneId": "dowds-no-9-nukfg",
                         "url": "https://thesession.org/tunes/761#setting45628",
                         "key": "D"
