@@ -5177,5 +5177,48 @@
         "external": {
             "thesession": 500
         }
+    },
+    "wallop-the-potlid-j3xr4": {
+        "id": "wallop-the-potlid-j3xr4",
+        "name": "Wallop The Potlid",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/1454",
+        "external": {
+            "thesession": 1454
+        }
+    },
+    "tatter-jack-walsh-el7iv": {
+        "id": "tatter-jack-walsh-el7iv",
+        "name": "Tatter Jack Walsh",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix",
+            "Ddor"
+        ],
+        "url": "https://thesession.org/tunes/1638",
+        "external": {
+            "thesession": 1638
+        }
+    },
+    "jerrys-beaver-hat-xv0a9": {
+        "id": "jerrys-beaver-hat-xv0a9",
+        "name": "Jerry's Beaver Hat",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/319",
+        "external": {
+            "thesession": 319
+        }
     }
 }
