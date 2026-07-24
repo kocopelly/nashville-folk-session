@@ -8012,5 +8012,342 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "sess_2026-07-22",
+        "seriesId": "quinns-irish",
+        "date": "2026-07-22",
+        "sets": [
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-lark-in-the-morning-qe75o",
+                        "url": "https://thesession.org/tunes/62#setting46802",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "jimmy-wards-wfwwc",
+                        "url": "https://thesession.org/tunes/793#setting27354",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-cliffs-of-moher-h2kgs",
+                        "url": "https://thesession.org/tunes/12#setting53260",
+                        "key": "Ador"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-league-ydi2c",
+                        "url": "https://thesession.org/tunes/3302#setting55686",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "farrel-ogaras-v2ply",
+                        "url": "https://thesession.org/tunes/234#setting12934",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "ormond-sound-39etn",
+                        "url": "https://thesession.org/tunes/426#setting56283",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "jennys-chickens-ha8qk",
+                        "url": "https://thesession.org/tunes/756#setting47790",
+                        "key": "Bm"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-banks-of-lough-gowna-08832",
+                        "url": "https://thesession.org/tunes/775#setting37528",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "mcgoldricks-0f7e9",
+                        "url": "https://thesession.org/tunes/628#setting27826",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-connaughtmans-rambles-1yjvc",
+                        "url": "https://thesession.org/tunes/19#setting53666",
+                        "key": "D"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-spotted-dog-8ituu",
+                        "url": "https://thesession.org/tunes/3967#setting51262",
+                        "key": "A"
+                    },
+                    {
+                        "tuneId": "sliabh-russell-78io8",
+                        "url": "https://thesession.org/tunes/335#setting36480",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "joe-derranes-rdohq",
+                        "url": "https://thesession.org/tunes/3321#setting48317",
+                        "key": "Bm"
+                    },
+                    {
+                        "tuneId": "cordal-the-otmqc",
+                        "url": "https://thesession.org/tunes/864#setting42279",
+                        "key": "D"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-roscommon-eauae",
+                        "url": "https://thesession.org/tunes/637#setting43965",
+                        "key": "Edor"
+                    },
+                    {
+                        "tuneId": "the-otters-holt-bf34e",
+                        "url": "https://thesession.org/tunes/636#setting54278",
+                        "key": "Bm"
+                    },
+                    {
+                        "tuneId": "lady-anne-montgomery-3636b",
+                        "url": "https://thesession.org/tunes/59#setting49883",
+                        "key": "D"
+                    }
+                ]
+            },
+            {
+                "label": "slip jigs",
+                "tunes": [
+                    {
+                        "tuneId": "james-byrnes-gl2kz",
+                        "url": "https://thesession.org/tunes/266#setting13006",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "would-the-minister-not-dance-kiaf7",
+                        "url": "https://thesession.org/tunes/7849#setting7849",
+                        "key": "A"
+                    },
+                    {
+                        "tuneId": "hardiman-the-fiddler-stk8o",
+                        "url": "https://thesession.org/tunes/48#setting54096",
+                        "key": "Ador"
+                    }
+                ]
+            },
+            {
+                "label": "waltzes",
+                "tunes": [
+                    {
+                        "tuneId": "the-south-wind-tqcnr",
+                        "url": "https://thesession.org/tunes/601#setting44279",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-fairhaired-boy-jl0p4",
+                        "url": "https://thesession.org/tunes/2248#setting39056",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "the-mountain-top-yew9l",
+                        "url": "https://thesession.org/tunes/529#setting11463",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-achonry-lasses-dg5y2",
+                        "url": "https://thesession.org/tunes/2921#setting9228",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-old-wheels-of-the-world-yfdmk",
+                        "url": "https://thesession.org/tunes/431#setting33247",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "the-spike-island-lasses-9b0bl",
+                        "url": "https://thesession.org/tunes/737#setting47893",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-old-bush-p5ivj",
+                        "url": "https://thesession.org/tunes/1499#setting44810",
+                        "key": "Dmix"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "poor-but-happy-at-53-qa6f7",
+                        "url": "https://thesession.org/tunes/314#setting314",
+                        "key": "Em"
+                    },
+                    {
+                        "tuneId": "the-abbey-ijklg",
+                        "url": "https://thesession.org/tunes/477#setting477",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "the-long-drop-at38u",
+                        "url": "https://thesession.org/tunes/1147#setting43485",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-shaskeen-3zy1j",
+                        "url": "https://thesession.org/tunes/615#setting49151",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-humours-of-lisheen-ccd7f",
+                        "url": "https://thesession.org/tunes/1600#setting25094",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-gallowglass-c72f1",
+                        "url": "https://thesession.org/tunes/1369#setting35215",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "the-humours-of-ennistymon-hc2qh",
+                        "url": "https://thesession.org/tunes/228#setting50910",
+                        "key": "G"
+                    }
+                ]
+            },
+            {
+                "label": "jigs",
+                "tunes": [
+                    {
+                        "tuneId": "the-sheep-in-the-boat-fxd0k",
+                        "url": "https://thesession.org/tunes/2576#setting2576",
+                        "key": "Edor"
+                    },
+                    {
+                        "tuneId": "dusty-windowsills-5f0a7",
+                        "url": "https://thesession.org/tunes/29#setting33683",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "the-humours-of-ballyloughlin-a9629",
+                        "url": "https://thesession.org/tunes/210#setting22800",
+                        "key": "Dmix"
+                    },
+                    {
+                        "tuneId": "the-mooncoin-bsped",
+                        "url": "https://thesession.org/tunes/206#setting54751",
+                        "key": "Amix"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-commodore-2ol0x",
+                        "url": "https://thesession.org/tunes/1710#setting48186",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-new-copperplate-psh31",
+                        "url": "https://thesession.org/tunes/887#setting37003",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "the-old-copperplate-lun3y",
+                        "url": "https://thesession.org/tunes/410#setting22933",
+                        "key": "Ador"
+                    },
+                    {
+                        "tuneId": "private-ass-and-cart-067m8",
+                        "url": "https://thesession.org/tunes/963#setting57641",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "kilty-town-s21qp",
+                        "url": "https://thesession.org/tunes/536#setting42017",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "beare-island-xljza",
+                        "url": "https://thesession.org/tunes/696#setting56192",
+                        "key": "Edor"
+                    }
+                ]
+            },
+            {
+                "label": "reels",
+                "tunes": [
+                    {
+                        "tuneId": "the-fishermans-island-o0fwe",
+                        "url": "https://thesession.org/tunes/181#setting55123",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-hunters-house-2q63r",
+                        "url": "https://thesession.org/tunes/472#setting13358",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "maudabawn-chapel-j6u6o",
+                        "url": "https://thesession.org/tunes/302#setting302",
+                        "key": "G"
+                    },
+                    {
+                        "tuneId": "love-at-the-endings-xakgl",
+                        "url": "https://thesession.org/tunes/990#setting14194",
+                        "key": "D"
+                    }
+                ]
+            },
+            {
+                "label": "hornpipes",
+                "tunes": [
+                    {
+                        "tuneId": "the-harvest-home-c79b3",
+                        "url": "https://thesession.org/tunes/49#setting46582",
+                        "key": "D"
+                    },
+                    {
+                        "tuneId": "the-galway-dn5wz",
+                        "url": "https://thesession.org/tunes/38#setting38",
+                        "key": "D"
+                    }
+                ]
+            }
+        ]
     }
 ]
