@@ -5426,5 +5426,198 @@
         "external": {
             "thesession": 963
         }
+    },
+    "the-galway-dn5wz": {
+        "id": "the-galway-dn5wz",
+        "name": "The Galway",
+        "type": "hornpipe",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D",
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/38",
+        "external": {
+            "thesession": 38
+        }
+    },
+    "james-byrnes-gl2kz": {
+        "id": "james-byrnes-gl2kz",
+        "name": "James Byrne's",
+        "type": "slip jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D",
+            "G",
+            "A"
+        ],
+        "url": "https://thesession.org/tunes/266",
+        "external": {
+            "thesession": 266
+        }
+    },
+    "the-old-copperplate-lun3y": {
+        "id": "the-old-copperplate-lun3y",
+        "name": "The Old Copperplate",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador",
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/410",
+        "external": {
+            "thesession": 410
+        }
+    },
+    "the-old-wheels-of-the-world-yfdmk": {
+        "id": "the-old-wheels-of-the-world-yfdmk",
+        "name": "The Old Wheels Of The World",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Dmix",
+            "G",
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/431",
+        "external": {
+            "thesession": 431
+        }
+    },
+    "the-mountain-top-yew9l": {
+        "id": "the-mountain-top-yew9l",
+        "name": "The Mountain Top",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/529",
+        "external": {
+            "thesession": 529
+        }
+    },
+    "the-south-wind-tqcnr": {
+        "id": "the-south-wind-tqcnr",
+        "name": "The South Wind",
+        "type": "waltz",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/601",
+        "external": {
+            "thesession": 601
+        }
+    },
+    "the-new-copperplate-psh31": {
+        "id": "the-new-copperplate-psh31",
+        "name": "The New Copperplate",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G",
+            "C"
+        ],
+        "url": "https://thesession.org/tunes/887",
+        "external": {
+            "thesession": 887
+        }
+    },
+    "the-commodore-2ol0x": {
+        "id": "the-commodore-2ol0x",
+        "name": "The Commodore",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D",
+            "E"
+        ],
+        "url": "https://thesession.org/tunes/1710",
+        "external": {
+            "thesession": 1710
+        }
+    },
+    "the-fairhaired-boy-jl0p4": {
+        "id": "the-fairhaired-boy-jl0p4",
+        "name": "The Fairhaired Boy",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D",
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/2248",
+        "external": {
+            "thesession": 2248
+        }
+    },
+    "the-achonry-lasses-dg5y2": {
+        "id": "the-achonry-lasses-dg5y2",
+        "name": "The Achonry Lasses",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/2921",
+        "external": {
+            "thesession": 2921
+        }
+    },
+    "the-league-ydi2c": {
+        "id": "the-league-ydi2c",
+        "name": "The League",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/3302",
+        "external": {
+            "thesession": 3302
+        }
+    },
+    "the-spotted-dog-8ituu": {
+        "id": "the-spotted-dog-8ituu",
+        "name": "The Spotted Dog",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "A",
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/3967",
+        "external": {
+            "thesession": 3967
+        }
+    },
+    "would-the-minister-not-dance-kiaf7": {
+        "id": "would-the-minister-not-dance-kiaf7",
+        "name": "Would The Minister Not Dance?",
+        "type": "slip jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "A",
+            "Amix"
+        ],
+        "url": "https://thesession.org/tunes/7849",
+        "external": {
+            "thesession": 7849
+        }
     }
 }
