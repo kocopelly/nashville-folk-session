@@ -5619,5 +5619,50 @@
         "external": {
             "thesession": 7849
         }
+    },
+    "young-tom-ennis-unzsj": {
+        "id": "young-tom-ennis-unzsj",
+        "name": "Young Tom Ennis",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador",
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/131",
+        "external": {
+            "thesession": 131
+        }
+    },
+    "behind-the-haystack-6hauf": {
+        "id": "behind-the-haystack-6hauf",
+        "name": "Behind The Haystack",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "D",
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/358",
+        "external": {
+            "thesession": 358
+        }
+    },
+    "the-swaggering-jig-cusrn": {
+        "id": "the-swaggering-jig-cusrn",
+        "name": "The Swaggering Jig",
+        "type": "slip jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G",
+            "Em"
+        ],
+        "url": "https://thesession.org/tunes/661",
+        "external": {
+            "thesession": 661
+        }
     }
 }
