@@ -14,9 +14,11 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
+    "@eslint/js": "^9.39.4",
     "@tailwindcss/cli": "^4.2.1",
     "@types/node": "^22.0.0",
-    "eslint": "^9.0.0",
+    "eslint": "^9.39.4",
+    "globals": "^17.4.0",
     "prettier": "^3.4.0",
     "tailwindcss": "^4.2.1",
     "tsx": "^4.19.0",

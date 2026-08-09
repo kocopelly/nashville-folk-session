@@ -4,13 +4,20 @@
 let ff = null;
 let ptr = null; // reusable PCM window pointer
 let framesReceived = 0;
+let currentGenre = 'irish'; // 'irish' or 'oldtime'
 
-const INDEX_URL = 'https://folkfriend-app-data.web.app/folkfriend-non-user-data.json';
+const INDEX_URLS = {
+  irish: 'https://folkfriend-app-data.web.app/folkfriend-non-user-data.json',
+  oldtime: '/listen/oldtime-tune-data.json',
+};
 
 self.onmessage = async ({ data }) => {
   switch (data.type) {
     case 'init': {
       try {
+        currentGenre = data.genre || 'irish';
+        const indexUrl = INDEX_URLS[currentGenre] || INDEX_URLS.irish;
+
         console.log('[worker] init: loading WASM...');
         const mod = await import('./wasm/folkfriend.js');
         await mod.default(); // init wasm
@@ -18,12 +25,12 @@ self.onmessage = async ({ data }) => {
         console.log('[worker] WASM loaded, version:', ff.version());
 
         // Fetch the tune index
-        self.postMessage({ type: 'status', msg: 'Downloading tune index...' });
-        console.log('[worker] fetching tune index from', INDEX_URL);
-        const resp = await fetch(INDEX_URL);
+        self.postMessage({ type: 'status', msg: `Downloading ${currentGenre} tune index...` });
+        console.log(`[worker] fetching ${currentGenre} tune index from`, indexUrl);
+        const resp = await fetch(indexUrl);
         const index = await resp.json();
         const settingCount = Object.keys(index.settings).length;
-        console.log(`[worker] index loaded: ${settingCount} settings`);
+        console.log(`[worker] index loaded: ${settingCount} settings (${currentGenre})`);
 
         // Strip ABC strings before passing to WASM
         for (const sid in index.settings) {
@@ -42,7 +49,7 @@ self.onmessage = async ({ data }) => {
         console.log('[worker] PCM window allocated at ptr:', ptr);
 
         framesReceived = 0;
-        self.postMessage({ type: 'ready' });
+        self.postMessage({ type: 'ready', genre: currentGenre });
         console.log('[worker] ready!');
       } catch (e) {
         console.error('[worker] init error:', e);
