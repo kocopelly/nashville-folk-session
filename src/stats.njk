@@ -93,40 +93,37 @@ permalink: /stats/
   <div class="space-y-8">
     <div>
       <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Repertoire Growth</h3>
+      <p class="text-muted text-xs text-center mb-3">Cumulative unique tunes learned — stacked by Reel / Jig / Other</p>
       <div id="chart-repertoire" class="w-full"></div>
-    </div>
-    <div>
-      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Tunes Per Session</h3>
-      <div id="chart-session-size" class="w-full"></div>
-    </div>
-    <div>
-      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Type Mix</h3>
-      <div id="chart-type-mix" class="w-full"></div>
-    </div>
-    <div>
-      <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Key Distribution</h3>
-      <div id="chart-key-mix" class="w-full"></div>
+      <div class="flex flex-wrap gap-3 mt-3 justify-center">
+        <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-reel inline-block"></span> Reel</span>
+        <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-jig inline-block"></span> Jig</span>
+        <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-mixed inline-block"></span> Other</span>
+      </div>
     </div>
   </div>
 </section>
 
-{# ═══ TYPE BREAKDOWN ═══ #}
+{# ═══ TYPE BREAKDOWN (donut) ═══ #}
 <section class="mb-14">
   <div class="text-center mb-6">
     <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">By Type</h2>
     <div class="w-12 h-0.5 bg-ink mx-auto"></div>
   </div>
 
-  <div class="space-y-3">
-    {% for item in stats.typeBreakdown %}
-    <div class="flex items-center gap-3">
-      <span class="text-sm font-semibold capitalize w-20 text-right shrink-0">{{ item.type }}</span>
-      <div class="flex-1 bg-hover h-6 relative overflow-hidden border border-border">
-        <div class="h-full dna-{{ item.type | replace(' ', '') }}" style="width: {{ item.pct }}%;"></div>
-      </div>
-      <span class="text-xs text-muted w-16 shrink-0">{{ item.count }} <span class="text-muted">({{ item.pct }}%)</span></span>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+    <div class="shrink-0">
+      <canvas id="type-donut" width="200" height="200" style="width:200px;height:200px;"></canvas>
     </div>
-    {% endfor %}
+    <ul class="space-y-1.5 w-full max-w-xs">
+      {% for item in stats.typeBreakdown %}
+      <li class="flex items-center gap-2 text-sm">
+        <span class="w-3 h-3 dna-{{ item.type | replace(' ', '') }} inline-block shrink-0"></span>
+        <span class="capitalize flex-1">{{ item.type }}</span>
+        <span class="text-muted font-mono text-xs">{{ item.count }} ({{ item.pct }}%)</span>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </section>
 
@@ -148,47 +145,11 @@ permalink: /stats/
     </div>
     {% endfor %}
   </div>
-</section>
-
-{# ═══ REPERTOIRE EVOLUTION ═══ #}
-<section class="mb-14" id="evolution-section" data-max-visible="{{ MAX_VISIBLE }}">
-  <div class="text-center mb-6">
-    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Repertoire Evolution</h2>
-    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
-    <p class="text-muted text-xs uppercase tracking-widest">New vs. repeat tunes each session</p>
-  </div>
-
-  <div class="space-y-4">
-    {% for diff in stats.sessionDiffs %}
-    <div class="session-row" data-idx="{{ loop.index0 }}">
-      <div class="flex items-center gap-3 mb-1">
-        <a href="/sessions/{{ diff.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 hover:text-ink transition-colors">{{ diff.date }}</a>
-        <div class="flex flex-1 h-6 overflow-hidden border border-border">
-          {% if diff.newPct > 0 %}
-          <div class="h-full bg-accent" style="width: {{ diff.newPct }}%;" title="{{ diff.newTunes }} new tunes"></div>
-          {% endif %}
-          {% if diff.repeatPct > 0 %}
-          <div class="h-full bg-ink opacity-30" style="width: {{ diff.repeatPct }}%;" title="{{ diff.repeatTunes }} repeat tunes"></div>
-          {% endif %}
-        </div>
-        <span class="text-xs text-muted w-20 text-right shrink-0">{{ diff.newTunes }} new · {{ diff.repeatTunes }} rep</span>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-
-  {% if stats.sessionDiffs | length > MAX_VISIBLE %}
-  <button class="show-all-toggle btn-show-all">Show all {{ stats.sessionDiffs | length }}</button>
-  {% endif %}
-
-  <div class="flex gap-4 mt-3 justify-center">
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 bg-accent inline-block"></span> New tunes</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 bg-ink opacity-30 inline-block"></span> Repeats</span>
-  </div>
+  <p class="text-muted text-xs text-center mt-3">Horizontal bars stay readable on mobile even with many keys — kept as bars rather than a pie.</p>
 </section>
 
 {# ═══ KEY JOURNEY ═══ #}
-<section class="mb-14" id="journey-section" data-max-visible="{{ MAX_VISIBLE }}">
+<section class="mb-14" id="journey-section" data-max-visible="5">
   <div class="text-center mb-6">
     <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Key Journey</h2>
     <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
@@ -198,7 +159,7 @@ permalink: /stats/
   <div class="space-y-3">
     {% for journey in stats.keyJourneys %}
     <div class="session-row flex items-start gap-3" data-idx="{{ loop.index0 }}">
-      <span class="text-xs text-muted font-mono w-20 shrink-0 pt-0.5">{{ journey.date }}</span>
+      <a href="/sessions/{{ journey.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 pt-0.5 hover:text-ink transition-colors">{{ journey.date }}</a>
       <div class="flex flex-wrap gap-1">
         {% for key in journey.keys %}
         <span class="key-chip text-xs font-mono font-bold px-2 py-0.5 border border-border {% if key == 'D' or key == 'Dmix' or key == 'Ddor' %}key-d{% elif key == 'G' or key == 'Gmix' %}key-g{% elif key == 'A' or key == 'Amix' or key == 'Ador' %}key-a{% elif key == 'Em' or key == 'Edor' %}key-e{% elif key == 'Bm' or key == 'Bdor' or key == 'Bdorian' %}key-b{% elif key == 'Am' %}key-a{% elif key == 'Ddor' %}key-d{% else %}key-other{% endif %}">{{ key }}</span>
@@ -346,7 +307,7 @@ permalink: /stats/
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:[grid-template-rows:1fr]">
-    <div class="border-2 border-ink p-5 relative md:max-h-80 overflow-hidden">
+    <div class="velocity-col border-2 border-ink p-5 relative overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-ink">⚓ Standards</div>
         <div class="text-xs text-muted">3+ sessions</div>
@@ -364,9 +325,10 @@ permalink: /stats/
         <p class="text-center text-muted text-sm italic">Need more sessions!</p>
       {% endif %}
       <div class="velocity-fade"></div>
+      <button class="velocity-expand btn-show-all">Show all</button>
     </div>
 
-    <div class="border-2 border-accent p-5 relative md:max-h-80 overflow-hidden">
+    <div class="velocity-col border-2 border-accent p-5 relative overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-accent">🔥 Heating Up</div>
         <div class="text-xs text-muted">2+ of last 3 sessions</div>
@@ -384,9 +346,10 @@ permalink: /stats/
         <p class="text-center text-muted text-sm italic">Nothing trending</p>
       {% endif %}
       <div class="velocity-fade"></div>
+      <button class="velocity-expand btn-show-all">Show all</button>
     </div>
 
-    <div class="border border-border p-5 relative md:max-h-80 overflow-hidden">
+    <div class="velocity-col border border-border p-5 relative overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-muted">💨 One-Hit Wonders</div>
         <div class="text-xs text-muted">Played once, never returned</div>
@@ -402,6 +365,7 @@ permalink: /stats/
         <p class="text-center text-muted text-sm italic">Everything's a repeat!</p>
       {% endif %}
       <div class="velocity-fade"></div>
+      <button class="velocity-expand btn-show-all">Show all</button>
     </div>
   </div>
 </section>
@@ -430,42 +394,9 @@ permalink: /stats/
 </section>
 {% endif %}
 
-{# ═══ FULL TUNE TABLE ═══ #}
-<section class="mb-14">
-  <div class="text-center mb-6">
-    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">All Tunes Played</h2>
-    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
-    <p class="text-muted text-xs uppercase tracking-widest">Click headers to sort</p>
-  </div>
-
-  <div class="overflow-x-auto">
-    <table class="w-full text-sm" id="tune-table">
-      <thead>
-        <tr class="border-b-2 border-ink">
-          <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-default>Name</th>
-          <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors">Type</th>
-          <th class="text-left py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors">Key</th>
-          <th class="text-right py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-method="number">Plays</th>
-          <th class="text-right py-3 px-2 text-xs uppercase tracking-widest text-muted font-bold cursor-pointer hover:text-ink transition-colors" data-sort-method="number">Sessions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for tune in stats.tunePlays %}
-        <tr class="border-b border-border hover:bg-hover transition-colors">
-          <td class="py-2 px-2 font-semibold"><a href="/tunes/{{ tune.id }}/" class="text-ink hover:text-accent transition-colors">{{ tune.name }}</a></td>
-          <td class="py-2 px-2 text-muted capitalize">{{ tune.type }}</td>
-          <td class="py-2 px-2 font-mono text-xs">{{ tune.bestKey }}</td>
-          <td class="py-2 px-2 text-right font-display">{{ tune.count }}</td>
-          <td class="py-2 px-2 text-right font-display">{{ tune.sessionCount }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-
-  {# Pagination controls #}
-  <div id="tune-pagination" class="flex items-center justify-center gap-2 mt-4">
-  </div>
+{# Full tune table removed — the dedicated /tunes/ page has the same (richer) data. #}
+<section class="mb-14 text-center">
+  <a href="/tunes/" class="btn-primary">Browse all tunes →</a>
 </section>
 
 {# ═══ SET COMPOSITION ═══ #}
@@ -497,8 +428,6 @@ permalink: /stats/
 <script id="stats-json" type="application/json">{{ stats.clientData | dump | safe }}</script>
 
 {# ═══ SCRIPTS ═══ #}
-<script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
-<script src="https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.number.min.js"></script>
 <script src="https://unpkg.com/uplot@1.6.31/dist/uPlot.iife.min.js"></script>
 
 <script>
@@ -510,64 +439,37 @@ permalink: /stats/
   const ts = DATA.timeSeries;
   const net = DATA.network;
 
-  // ── Tablesort + Pagination ──
-  const tuneTable = document.getElementById('tune-table');
-  new Tablesort(tuneTable);
-
-  const PAGE_SIZE = 25;
-  const tbody = tuneTable.querySelector('tbody');
-  const paginationEl = document.getElementById('tune-pagination');
-
-  function paginateTable() {
-    let currentPage = 1;
-
-    // Re-query rows from DOM each time so we respect Tablesort's reordering
-    function getRows() { return Array.from(tbody.querySelectorAll('tr')); }
-
-    function showPage(page) {
-      const rows = getRows();
-      const totalPages = Math.ceil(rows.length / PAGE_SIZE);
-      currentPage = Math.max(1, Math.min(page, totalPages));
-      const start = (currentPage - 1) * PAGE_SIZE;
-      const end = start + PAGE_SIZE;
-      rows.forEach((row, i) => {
-        row.style.display = (i >= start && i < end) ? '' : 'none';
-      });
-      renderControls(rows.length, totalPages);
+  // ── Velocity column expand/collapse (mobile truncation) ──
+  document.querySelectorAll('.velocity-col').forEach(col => {
+    const btn = col.querySelector('.velocity-expand');
+    const fade = col.querySelector('.velocity-fade');
+    if (!btn) return;
+    let expanded = false;
+    // Recompute overflow after layout/CSS is fully applied (avoids stale-height race).
+    function refreshVisibility() {
+      if (expanded) return; // don't hide while expanded
+      const overflowing = col.scrollHeight > col.clientHeight + 4;
+      btn.style.display = overflowing ? '' : 'none';
+      if (fade) fade.style.display = overflowing ? '' : 'none';
     }
-
-    function renderControls(totalRows, totalPages) {
-      if (totalPages <= 1) { paginationEl.innerHTML = ''; return; }
-      const btnClass = 'text-xs uppercase tracking-widest px-3 py-1 border font-bold transition-colors';
-      const activeClass = btnClass + ' border-ink bg-ink text-bg';
-      const normalClass = btnClass + ' border-border text-muted hover:text-ink hover:border-ink';
-      const disabledClass = btnClass + ' border-border text-border cursor-default';
-
-      let html = '';
-      html += '<button class="' + (currentPage > 1 ? normalClass : disabledClass) + '" data-page="prev">←</button>';
-      for (let p = 1; p <= totalPages; p++) {
-        html += '<button class="' + (p === currentPage ? activeClass : normalClass) + '" data-page="' + p + '">' + p + '</button>';
+    btn.addEventListener('click', () => {
+      expanded = !expanded;
+      if (expanded) {
+        col.classList.add('velocity-col-expanded');
+        if (fade) fade.style.display = 'none';
+        btn.textContent = 'Show less';
+      } else {
+        col.classList.remove('velocity-col-expanded');
+        if (fade) fade.style.display = '';
+        btn.textContent = 'Show all';
+        refreshVisibility();
       }
-      html += '<button class="' + (currentPage < totalPages ? normalClass : disabledClass) + '" data-page="next">→</button>';
-      html += '<span class="text-xs text-muted ml-2">' + totalRows + ' tunes</span>';
-      paginationEl.innerHTML = html;
-
-      paginationEl.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const val = btn.dataset.page;
-          if (val === 'prev') showPage(currentPage - 1);
-          else if (val === 'next') showPage(currentPage + 1);
-          else showPage(parseInt(val));
-        });
-      });
-    }
-
-    showPage(1);
-
-    // Re-paginate after sort — re-reads DOM order so sort applies globally
-    tuneTable.addEventListener('afterSort', () => showPage(1));
-  }
-  paginateTable();
+    });
+    refreshVisibility();
+    window.addEventListener('load', refreshVisibility);
+    let rt;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(refreshVisibility, 200); });
+  });
 
   // ── Show-all toggles (last N sessions) ──
   document.querySelectorAll('[data-max-visible]').forEach(section => {
@@ -646,179 +548,88 @@ permalink: /stats/
   // ── Store chart refs for resize ──
   const uPlots = [];
 
-  // ── Chart: Repertoire Growth ──
-  if (ts.dates.length >= 2) {
-    const opts = {
-      width: chartWidth(),
-      height: 220,
-      padding: [10, 10, 0, 0],
-      cursor: { show: true },
-      axes: [dateAxis(), valAxis('')],
-      series: [
-        {},
-        {
-          label: 'Cumulative Unique',
-          stroke: INK,
-          width: 2,
-          fill: 'rgba(26, 26, 58, 0.08)',
-          points: { size: 6, fill: BG, stroke: INK },
-        },
-        {
-          label: 'New This Session',
-          stroke: ACCENT,
-          width: 2,
-          dash: [5, 3],
-          points: { size: 5, fill: BG, stroke: ACCENT },
-        },
-      ],
-    };
-    uPlots.push(new uPlot(opts, [ts.dates, ts.cumulativeUnique, ts.newPerSession],
-      document.getElementById('chart-repertoire')));
-  }
-
-  // ── Chart: Tunes Per Session ──
-  if (ts.dates.length >= 2) {
-    const opts = {
-      width: chartWidth(),
-      height: 200,
-      padding: [10, 10, 0, 0],
-      cursor: { show: true },
-      axes: [dateAxis(), valAxis('')],
-      series: [
-        {},
-        {
-          label: 'Tunes',
-          stroke: INK,
-          width: 2,
-          fill: 'rgba(26, 26, 58, 0.1)',
-          points: { size: 6, fill: BG, stroke: INK },
-          paths: uPlot.paths.bars({ size: [0.6] }),
-        },
-        {
-          label: 'Sets',
-          stroke: ACCENT,
-          width: 2,
-          points: { size: 5, fill: BG, stroke: ACCENT },
-        },
-      ],
-    };
-    uPlots.push(new uPlot(opts, [ts.dates, ts.tunesPerSession, ts.setsPerSession],
-      document.getElementById('chart-session-size')));
-  }
-
-  // ── Helper: build stacked bar chart (percentage-normalized) ──
-  function stackedBarChart(container, rawSeriesMap, colorMap, labelSuffix) {
-    if (ts.dates.length < 2) return null;
-    const keys = Object.keys(rawSeriesMap);
-    // Sort by total descending so biggest category is at bottom
-    keys.sort((a, b) => {
-      const sumA = rawSeriesMap[a].reduce((s, v) => s + v, 0);
-      const sumB = rawSeriesMap[b].reduce((s, v) => s + v, 0);
-      return sumB - sumA;
-    });
-
-    // Normalize each column to 100%
-    const normalized = {};
-    for (const k of keys) normalized[k] = [];
-    for (let j = 0; j < ts.dates.length; j++) {
-      let colTotal = 0;
-      for (const k of keys) colTotal += rawSeriesMap[k][j];
-      for (const k of keys) {
-        normalized[k].push(colTotal > 0 ? Math.round((rawSeriesMap[k][j] / colTotal) * 1000) / 10 : 0);
-      }
-    }
-
-    // Stack the data: each series = sum of itself + all below
-    const stacked = [];
-    for (let k = 0; k < keys.length; k++) {
-      const vals = [];
-      for (let j = 0; j < ts.dates.length; j++) {
-        let sum = 0;
-        for (let i = 0; i <= k; i++) sum += normalized[keys[i]][j];
-        vals.push(sum);
-      }
-      stacked.push(vals);
-    }
-
-    // Build series configs (render from top to bottom for visual stacking)
-    // Store individual (non-stacked) values for legend display
-    const individualVals = [];
-    const series = [{}];
-    const data = [ts.dates];
-    for (let k = keys.length - 1; k >= 0; k--) {
-      const key = keys[k];
-      const color = colorMap[key] || MUTED;
-      const seriesIdx = series.length; // capture for closure
-      const indiv = normalized[key]; // non-stacked percentages
-      individualVals[seriesIdx] = indiv;
-      series.push({
-        label: key.charAt(0).toUpperCase() + key.slice(1) + (labelSuffix || ''),
-        stroke: color,
-        width: 0,
-        fill: color + 'cc',
-        paths: uPlot.paths.bars({ size: [0.7], align: 0 }),
-        points: { show: false },
-        value: (u, val, si, di) => di == null ? '--' : Math.round(individualVals[si][di]) + '%',
-      });
-      data.push(stacked[k]);
-    }
-
+  // ── Chart: Repertoire Growth (stacked area: cumulative unique by Reel/Jig/Other) ──
+  if (ts.dates.length >= 2 && ts.cumulativeByType) {
+    const REEL = INK, JIG = ACCENT, OTHER = MUTED;
+    const reel = ts.cumulativeByType.Reel;
+    const jig = ts.cumulativeByType.Jig;
+    const other = ts.cumulativeByType.Other;
+    // Stack bottom→top: reel, reel+jig, reel+jig+other (total)
+    const sReel = reel;
+    const sJig = reel.map((v, i) => v + jig[i]);
+    const sTotal = sJig.map((v, i) => v + other[i]);
+    // uPlot draws later series on top; fill each band down to zero, layering big→small
     const opts = {
       width: chartWidth(),
       height: 240,
       padding: [10, 10, 0, 0],
       cursor: { show: true },
-      axes: [dateAxis(), Object.assign(valAxis(''), {
-        values: (u, vals) => vals.map(v => Math.round(v) + '%'),
-      })],
-      scales: { y: { range: [0, 100] } },
-      series,
+      axes: [dateAxis(), valAxis('')],
+      series: [
+        {},
+        { label: 'Total (Reel+Jig+Other)', stroke: OTHER, width: 1.5, fill: 'rgba(106,106,128,0.35)',
+          value: (u, v, si, di) => di == null ? '--' : other[di] + ' other' },
+        { label: 'Reel+Jig', stroke: JIG, width: 1.5, fill: 'rgba(196,154,60,0.55)',
+          value: (u, v, si, di) => di == null ? '--' : jig[di] + ' jig' },
+        { label: 'Reel', stroke: REEL, width: 1.5, fill: 'rgba(26,26,58,0.65)',
+          value: (u, v, si, di) => di == null ? '--' : reel[di] + ' reel' },
+      ],
     };
-    return new uPlot(opts, data, container);
+    uPlots.push(new uPlot(opts, [ts.dates, sTotal, sJig, sReel],
+      document.getElementById('chart-repertoire')));
   }
 
-  // ── Chart: Type Mix Over Time (stacked bars) ──
-  {
-    const el = document.getElementById('chart-type-mix');
-    const chart = stackedBarChart(el, ts.typePerSession, TYPE_COLORS, ' %');
-    if (chart) uPlots.push(chart);
-  }
-
-  // ── Chart: Key Distribution Over Time (stacked bars) ──
-  if (ts.keyPerSession) {
-    // Color map for keys
-    const KEY_COLORS = {
-      D: '#6a5020', G: '#2a5a2a', A: '#5a2a5a', Em: '#2a3a6a', Edor: '#2a3a6a',
-      Ador: '#5a2a5a', Dmix: '#8a6a20', Gmix: '#3a6a3a', Amix: '#6a3a6a',
-      Bm: '#6a3a1a', Am: '#5a2a5a', Ddor: '#8a6a20',
-    };
-    const el = document.getElementById('chart-key-mix');
-    // Only show top 6 keys to avoid clutter, group rest as "Other"
-    const keysArr = Object.keys(ts.keyPerSession);
-    const keyTotals = keysArr.map(k => [k, ts.keyPerSession[k].reduce((a, b) => a + b, 0)]);
-    keyTotals.sort((a, b) => b[1] - a[1]);
-    const topKeys = keyTotals.slice(0, 6).map(k => k[0]);
-    const filteredMap = {};
-    const otherVals = new Array(ts.dates.length).fill(0);
-    for (const k of keysArr) {
-      if (topKeys.includes(k)) {
-        filteredMap[k] = ts.keyPerSession[k];
-      } else {
-        ts.keyPerSession[k].forEach((v, i) => otherVals[i] += v);
-      }
+  // ── Donut chart: By Type ──
+  (function renderTypeDonut() {
+    const canvas = document.getElementById('type-donut');
+    if (!canvas) return;
+    const items = DATA.typeBreakdown || [];
+    if (!items.length) return;
+    const dpr = window.devicePixelRatio || 1;
+    const size = 200;
+    canvas.width = size * dpr; canvas.height = size * dpr;
+    canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    const cx = size / 2, cy = size / 2, rOuter = 92, rInner = 54;
+    const total = items.reduce((s, it) => s + it.count, 0);
+    let a0 = -Math.PI / 2;
+    for (const it of items) {
+      const frac = it.count / total;
+      const a1 = a0 + frac * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, rOuter, a0, a1);
+      ctx.closePath();
+      ctx.fillStyle = (TYPE_COLORS[it.type] || MUTED);
+      ctx.fill();
+      a0 = a1;
     }
-    if (otherVals.some(v => v > 0)) filteredMap['Other'] = otherVals;
-    KEY_COLORS['Other'] = '#9a9aaa';
-    const chart = stackedBarChart(el, filteredMap, KEY_COLORS, '');
-    if (chart) uPlots.push(chart);
-  }
+    // punch the hole
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath(); ctx.arc(cx, cy, rInner, 0, Math.PI * 2); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+    // center label: total plays
+    ctx.fillStyle = INK;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = 'bold 22px system-ui';
+    ctx.fillText(String(total), cx, cy - 6);
+    ctx.font = '10px system-ui'; ctx.fillStyle = MUTED;
+    ctx.fillText('PLAYS', cx, cy + 12);
+  })();
 
   // ── Network Graph with Multiple Layouts ──
   if (net.nodes.length > 0) {
     const canvas = document.getElementById('network-canvas');
     const container = document.getElementById('network-container');
     const tooltip = document.getElementById('network-tooltip');
-    const W = container.clientWidth || 672;
+    // Clamp to the actual available width; never exceed viewport (fixes mobile hscroll).
+    const avail = Math.min(
+      container.clientWidth || 672,
+      document.documentElement.clientWidth,
+      (container.parentElement ? container.parentElement.clientWidth : Infinity)
+    );
+    const W = Math.max(280, avail);
     const H = 450;
     const PAD = 30;
     const dpr = window.devicePixelRatio || 1;

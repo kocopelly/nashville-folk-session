@@ -334,3 +334,22 @@ th[aria-sort="descending"]::after { content: " ↓"; }
   overflow-y: auto;
   white-space: pre-wrap;
 }
+
+/* ─── Stats page: prevent horizontal overflow on mobile ─── */
+main { overflow-x: clip; }
+#network-canvas, #type-donut, #chart-repertoire { max-width: 100%; }
+#network-container { max-width: 100%; overflow: hidden; }
+
+/* ─── Velocity columns: cap height (mobile + desktop), expand on demand ─── */
+.velocity-col { max-height: 18rem; }
+@media (min-width: 768px) { .velocity-col { max-height: 20rem; } }
+.velocity-col.velocity-col-expanded { max-height: none; }
+
+/* ─── Velocity expand button (sits above the fade overlay) ─── */
+.velocity-expand {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
