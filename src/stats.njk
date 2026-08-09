@@ -604,7 +604,7 @@ permalink: /stats/
     };
   }
 
-  // ── Pie chart with evenly-spread leader-line labels (no legend) ──
+  // ── Pie chart: radial-knee leaders into de-collided label columns (no legend) ──
   (function renderTypePie() {
     const canvas = document.getElementById('type-pie');
     if (!canvas) return;
@@ -614,12 +614,12 @@ permalink: /stats/
     const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 
     const cssW = Math.min(360, (canvas.parentElement ? canvas.parentElement.clientWidth : 360) || 360);
-    const GUTTER = 96;                    // reserved label width each side
-    const r = Math.max(56, Math.min(74, (cssW - GUTTER * 2) / 2 + 8));
-    const TOP = 18, BOT = 18;             // vertical margins for label rows
+    const GUTTER = 92;                    // reserved label width each side
+    const r = Math.max(56, Math.min(72, (cssW - GUTTER * 2) / 2 + 10));
+    const GAP = 16;                       // min vertical gap between label rows
     const dpr = window.devicePixelRatio || 1;
 
-    // Slice geometry.
+    // Slice geometry (start at 12 o'clock).
     let a0 = -Math.PI / 2;
     const slices = items.map(it => {
       const frac = it.count / total;
@@ -632,8 +632,7 @@ permalink: /stats/
 
     const leftN = slices.filter(s => s.side === 'l').length;
     const rightN = slices.filter(s => s.side === 'r').length;
-    const rowH = 17;
-    const needH = Math.max(leftN, rightN) * rowH + TOP + BOT;
+    const needH = Math.max(leftN, rightN) * GAP + 32;
     const cssH = Math.max(2 * r + 24, needH);
 
     canvas.width = cssW * dpr; canvas.height = cssH * dpr;
@@ -656,27 +655,38 @@ permalink: /stats/
       ctx.strokeStyle = BG; ctx.lineWidth = 1.5; ctx.stroke();
     }
 
-    // Evenly distribute label rows down each side, ordered by angle (top→bottom).
-    // Sort key: vertical position of the slice mid-point.
-    function layoutSide(side) {
-      const arr = slices.filter(s => s.side === side)
-        .sort((a, b) => Math.sin(a.mid) - Math.sin(b.mid));
-      const n = arr.length;
-      if (!n) return arr;
-      const span = cssH - TOP - BOT;
-      arr.forEach((s, i) => {
-        s.labelY = n === 1 ? cy : TOP + (span * i) / (n - 1);
-      });
+    // Collision resolver: start each label at its ideal radial Y, then relax
+    // overlaps by pushing neighbours apart, clamped to the canvas.
+    function resolve(arr) {
+      arr.sort((a, b) => a.labelY - b.labelY);
+      for (let pass = 0; pass < 200; pass++) {
+        let moved = false;
+        for (let i = 0; i < arr.length - 1; i++) {
+          const overlap = (arr[i].labelY + GAP) - arr[i + 1].labelY;
+          if (overlap > 0) { arr[i].labelY -= overlap / 2; arr[i + 1].labelY += overlap / 2; moved = true; }
+        }
+        if (arr.length) {
+          if (arr[0].labelY < 14) { const d = 14 - arr[0].labelY; for (const L of arr) L.labelY += d; }
+          const last = arr[arr.length - 1];
+          if (last.labelY > cssH - 14) { const d = last.labelY - (cssH - 14); for (const L of arr) L.labelY -= d; }
+        }
+        if (!moved) break;
+      }
       return arr;
+    }
+    function layoutSide(side) {
+      const arr = slices.filter(s => s.side === side);
+      arr.forEach(s => { s.labelY = cy + Math.sin(s.mid) * (r + 16); });
+      return resolve(arr);
     }
     const placed = [...layoutSide('l'), ...layoutSide('r')];
 
     for (const s of placed) {
       const p0x = cx + Math.cos(s.mid) * r;
       const p0y = cy + Math.sin(s.mid) * r;
-      // knee sits just outside the arc, vertically level with the label row
-      const kneeX = cx + (s.side === 'r' ? 1 : -1) * (r + 12);
-      const endX = s.side === 'r' ? cssW - GUTTER + 6 : GUTTER - 6;
+      // radial knee off the slice, then a horizontal run into the label column
+      const kneeX = cx + (s.side === 'r' ? 1 : -1) * (r + 14);
+      const endX = s.side === 'r' ? cssW - GUTTER : GUTTER;
       ctx.beginPath();
       ctx.moveTo(p0x, p0y);
       ctx.lineTo(kneeX, s.labelY);
@@ -684,12 +694,12 @@ permalink: /stats/
       ctx.strokeStyle = MUTED; ctx.lineWidth = 1; ctx.stroke();
       // color swatch dot at the label anchor
       ctx.fillStyle = (TYPE_COLORS[s.it.type] || MUTED);
-      const dotX = s.side === 'r' ? endX + 6 : endX - 6;
+      const dotX = s.side === 'r' ? endX + 5 : endX - 5;
       ctx.beginPath(); ctx.arc(dotX, s.labelY, 3, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = INK;
       ctx.textAlign = s.side === 'r' ? 'left' : 'right';
       ctx.textBaseline = 'middle';
-      const tx = s.side === 'r' ? endX + 13 : endX - 13;
+      const tx = s.side === 'r' ? endX + 12 : endX - 12;
       ctx.fillText(cap(s.it.type) + ' ' + s.it.pct + '%', tx, s.labelY);
     }
   })();
