@@ -4819,20 +4819,6 @@
             "thesession": 406
         }
     },
-    "the-flogging-77d15": {
-        "id": "the-flogging-77d15",
-        "name": "The Flogging",
-        "type": "reel",
-        "tradition": "irish",
-        "aliases": [],
-        "commonKeys": [
-            "Edor"
-        ],
-        "url": "https://thesession.org/tunes/113",
-        "external": {
-            "thesession": 113
-        }
-    },
     "the-humours-of-ballyloughlin-a9629": {
         "id": "the-humours-of-ballyloughlin-a9629",
         "name": "The Humours Of Ballyloughlin",
@@ -5692,6 +5678,22 @@
         "url": "https://thesession.org/tunes/843",
         "external": {
             "thesession": 843
+        }
+    },
+    "toss-the-feathers-slo9d": {
+        "id": "toss-the-feathers-slo9d",
+        "name": "Toss The Feathers",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [
+            "Toss The Feathers (#113)"
+        ],
+        "commonKeys": [
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/113",
+        "external": {
+            "thesession": 113
         }
     }
 }
