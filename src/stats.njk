@@ -228,7 +228,7 @@ permalink: /stats/
     <div class="w-12 h-0.5 bg-ink mx-auto"></div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:[grid-template-rows:1fr]">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="velocity-col border-2 border-ink p-5 relative overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-ink">⚓ Standards</div>
@@ -266,6 +266,27 @@ permalink: /stats/
         </ul>
       {% else %}
         <p class="text-center text-muted text-sm italic">Nothing trending</p>
+      {% endif %}
+      <div class="velocity-fade"></div>
+      <button class="velocity-expand btn-show-all">Show all</button>
+    </div>
+
+    <div class="velocity-col border-2 border-border p-5 relative overflow-hidden">
+      <div class="text-center mb-3">
+        <div class="text-sm font-bold uppercase tracking-widest text-muted">🕸️ Gathering Dust</div>
+        <div class="text-xs text-muted">Played before, not seen in a while</div>
+      </div>
+      {% if stats.velocity.dormant.length %}
+        <ul class="space-y-1">
+          {% for t in stats.velocity.dormant %}
+          <li class="flex justify-between text-sm gap-2">
+            <a href="/tunes/{{ t.id }}/" class="text-ink hover:text-accent transition-colors truncate">{{ t.name }}</a>
+            <span class="text-muted text-xs font-mono shrink-0">{{ t.count }}× · {{ t.sessionsSince }}s ago</span>
+          </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-center text-muted text-sm italic">Nothing forgotten yet</p>
       {% endif %}
       <div class="velocity-fade"></div>
       <button class="velocity-expand btn-show-all">Show all</button>
@@ -583,7 +604,7 @@ permalink: /stats/
     };
   }
 
-  // ── Pie chart with leader-line labels for EVERY slice (no legend) ──
+  // ── Pie chart with evenly-spread leader-line labels (no legend) ──
   (function renderTypePie() {
     const canvas = document.getElementById('type-pie');
     if (!canvas) return;
@@ -592,25 +613,28 @@ permalink: /stats/
     const total = items.reduce((s, it) => s + it.count, 0);
     const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 
-    const LINE_H = 15;         // vertical spacing between stacked labels
-    const LABEL_PAD = 96;      // horizontal room reserved for label text each side
     const cssW = Math.min(360, (canvas.parentElement ? canvas.parentElement.clientWidth : 360) || 360);
+    const GUTTER = 96;                    // reserved label width each side
+    const r = Math.max(56, Math.min(74, (cssW - GUTTER * 2) / 2 + 8));
+    const TOP = 18, BOT = 18;             // vertical margins for label rows
     const dpr = window.devicePixelRatio || 1;
 
-    // First pass: compute geometry to know how many labels land on each side.
+    // Slice geometry.
     let a0 = -Math.PI / 2;
-    const rGuess = Math.min(62, (cssW - LABEL_PAD * 2) / 2);
     const slices = items.map(it => {
       const frac = it.count / total;
       const a1 = a0 + frac * Math.PI * 2;
       const mid = (a0 + a1) / 2;
+      const start = a1 - frac * Math.PI * 2;
       a0 = a1;
-      return { it, a0: a1 - frac * Math.PI * 2, a1, mid, frac, side: Math.cos(mid) >= 0 ? 'r' : 'l' };
+      return { it, a0: start, a1, mid, frac, side: Math.cos(mid) >= 0 ? 'r' : 'l' };
     });
+
     const leftN = slices.filter(s => s.side === 'l').length;
     const rightN = slices.filter(s => s.side === 'r').length;
-    const maxStack = Math.max(leftN, rightN);
-    const cssH = Math.max(2 * rGuess + 40, maxStack * LINE_H + 30);
+    const rowH = 17;
+    const needH = Math.max(leftN, rightN) * rowH + TOP + BOT;
+    const cssH = Math.max(2 * r + 24, needH);
 
     canvas.width = cssW * dpr; canvas.height = cssH * dpr;
     canvas.style.height = cssH + 'px';
@@ -620,7 +644,6 @@ permalink: /stats/
     ctx.font = '11px system-ui';
 
     const cx = cssW / 2, cy = cssH / 2;
-    const r = rGuess;
 
     // Draw slices.
     for (const s of slices) {
@@ -633,45 +656,41 @@ permalink: /stats/
       ctx.strokeStyle = BG; ctx.lineWidth = 1.5; ctx.stroke();
     }
 
-    // Assign non-overlapping label Y positions per side (greedy top→bottom).
+    // Evenly distribute label rows down each side, ordered by angle (top→bottom).
+    // Sort key: vertical position of the slice mid-point.
     function layoutSide(side) {
       const arr = slices.filter(s => s.side === side)
-        .map(s => ({ s, idealY: cy + Math.sin(s.mid) * (r + 12) }))
-        .sort((a, b) => a.idealY - b.idealY);
-      let last = -Infinity;
-      for (const L of arr) {
-        L.y = Math.max(L.idealY, last + LINE_H);
-        last = L.y;
-      }
-      // If we overflowed the bottom, shift the whole stack up.
-      const overflow = last - (cssH - 8);
-      if (overflow > 0) for (const L of arr) L.y -= overflow;
-      // Clamp top.
-      let top = arr.length ? arr[0].y : 0;
-      if (top < 12) { const d = 12 - top; for (const L of arr) L.y += d; }
+        .sort((a, b) => Math.sin(a.mid) - Math.sin(b.mid));
+      const n = arr.length;
+      if (!n) return arr;
+      const span = cssH - TOP - BOT;
+      arr.forEach((s, i) => {
+        s.labelY = n === 1 ? cy : TOP + (span * i) / (n - 1);
+      });
       return arr;
     }
     const placed = [...layoutSide('l'), ...layoutSide('r')];
 
-    for (const L of placed) {
-      const s = L.s;
-      const p0x = cx + Math.cos(s.mid) * r, p0y = cy + Math.sin(s.mid) * r;
-      const kneeX = cx + Math.cos(s.mid) * (r + 10);
-      const endX = s.side === 'r' ? cx + r + 20 : cx - r - 20;
+    for (const s of placed) {
+      const p0x = cx + Math.cos(s.mid) * r;
+      const p0y = cy + Math.sin(s.mid) * r;
+      // knee sits just outside the arc, vertically level with the label row
+      const kneeX = cx + (s.side === 'r' ? 1 : -1) * (r + 12);
+      const endX = s.side === 'r' ? cssW - GUTTER + 6 : GUTTER - 6;
       ctx.beginPath();
       ctx.moveTo(p0x, p0y);
-      ctx.lineTo(kneeX, L.y);
-      ctx.lineTo(endX, L.y);
+      ctx.lineTo(kneeX, s.labelY);
+      ctx.lineTo(endX, s.labelY);
       ctx.strokeStyle = MUTED; ctx.lineWidth = 1; ctx.stroke();
-      // color swatch dot at the label
+      // color swatch dot at the label anchor
       ctx.fillStyle = (TYPE_COLORS[s.it.type] || MUTED);
-      const dotX = s.side === 'r' ? endX + 5 : endX - 5;
-      ctx.beginPath(); ctx.arc(dotX, L.y, 3, 0, Math.PI * 2); ctx.fill();
+      const dotX = s.side === 'r' ? endX + 6 : endX - 6;
+      ctx.beginPath(); ctx.arc(dotX, s.labelY, 3, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = INK;
       ctx.textAlign = s.side === 'r' ? 'left' : 'right';
       ctx.textBaseline = 'middle';
-      const tx = s.side === 'r' ? endX + 12 : endX - 12;
-      ctx.fillText(cap(s.it.type) + ' ' + s.it.pct + '%', tx, L.y);
+      const tx = s.side === 'r' ? endX + 13 : endX - 13;
+      ctx.fillText(cap(s.it.type) + ' ' + s.it.pct + '%', tx, s.labelY);
     }
   })();
 
