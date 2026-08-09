@@ -61,17 +61,23 @@ permalink: /stats/
   </div>
 </section>
 
-{# ═══ TYPE BREAKDOWN (donut) ═══ #}
+{# ═══ TYPE BREAKDOWN ═══ #}
 <section class="mb-14">
   <div class="text-center mb-6">
     <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">By Type</h2>
     <div class="w-12 h-0.5 bg-ink mx-auto"></div>
   </div>
 
-  <div class="flex flex-col items-center gap-6">
-    <div class="w-full max-w-md">
-      <canvas id="type-pie" class="w-full" style="margin:0 auto;display:block;"></canvas>
+  <div class="space-y-2">
+    {% for item in stats.typeBreakdown %}
+    <div class="flex items-center gap-3">
+      <span class="text-sm font-mono font-bold w-20 text-right shrink-0">{{ item.type | capitalize }}</span>
+      <div class="flex-1 bg-hover h-5 relative overflow-hidden border border-border">
+        <div class="h-full bg-ink" style="width: {{ item.pct }}%; opacity: {{ 0.3 + (item.pct / 100) * 0.7 }};"></div>
+      </div>
+      <span class="text-xs text-muted w-16 shrink-0">{{ item.count }} <span class="text-muted">({{ item.pct }}%)</span></span>
     </div>
+    {% endfor %}
   </div>
 </section>
 
@@ -281,7 +287,7 @@ permalink: /stats/
           {% for t in stats.velocity.dormant %}
           <li class="flex justify-between text-sm gap-2">
             <a href="/tunes/{{ t.id }}/" class="text-ink hover:text-accent transition-colors truncate">{{ t.name }}</a>
-            <span class="text-muted text-xs font-mono shrink-0">{{ t.count }}× · {{ t.sessionsSince }}s ago</span>
+            <span class="text-muted text-xs font-mono shrink-0">{{ t.count }}× · {{ t.sinceLabel }} ago</span>
           </li>
           {% endfor %}
         </ul>
@@ -603,106 +609,6 @@ permalink: /stats/
       uRep.setCursor({ left: uRep.valToPos(ts.dates[lastIdx], 'x'), top: uRep.over.clientHeight / 2 });
     };
   }
-
-  // ── Pie chart: radial-knee leaders into de-collided label columns (no legend) ──
-  (function renderTypePie() {
-    const canvas = document.getElementById('type-pie');
-    if (!canvas) return;
-    const items = (DATA.typeBreakdown || []).filter(it => it.count > 0);
-    if (!items.length) return;
-    const total = items.reduce((s, it) => s + it.count, 0);
-    const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-
-    const cssW = Math.min(360, (canvas.parentElement ? canvas.parentElement.clientWidth : 360) || 360);
-    const GUTTER = 92;                    // reserved label width each side
-    const r = Math.max(56, Math.min(72, (cssW - GUTTER * 2) / 2 + 10));
-    const GAP = 16;                       // min vertical gap between label rows
-    const dpr = window.devicePixelRatio || 1;
-
-    // Slice geometry (start at 12 o'clock).
-    let a0 = -Math.PI / 2;
-    const slices = items.map(it => {
-      const frac = it.count / total;
-      const a1 = a0 + frac * Math.PI * 2;
-      const mid = (a0 + a1) / 2;
-      const start = a1 - frac * Math.PI * 2;
-      a0 = a1;
-      return { it, a0: start, a1, mid, frac, side: Math.cos(mid) >= 0 ? 'r' : 'l' };
-    });
-
-    const leftN = slices.filter(s => s.side === 'l').length;
-    const rightN = slices.filter(s => s.side === 'r').length;
-    const needH = Math.max(leftN, rightN) * GAP + 32;
-    const cssH = Math.max(2 * r + 24, needH);
-
-    canvas.width = cssW * dpr; canvas.height = cssH * dpr;
-    canvas.style.height = cssH + 'px';
-    const ctx = canvas.getContext('2d');
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, cssW, cssH);
-    ctx.font = '11px system-ui';
-
-    const cx = cssW / 2, cy = cssH / 2;
-
-    // Draw slices.
-    for (const s of slices) {
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, r, s.a0, s.a1);
-      ctx.closePath();
-      ctx.fillStyle = (TYPE_COLORS[s.it.type] || MUTED);
-      ctx.fill();
-      ctx.strokeStyle = BG; ctx.lineWidth = 1.5; ctx.stroke();
-    }
-
-    // Collision resolver: start each label at its ideal radial Y, then relax
-    // overlaps by pushing neighbours apart, clamped to the canvas.
-    function resolve(arr) {
-      arr.sort((a, b) => a.labelY - b.labelY);
-      for (let pass = 0; pass < 200; pass++) {
-        let moved = false;
-        for (let i = 0; i < arr.length - 1; i++) {
-          const overlap = (arr[i].labelY + GAP) - arr[i + 1].labelY;
-          if (overlap > 0) { arr[i].labelY -= overlap / 2; arr[i + 1].labelY += overlap / 2; moved = true; }
-        }
-        if (arr.length) {
-          if (arr[0].labelY < 14) { const d = 14 - arr[0].labelY; for (const L of arr) L.labelY += d; }
-          const last = arr[arr.length - 1];
-          if (last.labelY > cssH - 14) { const d = last.labelY - (cssH - 14); for (const L of arr) L.labelY -= d; }
-        }
-        if (!moved) break;
-      }
-      return arr;
-    }
-    function layoutSide(side) {
-      const arr = slices.filter(s => s.side === side);
-      arr.forEach(s => { s.labelY = cy + Math.sin(s.mid) * (r + 16); });
-      return resolve(arr);
-    }
-    const placed = [...layoutSide('l'), ...layoutSide('r')];
-
-    for (const s of placed) {
-      const p0x = cx + Math.cos(s.mid) * r;
-      const p0y = cy + Math.sin(s.mid) * r;
-      // radial knee off the slice, then a horizontal run into the label column
-      const kneeX = cx + (s.side === 'r' ? 1 : -1) * (r + 14);
-      const endX = s.side === 'r' ? cssW - GUTTER : GUTTER;
-      ctx.beginPath();
-      ctx.moveTo(p0x, p0y);
-      ctx.lineTo(kneeX, s.labelY);
-      ctx.lineTo(endX, s.labelY);
-      ctx.strokeStyle = MUTED; ctx.lineWidth = 1; ctx.stroke();
-      // color swatch dot at the label anchor
-      ctx.fillStyle = (TYPE_COLORS[s.it.type] || MUTED);
-      const dotX = s.side === 'r' ? endX + 5 : endX - 5;
-      ctx.beginPath(); ctx.arc(dotX, s.labelY, 3, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = INK;
-      ctx.textAlign = s.side === 'r' ? 'left' : 'right';
-      ctx.textBaseline = 'middle';
-      const tx = s.side === 'r' ? endX + 12 : endX - 12;
-      ctx.fillText(cap(s.it.type) + ' ' + s.it.pct + '%', tx, s.labelY);
-    }
-  })();
 
   // ── Network Graph with Multiple Layouts ──
   if (net.nodes.length > 0) {
