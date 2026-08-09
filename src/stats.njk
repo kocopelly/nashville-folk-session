@@ -45,6 +45,31 @@ permalink: /stats/
 </div>
 
 
+{# ═══ SET COMPOSITION ═══ #}
+<section class="mb-14">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Set Composition</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto"></div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.avgSetSize }}</div>
+      <div class="stat-box-label">Avg Tunes / Set</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.maxSetSize }}</div>
+      <div class="stat-box-label">Biggest Set</div>
+      <div class="text-xs text-muted mt-1">{{ stats.maxSetInfo }}</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-value text-2xl font-display">{{ stats.typeBreakdown[0].type | capitalize }}</div>
+      <div class="stat-box-label">Most Common Type</div>
+      <div class="text-xs text-muted mt-1">{{ stats.typeBreakdown[0].pct }}% of all plays</div>
+    </div>
+  </div>
+</section>
+
 {# ═══ TIME-SERIES CHARTS ═══ #}
 <section class="mb-14">
   <div class="text-center mb-6">
@@ -346,31 +371,6 @@ permalink: /stats/
 {# Full tune table removed — the dedicated /tunes/ page has the same (richer) data. #}
 <section class="mb-14 text-center">
   <a href="/tunes/" class="btn-primary">Browse all tunes →</a>
-</section>
-
-{# ═══ SET COMPOSITION ═══ #}
-<section class="mb-14">
-  <div class="text-center mb-6">
-    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Set Composition</h2>
-    <div class="w-12 h-0.5 bg-ink mx-auto"></div>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div class="stat-box">
-      <div class="stat-box-value text-2xl font-display">{{ stats.avgSetSize }}</div>
-      <div class="stat-box-label">Avg Tunes / Set</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-box-value text-2xl font-display">{{ stats.maxSetSize }}</div>
-      <div class="stat-box-label">Biggest Set</div>
-      <div class="text-xs text-muted mt-1">{{ stats.maxSetInfo }}</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-box-value text-2xl font-display">{{ stats.typeBreakdown[0].type | capitalize }}</div>
-      <div class="stat-box-label">Most Common Type</div>
-      <div class="text-xs text-muted mt-1">{{ stats.typeBreakdown[0].pct }}% of all plays</div>
-    </div>
-  </div>
 </section>
 
 {# ═══ SESSION DNA ═══ #}
