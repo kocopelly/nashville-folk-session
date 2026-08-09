@@ -5664,5 +5664,34 @@
         "external": {
             "thesession": 661
         }
+    },
+    "the-price-of-my-pig-6hhbw": {
+        "id": "the-price-of-my-pig-6hhbw",
+        "name": "The Price Of My Pig",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Am",
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/2680",
+        "external": {
+            "thesession": 2680
+        }
+    },
+    "christy-barrys-kt5yu": {
+        "id": "christy-barrys-kt5yu",
+        "name": "Christy Barry's",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/843",
+        "external": {
+            "thesession": 843
+        }
     }
 }
