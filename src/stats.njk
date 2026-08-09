@@ -95,11 +95,6 @@ permalink: /stats/
       <h3 class="text-sm font-bold uppercase tracking-widest text-center mb-3">Repertoire Growth</h3>
       <p class="text-muted text-xs text-center mb-3">Cumulative unique tunes learned — stacked by Reel / Jig / Other</p>
       <div id="chart-repertoire" class="w-full"></div>
-      <div class="flex flex-wrap gap-3 mt-3 justify-center">
-        <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-reel inline-block"></span> Reel</span>
-        <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-jig inline-block"></span> Jig</span>
-        <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-mixed inline-block"></span> Other</span>
-      </div>
     </div>
   </div>
 </section>
@@ -111,11 +106,11 @@ permalink: /stats/
     <div class="w-12 h-0.5 bg-ink mx-auto"></div>
   </div>
 
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-    <div class="shrink-0">
-      <canvas id="type-donut" width="200" height="200" style="width:200px;height:200px;"></canvas>
+  <div class="flex flex-col items-center gap-6">
+    <div class="w-full max-w-md">
+      <canvas id="type-pie" class="w-full" style="max-width:340px;margin:0 auto;display:block;"></canvas>
     </div>
-    <ul class="space-y-1.5 w-full max-w-xs">
+    <ul class="grid grid-cols-2 gap-x-6 gap-y-1.5 w-full max-w-md">
       {% for item in stats.typeBreakdown %}
       <li class="flex items-center gap-2 text-sm">
         <span class="w-3 h-3 dna-{{ item.type | replace(' ', '') }} inline-block shrink-0"></span>
@@ -145,7 +140,6 @@ permalink: /stats/
     </div>
     {% endfor %}
   </div>
-  <p class="text-muted text-xs text-center mt-3">Horizontal bars stay readable on mobile even with many keys — kept as bars rather than a pie.</p>
 </section>
 
 {# ═══ KEY JOURNEY ═══ #}
@@ -558,64 +552,95 @@ permalink: /stats/
     const sReel = reel;
     const sJig = reel.map((v, i) => v + jig[i]);
     const sTotal = sJig.map((v, i) => v + other[i]);
-    // uPlot draws later series on top; fill each band down to zero, layering big→small
+    // Series are drawn as descending cumulative bands so each shows down to zero,
+    // but labels/values report each band's OWN count (not the running sum).
     const opts = {
       width: chartWidth(),
       height: 240,
       padding: [10, 10, 0, 0],
       cursor: { show: true },
+      legend: { show: true },
       axes: [dateAxis(), valAxis('')],
       series: [
-        {},
-        { label: 'Total (Reel+Jig+Other)', stroke: OTHER, width: 1.5, fill: 'rgba(106,106,128,0.35)',
-          value: (u, v, si, di) => di == null ? '--' : other[di] + ' other' },
-        { label: 'Reel+Jig', stroke: JIG, width: 1.5, fill: 'rgba(196,154,60,0.55)',
-          value: (u, v, si, di) => di == null ? '--' : jig[di] + ' jig' },
+        { label: 'Date' },
+        { label: 'Other', stroke: OTHER, width: 1.5, fill: 'rgba(106,106,128,0.35)',
+          value: (u, v, si, di) => di == null ? '--' : other[di] },
+        { label: 'Jig', stroke: JIG, width: 1.5, fill: 'rgba(196,154,60,0.55)',
+          value: (u, v, si, di) => di == null ? '--' : jig[di] },
         { label: 'Reel', stroke: REEL, width: 1.5, fill: 'rgba(26,26,58,0.65)',
-          value: (u, v, si, di) => di == null ? '--' : reel[di] + ' reel' },
+          value: (u, v, si, di) => di == null ? '--' : reel[di] },
       ],
     };
     uPlots.push(new uPlot(opts, [ts.dates, sTotal, sJig, sReel],
       document.getElementById('chart-repertoire')));
   }
 
-  // ── Donut chart: By Type ──
-  (function renderTypeDonut() {
-    const canvas = document.getElementById('type-donut');
+  // ── Pie chart with leader-line labels: By Type ──
+  (function renderTypePie() {
+    const canvas = document.getElementById('type-pie');
     if (!canvas) return;
-    const items = DATA.typeBreakdown || [];
+    const items = (DATA.typeBreakdown || []).filter(it => it.count > 0);
     if (!items.length) return;
-    const dpr = window.devicePixelRatio || 1;
-    const size = 200;
-    canvas.width = size * dpr; canvas.height = size * dpr;
-    canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
-    const ctx = canvas.getContext('2d');
-    ctx.scale(dpr, dpr);
-    const cx = size / 2, cy = size / 2, rOuter = 92, rInner = 54;
     const total = items.reduce((s, it) => s + it.count, 0);
+
+    // Canvas sized to leave room for outside labels on both sides.
+    const cssW = Math.min(340, (canvas.parentElement ? canvas.parentElement.clientWidth : 340) || 340);
+    const cssH = 250;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = cssW * dpr; canvas.height = cssH * dpr;
+    canvas.style.height = cssH + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+
+    // Reserve horizontal margin for labels; radius scales to fit.
+    const labelMargin = 62;
+    const cx = cssW / 2, cy = cssH / 2;
+    const r = Math.min(70, (cssW - labelMargin * 2) / 2);
+
+    // Draw slices.
     let a0 = -Math.PI / 2;
-    for (const it of items) {
+    const slices = items.map(it => {
       const frac = it.count / total;
       const a1 = a0 + frac * Math.PI * 2;
+      const mid = (a0 + a1) / 2;
+      const s = { it, a0, a1, mid, frac };
       ctx.beginPath();
       ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, rOuter, a0, a1);
+      ctx.arc(cx, cy, r, a0, a1);
       ctx.closePath();
       ctx.fillStyle = (TYPE_COLORS[it.type] || MUTED);
       ctx.fill();
+      ctx.strokeStyle = BG; ctx.lineWidth = 1.5; ctx.stroke();
       a0 = a1;
+      return s;
+    });
+
+    // Leader-line labels. Stack vertically per side to avoid overlap.
+    ctx.font = '11px system-ui';
+    const labeled = slices.map(s => {
+      const dirX = Math.cos(s.mid), dirY = Math.sin(s.mid);
+      return { s, side: dirX >= 0 ? 'r' : 'l', elbowY: cy + dirY * (r + 14), dirX, dirY };
+    });
+    // Only label slices >=8% with whiskers (bigger ones); the legend covers the rest.
+    for (const L of labeled) {
+      if (L.s.frac < 0.08) continue;
+      const s = L.s;
+      const p0x = cx + Math.cos(s.mid) * r, p0y = cy + Math.sin(s.mid) * r;
+      const p1x = cx + Math.cos(s.mid) * (r + 10), p1y = cy + Math.sin(s.mid) * (r + 10);
+      const endX = L.side === 'r' ? cx + r + 34 : cx - r - 34;
+      ctx.beginPath();
+      ctx.moveTo(p0x, p0y);
+      ctx.lineTo(p1x, p1y);
+      ctx.lineTo(endX, p1y);
+      ctx.strokeStyle = MUTED; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = INK;
+      ctx.textAlign = L.side === 'r' ? 'left' : 'right';
+      ctx.textBaseline = 'middle';
+      const tx = L.side === 'r' ? endX + 3 : endX - 3;
+      const label = (s.it.type.charAt(0).toUpperCase() + s.it.type.slice(1)) + ' ' + s.it.pct + '%';
+      ctx.fillText(label, tx, p1y);
     }
-    // punch the hole
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.beginPath(); ctx.arc(cx, cy, rInner, 0, Math.PI * 2); ctx.fill();
-    ctx.globalCompositeOperation = 'source-over';
-    // center label: total plays
-    ctx.fillStyle = INK;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.font = 'bold 22px system-ui';
-    ctx.fillText(String(total), cx, cy - 6);
-    ctx.font = '10px system-ui'; ctx.fillStyle = MUTED;
-    ctx.fillText('PLAYS', cx, cy + 12);
   })();
 
   // ── Network Graph with Multiple Layouts ──

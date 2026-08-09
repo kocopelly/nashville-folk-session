@@ -352,4 +352,17 @@ main { overflow-x: clip; }
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 0.25rem 0.9rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+}
+.velocity-expand:hover { color: var(--color-ink); border-color: var(--color-ink); }
+/* When expanded, the button flows inline at the end rather than floating. */
+.velocity-col-expanded .velocity-expand {
+  position: static;
+  transform: none;
+  display: block;
+  margin: 0.75rem auto 0;
 }
