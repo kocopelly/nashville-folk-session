@@ -44,44 +44,6 @@ permalink: /stats/
   </div>
 </div>
 
-{# ═══ SESSION DNA ═══ #}
-<section class="mb-14" id="dna-section" data-max-visible="{{ MAX_VISIBLE }}">
-  <div class="text-center mb-6">
-    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Session DNA</h2>
-    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
-    <p class="text-muted text-xs uppercase tracking-widest">Visual fingerprint — each block is a set, colored by type, width by tune count</p>
-  </div>
-
-  <div class="space-y-3">
-    {% for session in stats.sessionDNA %}
-    <div class="session-row flex items-center gap-3" data-idx="{{ loop.index0 }}">
-      <a href="/sessions/{{ session.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 hover:text-ink transition-colors">{{ session.date }}</a>
-      <div class="flex flex-1 h-8 border border-border overflow-hidden" title="{{ session.tuneCount }} tunes in {{ session.setCount }} sets">
-        {% for set in session.sets %}
-        <div class="{{ set.colorClass }} relative group"
-             style="width: {{ set.pct }}%; min-width: 4px;"
-             title="{{ set.label }}: {{ set.tuneCount }} tune{{ 's' if set.tuneCount != 1 }}">
-        </div>
-        {% endfor %}
-      </div>
-      <span class="text-xs text-muted w-8 text-right shrink-0">{{ session.tuneCount }}</span>
-    </div>
-    {% endfor %}
-  </div>
-
-  {% if stats.sessionDNA | length > MAX_VISIBLE %}
-  <button class="show-all-toggle btn-show-all">Show all {{ stats.sessionDNA | length }}</button>
-  {% endif %}
-
-  <div class="flex flex-wrap gap-3 mt-4 justify-center">
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-reel inline-block"></span> Reel</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-jig inline-block"></span> Jig</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-polka inline-block"></span> Polka</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slipjig inline-block"></span> Slip Jig</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slide inline-block"></span> Slide</span>
-    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-mixed inline-block"></span> Mixed</span>
-  </div>
-</section>
 
 {# ═══ TIME-SERIES CHARTS ═══ #}
 <section class="mb-14">
@@ -108,17 +70,8 @@ permalink: /stats/
 
   <div class="flex flex-col items-center gap-6">
     <div class="w-full max-w-md">
-      <canvas id="type-pie" class="w-full" style="max-width:340px;margin:0 auto;display:block;"></canvas>
+      <canvas id="type-pie" class="w-full" style="margin:0 auto;display:block;"></canvas>
     </div>
-    <ul class="grid grid-cols-2 gap-x-6 gap-y-1.5 w-full max-w-md">
-      {% for item in stats.typeBreakdown %}
-      <li class="flex items-center gap-2 text-sm">
-        <span class="w-3 h-3 dna-{{ item.type | replace(' ', '') }} inline-block shrink-0"></span>
-        <span class="capitalize flex-1">{{ item.type }}</span>
-        <span class="text-muted font-mono text-xs">{{ item.count }} ({{ item.pct }}%)</span>
-      </li>
-      {% endfor %}
-    </ul>
   </div>
 </section>
 
@@ -142,32 +95,6 @@ permalink: /stats/
   </div>
 </section>
 
-{# ═══ KEY JOURNEY ═══ #}
-<section class="mb-14" id="journey-section" data-max-visible="5">
-  <div class="text-center mb-6">
-    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Key Journey</h2>
-    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
-    <p class="text-muted text-xs uppercase tracking-widest">The tonal path through each night — first key of each set</p>
-  </div>
-
-  <div class="space-y-3">
-    {% for journey in stats.keyJourneys %}
-    <div class="session-row flex items-start gap-3" data-idx="{{ loop.index0 }}">
-      <a href="/sessions/{{ journey.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 pt-0.5 hover:text-ink transition-colors">{{ journey.date }}</a>
-      <div class="flex flex-wrap gap-1">
-        {% for key in journey.keys %}
-        <span class="key-chip text-xs font-mono font-bold px-2 py-0.5 border border-border {% if key == 'D' or key == 'Dmix' or key == 'Ddor' %}key-d{% elif key == 'G' or key == 'Gmix' %}key-g{% elif key == 'A' or key == 'Amix' or key == 'Ador' %}key-a{% elif key == 'Em' or key == 'Edor' %}key-e{% elif key == 'Bm' or key == 'Bdor' or key == 'Bdorian' %}key-b{% elif key == 'Am' %}key-a{% elif key == 'Ddor' %}key-d{% else %}key-other{% endif %}">{{ key }}</span>
-        {% if not loop.last %}<span class="text-border self-center">→</span>{% endif %}
-        {% endfor %}
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-
-  {% if stats.keyJourneys | length > MAX_VISIBLE %}
-  <button class="show-all-toggle btn-show-all">Show all {{ stats.keyJourneys | length }}</button>
-  {% endif %}
-</section>
 
 {# ═══ NETWORK ANALYSIS ═══ #}
 <section class="mb-14">
@@ -293,6 +220,7 @@ permalink: /stats/
   </div>
 </section>
 
+
 {# ═══ TUNE VELOCITY ═══ #}
 <section class="mb-14">
   <div class="text-center mb-6">
@@ -304,7 +232,7 @@ permalink: /stats/
     <div class="velocity-col border-2 border-ink p-5 relative overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-ink">⚓ Standards</div>
-        <div class="text-xs text-muted">3+ sessions</div>
+        <div class="text-xs text-muted">Top quartile by session presence</div>
       </div>
       {% if stats.velocity.standards.length %}
         <ul class="space-y-1">
@@ -325,7 +253,7 @@ permalink: /stats/
     <div class="velocity-col border-2 border-accent p-5 relative overflow-hidden">
       <div class="text-center mb-3">
         <div class="text-sm font-bold uppercase tracking-widest text-accent">🔥 Heating Up</div>
-        <div class="text-xs text-muted">2+ of last 3 sessions</div>
+        <div class="text-xs text-muted">Trending above its own baseline</div>
       </div>
       {% if stats.velocity.heating.length %}
         <ul class="space-y-1">
@@ -416,6 +344,72 @@ permalink: /stats/
       <div class="text-xs text-muted mt-1">{{ stats.typeBreakdown[0].pct }}% of all plays</div>
     </div>
   </div>
+</section>
+
+{# ═══ SESSION DNA ═══ #}
+<section class="mb-14" id="dna-section" data-max-visible="{{ MAX_VISIBLE }}">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Session DNA</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">Visual fingerprint — each block is a set, colored by type, width by tune count</p>
+  </div>
+
+  <div class="space-y-3">
+    {% for session in stats.sessionDNA %}
+    <div class="session-row flex items-center gap-3" data-idx="{{ loop.index0 }}">
+      <a href="/sessions/{{ session.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 hover:text-ink transition-colors">{{ session.date }}</a>
+      <div class="flex flex-1 h-8 border border-border overflow-hidden" title="{{ session.tuneCount }} tunes in {{ session.setCount }} sets">
+        {% for set in session.sets %}
+        <div class="{{ set.colorClass }} relative group"
+             style="width: {{ set.pct }}%; min-width: 4px;"
+             title="{{ set.label }}: {{ set.tuneCount }} tune{{ 's' if set.tuneCount != 1 }}">
+        </div>
+        {% endfor %}
+      </div>
+      <span class="text-xs text-muted w-8 text-right shrink-0">{{ session.tuneCount }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if stats.sessionDNA | length > MAX_VISIBLE %}
+  <button class="show-all-toggle btn-show-all">Show all {{ stats.sessionDNA | length }}</button>
+  {% endif %}
+
+  <div class="flex flex-wrap gap-3 mt-4 justify-center">
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-reel inline-block"></span> Reel</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-jig inline-block"></span> Jig</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-polka inline-block"></span> Polka</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slipjig inline-block"></span> Slip Jig</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-slide inline-block"></span> Slide</span>
+    <span class="flex items-center gap-1.5 text-xs text-muted"><span class="w-3 h-3 dna-mixed inline-block"></span> Mixed</span>
+  </div>
+</section>
+
+{# ═══ KEY JOURNEY ═══ #}
+<section class="mb-14" id="journey-section" data-max-visible="5">
+  <div class="text-center mb-6">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-wider mb-1">Key Journey</h2>
+    <div class="w-12 h-0.5 bg-ink mx-auto mb-2"></div>
+    <p class="text-muted text-xs uppercase tracking-widest">The tonal path through each night — first key of each set</p>
+  </div>
+
+  <div class="space-y-3">
+    {% for journey in stats.keyJourneys %}
+    <div class="session-row flex items-start gap-3" data-idx="{{ loop.index0 }}">
+      <a href="/sessions/{{ journey.id }}/" class="text-xs text-muted font-mono w-20 shrink-0 pt-0.5 hover:text-ink transition-colors">{{ journey.date }}</a>
+      <div class="flex flex-wrap gap-1">
+        {% for key in journey.keys %}
+        <span class="key-chip text-xs font-mono font-bold px-2 py-0.5 border border-border {% if key == 'D' or key == 'Dmix' or key == 'Ddor' %}key-d{% elif key == 'G' or key == 'Gmix' %}key-g{% elif key == 'A' or key == 'Amix' or key == 'Ador' %}key-a{% elif key == 'Em' or key == 'Edor' %}key-e{% elif key == 'Bm' or key == 'Bdor' or key == 'Bdorian' %}key-b{% elif key == 'Am' %}key-a{% elif key == 'Ddor' %}key-d{% else %}key-other{% endif %}">{{ key }}</span>
+        {% if not loop.last %}<span class="text-border self-center">→</span>{% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if stats.keyJourneys | length > MAX_VISIBLE %}
+  <button class="show-all-toggle btn-show-all">Show all {{ stats.keyJourneys | length }}</button>
+  {% endif %}
 </section>
 
 {# ═══ EMBEDDED DATA FOR CLIENT-SIDE VIZ ═══ #}
@@ -570,76 +564,114 @@ permalink: /stats/
         { label: 'Reel', stroke: REEL, width: 1.5, fill: 'rgba(26,26,58,0.65)',
           value: (u, v, si, di) => di == null ? '--' : reel[di] },
       ],
+      hooks: {
+        // Default the legend to the most recent session instead of showing '--'.
+        ready: [ (u) => {
+          const lastIdx = ts.dates.length - 1;
+          const left = u.valToPos(ts.dates[lastIdx], 'x');
+          u.setCursor({ left, top: u.over.clientHeight / 2 });
+        } ],
+      },
     };
-    uPlots.push(new uPlot(opts, [ts.dates, sTotal, sJig, sReel],
-      document.getElementById('chart-repertoire')));
+    const uRep = new uPlot(opts, [ts.dates, sTotal, sJig, sReel],
+      document.getElementById('chart-repertoire'));
+    uPlots.push(uRep);
+    // Re-pin to the last point after any resize (resize handler rebuilds size).
+    uRep._pinLast = () => {
+      const lastIdx = ts.dates.length - 1;
+      uRep.setCursor({ left: uRep.valToPos(ts.dates[lastIdx], 'x'), top: uRep.over.clientHeight / 2 });
+    };
   }
 
-  // ── Pie chart with leader-line labels: By Type ──
+  // ── Pie chart with leader-line labels for EVERY slice (no legend) ──
   (function renderTypePie() {
     const canvas = document.getElementById('type-pie');
     if (!canvas) return;
     const items = (DATA.typeBreakdown || []).filter(it => it.count > 0);
     if (!items.length) return;
     const total = items.reduce((s, it) => s + it.count, 0);
+    const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 
-    // Canvas sized to leave room for outside labels on both sides.
-    const cssW = Math.min(340, (canvas.parentElement ? canvas.parentElement.clientWidth : 340) || 340);
-    const cssH = 250;
+    const LINE_H = 15;         // vertical spacing between stacked labels
+    const LABEL_PAD = 96;      // horizontal room reserved for label text each side
+    const cssW = Math.min(360, (canvas.parentElement ? canvas.parentElement.clientWidth : 360) || 360);
     const dpr = window.devicePixelRatio || 1;
+
+    // First pass: compute geometry to know how many labels land on each side.
+    let a0 = -Math.PI / 2;
+    const rGuess = Math.min(62, (cssW - LABEL_PAD * 2) / 2);
+    const slices = items.map(it => {
+      const frac = it.count / total;
+      const a1 = a0 + frac * Math.PI * 2;
+      const mid = (a0 + a1) / 2;
+      a0 = a1;
+      return { it, a0: a1 - frac * Math.PI * 2, a1, mid, frac, side: Math.cos(mid) >= 0 ? 'r' : 'l' };
+    });
+    const leftN = slices.filter(s => s.side === 'l').length;
+    const rightN = slices.filter(s => s.side === 'r').length;
+    const maxStack = Math.max(leftN, rightN);
+    const cssH = Math.max(2 * rGuess + 40, maxStack * LINE_H + 30);
+
     canvas.width = cssW * dpr; canvas.height = cssH * dpr;
     canvas.style.height = cssH + 'px';
     const ctx = canvas.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, cssW, cssH);
+    ctx.font = '11px system-ui';
 
-    // Reserve horizontal margin for labels; radius scales to fit.
-    const labelMargin = 62;
     const cx = cssW / 2, cy = cssH / 2;
-    const r = Math.min(70, (cssW - labelMargin * 2) / 2);
+    const r = rGuess;
 
     // Draw slices.
-    let a0 = -Math.PI / 2;
-    const slices = items.map(it => {
-      const frac = it.count / total;
-      const a1 = a0 + frac * Math.PI * 2;
-      const mid = (a0 + a1) / 2;
-      const s = { it, a0, a1, mid, frac };
+    for (const s of slices) {
       ctx.beginPath();
       ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, r, a0, a1);
+      ctx.arc(cx, cy, r, s.a0, s.a1);
       ctx.closePath();
-      ctx.fillStyle = (TYPE_COLORS[it.type] || MUTED);
+      ctx.fillStyle = (TYPE_COLORS[s.it.type] || MUTED);
       ctx.fill();
       ctx.strokeStyle = BG; ctx.lineWidth = 1.5; ctx.stroke();
-      a0 = a1;
-      return s;
-    });
+    }
 
-    // Leader-line labels. Stack vertically per side to avoid overlap.
-    ctx.font = '11px system-ui';
-    const labeled = slices.map(s => {
-      const dirX = Math.cos(s.mid), dirY = Math.sin(s.mid);
-      return { s, side: dirX >= 0 ? 'r' : 'l', elbowY: cy + dirY * (r + 14), dirX, dirY };
-    });
-    // Only label slices >=8% with whiskers (bigger ones); the legend covers the rest.
-    for (const L of labeled) {
-      if (L.s.frac < 0.08) continue;
+    // Assign non-overlapping label Y positions per side (greedy top→bottom).
+    function layoutSide(side) {
+      const arr = slices.filter(s => s.side === side)
+        .map(s => ({ s, idealY: cy + Math.sin(s.mid) * (r + 12) }))
+        .sort((a, b) => a.idealY - b.idealY);
+      let last = -Infinity;
+      for (const L of arr) {
+        L.y = Math.max(L.idealY, last + LINE_H);
+        last = L.y;
+      }
+      // If we overflowed the bottom, shift the whole stack up.
+      const overflow = last - (cssH - 8);
+      if (overflow > 0) for (const L of arr) L.y -= overflow;
+      // Clamp top.
+      let top = arr.length ? arr[0].y : 0;
+      if (top < 12) { const d = 12 - top; for (const L of arr) L.y += d; }
+      return arr;
+    }
+    const placed = [...layoutSide('l'), ...layoutSide('r')];
+
+    for (const L of placed) {
       const s = L.s;
       const p0x = cx + Math.cos(s.mid) * r, p0y = cy + Math.sin(s.mid) * r;
-      const p1x = cx + Math.cos(s.mid) * (r + 10), p1y = cy + Math.sin(s.mid) * (r + 10);
-      const endX = L.side === 'r' ? cx + r + 34 : cx - r - 34;
+      const kneeX = cx + Math.cos(s.mid) * (r + 10);
+      const endX = s.side === 'r' ? cx + r + 20 : cx - r - 20;
       ctx.beginPath();
       ctx.moveTo(p0x, p0y);
-      ctx.lineTo(p1x, p1y);
-      ctx.lineTo(endX, p1y);
+      ctx.lineTo(kneeX, L.y);
+      ctx.lineTo(endX, L.y);
       ctx.strokeStyle = MUTED; ctx.lineWidth = 1; ctx.stroke();
+      // color swatch dot at the label
+      ctx.fillStyle = (TYPE_COLORS[s.it.type] || MUTED);
+      const dotX = s.side === 'r' ? endX + 5 : endX - 5;
+      ctx.beginPath(); ctx.arc(dotX, L.y, 3, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = INK;
-      ctx.textAlign = L.side === 'r' ? 'left' : 'right';
+      ctx.textAlign = s.side === 'r' ? 'left' : 'right';
       ctx.textBaseline = 'middle';
-      const tx = L.side === 'r' ? endX + 3 : endX - 3;
-      const label = (s.it.type.charAt(0).toUpperCase() + s.it.type.slice(1)) + ' ' + s.it.pct + '%';
-      ctx.fillText(label, tx, p1y);
+      const tx = s.side === 'r' ? endX + 12 : endX - 12;
+      ctx.fillText(cap(s.it.type) + ' ' + s.it.pct + '%', tx, L.y);
     }
   })();
 
