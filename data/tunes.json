@@ -5695,5 +5695,101 @@
         "external": {
             "thesession": 113
         }
+    },
+    "the-lass-of-carracastle-0m2pk": {
+        "id": "the-lass-of-carracastle-0m2pk",
+        "name": "The Lass Of Carracastle",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [
+            "The Carracastle Lass",
+            "The Carrickcastle Lass",
+            "Joe O'Dowd's",
+            "John Eddie's",
+            "Lady Mary Montague"
+        ],
+        "commonKeys": [
+            "D",
+            "C"
+        ],
+        "url": "https://thesession.org/tunes/2088",
+        "external": {
+            "thesession": 2088
+        }
+    },
+    "the-broken-pledge-gg42e": {
+        "id": "the-broken-pledge-gg42e",
+        "name": "The Broken Pledge",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [
+            "An Geall Briste"
+        ],
+        "commonKeys": [
+            "Ddor",
+            "Edor",
+            "Emix",
+            "Amix",
+            "Gdor",
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/1423",
+        "external": {
+            "thesession": 1423
+        }
+    },
+    "the-irish-girl-1kmcm": {
+        "id": "the-irish-girl-1kmcm",
+        "name": "The Irish Girl",
+        "type": "strathspey",
+        "tradition": "irish",
+        "aliases": [
+            "The Irish Girl's Highland Fling"
+        ],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/10413",
+        "external": {
+            "thesession": 10413
+        }
+    },
+    "biddy-from-sligo-ji5ev": {
+        "id": "biddy-from-sligo-ji5ev",
+        "name": "Biddy From Sligo",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "Ballahaboy Fair",
+            "Biddy Of Sligo"
+        ],
+        "commonKeys": [
+            "D",
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/1672",
+        "external": {
+            "thesession": 1672
+        }
+    },
+    "paddy-from-portlaw-nonus": {
+        "id": "paddy-from-portlaw-nonus",
+        "name": "Paddy From Portlaw",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "Brian Rooney's",
+            "Frazer's",
+            "The Godfather",
+            "Jackie Daly's Thatched Cabin",
+            "Paddy From Portlow"
+        ],
+        "commonKeys": [
+            "D"
+        ],
+        "url": "https://thesession.org/tunes/4927",
+        "external": {
+            "thesession": 4927
+        }
     }
 }
