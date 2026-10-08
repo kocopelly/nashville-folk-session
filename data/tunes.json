@@ -5791,5 +5791,48 @@
         "external": {
             "thesession": 4927
         }
+    },
+    "bonnie-kate-tvdma": {
+        "id": "bonnie-kate-tvdma",
+        "name": "Bonnie Kate",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [
+            "Boney Kate",
+            "The Bonnie Lass o' Fisherow"
+        ],
+        "commonKeys": [],
+        "url": "https://thesession.org/tunes/754",
+        "external": {
+            "thesession": 754
+        }
+    },
+    "shandon-bells-40gfd": {
+        "id": "shandon-bells-40gfd",
+        "name": "Shandon Bells",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "Killieburn Brae",
+            "Punch for the Ladies",
+            "The Shandon's Bells"
+        ],
+        "commonKeys": [],
+        "url": "https://thesession.org/tunes/1200",
+        "external": {
+            "thesession": 1200
+        }
+    },
+    "stranger-at-the-gate-tcmm7": {
+        "id": "stranger-at-the-gate-tcmm7",
+        "name": "Stranger at the Gate",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [],
+        "url": "https://thesession.org/tunes/5300",
+        "external": {
+            "thesession": 5300
+        }
     }
 }
