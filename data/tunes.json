@@ -898,11 +898,13 @@
         "tradition": "irish",
         "aliases": [],
         "commonKeys": [
-            "D"
+            "Bm",
+            "Em",
+            "G"
         ],
-        "url": "https://thesession.org/tunes/230",
+        "url": "https://thesession.org/tunes/188",
         "external": {
-            "thesession": 230
+            "thesession": 188
         }
     },
     "farrel-ogaras-v2ply": {
@@ -4612,7 +4614,7 @@
     "the-ballydesmond-75da6": {
         "id": "the-ballydesmond-75da6",
         "name": "The Ballydesmond",
-        "type": "jig",
+        "type": "polka",
         "tradition": "irish",
         "aliases": [],
         "commonKeys": [
@@ -4868,11 +4870,12 @@
         "tradition": "irish",
         "aliases": [],
         "commonKeys": [
-            "D"
+            "Ador",
+            "Dmix"
         ],
-        "url": "https://thesession.org/tunes/1189",
+        "url": "https://thesession.org/tunes/298",
         "external": {
-            "thesession": 1189
+            "thesession": 298
         }
     },
     "ballydesmond-polka-no-2-57d90": {
@@ -4882,11 +4885,11 @@
         "tradition": "irish",
         "aliases": [],
         "commonKeys": [
-            "D"
+            "Ador"
         ],
-        "url": "https://thesession.org/tunes/1190",
+        "url": "https://thesession.org/tunes/238",
         "external": {
-            "thesession": 1190
+            "thesession": 238
         }
     },
     "ballydesmond-polka-no-3-b4fa4": {
@@ -4896,11 +4899,12 @@
         "tradition": "irish",
         "aliases": [],
         "commonKeys": [
+            "G",
             "D"
         ],
-        "url": "https://thesession.org/tunes/1191",
+        "url": "https://thesession.org/tunes/531",
         "external": {
-            "thesession": 1191
+            "thesession": 531
         }
     },
     "the-pigeon-on-the-gate-05905": {
