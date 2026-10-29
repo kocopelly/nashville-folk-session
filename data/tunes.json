@@ -6043,5 +6043,47 @@
         "external": {
             "thesession": 1359
         }
+    },
+    "teampall-an-ghleanntain-h6joy": {
+        "id": "teampall-an-ghleanntain-h6joy",
+        "name": "Teampall An Ghleanntáin",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [
+            "The Glentan",
+            "The Hairy",
+            "Moloney's",
+            "Teampall An Ghleannt",
+            "Teampall An Ghleantáin"
+        ],
+        "commonKeys": [
+            "D",
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/1988",
+        "external": {
+            "thesession": 1988
+        }
+    },
+    "the-geese-in-the-bog-dvxsf": {
+        "id": "the-geese-in-the-bog-dvxsf",
+        "name": "The Geese In The Bog",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "The Geese In The Bogs",
+            "The Humours Of Ballinafad",
+            "Ken Fahey's",
+            "Na Géanna Sa Phortach",
+            "The Old Geese In The Bog"
+        ],
+        "commonKeys": [
+            "Am",
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/43",
+        "external": {
+            "thesession": 43
+        }
     }
 }
