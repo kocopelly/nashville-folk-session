@@ -5948,5 +5948,100 @@
         "external": {
             "thesession": 1619
         }
+    },
+    "langstroms-pony-j9527": {
+        "id": "langstroms-pony-j9527",
+        "name": "Langstrom's Pony",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "Cuir Diallaid Air An Clibin",
+            "Langstern Pony",
+            "The Langstern Pony",
+            "Langstern's Pony",
+            "The Langstrom Pony"
+        ],
+        "commonKeys": [
+            "Amix"
+        ],
+        "url": "https://thesession.org/tunes/61",
+        "external": {
+            "thesession": 61
+        }
+    },
+    "the-ballydesmond-rzybp": {
+        "id": "the-ballydesmond-rzybp",
+        "name": "The Ballydesmond",
+        "type": "slide",
+        "tradition": "irish",
+        "aliases": [],
+        "commonKeys": [
+            "Ador"
+        ],
+        "url": "https://thesession.org/tunes/24555",
+        "external": {
+            "thesession": 24555
+        }
+    },
+    "crested-hens-2eilx": {
+        "id": "crested-hens-2eilx",
+        "name": "Crested Hens",
+        "type": "waltz",
+        "tradition": "irish",
+        "aliases": [
+            "Cockscomb Bouree",
+            "Como Poden Per Sas Culpas",
+            "The Crested Hen",
+            "The Crested Hens",
+            "Les Poules Huppées"
+        ],
+        "commonKeys": [
+            "D",
+            "Edor"
+        ],
+        "url": "https://thesession.org/tunes/562",
+        "external": {
+            "thesession": 562
+        }
+    },
+    "the-teetotallers-gluck": {
+        "id": "the-teetotallers-gluck",
+        "name": "The Teetotaller's",
+        "type": "reel",
+        "tradition": "irish",
+        "aliases": [
+            "The Bowl Of Coffee",
+            "The Road To Newbridge",
+            "The Teatotaler",
+            "The Teatotaler's Fancy",
+            "The Teatotaler's"
+        ],
+        "commonKeys": [
+            "G"
+        ],
+        "url": "https://thesession.org/tunes/114",
+        "external": {
+            "thesession": 114
+        }
+    },
+    "old-hag-you-have-killed-me-pmejl": {
+        "id": "old-hag-you-have-killed-me-pmejl",
+        "name": "Old Hag, You Have Killed Me",
+        "type": "jig",
+        "tradition": "irish",
+        "aliases": [
+            "'Chailligh Do Mhairis Mé",
+            "A Chailleach Do Mharais Me",
+            "A Chailleach, Do Mharais Mé",
+            "Away With Ye",
+            "Na Caoire Ar Na Sleibhtibh"
+        ],
+        "commonKeys": [
+            "Dmix"
+        ],
+        "url": "https://thesession.org/tunes/1359",
+        "external": {
+            "thesession": 1359
+        }
     }
 }
